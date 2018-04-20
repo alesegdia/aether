@@ -1,25 +1,20 @@
 #pragma once
 
+#include "../core/handle.h"
+
 namespace aether {
 namespace graphics {
 
 
-class Texture
+class Texture : public core::Handle
 {
-private:
-
-    Texture(int handle);
-
-    int m_handle = -1;
-
-
 public:
-    Texture();
-    Texture(const Texture& other);
 
-    bool valid();
+    Texture()
+    {
 
-    // implementation interface
+    }
+
     int height();
     int width();
     void destroy();
