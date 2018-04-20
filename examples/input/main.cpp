@@ -1,6 +1,7 @@
 #include "../src/core/application.h"
 #include "../src/graphics/texture.h"
 #include "../src/math/vec.h"
+#include "../src/graphics/graphics.h"
 
 
 class NormalScreen : public aether::core::IScreen
@@ -23,6 +24,7 @@ public:
 
     void render() final
     {
+        aether::graphics::clear(255, 0, 0);
         m_texture.draw(m_position.x(), m_position.y());
     }
 
@@ -41,11 +43,11 @@ public:
 
         if( aether::core::is_key_down(aether::core::KeyCode::Up) )
         {
-            delta_pos.y(1);
+            delta_pos.y(-1);
         }
         else if( aether::core::is_key_down(aether::core::KeyCode::Down) )
         {
-            delta_pos.y(-1);
+            delta_pos.y(1);
         }
 
         float d = float(delta) / 10e6;
