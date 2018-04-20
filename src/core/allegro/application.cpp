@@ -9,7 +9,7 @@ AllegroApplication::AllegroApplication(int sw, int sh)
 
 }
 
-void AllegroApplication::init(int argc, char **argv)
+int AllegroApplication::init(int argc, char **argv)
 {
     if(!al_init()) {
         fprintf(stderr, "failed to initialize allegro!\n");
@@ -53,7 +53,7 @@ void AllegroApplication::init(int argc, char **argv)
         return -1;
     }
 
-    m_display = al_create_display(m_screenWidth, m_screenHeight);
+    m_display = al_create_display(screenWidth(), screenHeight());
     if(!m_display) {
         fprintf(stderr, "failed to create display!\n");
         return -1;
@@ -94,8 +94,17 @@ void AllegroApplication::init(int argc, char **argv)
     int release = version & 255;
     printf("Allegro %d.%d.%d.%d\n", major, minor, revision, release);
 
+    return 0;
+}
 
-    return ready(argc, argv);
+void AllegroApplication::preRender()
+{
+    al_set_target_bitmap(al_get_backbuffer(m_display));
+}
+
+void AllegroApplication::postRender()
+{
+    al_flip_display();
 }
 
 void aether::core::AllegroApplication::cleanup()
@@ -117,19 +126,19 @@ void aether::core::AllegroApplication::preUpdate()
     {
         if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         {
-            m_doexit = true;
+            close();
         }
         else if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
         {
-            _notify_key_down(ev.keyboard.keycode);
+            _notify_key_down((KeyCode)ev.keyboard.keycode);
         }
         else if(ev.type == ALLEGRO_EVENT_KEY_UP)
         {
-            _notify_key_up(ev.keyboard.keycode);
+            _notify_key_up((KeyCode)ev.keyboard.keycode);
         }
         else if( ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN )
         {
-            _notify_mouse_button_down(ev.mouse.button);
+            _notify_mouse_button_down((MouseButton)ev.mouse.button);
         }
     }
 

@@ -20,10 +20,14 @@ class AllegroApplication : public ApplicationBase
 {
 public:
     AllegroApplication(int sw, int sh);
+    virtual ~AllegroApplication()
+    {
+
+    }
 
     // ApplicationBase interface
 protected:
-    void init(int argc, char **argv) final;
+    int init(int argc, char **argv) final;
 
 private:
     ALLEGRO_DISPLAY* m_display = NULL;
@@ -36,6 +40,11 @@ protected:
     void preUpdate();
 
     void postUpdate();
+
+    void preRender();
+
+    void postRender();
+
 };
 
 typedef AllegroApplication Application;

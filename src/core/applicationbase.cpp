@@ -11,6 +11,11 @@ ApplicationBase::ApplicationBase( int screen_width, int screen_height )
 
 }
 
+ApplicationBase::~ApplicationBase()
+{
+
+}
+
 int ApplicationBase::exec(int argc, char **argv)
 {
     int init_retcode = init(argc, argv);
@@ -28,11 +33,11 @@ int ApplicationBase::exec(int argc, char **argv)
 
     double now, then;
     now = then = get_time();
-    uint64_t accum[2]={ 0, 0 };
+    uint64_t accum[2] = { 0, 0 };
 
     while( false == m_doExit )
     {
-        now = al_get_time();
+        now = get_time();
         uint64_t delta = now - then;
 
         accum[0] += delta;
@@ -44,16 +49,17 @@ int ApplicationBase::exec(int argc, char **argv)
         if( accum[0] > m_renderFPS )
         {
             accum[0] -= m_renderFPS;
-            this->render();
+            preRender();
+            render();
+            postRender();
         }
 
         // update
-        while( accum[1]> m_updateFPS )
+        while( accum[1] > m_updateFPS )
         {
             accum[1] -= m_updateFPS;
             preUpdate();
-
-            m_currentScreen->update(delta);
+            update(delta);
             postUpdate();
         }
     }
@@ -61,6 +67,17 @@ int ApplicationBase::exec(int argc, char **argv)
     dispose();
     cleanup();
 
+}
+
+void ApplicationBase::setScreen(IScreen::Ptr screen)
+{
+    if( m_currentScreen != nullptr )
+    {
+        m_currentScreen->hide();
+    }
+
+    m_currentScreen = screen;
+    m_currentScreen->show();
 }
 
 void ApplicationBase::setUpdateFPS(uint64_t fps)
@@ -73,14 +90,29 @@ void ApplicationBase::setRenderFPS(uint64_t fps)
     m_renderFPS = fps;
 }
 
+int ApplicationBase::screenWidth()
+{
+    return m_screenWidth;
+}
+
+int ApplicationBase::screenHeight()
+{
+    return m_screenHeight;
+}
+
 void ApplicationBase::close()
 {
     m_doExit = true;
 }
 
-void ApplicationBase::render()
+int ApplicationBase::ready(int argc, char **argv)
 {
-    m_currentScreen->render();
+    return 0;
+}
+
+void ApplicationBase::dispose()
+{
+
 }
 
 }

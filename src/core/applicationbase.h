@@ -15,19 +15,14 @@ public:
 
     int exec(int argc, char** argv);
 
-    void setScreen(IScreen::Ptr screen)
-    {
-        if( m_currentScreen != nullptr )
-        {
-            m_currentScreen->hide();
-        }
-
-        m_currentScreen = screen;
-        m_currentScreen->show();
-    }
+    void setScreen(IScreen::Ptr screen);
 
     void setUpdateFPS(uint64_t fps);
     void setRenderFPS(uint64_t fps);
+
+    int screenWidth();
+
+    int screenHeight();
 
     void close();
 
@@ -39,19 +34,19 @@ protected:
      * @param argc
      * @param argv
      */
-    virtual void init(int argc, char** argv) = 0;
+    virtual int init(int argc, char** argv) = 0;
 
     /**
      * @brief ready to be implemented in derived class
      * @param argc
      * @param argv
      */
-    virtual void ready(int argc, char** argv) = 0 ;
+    virtual int ready(int argc, char** argv);
 
     /**
      * @brief dispose called to clean user code
      */
-    virtual void dispose() = 0 ;
+    virtual void dispose();
 
     /**
      * @brief cleanup called to clean the implementation resources
@@ -62,6 +57,25 @@ protected:
      * @brief preUpdate executed BEFORE updating the screen
      */
     virtual void preUpdate() = 0 ;
+
+    virtual void update(uint64_t delta)
+    {
+        if( m_currentScreen != nullptr )
+        {
+            m_currentScreen->update(delta);
+        }
+    }
+
+    virtual void render()
+    {
+        if( m_currentScreen != nullptr )
+        {
+            m_currentScreen->render();
+        }
+    }
+
+    virtual void preRender() = 0 ;
+    virtual void postRender() = 0 ;
 
     /**
      * @brief postUpdate executed AFTER updating the screen
@@ -78,7 +92,7 @@ private:
     uint64_t m_renderFPS = 10e6 / 64;
     uint64_t m_updateFPS = 10e6 / 64;
 
-    IScreen::Ptr m_currentScreen;
+    IScreen::Ptr m_currentScreen = nullptr;
 
 };
 
