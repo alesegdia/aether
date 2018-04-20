@@ -1,3 +1,6 @@
+#pragma once
+
+
 namespace aether {
 namespace core {
 

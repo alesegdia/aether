@@ -11,7 +11,7 @@ Handle::Handle()
     m_handle = -1;
 }
 
-Handle::Handle(const aether::core::Handle &other)
+Handle::Handle(const Handle &other)
 {
     m_handle = other.m_handle;
 }

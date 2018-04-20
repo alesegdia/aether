@@ -1,7 +1,11 @@
-namespace aether {
-namespace core {
+#pragma once
 
 #include <stdio.h>
+#include <assert.h>
+
+
+namespace aether {
+namespace core {
 
 
 template <typename ResourceType, size_t NumResources = 64>
@@ -24,6 +28,14 @@ public:
         ResourceType res = m_resources[handle];
         return res;
     }
+
+    ResourceType& fetchRef(int handle)
+    {
+        assert( handle >= 0 );
+        assert( handle < m_usedResources );
+        return m_resources[handle];
+    }
+
 
 private:
     ResourceType m_resources[NumResources];

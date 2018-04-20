@@ -11,19 +11,19 @@ namespace graphics {
 
 
 // en un futuro se pueden usar bitset con findfirstfree!
-core::HandledResourceManager<ALLEGRO_BITMAP*> manager;
+core::HandledResourceManager<ALLEGRO_BITMAP*> texture_manager;
 
 void Texture::load(const char *path)
 {
     assert(notValid());
     ALLEGRO_BITMAP* bitmap = al_load_bitmap(path);
     assert(bitmap != nullptr);
-    handle(manager.setNextHandle(bitmap));
+    handle(texture_manager.setNextHandle(bitmap));
 }
 
 static ALLEGRO_BITMAP* fetch(int handle)
 {
-    ALLEGRO_BITMAP* texture = manager.fetch(handle);
+    ALLEGRO_BITMAP* texture = texture_manager.fetch(handle);
     assert(texture != nullptr);
     return texture;
 }
