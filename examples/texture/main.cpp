@@ -1,5 +1,5 @@
-#include "../src/core/application.h"
-#include "../src/graphics/texture.h"
+#include <aether/core/application.h>
+#include <aether/graphics/texture.h>
 
 
 class MyGame : public aether::core::Application

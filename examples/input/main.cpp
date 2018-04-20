@@ -1,7 +1,7 @@
-#include "../src/core/application.h"
-#include "../src/graphics/texture.h"
-#include "../src/math/vec.h"
-#include "../src/graphics/graphics.h"
+#include <aether/core/application.h>
+#include <aether/graphics/texture.h>
+#include <aether/math/vec.h>
+#include <aether/graphics/graphics.h>
 
 
 class NormalScreen : public aether::core::IScreen
