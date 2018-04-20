@@ -37,13 +37,13 @@ private:
 protected:
     void cleanup();
 
-    void preUpdate();
+    void preUpdate() final;
 
-    void postUpdate();
+    void postUpdate() final;
 
-    void preRender();
+    void preRender() final;
 
-    void postRender();
+    void postRender() final;
 
 };
 

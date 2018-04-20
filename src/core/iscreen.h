@@ -26,7 +26,7 @@ public:
      * @brief for game logic
      * @param delta time between current and last frames
      */
-    virtual void update(double delta) = 0 ;
+    virtual void update(uint64_t delta) = 0 ;
 
     /**
      * @brief called in a fixed rate, for rendering

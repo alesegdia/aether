@@ -36,11 +36,12 @@ endif()
 
 if(WIN32)
         list(APPEND CMAKE_EXE_LINKER_FLAGS "-static-libstdc++ -static-libgcc")
-        #set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin/win32)
+        set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin/win32)
 elseif(UNIX)
-        #set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin/linux)
+        set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin/linux)
 endif()
 
 ADD_AETHER_TARGET(aether-minimal-example examples/basic/main.cpp)
 ADD_AETHER_TARGET(aether-texture-example examples/texture/main.cpp)
+ADD_AETHER_TARGET(aether-input-example examples/input/main.cpp)
 

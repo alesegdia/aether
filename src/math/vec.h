@@ -1,5 +1,8 @@
 #pragma once
 
+#include <iostream>
+#include <math.h>
+
 namespace aether {
 namespace math {
 
@@ -62,6 +65,13 @@ public:
         m_x *= p;
         m_y *= p;
         return *this;
+    }
+
+    Vec2 operator* (float p)
+    {
+        Vec2 ret = (*this);
+        ret *= p;
+        return ret;
     }
 
 private:
