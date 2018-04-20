@@ -1,6 +1,6 @@
 list(APPEND CMAKE_CXX_FLAGS "-std=c++11 -g -ftest-coverage -fprofile-arcs")
 
-file(GLOB_RECURSE AETHER_SRCS "src/*.cpp" "src/*.h")
+file(GLOB_RECURSE AETHER_SRCS "${CMAKE_CURRENT_LIST_DIR}/../src/*.cpp" "${CMAKE_CURRENT_LIST_DIR}/../src/*.h")
 
 # to be set from the outside when calling cmake command
 set(AETHER_USE_ALLEGRO TRUE)
