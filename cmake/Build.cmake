@@ -1,6 +1,8 @@
 list(APPEND CMAKE_CXX_FLAGS "-std=c++11 -g -ftest-coverage -fprofile-arcs")
 
 file(GLOB_RECURSE AETHER_SRCS "${CMAKE_CURRENT_LIST_DIR}/../src/*.cpp" "${CMAKE_CURRENT_LIST_DIR}/../src/*.h")
+set(AETHER_BASE_DIR ${CMAKE_CURRENT_LIST_DIR})
+message(${CMAKE_CURRENT_LIST_DIR})
 
 # to be set from the outside when calling cmake command
 set(AETHER_USE_ALLEGRO TRUE)
@@ -8,25 +10,25 @@ set(AETHER_USE_ALLEGRO TRUE)
 if(${AETHER_USE_ALLEGRO})
     add_definitions(-DAETHER_USE_ALLEGRO)
     function(ADD_AETHER_TARGET EXEC-NAME SRCS)
-            add_executable(${EXEC-NAME} ${AETHER_SRCS} ${SRCS})
-            target_include_directories(${EXEC-NAME} PUBLIC src)
-            set_target_properties(${EXEC-NAME} PROPERTIES
-                    COMPILE_FLAGS "-std=c++11"
-                    LINK_FLAGS "-g -ftest-coverage -fprofile-arcs"
-                    )
-            if(WIN32)
-                    target_link_libraries(${EXEC-NAME} allegro_monolith)
-            elseif(UNIX)
-                    target_link_libraries(${EXEC-NAME} allegro)
-                    target_link_libraries(${EXEC-NAME} allegro_image)
-                    target_link_libraries(${EXEC-NAME} allegro_primitives)
-                    target_link_libraries(${EXEC-NAME} allegro_font)
-                    target_link_libraries(${EXEC-NAME} allegro_ttf)
-                    target_link_libraries(${EXEC-NAME} allegro_audio)
-                    target_link_libraries(${EXEC-NAME} allegro_acodec)
-            else()
-                    message(SEND_FATAL "Unknown platform")
-            endif()
+        add_executable(${EXEC-NAME} ${AETHER_SRCS} ${SRCS})
+        target_include_directories(${EXEC-NAME} PUBLIC "${AETHER_BASE_DIR}/../src")
+        set_target_properties(${EXEC-NAME} PROPERTIES
+                COMPILE_FLAGS "-std=c++11"
+                LINK_FLAGS "-g -ftest-coverage -fprofile-arcs"
+                )
+        if(WIN32)
+                target_link_libraries(${EXEC-NAME} allegro_monolith)
+        elseif(UNIX)
+                target_link_libraries(${EXEC-NAME} allegro)
+                target_link_libraries(${EXEC-NAME} allegro_image)
+                target_link_libraries(${EXEC-NAME} allegro_primitives)
+                target_link_libraries(${EXEC-NAME} allegro_font)
+                target_link_libraries(${EXEC-NAME} allegro_ttf)
+                target_link_libraries(${EXEC-NAME} allegro_audio)
+                target_link_libraries(${EXEC-NAME} allegro_acodec)
+        else()
+                message(SEND_FATAL "Unknown platform")
+        endif()
     endfunction(ADD_AETHER_TARGET)
 endif()
 
