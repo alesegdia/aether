@@ -50,6 +50,13 @@ public:
         return Vec2<T>(m_x + other.m_x, m_y + other.m_y);
     }
 
+    Vec2& operator+= ( const Vec2<T>& other )
+    {
+        m_x += other.x();
+        m_y += other.y();
+        return *this;
+    }
+
     bool operator== ( const Vec2<T>& other ) const
     {
         return other.m_x == m_x && other.m_y == m_y;
@@ -67,10 +74,24 @@ public:
         return *this;
     }
 
+    Vec2& operator*= ( const Vec2& v )
+    {
+        m_x *= v.x();
+        m_y *= v.y();
+        return *this;
+    }
+
     Vec2 operator* (float p)
     {
         Vec2 ret = (*this);
         ret *= p;
+        return ret;
+    }
+
+    Vec2 operator* (const Vec2& other)
+    {
+        Vec2 ret = (*this);
+        ret *= other;
         return ret;
     }
 
@@ -186,11 +207,43 @@ public:
         return m_size.y();
     }
 
+    T x1() const
+    {
+        return x();
+    }
+
+    T x2() const
+    {
+        return x() + w();
+    }
+
+    T y1() const
+    {
+        return y();
+    }
+
+    T y2() const
+    {
+        return y() + h();
+    }
+
+    void move( Vec2<T> delta )
+    {
+        m_position += delta;
+    }
+
 private:
     Vec2<T> m_position, m_size;
 };
 
 typedef Rect<float> Rectf;
+
+template <typename T>
+bool intersect(Rect<T> a, Rect<T> b)
+{
+    return a.x1() < b.x2() && a.x2() > b.x1() &&
+           a.y1() < b.y2() && a.y2() > b.y1();
+}
 
 template <typename T>
 float clamp(T v, T min, T max )
