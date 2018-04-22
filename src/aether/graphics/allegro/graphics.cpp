@@ -16,5 +16,16 @@ void draw_rectangle(float x1, float y1, float x2, float y2, Color c, float thick
     al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(c.r, c.g, c.b), thickness);
 }
 
+void draw_filled_rectangle(float x1, float y1, float x2, float y2, Color c)
+{
+    al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(c.r, c.g, c.b));
+}
+
+void draw_filled_circle(float x, float y, float radius, Color c)
+{
+    al_draw_filled_circle(x, y, radius, al_map_rgb(c.r, c.g, c.b));
+}
+
+
 }
 }
