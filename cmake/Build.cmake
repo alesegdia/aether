@@ -1,4 +1,4 @@
-list(APPEND CMAKE_CXX_FLAGS "-std=gnu++14 -g -ftest-coverage -fprofile-arcs")
+list(APPEND CMAKE_CXX_FLAGS "-std=gnu++11 -g -Wall -Wextra -ftest-coverage -fprofile-arcs")
 
 file(GLOB_RECURSE AETHER_SRCS "${CMAKE_CURRENT_LIST_DIR}/../src/*.cpp" "${CMAKE_CURRENT_LIST_DIR}/../src/*.h")
 set(AETHER_BASE_DIR ${CMAKE_CURRENT_LIST_DIR})
