@@ -92,7 +92,7 @@ int AllegroApplication::init(int argc, char **argv)
     int minor = (version >> 16) & 255;
     int revision = (version >> 8) & 255;
     int release = version & 255;
-    printf("Allegro %d.%d.%d.%d\n", major, minor, revision, release);
+    //printf("Allegro %d.%d.%d.%d\n", major, minor, revision, release);
 
     return 0;
 }

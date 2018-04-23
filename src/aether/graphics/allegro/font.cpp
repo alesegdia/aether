@@ -36,6 +36,12 @@ void Font::print(const char *text, float x, float y, Color c)
     al_draw_text(font, al_map_rgb(c.r, c.g, c.b), x, y, 0, text);
 }
 
+void Font::print(const char *text, float x, float y, float width, float line_height, Color c)
+{
+    ALLEGRO_FONT* font = fetch(handle());
+    al_draw_multiline_text(font, al_map_rgb(c.r, c.g, c.b), x, y, width, line_height, ALLEGRO_ALIGN_CENTER, text);
+}
+
 
 }
 }

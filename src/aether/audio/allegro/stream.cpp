@@ -27,8 +27,6 @@ void Stream::load(const char *path)
     as.voice = al_create_voice( 44100, al_get_audio_stream_depth(as.stream),ALLEGRO_CHANNEL_CONF_2 );
     al_attach_audio_stream_to_voice(as.stream, as.voice);
     handle(stream_manager.setNextHandle(as));
-    printf("handle %d\n", handle());
-    fflush(stdout);
     playmode(PlayMode::Loop);
 }
 

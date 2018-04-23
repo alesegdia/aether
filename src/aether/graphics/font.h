@@ -15,6 +15,7 @@ public:
     void load( const char* path, int size );
     void destroy();
     void print( const char* text, float x, float y, Color c = Color() );
+    void print(const char* text, float x, float y, float width, float line_height , Color c);
 
 };
 
