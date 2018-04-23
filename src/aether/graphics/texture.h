@@ -19,6 +19,7 @@ public:
     int width();
     void destroy();
     void draw(float x, float y);
+    void draw(float x, float y, float alpha);
     void load(const char* path);
 
 };
