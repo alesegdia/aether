@@ -12,12 +12,16 @@ if(${AETHER_USE_ALLEGRO})
     function(ADD_AETHER_TARGET EXEC-NAME SRCS)
         add_executable(${EXEC-NAME} ${AETHER_SRCS} ${SRCS})
         target_include_directories(${EXEC-NAME} PUBLIC "${AETHER_BASE_DIR}/../src")
-        set_target_properties(${EXEC-NAME} PROPERTIES
-                COMPILE_FLAGS "-std=c++11"
-                LINK_FLAGS "-g -ftest-coverage -fprofile-arcs"
-                )
+		if(NOT MSVC) 
+			set_target_properties(${EXEC-NAME} PROPERTIES
+					COMPILE_FLAGS "-std=c++11"
+					LINK_FLAGS "-g -ftest-coverage -fprofile-arcs"
+					)
+		endif()
         if(WIN32)
-                target_link_libraries(${EXEC-NAME} allegro_monolith)
+                if(NOT MSVC)
+					target_link_libraries(${EXEC-NAME} allegro_monolith)
+				endif()
         elseif(UNIX)
                 target_link_libraries(${EXEC-NAME} allegro)
                 target_link_libraries(${EXEC-NAME} allegro_image)
@@ -33,8 +37,10 @@ if(${AETHER_USE_ALLEGRO})
 endif()
 
 if(WIN32)
-        list(APPEND CMAKE_EXE_LINKER_FLAGS "-static-libstdc++ -static-libgcc")
-        set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin/win32)
+	if(NOT MSVC)
+		list(APPEND CMAKE_EXE_LINKER_FLAGS "-static-libstdc++ -static-libgcc")
+	endif()
+	set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin/win32)
 elseif(UNIX)
-        set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin/linux)
+	set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin/linux)
 endif()
