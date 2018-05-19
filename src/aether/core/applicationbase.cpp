@@ -59,7 +59,7 @@ int ApplicationBase::exec(int argc, char **argv)
         {
             accum[1] -= m_updateFPS;
             preUpdate();
-            update(delta);
+            update(m_updateFPS);
             postUpdate();
         }
     }
@@ -67,6 +67,7 @@ int ApplicationBase::exec(int argc, char **argv)
     dispose();
     cleanup();
 
+	return 0;
 }
 
 void ApplicationBase::setScreen(IScreen::Ptr screen)

@@ -39,7 +39,7 @@ public:
 
 private:
     ResourceType m_resources[NumResources];
-    size_t m_usedResources = 0;
+    int m_usedResources = 0;
 
 };
 
