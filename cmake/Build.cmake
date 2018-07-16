@@ -9,6 +9,13 @@ message(${CMAKE_CURRENT_LIST_DIR})
 # to be set from the outside when calling cmake command
 set(AETHER_USE_ALLEGRO TRUE)
 
+if(MSVC)
+	set( CMAKE_C_FLAGS_RELEASE "/MT /O2 /Ob2 /D NDEBUG" )
+	set( CMAKE_CXX_FLAGS_RELEASE "/MT /O2 /Ob2 /D NDEBUG" )
+	set( CMAKE_C_FLAGS_DEBUG "/D_DEBUG /MTd /Zi /Ob0 /Od /RTC1" )
+	set( CMAKE_CXX_FLAGS_DEBUG "/D_DEBUG /MTd /Zi /Ob0 /Od /RTC1" )
+endif()
+
 if(${AETHER_USE_ALLEGRO})
     add_definitions(-DAETHER_USE_ALLEGRO)
     function(ADD_AETHER_TARGET EXEC-NAME SRCS)
@@ -36,6 +43,8 @@ if(${AETHER_USE_ALLEGRO})
                 message(SEND_FATAL "Unknown platform")
         endif()
     endfunction(ADD_AETHER_TARGET)
+else()
+    error("Must define one of the following: AETHER_USE_ALLEGRO, AETHER_USE_3DS")
 endif()
 
 if(WIN32)
