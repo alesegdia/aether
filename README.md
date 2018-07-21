@@ -1,14 +1,19 @@
 # aether
 
-Aether aims to be a very simple 2D framework intended to be used in several platforms with decoupled functionality in backends for rendering, app handling and input. The currently targeted systems are Linux, Windows and PS Vita Homebrew with VitaSDK. Mac version is not planned since I don't have a Mac to test with.
+Aether aims to be a very simple 2D framework intended to be used in several platforms with decoupled functionality in backends for rendering, application and input handling.
 
-**Please note that this library is heavily in development**
+**This library is heavily in development**
 
-## TODO
+## Platform backends
 
-* Enhance texture handling since the method in use does not reuse handles
-* Support for PS Vita Homebrew backend.
-* Implement Animation and Spritesheet classes
+* Linux and Windows using [allegro](https://github.com/liballeg/allegro5)
+* 3DS using [Citro2D](https://github.com/devkitPro/citro2d)
+
+## To-Do
+
+* Support for 3DS Homebrew (**in progress**)
+* Support for Vita Homebrew 
+* Reuse handles for resources management
+* Copy Animation and Spritesheet classes from alligator
 * Refactor math code, inherited from alligator
-
 

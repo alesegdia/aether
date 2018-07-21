@@ -1,4 +1,4 @@
-#include <aether/core/application.h>
+#include <aether/aether.h>
 
 class MyGame : public aether::core::Application
 {

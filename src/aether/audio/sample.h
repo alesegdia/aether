@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../core/handle.h"
-#include "audio.h"
+#include "playmode.h"
 
 namespace aether {
 namespace audio {

@@ -1,0 +1,10 @@
+#pragma once
+
+#ifdef AETHER_USE_ALLEGRO
+#include "core/allegro/al_application.h"
+#elif AETHER_USE_3DS
+#include "core/3ds/3ds_application.h"
+#else
+#error You must declare what backend to use
+#endif
+

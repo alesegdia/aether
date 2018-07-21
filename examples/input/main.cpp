@@ -1,8 +1,4 @@
-#include <aether/core/application.h>
-#include <aether/graphics/texture.h>
-#include <aether/math/vec.h>
-#include <aether/graphics/graphics.h>
-
+#include <aether/aether.h>
 
 class NormalScreen : public aether::core::IScreen
 {

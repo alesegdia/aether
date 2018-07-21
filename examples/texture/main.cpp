@@ -1,6 +1,4 @@
-#include <aether/core/application.h>
-#include <aether/graphics/texture.h>
-
+#include <aether/aether.h>
 
 class MyGame : public aether::core::Application
 {
