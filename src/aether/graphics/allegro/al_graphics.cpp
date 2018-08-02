@@ -26,7 +26,7 @@ void draw_filled_circle(float x, float y, float radius, Color c)
     al_draw_filled_circle(x, y, radius, al_map_rgb(c.r, c.g, c.b));
 }
 
-void draw_filled_circle_alpha(float x, float y, float radius, Color c, int alpha)
+void draw_filled_circle(float x, float y, float radius, Color c, int alpha)
 {
     al_draw_filled_circle(x, y, radius, al_map_rgba(alpha, alpha, alpha, alpha));
 }

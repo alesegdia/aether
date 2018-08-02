@@ -11,7 +11,7 @@ static core::HandledResourceManager<ALLEGRO_FONT*> font_manager;
 
 static ALLEGRO_FONT* fetch(int handle)
 {
-    ALLEGRO_FONT* font = font_manager.fetch(handle);
+    ALLEGRO_FONT* font = font_manager.fetchPresentHandle(handle);
     assert(font != nullptr);
     return font;
 }
@@ -21,7 +21,7 @@ void Font::load(const char *path, int size)
     assert(notValid());
     ALLEGRO_FONT* font = al_load_font(path, size, 0);
     assert(font != nullptr);
-    handle(font_manager.setNextHandle(font));
+    handle(font_manager.createNewHandle(font));
 }
 
 void Font::destroy()

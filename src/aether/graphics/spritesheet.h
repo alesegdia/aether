@@ -1,0 +1,71 @@
+#pragma once
+
+#include <vector>
+#include <memory>
+#include "texture.h"
+
+namespace aether {
+namespace graphics {
+
+
+class Spritesheet
+{
+public:
+
+    typedef std::shared_ptr<Spritesheet> SharedPtr;
+
+    /**
+     * @brief Spritesheet
+     * @param width in tiles
+     * @param height in tiles
+     * @param bitmap
+     */
+    explicit Spritesheet( size_t width, size_t height, Texture texture );
+
+    ~Spritesheet();
+
+    /**
+     * @brief retrieves a frame by its index
+     * @param num_frame frame index
+     * @return the sub bitmap associated to the index
+     */
+    Texture getFrame( size_t num_frame );
+
+    /**
+     * @brief retrieves a frame by its coordinate
+     * @param x_frame the x coordinate
+     * @param y_frame the y coordinate
+     * @return the sub bitmap in specified coordinate
+     */
+    Texture getFrame( size_t x_frame, size_t y_frame );
+
+    std::vector<Texture> getFrames(size_t start, size_t end );
+    std::vector<Texture> getAllFrames();
+
+private:
+
+    /**
+     * @brief resets spritesheet internals to store a new spritesheet data
+     * @param width in tiles of the spritesheet
+     * @param height in tiles of the spritesheet
+     * @param bitmap the whole spritesheet
+     */
+    void reset( size_t width, size_t height, Texture texture );
+
+    /**
+     * @brief translates a 2D cartesian coordinate to vector index
+     * @param x coordinate
+     * @param y coordinate
+     * @return the index
+     */
+    size_t coordToIndex(size_t x, size_t y );
+
+    std::vector<Texture> m_frames;
+    Texture m_parentTexture;
+    int m_height, m_width;
+
+};
+
+
+}
+}

@@ -21,17 +21,17 @@ void Sample::load(const char *path)
 {
     AllegroSample as;
     as.sample = al_load_sample(path);
-    handle(sample_manager.setNextHandle(as));
+    handle(sample_manager.createNewHandle(as));
 }
 
 void Sample::destroy()
 {
-    al_destroy_sample(sample_manager.fetch(handle()).sample);
+    al_destroy_sample(sample_manager.fetchPresentHandle(handle()).sample);
 }
 
 void Sample::play(float volume, PlayMode playmode)
 {
-    AllegroSample as = sample_manager.fetch(handle());
+    AllegroSample as = sample_manager.fetchPresentHandle(handle());
     ALLEGRO_PLAYMODE pm = ALLEGRO_PLAYMODE_ONCE;
     if( playmode == PlayMode::Loop )
     {
@@ -42,7 +42,7 @@ void Sample::play(float volume, PlayMode playmode)
 
 void Sample::rewind()
 {
-    AllegroSample as = sample_manager.fetch(handle());
+    AllegroSample as = sample_manager.fetchPresentHandle(handle());
     al_stop_sample(&as.id);
 }
 

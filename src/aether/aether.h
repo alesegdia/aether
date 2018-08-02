@@ -8,7 +8,7 @@
 #include "graphics/color.h"
 #include "graphics/font.h"
 #include "graphics/graphics.h"
-#include "graphics/spritesheet.hpp"
+#include "graphics/spritesheet.h"
 #include "graphics/texture.h"
 #include "graphics/animation.h"
 

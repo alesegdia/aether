@@ -21,9 +21,17 @@ public:
     void draw(float x, float y);
     void draw(float x, float y, float alpha);
     void load(const char* path);
+    Texture subdivide(int x, int y, int w, int h);
+
+private:
+
+    Texture(int h)
+    {
+        handle(h);
+    }
+
 
 };
-
 
 }
 }

@@ -18,12 +18,12 @@ void Texture::load(const char *path)
     assert(notValid());
     ALLEGRO_BITMAP* bitmap = al_load_bitmap(path);
     assert(bitmap != nullptr);
-    handle(texture_manager.setNextHandle(bitmap));
+    handle(texture_manager.createNewHandle(bitmap));
 }
 
 static ALLEGRO_BITMAP* fetch(int handle)
 {
-    ALLEGRO_BITMAP* texture = texture_manager.fetch(handle);
+    ALLEGRO_BITMAP* texture = texture_manager.fetchPresentHandle(handle);
     assert(texture != nullptr);
     return texture;
 }
@@ -52,6 +52,13 @@ void Texture::draw(float x, float y)
 void Texture::draw(float x, float y, float alpha)
 {
     al_draw_tinted_bitmap(fetch(handle()), al_map_rgba_f(alpha, alpha, alpha, alpha), x, y, 0);
+}
+
+Texture Texture::subdivide(int x, int y, int w, int h)
+{
+    ALLEGRO_BITMAP* sub = al_create_sub_bitmap(fetch(handle()), x, y, w, h);
+    auto sub_handle = texture_manager.createNewHandle(sub);
+    return Texture(sub_handle);
 }
 
 
