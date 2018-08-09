@@ -22,6 +22,8 @@ public:
      */
     explicit Spritesheet( size_t width, size_t height, Texture texture );
 
+    Spritesheet();
+
     ~Spritesheet();
 
     /**
@@ -42,8 +44,6 @@ public:
     std::vector<Texture> getFrames(size_t start, size_t end );
     std::vector<Texture> getAllFrames();
 
-private:
-
     /**
      * @brief resets spritesheet internals to store a new spritesheet data
      * @param width in tiles of the spritesheet
@@ -51,6 +51,10 @@ private:
      * @param bitmap the whole spritesheet
      */
     void reset( size_t width, size_t height, Texture texture );
+    void load( size_t width, size_t height, Texture texture );
+
+
+private:
 
     /**
      * @brief translates a 2D cartesian coordinate to vector index
@@ -63,6 +67,7 @@ private:
     std::vector<Texture> m_frames;
     Texture m_parentTexture;
     int m_height, m_width;
+
 
 };
 

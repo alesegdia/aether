@@ -23,7 +23,7 @@ public:
     void load(const char* path);
     Texture subdivide(int x, int y, int w, int h);
 
-private:
+protected:
 
     Texture(int h)
     {
@@ -31,6 +31,12 @@ private:
     }
 
 
+};
+
+class TextureRegion : public Texture
+{
+public:
+    void destroy();
 };
 
 }

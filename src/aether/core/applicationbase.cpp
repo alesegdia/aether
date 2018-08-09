@@ -5,8 +5,8 @@ namespace aether{
 namespace core {
 
 ApplicationBase::ApplicationBase( int screen_width, int screen_height )
-    : m_screenHeight(screen_height),
-      m_screenWidth(screen_width)
+    : m_screenWidth(screen_width),
+      m_screenHeight(screen_height)
 {
 
 }
@@ -31,7 +31,7 @@ int ApplicationBase::exec(int argc, char **argv)
 
     _init_input();
 
-    double now, then;
+    uint64_t now, then;
     now = then = get_time();
     uint64_t accum[2] = { 0, 0 };
 

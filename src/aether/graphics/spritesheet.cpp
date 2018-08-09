@@ -7,7 +7,10 @@ namespace graphics {
 
 Spritesheet::~Spritesheet()
 {
-
+    for( auto t : m_frames )
+    {
+        t.destroy();
+    }
 }
 
 std::vector<Texture> Spritesheet::getAllFrames()
@@ -19,6 +22,11 @@ std::vector<Texture> Spritesheet::getAllFrames()
 Spritesheet::Spritesheet(size_t width, size_t height, Texture texture)
 {
     reset( width, height, texture );
+}
+
+Spritesheet::Spritesheet()
+{
+
 }
 
 Texture Spritesheet::getFrame(size_t num_frame)
@@ -68,6 +76,11 @@ void Spritesheet::reset(size_t width, size_t height, Texture texture)
             m_frames.push_back(frame);
         }
     }
+}
+
+void Spritesheet::load(size_t width, size_t height, Texture texture)
+{
+    reset(width, height, texture);
 }
 
 size_t Spritesheet::coordToIndex(size_t x, size_t y)

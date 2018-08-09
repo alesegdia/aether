@@ -37,7 +37,7 @@ target_link_libraries(aether-allegro PUBLIC
 target_include_directories(aether-allegro PUBLIC "${ALLEGRO_INCLUDE_DIR}")
 target_compile_definitions(aether-allegro PUBLIC AETHER_USE_ALLEGRO=1)
 set_target_properties(aether-allegro PROPERTIES
-                COMPILE_FLAGS "-std=c++11"
+                COMPILE_FLAGS "-g -std=c++11"
                 LINK_FLAGS "-g -ftest-coverage -fprofile-arcs"
                 )
 
