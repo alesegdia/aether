@@ -89,8 +89,8 @@ private:
 
     bool m_doExit = false;
 
-    uint64_t m_renderFPS = 10e6 / 64;
-    uint64_t m_updateFPS = 10e6 / 64;
+    uint64_t m_renderFPS = 1e6 / 64;
+    uint64_t m_updateFPS = 1e6 / 64;
 
     IScreen::Ptr m_currentScreen = nullptr;
 

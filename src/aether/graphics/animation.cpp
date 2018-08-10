@@ -61,7 +61,7 @@ void Animation::updateData(AnimationData &data)
     {
         frame_index++;
         time_accumulated = frame->accumulated_duration + frame->frame_duration;
-        if( frame_index + 1 >= m_frames.size() )
+        if( frame_index >= m_frames.size() )
         {
             frame_index = 0;
             data.timer -= m_totalAnimDuration;
@@ -72,12 +72,6 @@ void Animation::updateData(AnimationData &data)
     data.currentFrame = frame;
     data.animationFrameIndex = frame_index;
 
-}
-
-Texture Animation::getFrame(size_t n)
-{
-    assert(n < m_frames.size());
-    return m_frames[n].texture;
 }
 
 
