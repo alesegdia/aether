@@ -7,7 +7,7 @@ Aether aims to be a very simple 2D framework intended to be used in several plat
 ## Platform backends
 
 * Linux and Windows using [allegro](https://github.com/liballeg/allegro5)
-* 3DS using [Citro2D](https://github.com/devkitPro/citro2d)
+* *[in progress]* 3DS using [Citro2D](https://github.com/devkitPro/citro2d)
 
 ## To-Do
 
