@@ -5,6 +5,8 @@
 #include "audio/sample.h"
 #include "audio/stream.h"
 
+#include "core/time.h"
+
 #include "graphics/color.h"
 #include "graphics/font.h"
 #include "graphics/graphics.h"

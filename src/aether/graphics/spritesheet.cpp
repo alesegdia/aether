@@ -61,12 +61,10 @@ void Spritesheet::reset(size_t width, size_t height, Texture texture)
     m_width = int(width);
     m_height = int(height);
 
-    int num_frames = m_width * m_height;
     int tw = texture.width() / m_width;
     int th = texture.height() / m_height;
 
     m_frames.clear();
-    m_frames.reserve(size_t(num_frames));
 
     for( int i = 0; i < m_height; i++ )
     {

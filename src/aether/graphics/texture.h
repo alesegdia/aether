@@ -11,10 +11,10 @@ class Texture : public core::Handle
 public:
 
     Texture()
+        : core::Handle ()
     {
 
     }
-
     int height();
     int width();
     void destroy();
@@ -33,11 +33,6 @@ protected:
 
 };
 
-class TextureRegion : public Texture
-{
-public:
-    void destroy();
-};
 
 }
 }
