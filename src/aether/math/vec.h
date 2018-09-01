@@ -232,11 +232,18 @@ public:
         m_position += delta;
     }
 
+    void move( T dx, T dy )
+    {
+        move( Vec2<T>(dx, dy) );
+    }
+
 private:
     Vec2<T> m_position, m_size;
+
 };
 
 typedef Rect<float> Rectf;
+typedef Rect<int> Recti;
 
 template <typename T>
 bool intersect(Rect<T> a, Rect<T> b)
@@ -286,6 +293,31 @@ Vec2<T> lerp( const Vec2<T>& v0, const Vec2<T>& v1, float t )
     return Vec2<T>( lerp(v0.x(), v1.x(), t ), lerp(v0.y(), v1.y(), t ) );
 }
 
+template <typename T>
+class Range : public Vec2<T>
+{
+public:
+    T min()
+    {
+        return Vec2<T>::x();
+    }
+
+    T max()
+    {
+        return Vec2<T>::y();
+    }
+
+    void min(T new_min)
+    {
+        x(new_min);
+    }
+
+    void max(T new_max)
+    {
+        y(new_max);
+    }
+
+};
 
 }
 }

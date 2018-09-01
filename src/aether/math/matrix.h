@@ -17,11 +17,11 @@ public:
 
     typedef std::shared_ptr<Matrix2D<T>> SharedPtr;
 
-    Matrix2D( int cols, int rows ) {
+    Matrix2D( size_t cols, size_t rows ) {
         resize(cols, rows);
     }
 
-    Matrix2D( int cols, int rows, T fill_value )
+    Matrix2D( size_t cols, size_t rows, T fill_value )
     {
         resize(cols, rows);
         fill(fill_value);
@@ -35,7 +35,7 @@ public:
 
     }
 
-    Matrix2D( int cols, int rows, std::initializer_list<T> il )
+    Matrix2D( size_t cols, size_t rows, std::initializer_list<T> il )
         : m_cols(cols),
           m_rows(rows),
           m_data(il)
@@ -43,24 +43,24 @@ public:
 
     }
 
-    inline void set( int col, int row, T value )
+    inline void set( size_t col, size_t row, T value )
     {
         assert(col >= 0 && col < m_cols);
         assert(row >= 0 && row < m_rows);
         m_data[coordToIndex(col, row)] = value;
     }
 
-    inline T get( int col, int row ) const
+    inline T get( size_t col, size_t row ) const
     {
         return m_data[coordToIndex(col, row)];
     }
 
-    int cols() const
+    size_t cols() const
     {
         return m_cols;
     }
 
-    int rows() const
+    size_t rows() const
     {
         return m_rows;
     }
@@ -84,7 +84,7 @@ public:
         }
     }
 
-    void resize( int cols, int rows )
+    void resize( size_t cols, size_t rows )
     {
         m_cols = cols;
         m_rows = rows;
@@ -95,7 +95,7 @@ public:
         m_data.resize(cols * rows);
     }
 
-    void resize( int cols, int rows, T defo )
+    void resize( size_t cols, size_t rows, T defo )
     {
         resize(cols, rows);
         fill(defo);
@@ -139,7 +139,7 @@ private:
     }
 
     std::vector<T> m_data;
-    int m_rows, m_cols;
+    size_t m_rows, m_cols;
 
 };
 

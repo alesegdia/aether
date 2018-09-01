@@ -17,7 +17,9 @@ file(GLOB AETHER_COMMON_SOURCES
     "${AETHER_SOURCES_DIR}/graphics/*.h"
     "${AETHER_SOURCES_DIR}/graphics/*.cpp"
     "${AETHER_SOURCES_DIR}/math/*.h"
-    "${AETHER_SOURCES_DIR}/math/*.cpp")
+    "${AETHER_SOURCES_DIR}/math/*.cpp"
+    "${AETHER_SOURCES_DIR}/collision/*.h"
+    "${AETHER_SOURCES_DIR}/collision/*.cpp")
 
 file(GLOB AETHER_ALLEGRO_SOURCES
     "${AETHER_SOURCES_DIR}/audio/allegro/*.h"

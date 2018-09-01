@@ -18,3 +18,5 @@
 #include "math/rect.h"
 #include "math/rng.h"
 #include "math/vec.h"
+
+#include "collision/tilemap.h"
