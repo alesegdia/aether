@@ -4,6 +4,7 @@
 
 #include "../math/matrix.h"
 #include "../math/vec.h"
+#include "../math/rect.h"
 
 namespace aether {
 namespace collision {

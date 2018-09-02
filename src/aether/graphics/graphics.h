@@ -1,7 +1,7 @@
 #pragma once
 
 #include "color.h"
-#include "../math/vec.h"
+#include "../math/rect.h"
 
 namespace aether {
 namespace graphics {

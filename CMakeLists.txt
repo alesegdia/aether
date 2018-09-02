@@ -5,6 +5,11 @@ project(aether)
 include(cmake/Build.cmake)
 
 set(AETHER_SOURCES_DIR "${CMAKE_CURRENT_LIST_DIR}/src/aether")
+set(RZTL_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/module/rztl/include")
+file(GLOB_RECURSE RZTL_SOURCES
+    "${RZTL_INCLUDE_DIR}/**/*.h"
+    "${RZTL_INCLUDE_DIR}/**/*.cpp")
+
 find_package(Allegro REQUIRED)
 
 file(GLOB AETHER_COMMON_SOURCES
@@ -19,7 +24,8 @@ file(GLOB AETHER_COMMON_SOURCES
     "${AETHER_SOURCES_DIR}/math/*.h"
     "${AETHER_SOURCES_DIR}/math/*.cpp"
     "${AETHER_SOURCES_DIR}/collision/*.h"
-    "${AETHER_SOURCES_DIR}/collision/*.cpp")
+    "${AETHER_SOURCES_DIR}/collision/*.cpp"
+    )
 
 file(GLOB AETHER_ALLEGRO_SOURCES
     "${AETHER_SOURCES_DIR}/audio/allegro/*.h"
@@ -32,16 +38,18 @@ file(GLOB AETHER_ALLEGRO_SOURCES
     "${AETHER_SOURCES_DIR}/math/allegro/*.cpp"
     )
 
-add_library(aether-allegro ${AETHER_COMMON_SOURCES} ${AETHER_ALLEGRO_SOURCES})
+add_library(aether-allegro ${AETHER_COMMON_SOURCES} ${AETHER_ALLEGRO_SOURCES} ${RZTL_SOURCES})
 target_link_libraries(aether-allegro PUBLIC
     ${ALLEGRO_LIBRARIES})
 
-target_include_directories(aether-allegro PUBLIC "${ALLEGRO_INCLUDE_DIR}")
+target_include_directories(aether-allegro PUBLIC
+    ${ALLEGRO_INCLUDE_DIR}
+    ${RZTL_INCLUDE_DIR})
+
 target_compile_definitions(aether-allegro PUBLIC AETHER_USE_ALLEGRO=1)
 set_target_properties(aether-allegro PROPERTIES
                 COMPILE_FLAGS "-g -std=c++11"
-                LINK_FLAGS "-g -ftest-coverage -fprofile-arcs"
-                )
+                LINK_FLAGS "-g -ftest-coverage -fprofile-arcs")
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 
