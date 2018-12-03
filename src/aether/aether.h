@@ -6,6 +6,7 @@
 #include "audio/stream.h"
 
 #include "core/time.h"
+#include "core/resourcemanager.h"
 
 #include "graphics/color.h"
 #include "graphics/font.h"
@@ -20,3 +21,7 @@
 #include "math/rng.h"
 
 #include "collision/tilemap.h"
+
+#include "scene/scene.h"
+#include "scene/texturenode.h"
+#include "scene/animationnode.h"

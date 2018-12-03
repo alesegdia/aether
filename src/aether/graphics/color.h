@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 
 namespace aether {
 namespace graphics {
@@ -7,11 +8,20 @@ namespace graphics {
 
 struct Color
 {
-    Color(float r, float g, float b)
+    Color(uint8_t r, uint8_t g, uint8_t b)
+        : r(r)
+        , g(g)
+        , b(b)
     {
-        this->r = r;
-        this->g = g;
-        this->b = b;
+
+    }
+
+    Color(float r, float g, float b)
+        : r(uint8_t(0xFF * r))
+        , g(uint8_t(0xFF * g))
+        , b(uint8_t(0xFF * b))
+    {
+
     }
 
     Color()
@@ -19,9 +29,9 @@ struct Color
 
     }
 
-    float r = 0;
-    float g = 0;
-    float b = 0;
+    uint8_t r = 0;
+    uint8_t g = 0;
+    uint8_t b = 0;
 
 };
 

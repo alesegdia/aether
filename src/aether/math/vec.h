@@ -45,6 +45,11 @@ public:
         m_x = x; m_y = y;
     }
 
+    void set( const Vec2<T>& other )
+    {
+        m_x = other.x(); m_y = other.y();
+    }
+
     Vec2<T> operator+( const Vec2<T>& other ) const
     {
         return Vec2<T>(m_x + other.m_x, m_y + other.m_y);
