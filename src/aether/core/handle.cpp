@@ -21,7 +21,7 @@ bool Handle::valid()
     return m_handle != -1;
 }
 
-int Handle::handle()
+int Handle::handle() const
 {
     return m_handle;
 }

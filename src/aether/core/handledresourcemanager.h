@@ -8,7 +8,7 @@ namespace aether {
 namespace core {
 
 
-template <typename ResourceType, size_t NumResources = 64>
+template <typename ResourceType, size_t NumResources = 128>
 /**
  * @brief The HandledResourceManager class keeps track of resources
  * that are used externally via a handle instead of directly

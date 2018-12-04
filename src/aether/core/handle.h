@@ -18,7 +18,7 @@ public:
     }
 
 protected:
-    int handle();
+	int handle() const;
     void handle(int h);
     void invalidate();
 

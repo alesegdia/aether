@@ -18,7 +18,7 @@ public:
 
     void render() override
     {
-        m_texture = m_animationData.currentFrame->texture;
+        m_texregion = m_animationData.currentFrame->texture;
         TextureNode::render();
     }
 

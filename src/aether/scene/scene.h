@@ -14,66 +14,46 @@ namespace scene {
 
 
 
-class SceneNode
+class SceneNode : public std::enable_shared_from_this<SceneNode>
 {
 public:
 
     using Shared = std::shared_ptr<SceneNode>;
 
-    math::Vec2f& relativePos()
-    {
-        return m_relativePosition;
-    }
+    virtual ~SceneNode();
 
-    const math::Vec2f& relativePos() const
-    {
-        return m_relativePosition;
-    }
+    math::Vec2f& relativePos();
 
-    math::Vec2f& renderPos()
-    {
-        return m_renderPosition;
-    }
+    const math::Vec2f& relativePos() const;
 
-    const math::Vec2f& renderPos() const
-    {
-        return m_renderPosition;
-    }
+    math::Vec2f& renderPos();
 
-    int zIndex() const
-    {
-        return m_zIndex;
-    }
+    const math::Vec2f& renderPos() const;
 
-    void zIndex(int pzindex)
-    {
-        m_zIndex = pzindex;
-    }
+    int zIndex() const;
 
-    virtual void render()
-    {
+    void zIndex(int pzindex);
 
-    }
+    virtual void render();
 
-    const std::vector<SceneNode*>& children() const
-    {
-        return m_children;
-    }
+    std::vector<SceneNode::Shared>& children();
 
-    const SceneNode* parent() const
-    {
-        return m_parent;
-    }
+    SceneNode::Shared& parent();
+
+    void parent(Shared newParent);
+
+    void addChild(const SceneNode::Shared& sceneNode);
 
 private:
 
-    SceneNode* m_parent{nullptr};
+    SceneNode::Shared m_parent{nullptr};
     graphics::Color m_color;
-    std::vector<SceneNode*> m_children;
+    std::vector<SceneNode::Shared> m_children;
 
     int m_zIndex;
     math::Vec2f m_relativePosition;
     math::Vec2f m_renderPosition;
+    float angle = 0.0f;
 
 
 };
@@ -84,32 +64,42 @@ class Scene
 public:
     Scene()
     {
-        m_root = new SceneNode;
+        m_root = std::make_shared<SceneNode>();
+        m_root->parent(std::make_shared<SceneNode>());
     }
 
     void render()
     {
         m_nodesSortedByZindex.clear();
-        computeRenderPos(m_root);
+        traverse(m_root);
         for( auto child : m_nodesSortedByZindex ) {
             child->render();
         }
     }
 
-    void computeRenderPos(SceneNode* node)
+    void traverse(const SceneNode::Shared& node)
     {
         core::insert_sorted(m_nodesSortedByZindex, node, [](auto val,  auto iter) {
             return val->zIndex();
         });
         node->renderPos() = node->parent()->renderPos() + node->relativePos();
         for( auto child : node->children() ) {
-            computeRenderPos(child);
+            traverse(child);
         }
     }
 
+    template <typename SceneNodeType, typename... Args>
+    std::shared_ptr<SceneNodeType> addToScene(Args&&... args)
+    {
+        auto ptr = std::make_shared<SceneNodeType>(args...);
+        m_root->addChild(ptr);
+        ptr->parent(m_root);
+        return ptr;
+    }
+
 private:
-    SceneNode* m_root;
-    std::vector<SceneNode*> m_nodesSortedByZindex;
+    SceneNode::Shared m_root;
+    std::vector<SceneNode::Shared> m_nodesSortedByZindex;
 
 };
 

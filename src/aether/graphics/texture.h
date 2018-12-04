@@ -1,6 +1,9 @@
 #pragma once
 
 #include "../core/handle.h"
+#include "../math/rect.h"
+
+#include "color.h"
 
 namespace aether {
 namespace graphics {
@@ -15,13 +18,18 @@ public:
     {
 
     }
-    int height();
-    int width();
+
+    int height() const;
+    int width() const;
     void destroy();
-    void draw(float x, float y);
-    void draw(float x, float y, float alpha);
+    void draw(float x, float y) const;
+    void draw(float x, float y,
+              float rx, float ry, float rw, float rh,
+              aether::graphics::Color color = aether::graphics::Color(1.f,1.f,1.f),
+              bool xflip=false, bool yflip=false,
+              float centerx=0.0f, float centery=0.0f, float angle=0.0f, float xscale=1.0f, float yscale=1.0f) const;
+	void draw(float x, float y, float alpha);
     void load(const char* path);
-    Texture subdivide(int x, int y, int w, int h);
 
 protected:
 
@@ -30,6 +38,47 @@ protected:
         handle(h);
     }
 
+
+};
+
+
+class TextureRegion
+{
+public:
+    TextureRegion(const TextureRegion& texreg)
+        : m_texture(texreg.m_texture)
+        , m_clip(texreg.m_clip)
+    {
+
+    }
+
+    TextureRegion(const Texture& texture)
+	    : m_texture(texture)
+	    , m_clip(aether::math::Rectf(0, 0, texture.width(), texture.height()))
+	{
+
+	}
+
+	TextureRegion(const Texture& texture, float x, float y, float w, float h)
+	    : m_texture(texture)
+	    , m_clip(aether::math::Rectf(x, y, w, h))
+	{
+
+	}
+
+	void setRegion(float x, float y, float w, float h)
+	{
+		m_clip = aether::math::Rectf(x, y, w, h);
+	}
+
+    void draw(float x, float y) const
+	{
+		m_texture.draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h());
+	}
+
+private:
+    Texture m_texture;
+	aether::math::Rectf m_clip;
 
 };
 

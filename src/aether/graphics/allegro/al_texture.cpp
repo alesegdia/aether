@@ -28,12 +28,12 @@ static ALLEGRO_BITMAP* fetch(int handle)
     return texture;
 }
 
-int Texture::width()
+int Texture::width() const
 {
     return al_get_bitmap_width(fetch(handle()));
 }
 
-int Texture::height()
+int Texture::height() const
 {
     return al_get_bitmap_height(fetch(handle()));
 }
@@ -44,7 +44,17 @@ void Texture::destroy()
     invalidate();
 }
 
-void Texture::draw(float x, float y)
+void Texture::draw(float x, float y, float rx, float ry, float rw, float rh, aether::graphics::Color color, bool xflip, bool yflip, float centerx, float centery, float angle, float xscale, float yscale) const
+{
+    al_draw_tinted_scaled_rotated_bitmap_region(fetch(handle()),
+                                                rx, ry, rw, rh,
+                                                al_map_rgb(color.r, color.g, color.b),
+                                                0, 0, x, y, xscale, yscale, angle,
+                                                (xflip ? ALLEGRO_FLIP_HORIZONTAL : 0) | (yflip ? ALLEGRO_FLIP_VERTICAL : 0));
+}
+
+
+void Texture::draw(float x, float y) const
 {
     al_draw_bitmap(fetch(handle()), x, y, 0);
 }
@@ -53,14 +63,6 @@ void Texture::draw(float x, float y, float alpha)
 {
     al_draw_tinted_bitmap(fetch(handle()), al_map_rgba_f(alpha, alpha, alpha, alpha), x, y, 0);
 }
-
-Texture Texture::subdivide(int x, int y, int w, int h)
-{
-    ALLEGRO_BITMAP* sub = al_create_sub_bitmap(fetch(handle()), x, y, w, h);
-    auto sub_handle = texture_manager.createNewHandle(sub);
-    return Texture(sub_handle);
-}
-
 
 }
 }

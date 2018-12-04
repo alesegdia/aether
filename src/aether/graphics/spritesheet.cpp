@@ -7,13 +7,10 @@ namespace graphics {
 
 Spritesheet::~Spritesheet()
 {
-    for( auto t : m_frames )
-    {
-        t.destroy();
-    }
+
 }
 
-std::vector<Texture> Spritesheet::getAllFrames()
+std::vector<TextureRegion> Spritesheet::getAllFrames()
 {
     return getFrames(0, m_frames.size() - 1);
 }
@@ -29,25 +26,25 @@ Spritesheet::Spritesheet()
 
 }
 
-Texture Spritesheet::getFrame(size_t num_frame)
+const TextureRegion& Spritesheet::getFrame(size_t num_frame) const
 {
     assert( num_frame < m_frames.size() );
     return m_frames[num_frame];
 }
 
-Texture Spritesheet::getFrame(size_t x_frame, size_t y_frame)
+const TextureRegion& Spritesheet::getFrame(size_t x_frame, size_t y_frame) const
 {
     size_t index = coordToIndex(x_frame, y_frame);
     assert( index < m_frames.size() );
     return getFrame(coordToIndex(x_frame, y_frame));
 }
 
-std::vector<Texture> Spritesheet::getFrames(size_t start, size_t end)
+std::vector<TextureRegion> Spritesheet::getFrames(size_t start, size_t end)
 {
     assert( start <= m_frames.size() );
     assert( end <= m_frames.size() );
 
-    std::vector<Texture> frames;
+    std::vector<TextureRegion> frames;
     for( size_t i = start; i <= end; i++ )
     {
         frames.push_back(m_frames[i]);
@@ -70,8 +67,7 @@ void Spritesheet::reset(size_t width, size_t height, Texture texture)
     {
         for( int j = 0; j < m_width; j++ )
         {
-            Texture frame = texture.subdivide( j * tw, i * th, tw, th );
-            m_frames.push_back(frame);
+            m_frames.emplace_back(texture, j * tw, i * th, tw, th);
         }
     }
 }
@@ -81,7 +77,7 @@ void Spritesheet::load(size_t width, size_t height, Texture texture)
     reset(width, height, texture);
 }
 
-size_t Spritesheet::coordToIndex(size_t x, size_t y)
+size_t Spritesheet::coordToIndex(size_t x, size_t y) const
 {
     return y * m_width + x;
 }

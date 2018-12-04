@@ -20,6 +20,11 @@ typename std::vector<T>::iterator
 }
 
 
+template <typename T>
+void remove_by_value(std::vector<T>& v, const T& t)
+{
+    v.erase(std::remove(v.begin(), v.end(), t), v.end());
+}
 
 
 }

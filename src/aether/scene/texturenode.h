@@ -13,13 +13,23 @@ namespace scene {
 class TextureNode : public SceneNode
 {
 public:
-    void render() override
+    TextureNode(const graphics::TextureRegion& texregion)
+        : m_texregion(texregion)
     {
-        m_texture.draw(renderPos().x(), renderPos().y());
+
     }
 
+    virtual ~TextureNode()
+    {
+
+    }
+
+    void set(const graphics::TextureRegion& tr);
+
+    void render() override;
+
 protected:
-    graphics::Texture m_texture;
+    graphics::TextureRegion m_texregion;
 
 };
 
