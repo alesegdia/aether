@@ -44,16 +44,22 @@ public:
 
     void addChild(const SceneNode::Shared& sceneNode);
 
-private:
+    float& angle()
+    {
+        return m_angle;
+    }
+
+protected:
 
     SceneNode::Shared m_parent{nullptr};
-    graphics::Color m_color;
+    graphics::Color m_color = graphics::Color(1.0f, 1.0f, 1.0f);
     std::vector<SceneNode::Shared> m_children;
 
     int m_zIndex;
     math::Vec2f m_relativePosition;
     math::Vec2f m_renderPosition;
-    float angle = 0.0f;
+    math::Vec2f m_center;
+    float m_angle = 0.0f;
 
 
 };
@@ -80,7 +86,7 @@ public:
     void traverse(const SceneNode::Shared& node)
     {
         core::insert_sorted(m_nodesSortedByZindex, node, [](auto val,  auto iter) {
-            return val->zIndex();
+            return val->zIndex() < iter->zIndex();
         });
         node->renderPos() = node->parent()->renderPos() + node->relativePos();
         for( auto child : node->children() ) {

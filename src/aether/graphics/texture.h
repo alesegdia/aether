@@ -76,6 +76,16 @@ public:
 		m_texture.draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h());
 	}
 
+    const Texture& texture()
+    {
+        return m_texture;
+    }
+
+    const aether::math::Rectf& clip()
+    {
+        return m_clip;
+    }
+
 private:
     Texture m_texture;
 	aether::math::Rectf m_clip;
