@@ -82,6 +82,8 @@ protected:
      */
     virtual void postUpdate() = 0 ;
 
+	virtual void grabMouse() = 0 ;
+
 
 private:
     int m_screenWidth;

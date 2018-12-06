@@ -25,6 +25,8 @@ struct MouseState {
     uint8_t buttons;
 };
 
+void enable_grab_mouse();
+
 bool is_key_down(KeyCode key);
 bool is_key_just_pressed(KeyCode key);
 

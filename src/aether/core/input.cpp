@@ -11,6 +11,7 @@ static constexpr size_t MAX_PROCESSORS = 10;
 static IInputProcessor::Ptr processors[MAX_PROCESSORS];
 static int last_processor_index = -1;
 
+
 bool is_key_down(KeyCode key)
 {
     return key_states[(int)key];

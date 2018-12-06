@@ -156,7 +156,10 @@ void aether::core::AllegroApplication::postUpdate()
     _input_post_update();
 }
 
-
+void aether::core::AllegroApplication::grabMouse()
+{
+    assert(al_grab_mouse(m_display));
+}
 
 }
 }

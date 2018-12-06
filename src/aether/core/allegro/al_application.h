@@ -23,6 +23,9 @@ public:
 
     }
 
+    void grabMouse() final;
+
+
     // ApplicationBase interface
 protected:
     int init(int argc, char **argv) final;
@@ -42,6 +45,7 @@ protected:
     void preRender() final;
 
     void postRender() final;
+
 
 };
 
