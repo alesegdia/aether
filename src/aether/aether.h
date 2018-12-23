@@ -25,3 +25,6 @@
 #include "scene/scene.h"
 #include "scene/texturenode.h"
 #include "scene/animationnode.h"
+#include "scene/gridnode.h"
+
+#include "map/tilemap.h"

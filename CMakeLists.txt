@@ -27,6 +27,8 @@ file(GLOB AETHER_COMMON_SOURCES
 	"${AETHER_SOURCES_DIR}/collision/*.cpp"
 	"${AETHER_SOURCES_DIR}/scene/*.h"
 	"${AETHER_SOURCES_DIR}/scene/*.cpp"
+	"${AETHER_SOURCES_DIR}/map/*.h"
+	"${AETHER_SOURCES_DIR}/map/*.cpp"
 	)
 
 file(GLOB AETHER_ALLEGRO_SOURCES
