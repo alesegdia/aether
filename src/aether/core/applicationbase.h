@@ -84,15 +84,19 @@ protected:
 
 	virtual void grabMouse() = 0 ;
 
-
 private:
+    void setFPS(uint64_t& timer, uint64_t fps)
+    {
+        timer = uint64_t(1e6) / fps;
+    }
+
     int m_screenWidth;
     int m_screenHeight;
 
     bool m_doExit = false;
 
-    uint64_t m_renderFPS = 1e6 / 64;
-    uint64_t m_updateFPS = 1e6 / 64;
+    uint64_t m_renderStepTimer = uint64_t(1e6) / 32;
+    uint64_t m_updateStepTimer = uint64_t(1e6) / 64;
 
     IScreen::Ptr m_currentScreen = nullptr;
 

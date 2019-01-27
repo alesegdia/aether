@@ -46,20 +46,20 @@ int ApplicationBase::exec(int argc, char **argv)
         then = now;
 
         // render
-        if( accum[0] > m_renderFPS )
+        if( accum[0] > m_renderStepTimer )
         {
-            accum[0] -= m_renderFPS;
+            accum[0] -= m_renderStepTimer;
             preRender();
             render();
             postRender();
         }
 
         // update
-        while( accum[1] > m_updateFPS )
+        while( accum[1] > m_updateStepTimer )
         {
-            accum[1] -= m_updateFPS;
+            accum[1] -= m_updateStepTimer;
             preUpdate();
-            update(m_updateFPS);
+            update(m_updateStepTimer);
             postUpdate();
         }
     }
@@ -83,12 +83,13 @@ void ApplicationBase::setScreen(IScreen::Ptr screen)
 
 void ApplicationBase::setUpdateFPS(uint64_t fps)
 {
-    m_updateFPS = fps;
+    setFPS(m_updateStepTimer, fps);
+;
 }
 
 void ApplicationBase::setRenderFPS(uint64_t fps)
 {
-    m_renderFPS = fps;
+    setFPS(m_renderStepTimer, fps);
 }
 
 int ApplicationBase::screenWidth()
