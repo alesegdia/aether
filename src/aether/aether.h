@@ -14,6 +14,7 @@
 #include "graphics/spritesheet.h"
 #include "graphics/texture.h"
 #include "graphics/animation.h"
+#include "graphics/camera.h"
 
 #include "math/matrix.h"
 #include "math/vec.h"

@@ -10,7 +10,7 @@ Spritesheet::~Spritesheet()
 
 }
 
-std::vector<TextureRegion> Spritesheet::getAllFrames()
+std::vector<const TextureRegion*> Spritesheet::getAllFrames()
 {
     return getFrames(0, m_frames.size() - 1);
 }
@@ -26,28 +26,28 @@ Spritesheet::Spritesheet()
 
 }
 
-const TextureRegion& Spritesheet::getFrame(size_t num_frame) const
+const TextureRegion *Spritesheet::getFrame(size_t num_frame) const
 {
     assert( num_frame < m_frames.size() );
-    return m_frames[num_frame];
+    return &m_frames[num_frame];
 }
 
-const TextureRegion& Spritesheet::getFrame(size_t x_frame, size_t y_frame) const
+const TextureRegion *Spritesheet::getFrame(size_t x_frame, size_t y_frame) const
 {
     size_t index = coordToIndex(x_frame, y_frame);
     assert( index < m_frames.size() );
     return getFrame(coordToIndex(x_frame, y_frame));
 }
 
-std::vector<TextureRegion> Spritesheet::getFrames(size_t start, size_t end)
+std::vector<const TextureRegion*> Spritesheet::getFrames(size_t start, size_t end)
 {
     assert( start <= m_frames.size() );
     assert( end <= m_frames.size() );
 
-    std::vector<TextureRegion> frames;
+    std::vector<const TextureRegion*> frames;
     for( size_t i = start; i <= end; i++ )
     {
-        frames.push_back(m_frames[i]);
+        frames.push_back(&m_frames[i]);
     }
 
     return frames;

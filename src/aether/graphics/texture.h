@@ -76,12 +76,19 @@ public:
 		m_texture.draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h());
 	}
 
-    const Texture& texture()
+    void draw(float x, float y, float cx, float cy, float angle) const
+    {
+        m_texture.draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(),
+                       Color(1.f,1.f,1.f),
+                       false, false, cx, cy);
+    }
+
+    const Texture& texture() const
     {
         return m_texture;
     }
 
-    const aether::math::Rectf& clip()
+    const aether::math::Rectf& clip() const
     {
         return m_clip;
     }

@@ -55,6 +55,11 @@ public:
         return Vec2<T>(m_x + other.m_x, m_y + other.m_y);
     }
 
+	Vec2<T> operator/( T other ) const
+	{
+		return Vec2<T>(m_x / other, m_y / other);
+	}
+
     Vec2& operator+= ( const Vec2<T>& other )
     {
         m_x += other.x();

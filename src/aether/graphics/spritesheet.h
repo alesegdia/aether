@@ -31,7 +31,7 @@ public:
      * @param num_frame frame index
      * @return the sub bitmap associated to the index
      */
-    const TextureRegion& getFrame( size_t num_frame ) const;
+    const TextureRegion* getFrame( size_t num_frame ) const;
 
     /**
      * @brief retrieves a frame by its coordinate
@@ -39,10 +39,10 @@ public:
      * @param y_frame the y coordinate
      * @return the sub bitmap in specified coordinate
      */
-    const TextureRegion& getFrame( size_t x_frame, size_t y_frame ) const;
+    const TextureRegion* getFrame( size_t x_frame, size_t y_frame ) const;
 
-    std::vector<TextureRegion> getFrames(size_t start, size_t end );
-    std::vector<TextureRegion> getAllFrames();
+    std::vector<const TextureRegion *> getFrames(size_t start, size_t end );
+    std::vector<const TextureRegion *> getAllFrames();
 
     /**
      * @brief resets spritesheet internals to store a new spritesheet data

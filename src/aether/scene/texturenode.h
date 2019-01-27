@@ -14,7 +14,7 @@ class TextureNode : public SceneNode
 {
 public:
     TextureNode(const graphics::TextureRegion& texregion)
-        : m_texregion(texregion)
+        : m_texregion(&texregion)
     {
 
     }
@@ -29,7 +29,7 @@ public:
     void render() override;
 
 protected:
-    graphics::TextureRegion m_texregion;
+    const graphics::TextureRegion* m_texregion;
 
 };
 

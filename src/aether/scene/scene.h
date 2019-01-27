@@ -85,6 +85,7 @@ public:
 
     void traverse(const SceneNode::Shared& node)
     {
+        /*
         core::insert_sorted(m_nodesSortedByZindex, node, [](auto val,  auto iter) {
             return val->zIndex() < iter->zIndex();
         });
@@ -92,6 +93,7 @@ public:
         for( auto child : node->children() ) {
             traverse(child);
         }
+        */
     }
 
     template <typename SceneNodeType, typename... Args>

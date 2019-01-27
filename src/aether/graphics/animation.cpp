@@ -10,7 +10,7 @@ void AnimationData::reset()
 
 void AnimationData::render(float x, float y)
 {
-    currentFrame->texture.draw(x, y);
+    currentFrame->texture->draw(x, y);
 }
 
 Animation::Animation(uint64_t default_frame_duration)
@@ -19,7 +19,7 @@ Animation::Animation(uint64_t default_frame_duration)
 
 }
 
-void Animation::addFrame(Texture texture, uint64_t duration)
+void Animation::addFrame(const TextureRegion* texture, uint64_t duration)
 {
     uint64_t accumulated = 0;
     if( m_frames.size() > 0 )
@@ -31,12 +31,12 @@ void Animation::addFrame(Texture texture, uint64_t duration)
     m_totalAnimDuration += duration;
 }
 
-void Animation::addFrame(Texture texture)
+void Animation::addFrame(const TextureRegion* texture)
 {
     addFrame( texture, m_defaultFrameDuration );
 }
 
-void Animation::addFrames(std::vector<Texture> frames)
+void Animation::addFrames(std::vector<const TextureRegion *> frames)
 {
     for( auto texture : frames )
     {

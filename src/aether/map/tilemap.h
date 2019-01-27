@@ -41,7 +41,7 @@ private:
 
     const TileSet& tileSetForIndex(int index)
     {
-        TileSet* ts;
+        const TileSet* ts;
         for( const auto& tileset : m_tilesets )
         {
             if( tileset.lastIndex <= index ) {

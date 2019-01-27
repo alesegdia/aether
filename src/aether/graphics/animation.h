@@ -12,7 +12,7 @@ namespace graphics {
 
 struct AnimationFrame
 {
-    Texture texture;
+    const TextureRegion* texture;
     uint64_t frame_duration;
     uint64_t accumulated_duration;
 };
@@ -41,19 +41,19 @@ public:
      * @param texture
      * @param duration
      */
-    void addFrame(Texture texture, uint64_t duration);
+    void addFrame(const TextureRegion* texture, uint64_t duration);
 
     /**
      * @brief addFrame adds a frame with the default set frame duration
      * @param texture
      */
-    void addFrame(Texture texture);
+    void addFrame(const TextureRegion* texture);
 
     /**
      * @brief addFrames adds a list of frames with the default set frame duration
      * @param frames
      */
-    void addFrames(std::vector<Texture> frames);
+    void addFrames(std::vector<const TextureRegion*> frames);
 
     /**
      * @brief reset resets the AnimationData state for this animation
@@ -66,6 +66,11 @@ public:
      * @param data the animation data to be updated
      */
     void updateData( AnimationData& data );
+
+    const AnimationFrame& getFrame(size_t i)
+    {
+        return m_frames[i];
+    }
 
 
 private:
