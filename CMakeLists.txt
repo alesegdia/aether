@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.11)
 
 project(aether)
 
+find_package(tmxparser REQUIRED)
 include(cmake/Build.cmake)
 
 set(AETHER_SOURCES_DIR "${CMAKE_CURRENT_LIST_DIR}/src/aether")
@@ -23,13 +24,9 @@ file(GLOB AETHER_COMMON_SOURCES
     "${AETHER_SOURCES_DIR}/graphics/*.cpp"
     "${AETHER_SOURCES_DIR}/math/*.h"
     "${AETHER_SOURCES_DIR}/math/*.cpp"
-	"${AETHER_SOURCES_DIR}/collision/*.h"
-	"${AETHER_SOURCES_DIR}/collision/*.cpp"
-	"${AETHER_SOURCES_DIR}/scene/*.h"
-	"${AETHER_SOURCES_DIR}/scene/*.cpp"
-	"${AETHER_SOURCES_DIR}/map/*.h"
-	"${AETHER_SOURCES_DIR}/map/*.cpp"
-	)
+    "${AETHER_SOURCES_DIR}/tilemap/*.h"
+    "${AETHER_SOURCES_DIR}/tilemap/*.cpp"
+    )
 
 file(GLOB AETHER_ALLEGRO_SOURCES
     "${AETHER_SOURCES_DIR}/audio/allegro/*.h"
@@ -43,12 +40,18 @@ file(GLOB AETHER_ALLEGRO_SOURCES
     )
 
 add_library(aether-allegro ${AETHER_COMMON_SOURCES} ${AETHER_ALLEGRO_SOURCES} ${RZTL_SOURCES})
+
 target_link_libraries(aether-allegro PUBLIC
     ${ALLEGRO_LIBRARIES})
 
 target_include_directories(aether-allegro PUBLIC
     ${ALLEGRO_INCLUDE_DIR}
     ${RZTL_INCLUDE_DIR})
+
+find_package(tmxparser)
+
+target_include_directories(aether-allegro PUBLIC ${TMXPARSER_INCLUDE_DIR})
+target_link_libraries(aether-allegro PUBLIC ${TMXPARSER_LIBRARY})
 
 target_compile_definitions(aether-allegro PUBLIC AETHER_USE_ALLEGRO=1)
 set_target_properties(aether-allegro PROPERTIES
@@ -74,6 +77,8 @@ endif()
 ADD_AETHER_TARGET(aether-minimal-example examples/basic/main.cpp)
 ADD_AETHER_TARGET(aether-texture-example examples/texture/main.cpp)
 ADD_AETHER_TARGET(aether-input-example examples/input/main.cpp)
+
+#target_link_libraries(aether-allegro PUBLIC tmxparser)
 
 #[[
 if(MSVC)

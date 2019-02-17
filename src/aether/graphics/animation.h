@@ -24,7 +24,7 @@ struct AnimationData
     void render(float x, float y);
 
     uint64_t timer = 0;
-    AnimationFrame* currentFrame = nullptr;
+    const AnimationFrame* currentFrame = nullptr;
     size_t animationFrameIndex = 0;
 };
 

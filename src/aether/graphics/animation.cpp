@@ -53,7 +53,7 @@ void Animation::reset(AnimationData &data)
 void Animation::updateData(AnimationData &data)
 {
     assert(data.currentFrame != nullptr);
-    AnimationFrame *frame = data.currentFrame;
+    const AnimationFrame *frame = data.currentFrame;
     uint64_t time_accumulated = frame->accumulated_duration;
     size_t frame_index = size_t(data.animationFrameIndex);
 

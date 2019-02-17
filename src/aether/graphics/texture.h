@@ -31,12 +31,15 @@ public:
 	void draw(float x, float y, float alpha);
     void load(const char* path);
 
-protected:
 
+    // temporary here, was protected
     Texture(int h)
     {
         handle(h);
     }
+
+
+protected:
 
 
 };

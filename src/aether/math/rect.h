@@ -54,6 +54,11 @@ public:
         m_position.set(x, y);
     }
 
+    const Vec2<T>& position() const
+    {
+        return m_position;
+    }
+
     void x( T new_x )
     {
         m_position.x(new_x);

@@ -4,7 +4,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}" ${CMAKE_MODULE_PATH})
 function(ADD_AETHER_TARGET EXEC-NAME SRCS)
     add_executable(${EXEC-NAME} "${SRCS}")
     set_target_properties(${EXEC-NAME} PROPERTIES
-		            COMPILE_FLAGS "-g -std=c++14"
+                    COMPILE_FLAGS "-g -std=c++14"
                     LINK_FLAGS "-g -ftest-coverage -fprofile-arcs"
                     )
 

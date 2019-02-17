@@ -21,7 +21,7 @@
 #include "math/rect.h"
 #include "math/rng.h"
 
-#include "collision/tilemap.h"
+#include "tilemap/collisiontilemap.h"
 
 #include "scene/scene.h"
 #include "scene/texturenode.h"

@@ -1,3 +1,9 @@
 [submodule "module/rztl"]
 	path = module/rztl
 	url = git@github.com:alesegdia/rztl.git
+[submodule "module/tinyxml2"]
+	path = module/tinyxml2
+	url = https://github.com/leethomason/tinyxml2
+[submodule "module/tmxparser"]
+	path = module/tmxparser
+	url = https://github.com/sainteos/tmxparser.git
