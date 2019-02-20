@@ -24,8 +24,8 @@ file(GLOB AETHER_COMMON_SOURCES
     "${AETHER_SOURCES_DIR}/graphics/*.cpp"
     "${AETHER_SOURCES_DIR}/math/*.h"
     "${AETHER_SOURCES_DIR}/math/*.cpp"
-    "${AETHER_SOURCES_DIR}/tilemap/*.h"
-    "${AETHER_SOURCES_DIR}/tilemap/*.cpp"
+    "${AETHER_SOURCES_DIR}/map/*.h"
+    "${AETHER_SOURCES_DIR}/map/*.cpp"
     )
 
 file(GLOB AETHER_ALLEGRO_SOURCES

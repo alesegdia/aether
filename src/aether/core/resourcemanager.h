@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <memory>
 
 namespace aether {
 namespace core {
