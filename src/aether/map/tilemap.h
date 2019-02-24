@@ -9,6 +9,7 @@
 #include <TmxTileLayer.h>
 #include <TmxTileset.h>
 #include <TmxTile.h>
+#include <TmxObject.h>
 
 namespace aether {
 namespace tilemap {
@@ -90,10 +91,73 @@ private:
 class Layer {
 public:
     using Shared = std::shared_ptr<Layer>;
+
+    Layer(const std::string& id, int zOrder)
+    {
+        m_name = id;
+        m_zOrder = zOrder;
+    }
+
     virtual ~Layer() {
 
     }
     virtual void render() = 0;
+
+    const std::string& getName()
+    {
+        return m_name;
+    }
+
+    int zOrder() const
+    {
+        return m_zOrder;
+    }
+
+private:
+    std::string m_name;
+    int m_zOrder = 0;
+
+};
+
+class ObjectLayer : public Layer {
+public:
+
+    struct Object {
+        std::string name;
+        math::Recti aabb;
+        std::unordered_map<std::string, std::string> props;
+    };
+
+    using Shared = std::shared_ptr<ObjectLayer>;
+
+    ObjectLayer(const std::string& id, int zOrder)
+        : Layer(id, zOrder)
+    {
+
+    }
+
+    Object& newObject(const std::string& name, int x, int y, int w, int h)
+    {
+        Object object;
+        object.name = name;
+        object.aabb = {x, y, w, h};
+        m_objects.push_back(object);
+        return m_objects.back();
+    }
+
+    const std::vector<Object>& objects() const
+    {
+        return m_objects;
+    }
+
+    void render() override
+    {
+
+    }
+
+private:
+    std::vector<Object> m_objects;
+
 };
 
 class TileLayer : public Layer {
@@ -102,19 +166,15 @@ public:
     using Data = math::Matrix2D<int>;
     using Shared = std::shared_ptr<TileLayer>;
 
+    TileLayer(const std::string& id, int zOrder)
+        : Layer(id, zOrder)
+    {
+
+    }
+
     void setTileset(TileSet::Shared tileset)
     {
         m_tileset = tileset;
-    }
-
-    void setName(const std::string& name)
-    {
-        m_name = name;
-    }
-
-    const std::string& getName()
-    {
-        return m_name;
     }
 
     void setMapSize(size_t mapWidth, size_t mapHeight)
@@ -178,14 +238,12 @@ public:
         m_props[key] = value;
     }
 
-
 private:
     std::unique_ptr<Data> m_data;
     std::shared_ptr<TileSet> m_tileset;
     std::map<std::string, std::string> m_props;
     math::Vec2sz m_mapSizeInTiles;
     math::Vec2f m_tileSize;
-    std::string m_name;
 };
 
 
@@ -238,6 +296,13 @@ public:
         m_tileLayers[tilelayer->getName()] = tilelayer;
     }
 
+    void addObjectLayer(ObjectLayer::Shared objectLayer)
+    {
+        addLayer(objectLayer);
+        m_objectLayers[objectLayer->getName()] = objectLayer;
+
+    }
+
     template<typename LayerType>
     void addLayer(std::shared_ptr<LayerType> layer)
     {
@@ -249,6 +314,12 @@ public:
     {
         assert(m_tileLayers.count(layerId) > 0);
         return m_tileLayers[layerId];
+    }
+
+    ObjectLayer::Shared getObjectLayer(const std::string& layerId)
+    {
+        assert(m_objectLayers.count(layerId) > 0);
+        return m_objectLayers[layerId];
     }
 
     TileSet::Shared getTileset(int i)
@@ -263,11 +334,28 @@ public:
         }
     }
 
+    std::unordered_map<std::string, TileLayer::Shared>& getTileLayers()
+    {
+        return m_tileLayers;
+    }
+
+    void setBasePath(const std::string& basePath)
+    {
+        m_basePath = basePath;
+    }
+
+    const std::string& getBasePath()
+    {
+        return m_basePath;
+    }
+
 private:
     std::vector<Layer::Shared> m_layers;
     std::vector<TileSet::Shared> m_tilesets;
     std::vector<aether::graphics::Spritesheet::SharedPtr> m_sheetStore;
     std::unordered_map<std::string, TileLayer::Shared> m_tileLayers;
+    std::unordered_map<std::string, ObjectLayer::Shared> m_objectLayers;
+    std::string m_basePath;
 
 };
 

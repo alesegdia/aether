@@ -3,6 +3,7 @@
 std::shared_ptr<aether::tilemap::TileMap> aether::tilemap::buildMap(const Tmx::Map &inmap)
 {
     std::shared_ptr<TileMap> outmap(new TileMap());
+    outmap->setBasePath(inmap.GetFilepath());
 
     std::vector<TileSet::Shared> tilesets;
 
@@ -41,13 +42,16 @@ std::shared_ptr<aether::tilemap::TileMap> aether::tilemap::buildMap(const Tmx::M
 
     // parse layers
     for( auto layer : inmap.GetTileLayers() ) {
+
+        // IGNORE IF THERE I
         auto tmxTileLayer = static_cast<Tmx::TileLayer*>(layer);
-        std::shared_ptr<TileLayer> tileLayer = std::make_shared<TileLayer>();
-        tileLayer->setName(tmxTileLayer->GetName());
+        auto tilesetId = tmxTileLayer->GetTile(0, 0).tilesetId;
+        if( tilesetId == -1 ) continue;
+
+        std::shared_ptr<TileLayer> tileLayer = std::make_shared<TileLayer>(layer->GetName(), layer->GetZOrder());
         tileLayer->setMapSize(tmxTileLayer->GetWidth(), tmxTileLayer->GetHeight());
         outmap->addTileLayer(tileLayer);
         TileLayer::Data rawData(size_t(tmxTileLayer->GetWidth()), size_t(tmxTileLayer->GetHeight()));
-        auto tilesetId = tmxTileLayer->GetTile(0, 0).tilesetId;
         auto tileset = outmap->getTileset(tilesetId);
         tileLayer->setTileSize(tileset->tileSize().x(), tileset->tileSize().y());
 
@@ -62,5 +66,19 @@ std::shared_ptr<aether::tilemap::TileMap> aether::tilemap::buildMap(const Tmx::M
         }
         tileLayer->setData(rawData);
     }
+
+    for( auto group : inmap.GetObjectGroups() ) {
+        auto newObjectLayer = std::make_shared<ObjectLayer>(group->GetName(), group->GetZOrder());
+        outmap->addObjectLayer(newObjectLayer);
+        for( auto object : group->GetObjects() ) {
+            auto& newObject = newObjectLayer->newObject(object->GetName(),
+                                                        object->GetX(), object->GetY(),
+                                                        object->GetWidth(), object->GetHeight());
+            for( auto prop : object->GetProperties().GetList() ) {
+                newObject.props[prop.first] = prop.second;
+            }
+        }
+    }
+
     return outmap;
 }
