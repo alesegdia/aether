@@ -201,6 +201,9 @@ public:
     TileCollisionBehaviour getTileCollisionBehaviour( size_t x, size_t y ) const
     {
         auto cell = m_data->get( x, y );
+        if( cell == -1 ) {
+            return TileCollisionBehaviour::Empty;
+        }
         return m_tileset->get(cell).collisionBehaviour;
     }
 
@@ -226,9 +229,11 @@ public:
         {
             for( size_t j = 0; j < m_data->cols(); j++ )
             {
-                uint16_t cell = m_data->get(j, i);
-                const Tile& t = m_tileset->get(cell);
-                t.texture->draw(j * m_tileSize.x(), i * m_tileSize.y());
+                int cell = m_data->get(j, i);
+                if( cell != -1 ) {
+                    const Tile& t = m_tileset->get(cell);
+                    t.texture->draw(j * m_tileSize.x(), i * m_tileSize.y());
+                }
             }
         }
     }

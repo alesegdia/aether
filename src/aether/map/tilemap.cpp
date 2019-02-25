@@ -31,6 +31,13 @@ std::shared_ptr<aether::tilemap::TileMap> aether::tilemap::buildMap(const Tmx::M
             auto tileId = tile->GetId();
             auto visual = newSheet->getFrame(size_t(tileId));
             auto& newTile = newTileset->addTile(tileId, visual, TileCollisionBehaviour::Empty);
+            newTile.collisionBehaviour = TileCollisionBehaviour::Empty;
+
+            if( tile->GetProperties().HasProperty("collision") ) {
+                if( tile->GetProperties().GetStringProperty("collision") == "solid" ) {
+                    newTile.collisionBehaviour = TileCollisionBehaviour::Solid;
+                }
+            }
 
             // copy props
             for( auto prop : tile->GetProperties().GetList())
@@ -60,7 +67,7 @@ std::shared_ptr<aether::tilemap::TileMap> aether::tilemap::buildMap(const Tmx::M
                 auto tilesetId = tmxTileLayer->GetTile(i, j).tilesetId;
                 tileLayer->setTileset(tilesets[size_t(tilesetId)]);
                 auto firstGid = tilesets[size_t(tilesetId)]->getFirstGid();
-                auto cell = int(tmxTileLayer->GetTileId(i, j)) - firstGid;
+                auto cell = int(tmxTileLayer->GetTileId(i, j)); // - firstGid;
                 rawData.set(size_t(i), size_t(j), cell);
             }
         }
