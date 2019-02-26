@@ -7,3 +7,6 @@
 [submodule "module/tmxparser"]
 	path = module/tmxparser
 	url = https://github.com/sainteos/tmxparser.git
+[submodule "module/json11"]
+	path = module/json11
+	url = git@github.com:dropbox/json11.git
