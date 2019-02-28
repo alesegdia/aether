@@ -29,3 +29,5 @@
 #include "scene/gridnode.h"
 
 #include "map/tilemap.h"
+
+#include "json11.hpp"
