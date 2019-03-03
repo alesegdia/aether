@@ -96,18 +96,18 @@ void GenericCollisionTileMap<InternalDataType>::move(math::Rect<InternalDataType
         int depth = 0;
         for( int x = c0.x(); x <= c1.x(); x++ )
         {
-            if( isSolid( x, c0.y() ) )
+            bool solid = isSolid( x, c0.y() );
+            bool oneway = isOneway( x, c0.y() );
+
+            if( (solid || oneway) && Direction::Down == vertical  )
             {
-                if( Direction::Down == vertical )
-                {
-                    depth = y1 - (c0.y()) * tileHeight();
-                    ci->y_collision_direction = 1;
-                }
-                else // Direction::Up
-                {
-                    depth = -((c0.y()+1) * tileHeight() - y0);
-                    ci->y_collision_direction = -1;
-                }
+                depth = y1 - (c0.y()) * tileHeight();
+                ci->y_collision_direction = 1;
+            }
+            else if( solid && Direction::Up == vertical )
+            {
+                depth = -((c0.y()+1) * tileHeight() - y0);
+                ci->y_collision_direction = -1;
             }
         }
         if( depth != 0 )
@@ -138,6 +138,12 @@ template <typename InternalDataType>
 bool GenericCollisionTileMap<InternalDataType>::isSolid(size_t x, size_t y)
 {
     return m_tileLayer->getTileCollisionBehaviour(x, y) == TileCollisionBehaviour::Solid;
+}
+
+template <typename InternalDataType>
+bool GenericCollisionTileMap<InternalDataType>::isOneway(size_t x, size_t y)
+{
+    return m_tileLayer->getTileCollisionBehaviour(x, y) == TileCollisionBehaviour::Oneway;
 }
 
 template <typename InternalDataType>

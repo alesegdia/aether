@@ -14,19 +14,19 @@ public:
         : m_position(x, y),
           m_size(w, h)
     {
-
+        computeCenter();
     }
 
     Rect( const Vec2<T> pos, const Vec2<T> size )
         : m_position(pos), m_size(size)
     {
-
+        computeCenter();
     }
 
     Rect( const Rect<T>& other )
         : m_position(other.x(), other.y()), m_size(other.w(), other.h())
     {
-
+        computeCenter();
     }
 
     Rect()
@@ -47,26 +47,35 @@ public:
     void position( Vec2f new_pos )
     {
         m_position = new_pos;
+        computeCenter();
     }
 
     void position( float x, float y )
     {
         m_position.set(x, y);
+        computeCenter();
     }
 
     const Vec2<T>& position() const
     {
         return m_position;
     }
+    
+    const Vec2<T>& center() const
+    {
+        return m_center;
+    }
 
     void x( T new_x )
     {
         m_position.x(new_x);
+        computeCenter();
     }
 
     void y( T new_y )
     {
         m_position.y(new_y);
+        computeCenter();
     }
 
     T x() const
@@ -112,15 +121,26 @@ public:
     void move( Vec2<T> delta )
     {
         m_position += delta;
+        m_center += delta;
     }
 
     void move( T dx, T dy )
     {
         move( Vec2<T>(dx, dy) );
     }
+    
+    const Vec2<T>& center()
+    {
+        return m_center;
+    }
 
 private:
-    Vec2<T> m_position, m_size;
+    void computeCenter()
+    {
+        m_center.set(x() + w() / 2, y() + h());
+    }
+
+    Vec2<T> m_position, m_size, m_center;
 
 };
 

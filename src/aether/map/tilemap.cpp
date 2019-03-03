@@ -34,8 +34,11 @@ std::shared_ptr<aether::tilemap::TileMap> aether::tilemap::buildMap(const Tmx::M
             newTile.collisionBehaviour = TileCollisionBehaviour::Empty;
 
             if( tile->GetProperties().HasProperty("collision") ) {
-                if( tile->GetProperties().GetStringProperty("collision") == "solid" ) {
+                auto collisionType = tile->GetProperties().GetStringProperty("collision");
+                if( collisionType == "solid" ) {
                     newTile.collisionBehaviour = TileCollisionBehaviour::Solid;
+                } else if( collisionType == "oneway" ) {
+                    newTile.collisionBehaviour = TileCollisionBehaviour::Oneway;
                 }
             }
 

@@ -33,6 +33,7 @@ public:
     CollisionInfo realmove(math::Rect<InternalDataType> &rect, InternalDataType new_x, InternalDataType new_y);
 
     bool isSolid( size_t x, size_t y );
+    bool isOneway( size_t x, size_t y );
 
     math::Vec2i getTile( InternalDataType x, InternalDataType y );
 

@@ -19,6 +19,7 @@ enum class TileCollisionBehaviour : uint8_t
 {
     Empty = 0,
     Solid,
+    Oneway
 };
 
 struct Tile
