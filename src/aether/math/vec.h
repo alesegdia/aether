@@ -61,6 +61,11 @@ public:
         return Vec2<T>(m_x + other.m_x, m_y + other.m_y);
     }
 
+    Vec2<T> operator-( const Vec2<T>& other ) const
+    {
+        return Vec2<T>(m_x - other.m_x, m_y - other.m_y);
+    }
+
 	Vec2<T> operator/( T other ) const
 	{
 		return Vec2<T>(m_x / other, m_y / other);
@@ -109,6 +114,14 @@ public:
         Vec2 ret = (*this);
         ret *= other;
         return ret;
+    }
+    
+    template <typename U>
+    Vec2<U> cast() const
+    {
+        Vec2<U> casted;
+        casted.set( U(m_x), U(m_y) );
+        return casted;
     }
 
 private:

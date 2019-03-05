@@ -129,9 +129,9 @@ public:
         move( Vec2<T>(dx, dy) );
     }
     
-    const Vec2<T>& center()
+    const Vec2<T>& size() const
     {
-        return m_center;
+        return m_size;
     }
 
 private:

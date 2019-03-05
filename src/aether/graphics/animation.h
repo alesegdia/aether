@@ -35,6 +35,12 @@ public:
     typedef std::shared_ptr<Animation> SharedPtr;
 
     Animation(uint64_t default_frame_duration = 500);
+    ~Animation()
+    {
+        for( auto frame : m_frames ) {
+            delete frame;
+        }
+    }
 
     /**
      * @brief addFrame adds a frame with a specified duration
@@ -69,12 +75,12 @@ public:
 
     const AnimationFrame& getFrame(size_t i)
     {
-        return m_frames[i];
+        return *m_frames[i];
     }
 
 
 private:
-    std::vector<AnimationFrame> m_frames;
+    std::vector<AnimationFrame*> m_frames;
     uint64_t m_defaultFrameDuration = 0;
     uint64_t m_totalAnimDuration = 0;
 

@@ -25,9 +25,9 @@ void Animation::addFrame(const TextureRegion* texture, uint64_t duration)
     if( m_frames.size() > 0 )
     {
         auto& last_frame = m_frames.back();
-        accumulated = last_frame.accumulated_duration + last_frame.frame_duration;
+        accumulated = last_frame->accumulated_duration + last_frame->frame_duration;
     }
-    m_frames.push_back({ texture, duration, accumulated });
+    m_frames.push_back(new AnimationFrame{ texture, duration, accumulated });
     m_totalAnimDuration += duration;
 }
 
@@ -47,7 +47,7 @@ void Animation::addFrames(std::vector<const TextureRegion *> frames)
 void Animation::reset(AnimationData &data)
 {
     assert(data.currentFrame == nullptr && "The AnimationData instance is not null");
-    data.currentFrame = &m_frames[0];
+    data.currentFrame = m_frames[0];
 }
 
 void Animation::updateData(AnimationData &data)
@@ -66,7 +66,7 @@ void Animation::updateData(AnimationData &data)
             frame_index = 0;
             data.timer -= m_totalAnimDuration;
         }
-        frame = &m_frames[frame_index];
+        frame = m_frames[frame_index];
     }
 
     data.currentFrame = frame;
