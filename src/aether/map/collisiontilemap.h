@@ -12,30 +12,34 @@
 namespace aether {
 namespace tilemap {
 
+struct CollisionInfo
+{
+    bool collision_x = false;
+    bool collision_y = false;
+    int x_collision_direction = 0;
+    int y_collision_direction = 0;
+};
 
-template <typename InternalDataType>
+enum class Direction {
+    None, Up, Down, Left, Right
+};
+
 class GenericCollisionTileMap
 {
 public:
 
-    struct CollisionInfo
-    {
-        bool collision_x = false;
-        bool collision_y = false;
-        int x_collision_direction = 0;
-        int y_collision_direction = 0;
-    };
-
     GenericCollisionTileMap(TileLayer::Shared tilelayer);
+    virtual ~GenericCollisionTileMap();
 
-    void move(math::Rect<InternalDataType>& rect, InternalDataType new_x, InternalDataType new_y, CollisionInfo* ci);
+    CollisionInfo realmove(math::Rect<int> &rect, int new_x, int new_y);
 
-    CollisionInfo realmove(math::Rect<InternalDataType> &rect, InternalDataType new_x, InternalDataType new_y);
+protected:
+    virtual void move(math::Recti& rect, int new_x, int new_y, CollisionInfo* ci) = 0;
 
     bool isSolid( size_t x, size_t y );
     bool isOneway( size_t x, size_t y );
 
-    math::Vec2i getTile( InternalDataType x, InternalDataType y );
+    math::Vec2i getTile( int x, int y );
 
     int tileWidth();
 
@@ -44,15 +48,24 @@ public:
 
 private:
 
-    enum class Direction {
-        None, Up, Down, Left, Right
-    };
 
     TileLayer::Shared m_tileLayer;
 
 };
 
-typedef GenericCollisionTileMap<int> CollisionTilemap;
+
+class BlockCollisionTileMap : public GenericCollisionTileMap
+{
+public:
+    BlockCollisionTileMap(TileLayer::Shared tilelayer);
+    ~BlockCollisionTileMap() override;
+
+private:
+    virtual void move(math::Recti& rect, int new_x, int new_y, CollisionInfo* ci) override;
+
+};
+
+typedef BlockCollisionTileMap CollisionTilemap;
 
 
 }

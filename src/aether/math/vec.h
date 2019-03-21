@@ -115,6 +115,12 @@ public:
         ret *= other;
         return ret;
     }
+
+    Vec2& operator= ( const Vec2& other )
+    {
+        this->set(other.x(), other.y());
+        return *this;
+    }
     
     template <typename U>
     Vec2<U> cast() const

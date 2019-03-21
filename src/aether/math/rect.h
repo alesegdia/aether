@@ -44,7 +44,7 @@ public:
         return m_position + m_size;
     }
 
-    void position( Vec2f new_pos )
+    void position( Vec2<T> new_pos )
     {
         m_position = new_pos;
         computeCenter();
@@ -121,7 +121,7 @@ public:
     void move( Vec2<T> delta )
     {
         m_position += delta;
-        m_center += delta;
+        computeCenter();
     }
 
     void move( T dx, T dy )
@@ -137,7 +137,7 @@ public:
 private:
     void computeCenter()
     {
-        m_center.set(x() + w() / 2, y() + h());
+        m_center.set(x() + w() / 2, y() + h() / 2);
     }
 
     Vec2<T> m_position, m_size, m_center;

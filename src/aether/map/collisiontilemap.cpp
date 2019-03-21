@@ -3,15 +3,56 @@
 namespace aether {
 namespace tilemap {
 
-template <typename InternalDataType>
-GenericCollisionTileMap<InternalDataType>::GenericCollisionTileMap(TileLayer::Shared tilelayer)
+GenericCollisionTileMap::GenericCollisionTileMap(TileLayer::Shared tilelayer)
     : m_tileLayer(tilelayer)
 {
 
 }
 
-template <typename InternalDataType>
-void GenericCollisionTileMap<InternalDataType>::move(math::Rect<InternalDataType> &rect, InternalDataType new_x, InternalDataType new_y, CollisionInfo* ci)
+GenericCollisionTileMap::~GenericCollisionTileMap()
+{
+
+}
+
+bool GenericCollisionTileMap::isSolid(size_t x, size_t y)
+{
+    return m_tileLayer->getTileCollisionBehaviour(x, y) == TileCollisionBehaviour::Solid;
+}
+
+bool GenericCollisionTileMap::isOneway(size_t x, size_t y)
+{
+    return m_tileLayer->getTileCollisionBehaviour(x, y) == TileCollisionBehaviour::Oneway;
+}
+
+math::Vec2i GenericCollisionTileMap::getTile(int x, int y)
+{
+    return math::Vec2i( int(x / m_tileLayer->tileWidth()), int(y / m_tileLayer->tileHeight()) );
+}
+
+int GenericCollisionTileMap::tileWidth()
+{
+    return m_tileLayer->tileWidth();
+}
+
+int GenericCollisionTileMap::tileHeight()
+{
+    return m_tileLayer->tileHeight();
+}
+
+
+BlockCollisionTileMap::BlockCollisionTileMap(TileLayer::Shared tilelayer)
+    : GenericCollisionTileMap(tilelayer)
+{
+
+}
+
+BlockCollisionTileMap::~BlockCollisionTileMap()
+{
+
+}
+
+
+void BlockCollisionTileMap::move(math::Recti &rect, int new_x, int new_y, CollisionInfo* ci)
 {
     int fixed_col, fixed_row;
     fixed_col = fixed_row = -1;
@@ -22,12 +63,17 @@ void GenericCollisionTileMap<InternalDataType>::move(math::Rect<InternalDataType
     Direction horizontal = Direction::None;
     Direction vertical = Direction::None;
 
-    x0 = new_x;
-    y0 = new_y;
-    x1 = new_x + rect.w();
-    y1 = new_y + rect.h();
-    dx = x0 - rect.x();
-    dy = y0 - rect.y();
+    int rw2, rh2;
+    rw2 = rect.w() / 2;
+    rh2 = rect.h() / 2;
+
+    dx = new_x - rect.x();
+    dy = new_y - rect.y();
+
+    x0 = new_x - rw2;
+    y0 = new_y - rh2;
+    x1 = x0 + rect.w();
+    y1 = y0 + rect.h();
 
     // moving right
     if( dx > 0 )
@@ -65,7 +111,9 @@ void GenericCollisionTileMap<InternalDataType>::move(math::Rect<InternalDataType
         int depth = 0;
         for( int y = r0.y(); y <= r1.y(); y++ )
         {
-            if( isSolid( r0.x(), y ) )
+            int xxx = r0.x() < 0 ? 0 : r0.x();
+            int yyy = y < 0 ? 0 : y;
+            if( isSolid( xxx, yyy ) )
             {
                 if( Direction::Left == horizontal )
                 {
@@ -96,12 +144,24 @@ void GenericCollisionTileMap<InternalDataType>::move(math::Rect<InternalDataType
         int depth = 0;
         for( int x = c0.x(); x <= c1.x(); x++ )
         {
-            bool solid = isSolid( x, c0.y() );
-            bool oneway = isOneway( x, c0.y() );
+            size_t tile_x = x < 0 ? 0 : x;
+            size_t tile_y = c0.y() < 0 ? 0 : c0.y();
 
-            if( (solid || oneway) && Direction::Down == vertical  )
+            bool solid = isSolid( tile_x, tile_y );
+            bool oneway = isOneway( tile_x, tile_y );
+
+            int a = tile_y * tileHeight();
+            int b = int(rect.y2());
+
+            auto diff = a - b; // - rect.h() / 4;
+            std::cout << a << ", " << b << ", " << diff << std::endl;
+
+            static constexpr int OneWayPlatformCorrectionThreshold = 10;
+
+            if( (solid || (oneway && diff > -rect.h() - OneWayPlatformCorrectionThreshold)) && Direction::Down == vertical  )
             {
-                depth = y1 - (c0.y()) * tileHeight();
+                auto d = y1 - (c0.y()) * tileHeight();
+                depth = d;
                 ci->y_collision_direction = 1;
             }
             else if( solid && Direction::Up == vertical )
@@ -125,49 +185,13 @@ void GenericCollisionTileMap<InternalDataType>::move(math::Rect<InternalDataType
 
 }
 
-template<typename InternalDataType>
-typename GenericCollisionTileMap<InternalDataType>::CollisionInfo GenericCollisionTileMap<InternalDataType>::realmove(math::Rect<InternalDataType> &rect, InternalDataType new_x, InternalDataType new_y)
+CollisionInfo GenericCollisionTileMap::realmove(math::Recti &rect, int new_x, int new_y)
 {
     CollisionInfo ci;
     move(rect, new_x, rect.y(), &ci);
     move(rect, rect.x(), new_y, &ci);
     return ci;
 }
-
-template <typename InternalDataType>
-bool GenericCollisionTileMap<InternalDataType>::isSolid(size_t x, size_t y)
-{
-    return m_tileLayer->getTileCollisionBehaviour(x, y) == TileCollisionBehaviour::Solid;
-}
-
-template <typename InternalDataType>
-bool GenericCollisionTileMap<InternalDataType>::isOneway(size_t x, size_t y)
-{
-    return m_tileLayer->getTileCollisionBehaviour(x, y) == TileCollisionBehaviour::Oneway;
-}
-
-template <typename InternalDataType>
-math::Vec2i GenericCollisionTileMap<InternalDataType>::getTile(InternalDataType x, InternalDataType y)
-{
-    return math::Vec2i( int(x / m_tileLayer->tileWidth()), int(y / m_tileLayer->tileHeight()) );
-}
-
-template <typename InternalDataType>
-int GenericCollisionTileMap<InternalDataType>::tileWidth()
-{
-    return m_tileLayer->tileWidth();
-}
-
-template <typename InternalDataType>
-int GenericCollisionTileMap<InternalDataType>::tileHeight()
-{
-    return m_tileLayer->tileHeight();
-}
-
-
-// generate code for int, needed when defining template in .cpp
-template class GenericCollisionTileMap<int>;
-
 
 
 }
