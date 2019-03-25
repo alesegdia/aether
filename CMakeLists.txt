@@ -12,6 +12,7 @@ file(GLOB_RECURSE RZTL_SOURCES
     "${RZTL_INCLUDE_DIR}/**/*.cpp")
 
 find_package(Allegro REQUIRED)
+message("found alleg ${ALLEGRO_LIBRARIES}")
 
 file(GLOB AETHER_COMMON_SOURCES
     "${AETHER_SOURCES_DIR}/*.h"

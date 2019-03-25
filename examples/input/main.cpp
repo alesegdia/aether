@@ -65,12 +65,12 @@ public:
 
     int ready(int argc, char **argv) override
     {
-        setScreen(&m_screen);
+        auto scr = std::static_pointer_cast<aether::core::IScreen>(std::make_shared<NormalScreen>());
+        setScreen(scr);
         return 0;
     }
 
 private:
-    NormalScreen m_screen;
 
 
 };

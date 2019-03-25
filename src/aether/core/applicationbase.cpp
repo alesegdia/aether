@@ -70,7 +70,7 @@ int ApplicationBase::exec(int argc, char **argv)
 	return 0;
 }
 
-void ApplicationBase::setScreen(IScreen::Ptr screen)
+void ApplicationBase::setScreen(std::shared_ptr<IScreen> screen)
 {
     if( m_currentScreen != nullptr )
     {
