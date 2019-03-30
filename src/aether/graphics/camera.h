@@ -11,11 +11,11 @@ public:
 
 	typedef std::shared_ptr<Camera> SharedPtr;
 
-    Camera( aether::math::Vec2f viewport = aether::math::Vec2f(0, 0) );
+    Camera( const aether::math::Vec2f& viewport = aether::math::Vec2f(0, 0) );
 
 	void bind();
 
-    void position( aether::math::Vec2f new_position );
+    void position( const aether::math::Vec2f& new_position );
 
 	float x();
 
@@ -30,7 +30,7 @@ public:
 	void scale( float x, float y );
 
 private:
-	ALLEGRO_TRANSFORM m_transform;
+	ALLEGRO_TRANSFORM m_transform{};
 
 	// cache last (position, scale) if performance issues
     aether::math::Vec2f m_scale = aether::math::Vec2f(1, 1);
@@ -58,7 +58,7 @@ class FixedScroller : public Scroller
 {
 public:
 
-    FixedScroller( aether::math::Rectf global );
+    FixedScroller( const aether::math::Rectf& global );
 
     aether::math::Vec2f scroll( const Camera& cam, aether::math::Vec2f focus ) override;
 

@@ -11,6 +11,7 @@
 #include <TmxTile.h>
 #include <TmxObject.h>
 
+
 namespace aether {
 namespace tilemap {
 
@@ -24,12 +25,7 @@ enum class TileCollisionBehaviour : uint8_t
 
 struct Tile
 {
-    Tile(const graphics::TextureRegion* tex, TileCollisionBehaviour tcb)
-        : texture(tex),
-          collisionBehaviour(tcb)
-    {
-
-    }
+    Tile(const graphics::TextureRegion* tex, TileCollisionBehaviour tcb);
 
     const graphics::TextureRegion* texture;
     TileCollisionBehaviour collisionBehaviour = TileCollisionBehaviour::Empty;
@@ -42,43 +38,19 @@ class TileSet
 public:
     using Shared = std::shared_ptr<TileSet>;
 
-    const Tile& get( uint16_t tile_index ) const
-    {
-        assert(tile_index < m_tiles.size());
-        return m_tiles[tile_index];
-    }
+    const Tile& get( uint16_t tile_index ) const;
 
-    Tile& addTile(int index, const graphics::TextureRegion* tex, TileCollisionBehaviour tcb)
-    {
-        assert(index >= 0);
-        m_tiles.insert(m_tiles.begin() + index, Tile(tex, tcb));
-        return *(m_tiles.begin() + index);
-    }
+    Tile& addTile(int index, const graphics::TextureRegion* tex, TileCollisionBehaviour tcb);
 
-    void setName(const std::string& name)
-    {
-        m_name = name;
-    }
+    void setName(const std::string& name);
 
-    void setFirstGid( int gid )
-    {
-        m_gid = gid;
-    }
+    void setFirstGid( int gid );
 
-    int getFirstGid()
-    {
-        return m_gid;
-    }
+    int getFirstGid();
 
-    const math::Vec2i& tileSize()
-    {
-        return m_tileSize;
-    }
+    const math::Vec2i& tileSize();
 
-    void setTileSize(int w, int h)
-    {
-        m_tileSize.set(w, h);
-    }
+    void setTileSize(int w, int h);
 
 private:
     std::vector<Tile> m_tiles;
@@ -93,26 +65,14 @@ class Layer {
 public:
     using Shared = std::shared_ptr<Layer>;
 
-    Layer(const std::string& id, int zOrder)
-    {
-        m_name = id;
-        m_zOrder = zOrder;
-    }
+    Layer(const std::string& id, int zOrder);
 
-    virtual ~Layer() {
-
-    }
+    virtual ~Layer();
     virtual void render() = 0;
 
-    const std::string& getName()
-    {
-        return m_name;
-    }
+    const std::string& getName();
 
-    int zOrder() const
-    {
-        return m_zOrder;
-    }
+    int zOrder() const;
 
 private:
     std::string m_name;
@@ -131,30 +91,13 @@ public:
 
     using Shared = std::shared_ptr<ObjectLayer>;
 
-    ObjectLayer(const std::string& id, int zOrder)
-        : Layer(id, zOrder)
-    {
+    ObjectLayer(const std::string& id, int zOrder);
 
-    }
+    Object& newObject(const std::string& name, int x, int y, int w, int h);
 
-    Object& newObject(const std::string& name, int x, int y, int w, int h)
-    {
-        Object object;
-        object.name = name;
-        object.aabb = {x, y, w, h};
-        m_objects.push_back(object);
-        return m_objects.back();
-    }
+    const std::vector<Object>& objects() const;
 
-    const std::vector<Object>& objects() const
-    {
-        return m_objects;
-    }
-
-    void render() override
-    {
-
-    }
+    void render() override;
 
 private:
     std::vector<Object> m_objects;
@@ -167,82 +110,29 @@ public:
     using Data = math::Matrix2D<int>;
     using Shared = std::shared_ptr<TileLayer>;
 
-    TileLayer(const std::string& id, int zOrder)
-        : Layer(id, zOrder)
-    {
+    TileLayer(const std::string& id, int zOrder);
 
-    }
+    void setTileset(TileSet::Shared tileset);
 
-    void setTileset(TileSet::Shared tileset)
-    {
-        m_tileset = tileset;
-    }
+    void setMapSize(size_t mapWidth, size_t mapHeight);
 
-    void setMapSize(size_t mapWidth, size_t mapHeight)
-    {
-        m_mapSizeInTiles.set(mapWidth, mapHeight);
-    }
+    void setTileSize(size_t tileWidth, size_t tileHeight);
 
-    void setTileSize(size_t tileWidth, size_t tileHeight)
-    {
-        m_tileSize.set(tileWidth, tileHeight);
-    }
+    void setData(const Data& data);
 
-    void setData(Data data)
-    {
-        assert(data.cols() == m_mapSizeInTiles.x() && data.rows() == m_mapSizeInTiles.y());
-        m_data.reset(new Data(data));
-    }
+    TileSet::Shared tileSet();
 
-    TileSet::Shared tileSet()
-    {
-        return m_tileset;
-    }
+    TileCollisionBehaviour getTileCollisionBehaviour( size_t x, size_t y ) const;
 
-    TileCollisionBehaviour getTileCollisionBehaviour( size_t x, size_t y ) const
-    {
-        auto cell = m_data->get( x, y );
-        if( cell == -1 ) {
-            return TileCollisionBehaviour::Empty;
-        }
-        return m_tileset->get(cell).collisionBehaviour;
-    }
+    int tileWidth() const;
 
-    int tileWidth() const
-    {
-        return m_tileSize.x();
-    }
+    int tileHeight() const;
 
-    int tileHeight() const
-    {
-        return m_tileSize.y();
-    }
+    bool isValidTile(size_t x, size_t y) const;
 
-    bool isValidTile(size_t x, size_t y) const
-    {
-        return x < m_mapSizeInTiles.x() &&
-               y < m_mapSizeInTiles.y();
-    }
+    void render();
 
-    void render()
-    {
-        for( size_t i = 0; i < m_data->rows(); i++ )
-        {
-            for( size_t j = 0; j < m_data->cols(); j++ )
-            {
-                int cell = m_data->get(j, i);
-                if( cell != -1 ) {
-                    const Tile& t = m_tileset->get(cell);
-                    t.texture->draw(j * m_tileSize.x(), i * m_tileSize.y());
-                }
-            }
-        }
-    }
-
-    void addProperty(const std::string& key, const std::string& value)
-    {
-        m_props[key] = value;
-    }
+    void addProperty(const std::string& key, const std::string& value);
 
 private:
     std::unique_ptr<Data> m_data;
@@ -286,28 +176,13 @@ class TileMap
 {
 public:
 
-    void addSheet(graphics::Spritesheet::SharedPtr sheet)
-    {
-        m_sheetStore.push_back(sheet);
-    }
+    void addSheet(const graphics::Spritesheet::SharedPtr& sheet);
 
-    void addTileset(TileSet::Shared tileset)
-    {
-        m_tilesets.push_back(tileset);
-    }
+    void addTileset(const TileSet::Shared& tileset);
 
-    void addTileLayer(TileLayer::Shared tilelayer)
-    {
-        addLayer(tilelayer);
-        m_tileLayers[tilelayer->getName()] = tilelayer;
-    }
+    void addTileLayer(const TileLayer::Shared& tilelayer);
 
-    void addObjectLayer(ObjectLayer::Shared objectLayer)
-    {
-        addLayer(objectLayer);
-        m_objectLayers[objectLayer->getName()] = objectLayer;
-
-    }
+    void addObjectLayer(const ObjectLayer::Shared& objectLayer);
 
     template<typename LayerType>
     void addLayer(std::shared_ptr<LayerType> layer)
@@ -316,44 +191,19 @@ public:
         m_layers.push_back(std::static_pointer_cast<Layer>(layer));
     }
 
-    TileLayer::Shared getTileLayer(const std::string& layerId)
-    {
-        assert(m_tileLayers.count(layerId) > 0);
-        return m_tileLayers[layerId];
-    }
+    TileLayer::Shared getTileLayer(const std::string& layerId);
 
-    ObjectLayer::Shared getObjectLayer(const std::string& layerId)
-    {
-        assert(m_objectLayers.count(layerId) > 0);
-        return m_objectLayers[layerId];
-    }
+    ObjectLayer::Shared getObjectLayer(const std::string& layerId);
 
-    TileSet::Shared getTileset(int i)
-    {
-        return m_tilesets[i];
-    }
+    TileSet::Shared getTileset(int i);
 
-    void render()
-    {
-        for( auto layer : m_layers ) {
-            layer->render();
-        }
-    }
+    void render();
 
-    std::unordered_map<std::string, TileLayer::Shared>& getTileLayers()
-    {
-        return m_tileLayers;
-    }
+    std::unordered_map<std::string, TileLayer::Shared>& getTileLayers();
 
-    void setBasePath(const std::string& basePath)
-    {
-        m_basePath = basePath;
-    }
+    void setBasePath(const std::string& basePath);
 
-    const std::string& getBasePath()
-    {
-        return m_basePath;
-    }
+    const std::string& getBasePath();
 
 private:
     std::vector<Layer::Shared> m_layers;

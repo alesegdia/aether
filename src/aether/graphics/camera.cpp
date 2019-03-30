@@ -1,7 +1,7 @@
 
 #include "camera.h"
 
-Camera::Camera(aether::math::Vec2f viewport)
+Camera::Camera(const aether::math::Vec2f& viewport)
 	: m_viewport(viewport)
 {
 
@@ -14,7 +14,7 @@ void Camera::bind()
 	al_use_transform(&m_transform);
 }
 
-void Camera::position(aether::math::Vec2f new_position)
+void Camera::position(const aether::math::Vec2f& new_position)
 {
 	m_position = new_position;
 	m_position.y(-(m_position.y()) * m_scale.y());
@@ -59,12 +59,10 @@ void Scroller::operator()(Camera &cam, float x, float y)
 
 
 Scroller::~Scroller()
-{
-
-}
+= default;
 
 
-FixedScroller::FixedScroller(aether::math::Rectf global)
+FixedScroller::FixedScroller(const aether::math::Rectf& global)
 	: m_globalBounds(global) {}
 
 

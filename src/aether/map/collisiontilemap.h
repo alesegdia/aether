@@ -54,18 +54,18 @@ private:
 };
 
 
-class BlockCollisionTileMap : public GenericCollisionTileMap
+class CollisionTilemap : public GenericCollisionTileMap
 {
 public:
-    BlockCollisionTileMap(TileLayer::Shared tilelayer);
-    ~BlockCollisionTileMap() override;
+    CollisionTilemap(TileLayer::Shared tilelayer);
+    ~CollisionTilemap() override;
 
 private:
     virtual void move(math::Recti& rect, int new_x, int new_y, CollisionInfo* ci) override;
 
 };
 
-typedef BlockCollisionTileMap CollisionTilemap;
+//typedef BlockCollisionTileMap CollisionTilemap;
 
 
 }

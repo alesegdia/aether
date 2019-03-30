@@ -1,18 +1,18 @@
 #include "collisiontilemap.h"
 
+#include <utility>
+
 namespace aether {
 namespace tilemap {
 
 GenericCollisionTileMap::GenericCollisionTileMap(TileLayer::Shared tilelayer)
-    : m_tileLayer(tilelayer)
+    : m_tileLayer(std::move(tilelayer))
 {
 
 }
 
 GenericCollisionTileMap::~GenericCollisionTileMap()
-{
-
-}
+= default;
 
 bool GenericCollisionTileMap::isSolid(size_t x, size_t y)
 {
@@ -40,19 +40,17 @@ int GenericCollisionTileMap::tileHeight()
 }
 
 
-BlockCollisionTileMap::BlockCollisionTileMap(TileLayer::Shared tilelayer)
-    : GenericCollisionTileMap(tilelayer)
+CollisionTilemap::CollisionTilemap(TileLayer::Shared tilelayer)
+    : GenericCollisionTileMap(std::move(tilelayer))
 {
 
 }
 
-BlockCollisionTileMap::~BlockCollisionTileMap()
-{
-
-}
+CollisionTilemap::~CollisionTilemap()
+= default;
 
 
-void BlockCollisionTileMap::move(math::Recti &rect, int new_x, int new_y, CollisionInfo* ci)
+void CollisionTilemap::move(math::Recti &rect, int new_x, int new_y, CollisionInfo* ci)
 {
     int fixed_col, fixed_row;
     fixed_col = fixed_row = -1;

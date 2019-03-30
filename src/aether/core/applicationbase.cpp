@@ -1,4 +1,6 @@
 #include "applicationbase.h"
+
+#include <utility>
 #include "time.h"
 
 namespace aether{
@@ -12,9 +14,7 @@ ApplicationBase::ApplicationBase( int screen_width, int screen_height )
 }
 
 ApplicationBase::~ApplicationBase()
-{
-
-}
+= default;
 
 int ApplicationBase::exec(int argc, char **argv)
 {
@@ -77,7 +77,7 @@ void ApplicationBase::setScreen(std::shared_ptr<IScreen> screen)
         m_currentScreen->hide();
     }
 
-    m_currentScreen = screen;
+    m_currentScreen = std::move(screen);
     m_currentScreen->show();
 }
 

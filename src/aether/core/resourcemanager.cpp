@@ -9,9 +9,7 @@ namespace core {
 uint64_t ResourceTraits::nextTypeIndex = 0;
 
 IResourceStorage::~IResourceStorage()
-{
-
-}
+= default;
 
 ResourceManager& resmgr()
 {

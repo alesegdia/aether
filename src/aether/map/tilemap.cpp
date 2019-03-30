@@ -1,6 +1,13 @@
 #include "tilemap.h"
 
-std::shared_ptr<aether::tilemap::TileMap> aether::tilemap::buildMap(const Tmx::Map &inmap)
+#include <utility>
+
+
+namespace aether {
+namespace tilemap {
+
+
+std::shared_ptr<TileMap> buildMap(const Tmx::Map &inmap)
 {
     std::shared_ptr<TileMap> outmap(new TileMap());
     outmap->setBasePath(inmap.GetFilepath());
@@ -53,10 +60,11 @@ std::shared_ptr<aether::tilemap::TileMap> aether::tilemap::buildMap(const Tmx::M
     // parse layers
     for( auto layer : inmap.GetTileLayers() ) {
 
-        // IGNORE IF THERE I
         auto tmxTileLayer = static_cast<Tmx::TileLayer*>(layer);
-        auto tilesetId = tmxTileLayer->GetTile(0, 0).tilesetId;
-        if( tilesetId == -1 ) continue;
+        auto tilesetId = std::max(0, tmxTileLayer->GetTile(0, 0).tilesetId);
+
+        // IGNORE IF THERE I
+        // if( tilesetId == -1 ) continue;
 
         std::shared_ptr<TileLayer> tileLayer = std::make_shared<TileLayer>(layer->GetName(), layer->GetZOrder());
         tileLayer->setMapSize(tmxTileLayer->GetWidth(), tmxTileLayer->GetHeight());
@@ -67,11 +75,14 @@ std::shared_ptr<aether::tilemap::TileMap> aether::tilemap::buildMap(const Tmx::M
 
         for( int i = 0; i < tmxTileLayer->GetWidth(); i++ ) {
             for( int j = 0; j < tmxTileLayer->GetHeight(); j++ ) {
+                auto cellValue = -1;
                 auto tilesetId = tmxTileLayer->GetTile(i, j).tilesetId;
-                tileLayer->setTileset(tilesets[size_t(tilesetId)]);
-                auto firstGid = tilesets[size_t(tilesetId)]->getFirstGid();
-                auto cell = int(tmxTileLayer->GetTileId(i, j)); // - firstGid;
-                rawData.set(size_t(i), size_t(j), cell);
+                if( tilesetId != -1 ) {
+                    tileLayer->setTileset(tilesets[size_t(tilesetId)]);
+                    //auto firstGid = tilesets[size_t(tilesetId)]->getFirstGid();
+                    cellValue = int(tmxTileLayer->GetTileId(i, j)); // - firstGid;
+                }
+                rawData.set(size_t(i), size_t(j), cellValue);
             }
         }
         tileLayer->setData(rawData);
@@ -91,4 +102,236 @@ std::shared_ptr<aether::tilemap::TileMap> aether::tilemap::buildMap(const Tmx::M
     }
 
     return outmap;
+}
+
+Tile::Tile(const graphics::TextureRegion *tex, TileCollisionBehaviour tcb)
+    : texture(tex),
+      collisionBehaviour(tcb)
+{
+
+}
+
+const Tile &TileSet::get(uint16_t tile_index) const
+{
+    assert(tile_index < m_tiles.size());
+    return m_tiles[tile_index];
+}
+
+Tile &TileSet::addTile(int index, const graphics::TextureRegion *tex, TileCollisionBehaviour tcb)
+{
+    assert(index >= 0);
+    m_tiles.insert(m_tiles.begin() + index, Tile(tex, tcb));
+    return *(m_tiles.begin() + index);
+}
+
+void TileSet::setName(const std::string &name)
+{
+    m_name = name;
+}
+
+void TileSet::setFirstGid(int gid)
+{
+    m_gid = gid;
+}
+
+int TileSet::getFirstGid()
+{
+    return m_gid;
+}
+
+const math::Vec2i &TileSet::tileSize()
+{
+    return m_tileSize;
+}
+
+void TileSet::setTileSize(int w, int h)
+{
+    m_tileSize.set(w, h);
+}
+
+Layer::Layer(const std::string &id, int zOrder)
+{
+    m_name = id;
+    m_zOrder = zOrder;
+}
+
+Layer::~Layer() = default;
+
+const std::string &Layer::getName()
+{
+    return m_name;
+}
+
+int Layer::zOrder() const
+{
+    return m_zOrder;
+}
+
+ObjectLayer::ObjectLayer(const std::string &id, int zOrder)
+    : Layer(id, zOrder)
+{
+
+}
+
+ObjectLayer::Object &ObjectLayer::newObject(const std::string &name, int x, int y, int w, int h)
+{
+    Object object;
+    object.name = name;
+    object.aabb = {x, y, w, h};
+    m_objects.push_back(object);
+    return m_objects.back();
+}
+
+const std::vector<ObjectLayer::Object> &ObjectLayer::objects() const
+{
+    return m_objects;
+}
+
+void ObjectLayer::render()
+{
+
+}
+
+TileLayer::TileLayer(const std::string &id, int zOrder)
+    : Layer(id, zOrder)
+{
+
+}
+
+void TileLayer::setTileset(TileSet::Shared tileset)
+{
+    m_tileset = std::move(tileset);
+}
+
+void TileLayer::setMapSize(size_t mapWidth, size_t mapHeight)
+{
+    m_mapSizeInTiles.set(mapWidth, mapHeight);
+}
+
+void TileLayer::setTileSize(size_t tileWidth, size_t tileHeight)
+{
+    m_tileSize.set(tileWidth, tileHeight);
+}
+
+void TileLayer::setData(const TileLayer::Data& data)
+{
+    assert(data.cols() == m_mapSizeInTiles.x() && data.rows() == m_mapSizeInTiles.y());
+    m_data.reset(new Data(data));
+}
+
+TileSet::Shared TileLayer::tileSet()
+{
+    return m_tileset;
+}
+
+TileCollisionBehaviour TileLayer::getTileCollisionBehaviour(size_t x, size_t y) const
+{
+    auto cell = m_data->get( x, y );
+    if( cell == -1 ) {
+        return TileCollisionBehaviour::Empty;
+    }
+    return m_tileset->get(cell).collisionBehaviour;
+}
+
+int TileLayer::tileWidth() const
+{
+    return m_tileSize.x();
+}
+
+int TileLayer::tileHeight() const
+{
+    return m_tileSize.y();
+}
+
+bool TileLayer::isValidTile(size_t x, size_t y) const
+{
+    return x < m_mapSizeInTiles.x() &&
+            y < m_mapSizeInTiles.y();
+}
+
+void TileLayer::render()
+{
+    for( size_t i = 0; i < m_data->rows(); i++ )
+    {
+        for( size_t j = 0; j < m_data->cols(); j++ )
+        {
+            int cell = m_data->get(j, i);
+            if( cell != -1 ) {
+                const Tile& t = m_tileset->get(cell);
+                t.texture->draw(j * m_tileSize.x(), i * m_tileSize.y());
+            }
+        }
+    }
+}
+
+void TileLayer::addProperty(const std::string &key, const std::string &value)
+{
+    m_props[key] = value;
+}
+
+void TileMap::addSheet(const graphics::Spritesheet::SharedPtr& sheet)
+{
+    m_sheetStore.push_back(sheet);
+}
+
+void TileMap::addTileset(const TileSet::Shared& tileset)
+{
+    m_tilesets.push_back(tileset);
+}
+
+void TileMap::addTileLayer(const TileLayer::Shared& tilelayer)
+{
+    addLayer(tilelayer);
+    m_tileLayers[tilelayer->getName()] = tilelayer;
+}
+
+void TileMap::addObjectLayer(const ObjectLayer::Shared& objectLayer)
+{
+    addLayer(objectLayer);
+    m_objectLayers[objectLayer->getName()] = objectLayer;
+
+}
+
+TileLayer::Shared TileMap::getTileLayer(const std::string &layerId)
+{
+    assert(m_tileLayers.count(layerId) > 0);
+    return m_tileLayers[layerId];
+}
+
+ObjectLayer::Shared TileMap::getObjectLayer(const std::string &layerId)
+{
+    assert(m_objectLayers.count(layerId) > 0);
+    return m_objectLayers[layerId];
+}
+
+TileSet::Shared TileMap::getTileset(int i)
+{
+    assert(i < m_tilesets.size() && i >= 0);
+    return m_tilesets[i];
+}
+
+void TileMap::render()
+{
+    for( auto layer : m_layers ) {
+        layer->render();
+    }
+}
+
+std::unordered_map<std::string, TileLayer::Shared> &TileMap::getTileLayers()
+{
+    return m_tileLayers;
+}
+
+void TileMap::setBasePath(const std::string &basePath)
+{
+    m_basePath = basePath;
+}
+
+const std::string &TileMap::getBasePath()
+{
+    return m_basePath;
+}
+
+
+}
 }

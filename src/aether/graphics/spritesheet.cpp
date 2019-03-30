@@ -1,14 +1,13 @@
 
 #include <cassert>
+#include <utility>
 #include "spritesheet.h"
 
 namespace aether {
 namespace graphics {
 
 Spritesheet::~Spritesheet()
-{
-
-}
+= default;
 
 std::vector<const TextureRegion*> Spritesheet::getAllFrames()
 {
@@ -18,13 +17,10 @@ std::vector<const TextureRegion*> Spritesheet::getAllFrames()
 
 Spritesheet::Spritesheet(size_t width, size_t height, Texture texture)
 {
-    reset( width, height, texture );
+    reset( width, height, std::move(texture) );
 }
 
-Spritesheet::Spritesheet()
-{
-
-}
+Spritesheet::Spritesheet() = default;
 
 const TextureRegion *Spritesheet::getFrame(size_t num_frame) const
 {
@@ -74,7 +70,7 @@ void Spritesheet::reset(size_t width, size_t height, Texture texture)
 
 void Spritesheet::load(size_t width, size_t height, Texture texture)
 {
-    reset(width, height, texture);
+    reset(width, height, std::move(texture));
 }
 
 size_t Spritesheet::coordToIndex(size_t x, size_t y) const
