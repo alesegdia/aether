@@ -4,6 +4,8 @@
 #include "../math/vec.h"
 #include "../graphics/spritesheet.h"
 
+#include <vector>
+
 #include <TmxMap.h>
 #include <TmxLayer.h>
 #include <TmxTileLayer.h>
@@ -38,9 +40,9 @@ class TileSet
 public:
     using Shared = std::shared_ptr<TileSet>;
 
-    const Tile& get( uint16_t tile_index ) const;
+    Tile* get( uint16_t tile_index );
 
-    Tile& addTile(int index, const graphics::TextureRegion* tex, TileCollisionBehaviour tcb);
+    Tile& addTile(size_t index, const graphics::TextureRegion* tex, TileCollisionBehaviour tcb);
 
     void setName(const std::string& name);
 
@@ -130,7 +132,7 @@ public:
 
     bool isValidTile(size_t x, size_t y) const;
 
-    void render();
+    void render() override;
 
     void addProperty(const std::string& key, const std::string& value);
 

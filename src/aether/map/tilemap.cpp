@@ -33,26 +33,32 @@ std::shared_ptr<TileMap> buildMap(const Tmx::Map &inmap)
         outmap->addSheet(newSheet);
         newTileset->setFirstGid(tileset->GetFirstGid());
 
-        for( auto tile : tileset->GetTiles() ) {
-#warning TODO: set correct tile collision behaviour, or set it later
-            auto tileId = tile->GetId();
-            auto visual = newSheet->getFrame(size_t(tileId));
-            auto& newTile = newTileset->addTile(tileId, visual, TileCollisionBehaviour::Empty);
-            newTile.collisionBehaviour = TileCollisionBehaviour::Empty;
+        for( int i = 0; i < rows; i++ ) {
+            for( int j = 0; j < columns; j++ ) {
+                auto index = i * columns + j;
+                auto frame = newSheet->getFrame(index);
+                newTileset->addTile(index, frame, TileCollisionBehaviour::Empty);
+            }
+        }
 
+        for( auto tile : tileset->GetTiles() ) {
+
+            // set collision behaviour
+            auto tileId = tile->GetId();
+            auto newTile = newTileset->get(tileId);
             if( tile->GetProperties().HasProperty("collision") ) {
                 auto collisionType = tile->GetProperties().GetStringProperty("collision");
                 if( collisionType == "solid" ) {
-                    newTile.collisionBehaviour = TileCollisionBehaviour::Solid;
+                    newTile->collisionBehaviour = TileCollisionBehaviour::Solid;
                 } else if( collisionType == "oneway" ) {
-                    newTile.collisionBehaviour = TileCollisionBehaviour::Oneway;
+                    newTile->collisionBehaviour = TileCollisionBehaviour::Oneway;
                 }
             }
 
             // copy props
             for( auto prop : tile->GetProperties().GetList())
             {
-                newTile.props[prop.first] = prop.second;
+                newTile->props[prop.first] = prop.second;
             }
         }
     }
@@ -79,8 +85,8 @@ std::shared_ptr<TileMap> buildMap(const Tmx::Map &inmap)
                 auto tilesetId = tmxTileLayer->GetTile(i, j).tilesetId;
                 if( tilesetId != -1 ) {
                     tileLayer->setTileset(tilesets[size_t(tilesetId)]);
-                    //auto firstGid = tilesets[size_t(tilesetId)]->getFirstGid();
-                    cellValue = int(tmxTileLayer->GetTileId(i, j)); // - firstGid;
+                    auto firstGid = tilesets[size_t(tilesetId)]->getFirstGid();
+                    cellValue = int(tmxTileLayer->GetTileId(i, j));
                 }
                 rawData.set(size_t(i), size_t(j), cellValue);
             }
@@ -111,17 +117,24 @@ Tile::Tile(const graphics::TextureRegion *tex, TileCollisionBehaviour tcb)
 
 }
 
-const Tile &TileSet::get(uint16_t tile_index) const
+Tile *TileSet::get(uint16_t tile_index)
 {
-    assert(tile_index < m_tiles.size());
-    return m_tiles[tile_index];
+    if(tile_index >= m_tiles.size())
+    {
+        return nullptr;
+    }
+    Tile& tile = m_tiles[tile_index];
+    return &tile;
 }
 
-Tile &TileSet::addTile(int index, const graphics::TextureRegion *tex, TileCollisionBehaviour tcb)
+Tile &TileSet::addTile(size_t index, const graphics::TextureRegion *tex, TileCollisionBehaviour tcb)
 {
     assert(index >= 0);
-    m_tiles.insert(m_tiles.begin() + index, Tile(tex, tcb));
-    return *(m_tiles.begin() + index);
+    while( m_tiles.size() <= index ) {
+        m_tiles.emplace_back(nullptr, TileCollisionBehaviour::Empty);
+    }
+    m_tiles[index] = Tile(tex, tcb);
+    return m_tiles[index];
 }
 
 void TileSet::setName(const std::string &name)
@@ -227,10 +240,10 @@ TileSet::Shared TileLayer::tileSet()
 TileCollisionBehaviour TileLayer::getTileCollisionBehaviour(size_t x, size_t y) const
 {
     auto cell = m_data->get( x, y );
-    if( cell == -1 ) {
+    if( cell == -1 || m_tileset->get(cell) == nullptr ) {
         return TileCollisionBehaviour::Empty;
     }
-    return m_tileset->get(cell).collisionBehaviour;
+    return m_tileset->get(cell)->collisionBehaviour;
 }
 
 int TileLayer::tileWidth() const
@@ -246,7 +259,7 @@ int TileLayer::tileHeight() const
 bool TileLayer::isValidTile(size_t x, size_t y) const
 {
     return x < m_mapSizeInTiles.x() &&
-            y < m_mapSizeInTiles.y();
+           y < m_mapSizeInTiles.y();
 }
 
 void TileLayer::render()
@@ -257,8 +270,10 @@ void TileLayer::render()
         {
             int cell = m_data->get(j, i);
             if( cell != -1 ) {
-                const Tile& t = m_tileset->get(cell);
-                t.texture->draw(j * m_tileSize.x(), i * m_tileSize.y());
+                Tile* t = m_tileset->get(cell);
+                if( t != nullptr && t->texture != nullptr) {
+                    t->texture->draw(j * m_tileSize.x(), i * m_tileSize.y());
+                }
             }
         }
     }
