@@ -33,13 +33,19 @@ public:
 
     CollisionInfo realmove(math::Rect<int> &rect, int new_x, int new_y);
 
+    bool isSolidTile( float x, float y )
+    {
+        auto pos = getTilePos(x, y);
+        return isSolid(pos.x(), pos.y());
+    }
+
 protected:
     virtual void move(math::Recti& rect, int new_x, int new_y, CollisionInfo* ci) = 0;
 
     bool isSolid( size_t x, size_t y );
     bool isOneway( size_t x, size_t y );
 
-    math::Vec2i getTile( int x, int y );
+    math::Vec2i getTilePos( int x, int y );
 
     int tileWidth();
 

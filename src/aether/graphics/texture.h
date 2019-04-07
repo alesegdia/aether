@@ -74,9 +74,9 @@ public:
 		m_clip = aether::math::Rectf(x, y, w, h);
 	}
 
-    void draw(float x, float y) const
+    void draw(float x, float y, bool xflip = false, bool yflip = false) const
 	{
-		m_texture.draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h());
+        m_texture.draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(), graphics::Color(1.0f, 1.0f, 1.0f), xflip, yflip);
 	}
 
     void draw(float x, float y, float cx, float cy, float angle) const

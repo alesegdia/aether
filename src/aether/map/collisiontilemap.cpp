@@ -24,7 +24,7 @@ bool GenericCollisionTileMap::isOneway(size_t x, size_t y)
     return m_tileLayer->getTileCollisionBehaviour(x, y) == TileCollisionBehaviour::Oneway;
 }
 
-math::Vec2i GenericCollisionTileMap::getTile(int x, int y)
+math::Vec2i GenericCollisionTileMap::getTilePos(int x, int y)
 {
     return math::Vec2i( int(x / m_tileLayer->tileWidth()), int(y / m_tileLayer->tileHeight()) );
 }
@@ -77,30 +77,30 @@ void CollisionTilemap::move(math::Recti &rect, int new_x, int new_y, CollisionIn
     if( dx > 0 )
     {
         horizontal = Direction::Right;
-        r0 = getTile( x1, y0+1 );
-        r1 = getTile( x1, y1-1 );
+        r0 = getTilePos( x1, y0+1 );
+        r1 = getTilePos( x1, y1-1 );
     }
     // moving left
     else if( dx < 0 )
     {
         horizontal = Direction::Left;
-        r0 = getTile( x0, y0+1 );
-        r1 = getTile( x0, y1-1 );
+        r0 = getTilePos( x0, y0+1 );
+        r1 = getTilePos( x0, y1-1 );
     }
 
     // moving bottom
     if( dy > 0 )
     {
         vertical = Direction::Down;
-        c0 = getTile( x0+1, y1 );
-        c1 = getTile( x1-1, y1 );
+        c0 = getTilePos( x0+1, y1 );
+        c1 = getTilePos( x1-1, y1 );
     }
     // moving up
     else if( dy < 0 )
     {
         vertical = Direction::Up;
-        c0 = getTile( x0+1, y0 );
-        c1 = getTile( x1-1, y0 );
+        c0 = getTilePos( x0+1, y0 );
+        c1 = getTilePos( x1-1, y0 );
     }
 
     // horizontal movement?
@@ -152,7 +152,6 @@ void CollisionTilemap::move(math::Recti &rect, int new_x, int new_y, CollisionIn
             int b = int(rect.y2());
 
             auto diff = a - b; // - rect.h() / 4;
-            std::cout << a << ", " << b << ", " << diff << std::endl;
 
             static constexpr int OneWayPlatformCorrectionThreshold = 10;
 
