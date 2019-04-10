@@ -5,6 +5,7 @@
 #include "../graphics/spritesheet.h"
 
 #include <vector>
+#include <functional>
 
 #include <TmxMap.h>
 #include <TmxLayer.h>
@@ -99,6 +100,14 @@ public:
 
     const std::vector<Object>& objects() const;
 
+    void foreach(std::function<void(const Object&)> callback)
+    {
+        for( const auto& object : m_objects )
+        {
+            callback(object);
+        }
+    }
+
     void render() override;
 
 private:
@@ -129,6 +138,16 @@ public:
     int tileWidth() const;
 
     int tileHeight() const;
+
+    int mapWidth() const
+    {
+        return m_mapSizeInTiles.x();
+    }
+
+    int mapHeight() const
+    {
+        return m_mapSizeInTiles.y();
+    }
 
     bool isValidTile(size_t x, size_t y) const;
 
@@ -206,6 +225,20 @@ public:
     void setBasePath(const std::string& basePath);
 
     const std::string& getBasePath();
+
+    float width() const
+    {
+        assert(!m_layers.empty() && "must have some tile layer to fetch width");
+        const auto& layer = *(*(m_tileLayers.begin())).second;
+        return layer.mapWidth() * layer.tileWidth();
+    }
+
+    float height() const
+    {
+        assert(!m_layers.empty() && "must have some tile layer to fetch height");
+        const auto& layer = *(*(m_tileLayers.begin())).second;
+        return layer.mapHeight() * layer.tileHeight();
+    }
 
 private:
     std::vector<Layer::Shared> m_layers;

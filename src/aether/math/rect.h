@@ -164,8 +164,8 @@ template <typename T>
 Rect<T> clamp( Rect<T> container, Rect<T> contained )
 {
     Rect<T> rect;
-    rect.x( clamp<T>(contained.x(), container.x(), container.x() + container.w() - contained.w()) );
-    rect.y( clamp<T>(contained.y(), container.y(), container.y() + container.w() - contained.w()) );
+    rect.x( clamp<T>(contained.x(), container.x(), container.x() + container.w() ) );
+    rect.y( clamp<T>(contained.y(), container.y(), container.y() + container.w() ) );
     return rect;
 }
 

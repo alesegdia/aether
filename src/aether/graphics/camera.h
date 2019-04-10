@@ -5,6 +5,11 @@
 
 #include <memory>
 
+
+namespace aether {
+namespace graphics {
+
+
 class Camera
 {
 public:
@@ -28,6 +33,11 @@ public:
 	void move( float x, float y );
 
 	void scale( float x, float y );
+
+    const aether::math::Vec2f& viewport()
+    {
+        return m_viewport;
+    }
 
 private:
 	ALLEGRO_TRANSFORM m_transform{};
@@ -67,4 +77,37 @@ private:
 
 };
 
+class PlatformerScroller
+{
+public:
+    PlatformerScroller(std::shared_ptr<Camera> cam, const aether::math::Rectf& mapBounds )
+        : m_cam(cam),
+          m_mapBounds(mapBounds)
+    {
 
+    }
+
+    void focus(float x, float y)
+    {
+        auto pos = aether::math::Vec2f(x, y);
+        float halfViewportX = m_cam->viewport().x() / 2.f;
+        float halfViewportY = m_cam->viewport().y() / 2.f;
+        float xmin = halfViewportX;
+        float ymin = halfViewportY;
+        float xmax = m_mapBounds.x() - halfViewportX;
+        float ymax = m_mapBounds.y() - halfViewportY;
+        pos.x(std::max(std::min(pos.x(), xmax), xmin));
+        pos.y(std::max(std::min(pos.y(), ymax), ymin));
+        m_cam->position(pos);
+        m_cam->bind();
+    }
+
+private:
+    Camera::SharedPtr m_cam;
+    aether::math::Rectf m_mapBounds;
+
+};
+
+
+}
+}

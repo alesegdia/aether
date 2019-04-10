@@ -1,6 +1,11 @@
 
 #include "camera.h"
 
+
+namespace aether {
+namespace graphics {
+
+
 Camera::Camera(const aether::math::Vec2f& viewport)
 	: m_viewport(viewport)
 {
@@ -71,4 +76,8 @@ aether::math::Vec2f FixedScroller::scroll(const Camera &cam, aether::math::Vec2f
     aether::math::Rectf cam_boundary = cam.boundary();
 	cam_boundary.position( focus );
 	return clamp(cam_boundary, m_globalBounds).min();
+}
+
+
+}
 }
