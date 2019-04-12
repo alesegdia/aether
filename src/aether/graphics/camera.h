@@ -39,6 +39,11 @@ public:
         return m_viewport;
     }
 
+    const aether::math::Vec2f scale()
+    {
+        return m_scale;
+    }
+
 private:
 	ALLEGRO_TRANSFORM m_transform{};
 
@@ -80,27 +85,9 @@ private:
 class PlatformerScroller
 {
 public:
-    PlatformerScroller(std::shared_ptr<Camera> cam, const aether::math::Rectf& mapBounds )
-        : m_cam(cam),
-          m_mapBounds(mapBounds)
-    {
+    PlatformerScroller(std::shared_ptr<Camera> cam, const aether::math::Rectf& mapBounds );
 
-    }
-
-    void focus(float x, float y)
-    {
-        auto pos = aether::math::Vec2f(x, y);
-        float halfViewportX = m_cam->viewport().x() / 2.f;
-        float halfViewportY = m_cam->viewport().y() / 2.f;
-        float xmin = halfViewportX;
-        float ymin = halfViewportY;
-        float xmax = m_mapBounds.x() - halfViewportX;
-        float ymax = m_mapBounds.y() - halfViewportY;
-        pos.x(std::max(std::min(pos.x(), xmax), xmin));
-        pos.y(std::max(std::min(pos.y(), ymax), ymin));
-        m_cam->position(pos);
-        m_cam->bind();
-    }
+    void focus(float x, float y);
 
 private:
     Camera::SharedPtr m_cam;

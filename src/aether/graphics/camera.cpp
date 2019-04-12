@@ -15,7 +15,11 @@ Camera::Camera(const aether::math::Vec2f& viewport)
 void Camera::bind()
 {
 	al_identity_transform(&m_transform);
-	al_build_transform(&m_transform, m_position.x(), m_position.y(), m_scale.x(), m_scale.y(), m_rotation);
+    al_build_transform(&m_transform,
+                       m_position.x() + m_viewport.x() / 2.f,
+                       m_position.y() + m_viewport.y() / 2.f,
+                       m_scale.x(),
+                       m_scale.y(), m_rotation);
 	al_use_transform(&m_transform);
 }
 
@@ -76,6 +80,29 @@ aether::math::Vec2f FixedScroller::scroll(const Camera &cam, aether::math::Vec2f
     aether::math::Rectf cam_boundary = cam.boundary();
 	cam_boundary.position( focus );
 	return clamp(cam_boundary, m_globalBounds).min();
+}
+
+PlatformerScroller::PlatformerScroller(std::shared_ptr<Camera> cam, const math::Rectf &mapBounds)
+    : m_cam(cam),
+      m_mapBounds(mapBounds)
+{
+
+}
+
+void PlatformerScroller::focus(float x, float y)
+{
+    auto pos = aether::math::Vec2f(x, y);
+    float halfViewportX = m_cam->viewport().x() / 2.f / m_cam->scale().x();
+    float halfViewportY = m_cam->viewport().y() / 2.f / m_cam->scale().y();
+    float xmin = halfViewportX;
+    float ymin = halfViewportY;
+    float xmax = m_mapBounds.w() - halfViewportX;
+    float ymax = m_mapBounds.h() - halfViewportY;
+    auto newx = std::max(std::min(pos.x(), xmax), xmin);
+    auto newy = std::max(std::min(pos.y(), ymax), ymin);
+    pos.set(newx, newy);
+    m_cam->position(pos);
+    m_cam->bind();
 }
 
 
