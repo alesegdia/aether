@@ -87,7 +87,6 @@ private:
     aether::math::Vec2f m_focusPos;
     float m_snappedOrdinate = 0.f;
     bool m_snappedToPlatform = false;
-    bool m_snappedForced = false;
 
 };
 

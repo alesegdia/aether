@@ -74,12 +74,7 @@ PlatformerScroller::PlatformerScroller(const Camera::SharedPtr &cam,
 
 void PlatformerScroller::snapToPlatform(float y)
 {
-    float dy = m_focusPos.y() - m_cam->y();
-    m_snappedForced = false;
-    if( abs(dy) > m_innerLimits.y() / 5.f ) {
-        m_snappedOrdinate = - y * m_cam->scale().y();
-        m_snappedForced = true;
-    }
+    m_snappedOrdinate = - y * m_cam->scale().y();
 }
 
 void PlatformerScroller::focus(float x, float y)
@@ -125,17 +120,18 @@ void PlatformerScroller::focus(float x, float y)
 
 void PlatformerScroller::update(double delta)
 {
-    if( m_snappedToPlatform && m_snappedForced ) {
+    if( m_snappedToPlatform ) {
         double dd = m_snappedOrdinate - m_cam->pos().y();
         auto movY = std::min(std::abs(dd), delta * 0.001);
         if( dd < 0 ) {
             movY *= -1;
         }
         m_cam->move(0, movY);
-        if( abs(movY) < delta * 0.0001 ) {
+        if( abs(movY) < delta * 0.0005 ) {
             m_snappedToPlatform = false;
         }
     }
+
 }
 
 
