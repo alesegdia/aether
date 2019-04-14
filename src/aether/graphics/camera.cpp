@@ -32,12 +32,12 @@ void Camera::position(const aether::math::Vec2f& new_position)
 
 float Camera::x()
 {
-	return m_position.x();
+    return - m_position.x() / m_scale.x();
 }
 
 float Camera::y()
 {
-	return m_position.y();
+    return - m_position.y() / m_scale.y();
 }
 
 aether::math::Rectf Camera::boundary() const
@@ -61,48 +61,81 @@ void Camera::scale(float x, float y)
 }
 
 
-void Scroller::operator()(Camera &cam, float x, float y)
-{
-    cam.position(scroll(cam, aether::math::Vec2f(x, y)));
-}
-
-
-Scroller::~Scroller()
-= default;
-
-
-FixedScroller::FixedScroller(const aether::math::Rectf& global)
-	: m_globalBounds(global) {}
-
-
-aether::math::Vec2f FixedScroller::scroll(const Camera &cam, aether::math::Vec2f focus)
-{
-    aether::math::Rectf cam_boundary = cam.boundary();
-	cam_boundary.position( focus );
-	return clamp(cam_boundary, m_globalBounds).min();
-}
-
-PlatformerScroller::PlatformerScroller(std::shared_ptr<Camera> cam, const math::Rectf &mapBounds)
+PlatformerScroller::PlatformerScroller(const Camera::SharedPtr &cam,
+                                       const math::Rectf &globalBounds,
+                                       const math::Vec2f &innerLimits)
     : m_cam(cam),
-      m_mapBounds(mapBounds)
+      m_globalBounds(globalBounds),
+      m_innerLimits(innerLimits.x() / cam->scale().x(),
+                    innerLimits.y() / cam->scale().y())
 {
 
+}
+
+void PlatformerScroller::snapToPlatform(float y)
+{
+    float dy = m_focusPos.y() - m_cam->y();
+    m_snappedForced = false;
+    if( abs(dy) > m_innerLimits.y() / 5.f ) {
+        m_snappedOrdinate = - y * m_cam->scale().y();
+        m_snappedForced = true;
+    }
 }
 
 void PlatformerScroller::focus(float x, float y)
 {
+    m_focusPos.set(x, y);
+
+    float dx = m_focusPos.x() - m_cam->x();
+    float dy = m_focusPos.y() - m_cam->y();
+
     auto pos = aether::math::Vec2f(x, y);
     float halfViewportX = m_cam->viewport().x() / 2.f / m_cam->scale().x();
     float halfViewportY = m_cam->viewport().y() / 2.f / m_cam->scale().y();
     float xmin = halfViewportX;
     float ymin = halfViewportY;
-    float xmax = m_mapBounds.w() - halfViewportX;
-    float ymax = m_mapBounds.h() - halfViewportY;
+    float xmax = m_globalBounds.w() - halfViewportX;
+    float ymax = m_globalBounds.h() - halfViewportY;
     auto newx = std::max(std::min(pos.x(), xmax), xmin);
-    auto newy = std::max(std::min(pos.y(), ymax), ymin);
+
+    auto newy = std::max(std::min(m_cam->y(), ymax), ymin);
     pos.set(newx, newy);
+
+    float deltaX = m_innerLimits.x() / 2.f;
+    if( std::abs(dx) > deltaX )
+    {
+        deltaX *= (dx > 0) ? -1 : 1;
+        pos.set(pos.x() + deltaX, pos.y());
+    } else {
+        pos.x(m_cam->x());
+    }
+
+    auto deltaY = m_innerLimits.y() / 2.f;
+    if( std::abs(dy) > deltaY )
+    {
+        std::cout << dy << std::endl;
+        deltaY *= (dy > 0) ? -1 : 1;
+        auto toMove = deltaY + dy;
+        pos.y(m_cam->y() + toMove);
+    }
+
     m_cam->position(pos);
     m_cam->bind();
+}
+
+void PlatformerScroller::update(double delta)
+{
+    if( m_snappedToPlatform && m_snappedForced ) {
+        double dd = m_snappedOrdinate - m_cam->pos().y();
+        auto movY = std::min(std::abs(dd), delta * 0.001);
+        if( dd < 0 ) {
+            movY *= -1;
+        }
+        m_cam->move(0, movY);
+        if( abs(movY) < delta * 0.0001 ) {
+            m_snappedToPlatform = false;
+        }
+    }
 }
 
 

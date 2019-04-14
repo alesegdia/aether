@@ -44,6 +44,11 @@ public:
         return m_scale;
     }
 
+    const aether::math::Vec2f& pos()
+    {
+        return m_position;
+    }
+
 private:
 	ALLEGRO_TRANSFORM m_transform{};
 
@@ -57,41 +62,32 @@ private:
 };
 
 
-class Scroller
-{
-public:
-	virtual ~Scroller() = 0 ;
-
-	void operator()(Camera& cam, float x, float y);
-
-    virtual aether::math::Vec2f scroll( const Camera& cam, aether::math::Vec2f focus ) = 0 ;
-
-};
-
-
-class FixedScroller : public Scroller
-{
-public:
-
-    FixedScroller( const aether::math::Rectf& global );
-
-    aether::math::Vec2f scroll( const Camera& cam, aether::math::Vec2f focus ) override;
-
-private:
-    aether::math::Rectf m_globalBounds;
-
-};
-
 class PlatformerScroller
 {
 public:
-    PlatformerScroller(std::shared_ptr<Camera> cam, const aether::math::Rectf& mapBounds );
+    PlatformerScroller(const Camera::SharedPtr& cam,
+                        const aether::math::Rectf& globalBounds,
+                        const math::Vec2f &innerLimits);
 
     void focus(float x, float y);
 
+    void update(double delta);
+
+    void snapToPlatform(float y);
+
+    bool setSnapToPlatform(bool set)
+    {
+        m_snappedToPlatform = set;
+    }
+
 private:
     Camera::SharedPtr m_cam;
-    aether::math::Rectf m_mapBounds;
+    aether::math::Rectf m_globalBounds;
+    aether::math::Vec2f m_innerLimits;
+    aether::math::Vec2f m_focusPos;
+    float m_snappedOrdinate = 0.f;
+    bool m_snappedToPlatform = false;
+    bool m_snappedForced = false;
 
 };
 
