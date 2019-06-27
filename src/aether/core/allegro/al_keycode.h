@@ -17,6 +17,7 @@ enum class KeyCode : int
     Right = ALLEGRO_KEY_RIGHT,
     Enter = ALLEGRO_KEY_ENTER,
     Escape = ALLEGRO_KEY_ESCAPE,
+    Space = ALLEGRO_KEY_SPACE,
     A = ALLEGRO_KEY_A,
     B = ALLEGRO_KEY_B,
     C = ALLEGRO_KEY_C,
