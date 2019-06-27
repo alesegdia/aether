@@ -46,7 +46,8 @@ void Animation::addFrames(std::vector<const TextureRegion *> frames)
 
 void Animation::reset(AnimationData &data)
 {
-    assert(data.currentFrame == nullptr && "The AnimationData instance is not null");
+    //assert(data.currentFrame == nullptr && "The AnimationData instance is not null");
+    data.reset();
     data.currentFrame = &m_frames[0];
 }
 
@@ -54,7 +55,7 @@ void Animation::updateData(AnimationData &data)
 {
     assert(data.currentFrame != nullptr);
     AnimationFrame *frame = data.currentFrame;
-    uint64_t time_accumulated = frame->accumulated_duration;
+    int64_t time_accumulated = frame->accumulated_duration;
     size_t frame_index = size_t(data.animationFrameIndex);
 
     while( frame->accumulated_duration + frame->frame_duration < data.timer )

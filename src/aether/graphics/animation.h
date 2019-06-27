@@ -13,8 +13,8 @@ namespace graphics {
 struct AnimationFrame
 {
     const TextureRegion* texture;
-    uint64_t frame_duration;
-    uint64_t accumulated_duration;
+    int64_t frame_duration;
+    int64_t accumulated_duration;
 };
 
 struct AnimationData
@@ -23,7 +23,7 @@ struct AnimationData
 
     void render(float x, float y);
 
-    uint64_t timer = 0;
+    int64_t timer = 0;
     AnimationFrame* currentFrame = nullptr;
     size_t animationFrameIndex = 0;
 };
@@ -75,8 +75,8 @@ public:
 
 private:
     std::vector<AnimationFrame> m_frames;
-    uint64_t m_defaultFrameDuration = 0;
-    uint64_t m_totalAnimDuration = 0;
+    int64_t m_defaultFrameDuration = 0;
+    int64_t m_totalAnimDuration = 0;
 
 };
 
