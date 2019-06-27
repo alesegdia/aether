@@ -80,7 +80,7 @@ public:
     {
         m_texture.draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(),
                        Color(1.f,1.f,1.f),
-                       false, false, cx, cy);
+                       false, false, cx, cy, angle);
     }
 
     const Texture& texture() const
