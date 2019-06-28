@@ -41,7 +41,7 @@ public:
      * @param texture
      * @param duration
      */
-    void addFrame(const TextureRegion* texture, uint64_t duration);
+    void addFrame(const TextureRegion* texture, int64_t duration);
 
     /**
      * @brief addFrame adds a frame with the default set frame duration

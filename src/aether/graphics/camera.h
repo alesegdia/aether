@@ -75,7 +75,7 @@ public:
 
     void snapToPlatform(float y);
 
-    bool setSnapToPlatform(bool set)
+    void setSnapToPlatform(bool set)
     {
         m_snappedToPlatform = set;
     }

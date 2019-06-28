@@ -19,9 +19,9 @@ Animation::Animation(uint64_t default_frame_duration)
 
 }
 
-void Animation::addFrame(const TextureRegion* texture, uint64_t duration)
+void Animation::addFrame(const TextureRegion* texture, int64_t duration)
 {
-    uint64_t accumulated = 0;
+    int64_t accumulated = 0;
     if( m_frames.size() > 0 )
     {
         auto& last_frame = m_frames.back();
