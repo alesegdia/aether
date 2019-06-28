@@ -32,6 +32,16 @@ void draw_filled_rectangle(const math::Recti& r, Color c)
     al_draw_filled_rectangle(r.x1(), r.y1(), r.x2(), r.y2(), al_map_rgb(c.r, c.g, c.b));
 }
 
+void draw_filled_rectangle_centered(const math::Recti& r, Color c)
+{
+    al_draw_filled_rectangle(r.x1() - r.w() / 2, r.y1() - r.h() / 2, r.x2() - r.w() / 2, r.y2() - r.h() / 2, al_map_rgb(c.r, c.g, c.b));
+}
+
+void draw_filled_rectangle_centered(const math::Rectf& r, Color c)
+{
+    al_draw_filled_rectangle(r.x1() - r.w() / 2, r.y1() - r.h() / 2, r.x2() - r.w() / 2, r.y2() - r.h() / 2, al_map_rgb(c.r, c.g, c.b));
+}
+
 void draw_filled_circle(float x, float y, float radius, Color c)
 {
     al_draw_filled_circle(x, y, radius, al_map_rgb(c.r, c.g, c.b));

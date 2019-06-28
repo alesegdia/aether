@@ -16,7 +16,7 @@ Handle::Handle(const Handle &other)
     m_handle = other.m_handle;
 }
 
-bool Handle::valid()
+bool Handle::valid() const
 {
     return m_handle != -1;
 }

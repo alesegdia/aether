@@ -11,8 +11,8 @@ public:
 
     Handle(const Handle& other);
 
-    bool valid();
-    bool notValid()
+    bool valid() const;
+    bool notValid() const
     {
         return ! valid();
     }

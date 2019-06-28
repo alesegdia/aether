@@ -50,9 +50,20 @@ public:
         m_x = other.x(); m_y = other.y();
     }
 
+    void translate( const Vec2<T>& other )
+    {
+        m_x += other.x();
+        m_y += other.y();
+    }
+
     Vec2<T> operator+( const Vec2<T>& other ) const
     {
         return Vec2<T>(m_x + other.m_x, m_y + other.m_y);
+    }
+
+    Vec2<T> operator-( const Vec2<T>& other ) const
+    {
+        return Vec2<T>(m_x - other.m_x, m_y - other.m_y);
     }
 
 	Vec2<T> operator/( T other ) const
@@ -105,6 +116,20 @@ public:
         return ret;
     }
 
+    Vec2& operator= ( const Vec2& other )
+    {
+        this->set(other.x(), other.y());
+        return *this;
+    }
+    
+    template <typename U>
+    Vec2<U> cast() const
+    {
+        Vec2<U> casted;
+        casted.set( U(m_x), U(m_y) );
+        return casted;
+    }
+
 private:
     T m_x, m_y;
 };
@@ -118,6 +143,7 @@ std::ostream &operator<<( std::ostream& os, const Vec2<T>& v )
 
 typedef Vec2<int> Vec2i;
 typedef Vec2<float> Vec2f;
+typedef Vec2<size_t> Vec2sz;
 
 namespace allig { namespace math {
 

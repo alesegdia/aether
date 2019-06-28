@@ -4,9 +4,7 @@ namespace aether {
 namespace core {
 
 IScreen::~IScreen()
-{
-
-}
+= default;
 
 }
 }

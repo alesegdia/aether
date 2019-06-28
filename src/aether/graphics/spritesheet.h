@@ -66,7 +66,7 @@ private:
 
     std::vector<TextureRegion> m_frames;
     Texture m_parentTexture;
-    int m_height, m_width;
+    int m_height{}, m_width{};
 
 
 };

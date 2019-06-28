@@ -5,17 +5,22 @@
 
 #include <memory>
 
+
+namespace aether {
+namespace graphics {
+
+
 class Camera
 {
 public:
 
 	typedef std::shared_ptr<Camera> SharedPtr;
 
-    Camera( aether::math::Vec2f viewport = aether::math::Vec2f(0, 0) );
+    Camera( const aether::math::Vec2f& viewport = aether::math::Vec2f(0, 0) );
 
 	void bind();
 
-    void position( aether::math::Vec2f new_position );
+    void position( const aether::math::Vec2f& new_position );
 
 	float x();
 
@@ -29,8 +34,23 @@ public:
 
 	void scale( float x, float y );
 
+    const aether::math::Vec2f& viewport()
+    {
+        return m_viewport;
+    }
+
+    const aether::math::Vec2f scale()
+    {
+        return m_scale;
+    }
+
+    const aether::math::Vec2f& pos()
+    {
+        return m_position;
+    }
+
 private:
-	ALLEGRO_TRANSFORM m_transform;
+	ALLEGRO_TRANSFORM m_transform{};
 
 	// cache last (position, scale) if performance issues
     aether::math::Vec2f m_scale = aether::math::Vec2f(1, 1);
@@ -42,29 +62,34 @@ private:
 };
 
 
-class Scroller
+class PlatformerScroller
 {
 public:
-	virtual ~Scroller() = 0 ;
+    PlatformerScroller(const Camera::SharedPtr& cam,
+                        const aether::math::Rectf& globalBounds,
+                        const math::Vec2f &innerLimits);
 
-	void operator()(Camera& cam, float x, float y);
+    void focus(float x, float y);
 
-    virtual aether::math::Vec2f scroll( const Camera& cam, aether::math::Vec2f focus ) = 0 ;
+    void update(double delta);
 
-};
+    void snapToPlatform(float y);
 
-
-class FixedScroller : public Scroller
-{
-public:
-
-    FixedScroller( aether::math::Rectf global );
-
-    aether::math::Vec2f scroll( const Camera& cam, aether::math::Vec2f focus ) override;
+    bool setSnapToPlatform(bool set)
+    {
+        m_snappedToPlatform = set;
+    }
 
 private:
+    Camera::SharedPtr m_cam;
     aether::math::Rectf m_globalBounds;
+    aether::math::Vec2f m_innerLimits;
+    aether::math::Vec2f m_focusPos;
+    float m_snappedOrdinate = 0.f;
+    bool m_snappedToPlatform = false;
 
 };
 
 
+}
+}

@@ -10,8 +10,8 @@ namespace audio {
 
 struct AllegroStream
 {
-    ALLEGRO_AUDIO_STREAM* stream;
-    ALLEGRO_VOICE* voice;
+    ALLEGRO_AUDIO_STREAM* stream{};
+    ALLEGRO_VOICE* voice{};
     double last_pause = 0;
 };
 

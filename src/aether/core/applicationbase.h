@@ -15,7 +15,7 @@ public:
 
     int exec(int argc, char** argv);
 
-    void setScreen(IScreen::Ptr screen);
+    void setScreen(std::shared_ptr<IScreen> screen);
 
     void setUpdateFPS(uint64_t fps);
     void setRenderFPS(uint64_t fps);
@@ -62,7 +62,7 @@ protected:
     {
         if( m_currentScreen != nullptr )
         {
-            m_currentScreen->update(delta);
+            m_currentScreen->updateWithSubscreen(delta);
         }
     }
 
@@ -70,7 +70,7 @@ protected:
     {
         if( m_currentScreen != nullptr )
         {
-            m_currentScreen->render();
+            m_currentScreen->renderWithSubscreen();
         }
     }
 
@@ -82,7 +82,7 @@ protected:
      */
     virtual void postUpdate() = 0 ;
 
-	virtual void grabMouse() = 0 ;
+    virtual void grabMouse() = 0 ;
 
 private:
     void setFPS(uint64_t& timer, uint64_t fps)
@@ -98,7 +98,7 @@ private:
     uint64_t m_renderStepTimer = uint64_t(1e6) / 32;
     uint64_t m_updateStepTimer = uint64_t(1e6) / 64;
 
-    IScreen::Ptr m_currentScreen = nullptr;
+    std::shared_ptr<IScreen> m_currentScreen = nullptr;
 
 };
 

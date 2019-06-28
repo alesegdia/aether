@@ -14,19 +14,19 @@ public:
         : m_position(x, y),
           m_size(w, h)
     {
-
+        computeCenter();
     }
 
     Rect( const Vec2<T> pos, const Vec2<T> size )
         : m_position(pos), m_size(size)
     {
-
+        computeCenter();
     }
 
     Rect( const Rect<T>& other )
         : m_position(other.x(), other.y()), m_size(other.w(), other.h())
     {
-
+        computeCenter();
     }
 
     Rect()
@@ -44,24 +44,38 @@ public:
         return m_position + m_size;
     }
 
-    void position( Vec2f new_pos )
+    void position( Vec2<T> new_pos )
     {
         m_position = new_pos;
+        computeCenter();
     }
 
     void position( float x, float y )
     {
         m_position.set(x, y);
+        computeCenter();
+    }
+
+    const Vec2<T>& position() const
+    {
+        return m_position;
+    }
+    
+    const Vec2<T>& center() const
+    {
+        return m_center;
     }
 
     void x( T new_x )
     {
         m_position.x(new_x);
+        computeCenter();
     }
 
     void y( T new_y )
     {
         m_position.y(new_y);
+        computeCenter();
     }
 
     T x() const
@@ -107,15 +121,26 @@ public:
     void move( Vec2<T> delta )
     {
         m_position += delta;
+        computeCenter();
     }
 
     void move( T dx, T dy )
     {
         move( Vec2<T>(dx, dy) );
     }
+    
+    const Vec2<T>& size() const
+    {
+        return m_size;
+    }
 
 private:
-    Vec2<T> m_position, m_size;
+    void computeCenter()
+    {
+        m_center.set(x() + w() / 2, y() + h() / 2);
+    }
+
+    Vec2<T> m_position, m_size, m_center;
 
 };
 
@@ -139,8 +164,8 @@ template <typename T>
 Rect<T> clamp( Rect<T> container, Rect<T> contained )
 {
     Rect<T> rect;
-    rect.x( clamp<T>(contained.x(), container.x(), container.x() + container.w() - contained.w()) );
-    rect.y( clamp<T>(contained.y(), container.y(), container.y() + container.w() - contained.w()) );
+    rect.x( clamp<T>(contained.x(), container.x(), container.x() + container.w() ) );
+    rect.y( clamp<T>(contained.y(), container.y(), container.y() + container.w() ) );
     return rect;
 }
 

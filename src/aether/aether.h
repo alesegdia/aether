@@ -15,13 +15,14 @@
 #include "graphics/texture.h"
 #include "graphics/animation.h"
 #include "graphics/camera.h"
+#include "graphics/asepriteanimloader.h"
 
 #include "math/matrix.h"
 #include "math/vec.h"
 #include "math/rect.h"
 #include "math/rng.h"
 
-#include "collision/tilemap.h"
+#include "map/collisiontilemap.h"
 
 #include "scene/scene.h"
 #include "scene/texturenode.h"
@@ -29,3 +30,5 @@
 #include "scene/gridnode.h"
 
 #include "map/tilemap.h"
+
+#include "json11.hpp"
