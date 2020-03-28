@@ -1,5 +1,3 @@
-#include <allegro5/allegro_audio.h>
-
 #include "../playmode.h"
 #include "../stream.h"
 #include "../../core/handledresourcemanager.h"

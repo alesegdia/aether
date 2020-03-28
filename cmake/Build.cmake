@@ -8,8 +8,8 @@ function(ADD_AETHER_TARGET EXEC-NAME SRCS)
                     LINK_FLAGS "-g -ftest-coverage -fprofile-arcs"
                     )
 
-    target_link_libraries(${EXEC-NAME} aether-allegro)
-    target_link_libraries(${EXEC-NAME} aether-allegro "${ALLEGRO_LIBRARIES}")
+    target_link_libraries(${EXEC-NAME} aether-lib)
+    target_link_libraries(${EXEC-NAME} aether-lib "${ALLEGRO_LIBRARIES}")
     target_include_directories(${EXEC-NAME} PUBLIC "${AETHER_INCLUDE_DIR}")
     target_include_directories(${EXEC-NAME} PUBLIC "${RZTL_INCLUDE_DIR}")
 endfunction(ADD_AETHER_TARGET)
