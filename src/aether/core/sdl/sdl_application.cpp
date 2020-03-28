@@ -1,63 +1,41 @@
-#include "al_application.h"
+#include "sdl_application.h"
+
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 
 namespace aether {
 namespace core {
 
-AllegroApplication::AllegroApplication(int sw, int sh)
+SDLApplication::SDLApplication(int sw, int sh)
     : ApplicationBase(sw, sh)
 {
 
 }
 
-int AllegroApplication::init(int argc, char **argv)
+int SDLApplication::init(int argc, char **argv)
 {
-    if(!al_init()) {
-        fprintf(stderr, "failed to initialize allegro!\n");
+    if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+        fprintf(stderr, "failed to initialize SDL video!\n");
         return -1;
     }
 
-    if(!al_install_keyboard()) {
-        fprintf(stderr, "failed to initialize the keyboard!\n");
+	int flags = IMG_INIT_PNG;
+    if(IMG_Init(flags) & flags != flags) {
+        fprintf(stderr, "failed to initialize SDL image!\n");
         return -1;
     }
 
-    if(!al_install_mouse()) {
-        fprintf(stderr, "failed to initialize the mouse!\n");
-        return -1;
-    }
+	TTF_Init();
 
-    if(!al_init_image_addon()) {
-        fprintf(stderr, "failed to initialize image addon!\n");
-        return -1;
-    }
-
-    if(!al_init_primitives_addon()) {
-        fprintf(stderr, "failed to initialize primitives addon!\n");
-        return -1;
-    }
-
-    if(!al_init_acodec_addon()) {
-        fprintf(stderr, "failed to initialize audio codecs!\n");
-        return -1;
-    }
-
-    if(!al_install_audio()) {
-        fprintf(stderr, "failed to initialize audio!\n");
-        return -1;
-    }
-
-    al_init_font_addon();
-
-    if(!al_init_ttf_addon()) {
-        fprintf(stderr, "failed to initialize ttf addon!\n");
-        return -1;
-    }
-
-    m_display = al_create_display(screenWidth(), screenHeight());
+    m_display = SDL_CreateWindow("WindowName",
+								 SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+							     screenWidth(), screenHeight(), SDL_WINDOW_SHOWN);
     if(!m_display) {
-        fprintf(stderr, "failed to create display!\n");
+        fprintf(stderr, "failed to create display! %s\n", SDL_GetError());
         return -1;
     }
+
+	m_renderer = SDL_CreateRenderer(m_display, -1, SDL_RENDERER_ACCELERATED);
 
     al_clear_to_color(al_map_rgb(255, 0, 255));
     al_set_target_bitmap(al_get_backbuffer(m_display));
@@ -97,17 +75,17 @@ int AllegroApplication::init(int argc, char **argv)
     return 0;
 }
 
-void AllegroApplication::preRender()
+void SDLApplication::preRender()
 {
     al_set_target_bitmap(al_get_backbuffer(m_display));
 }
 
-void AllegroApplication::postRender()
+void SDLApplication::postRender()
 {
     al_flip_display();
 }
 
-void aether::core::AllegroApplication::cleanup()
+void aether::core::SDLApplication::cleanup()
 {
     al_destroy_display(m_display);
     al_shutdown_image_addon();
@@ -119,7 +97,7 @@ void aether::core::AllegroApplication::cleanup()
     al_uninstall_mouse();
 }
 
-void aether::core::AllegroApplication::preUpdate()
+void aether::core::SDLApplication::preUpdate()
 {
     ALLEGRO_EVENT ev;
     while( al_get_next_event(m_eventQueue, &ev) )
@@ -151,12 +129,12 @@ void aether::core::AllegroApplication::preUpdate()
     aether_mouse_state.buttons = allegro_mouse_state.buttons;
 }
 
-void aether::core::AllegroApplication::postUpdate()
+void aether::core::SDLApplication::postUpdate()
 {
     _input_post_update();
 }
 
-void aether::core::AllegroApplication::grabMouse()
+void aether::core::SDLApplication::grabMouse()
 {
     assert(al_grab_mouse(m_display));
 }
