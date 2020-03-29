@@ -86,6 +86,12 @@ public:
                        false, false, cx, cy, angle);
     }
 
+    void draw(float x, float y, float xscale, float yscale) const
+    {
+        m_texture.draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(), aether::graphics::Color(1.0f, 1.0f, 1.0f),
+            false, false, 0.0f, 0.0f, 0.0f, xscale, yscale);
+    }
+
     const Texture& texture() const
     {
         return m_texture;

@@ -62,7 +62,7 @@ void Texture::draw(float x, float y,
     SDL_Renderer* renderer = aether_sdl_get_renderer();
     SDL_Point center{ centerx, centery };
     SDL_Rect srcRect{ rx, ry, rw, rh };
-    SDL_Rect dstRect{ x, y, rw, rh };
+    SDL_Rect dstRect{ x, y, rw * xscale, rh * yscale };
     SDL_RendererFlip flip = SDL_RendererFlip((xflip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE) | (yflip ? SDL_FLIP_VERTICAL : SDL_FLIP_NONE));
     SDL_RenderCopyEx(renderer, texture, &srcRect, &dstRect, angle, &center, flip);
 }
