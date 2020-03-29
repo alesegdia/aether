@@ -1,5 +1,6 @@
 #include "input.h"
 
+#include <iostream>
 #include <cassert>
 #include <cstring>
 
@@ -49,6 +50,12 @@ bool is_mouse_button_just_pressed(int button)
 
 void _notify_key_down(KeyCode key)
 {
+    if (key >= KeyCode::NumKeys)
+    {
+        std::cout << "WARNING: key outside NumKeys on key up " << (int)key << std::endl;
+        return;
+    }
+
     key_states[(int)key] = true;
     last_key_pressed = key;
 
@@ -60,6 +67,12 @@ void _notify_key_down(KeyCode key)
 
 void _notify_key_up(KeyCode key)
 {
+    if (key >= KeyCode::NumKeys)
+    {
+        std::cout << "WARNING: key outside NumKeys on key up " << (int)key << std::endl;
+        return;
+    }
+
     key_states[(int)key] = false;
     AETHER_FOREACH_PROCESSOR
     {

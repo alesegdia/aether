@@ -1,5 +1,6 @@
 #include "sdl_application.h"
 #include "sdl_keycode.h"
+#include "../../graphics/sdl/sdl_locator.h"
 
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -37,6 +38,7 @@ int SDLApplication::init(int argc, char **argv)
     }
 
 	m_renderer = SDL_CreateRenderer(m_display, -1, SDL_RENDERER_ACCELERATED);
+    aether_sdl_set_renderer(m_renderer);
 
     SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
     SDL_RenderClear(m_renderer);
@@ -44,9 +46,11 @@ int SDLApplication::init(int argc, char **argv)
     // initialize input
     //Input::Initialize();
 
+    /*
     SDL_version version;
     SDL_GetVersion(&version);
     printf("SDL Version: %u.%u.%u", version.major, version.minor, version.patch);
+    */
 
     return 0;
 }
