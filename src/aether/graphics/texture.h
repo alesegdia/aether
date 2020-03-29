@@ -57,7 +57,7 @@ public:
 
     TextureRegion(const Texture& texture)
 	    : m_texture(texture)
-	    , m_clip(aether::math::Rectf(0, 0, texture.width(), texture.height()))
+	    , m_clip(aether::math::Rectf(0.0f, 0.0f, float(texture.width()), float(texture.height())))
 	{
 
 	}

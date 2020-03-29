@@ -60,9 +60,9 @@ void Texture::draw(float x, float y,
 {
     SDL_Texture* texture = texture_manager.fetchPresentHandle(handle());
     SDL_Renderer* renderer = aether_sdl_get_renderer();
-    SDL_Point center{ centerx, centery };
-    SDL_Rect srcRect{ rx, ry, rw, rh };
-    SDL_Rect dstRect{ x, y, rw * xscale, rh * yscale };
+    SDL_Point center{ int(centerx), int(centery) };
+    SDL_Rect srcRect{ int(rx), int(ry), int(rw), int(rh) };
+    SDL_Rect dstRect{ int(x), int(y), int(rw * xscale), int(rh * yscale) };
     SDL_RendererFlip flip = SDL_RendererFlip((xflip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE) | (yflip ? SDL_FLIP_VERTICAL : SDL_FLIP_NONE));
     SDL_RenderCopyEx(renderer, texture, &srcRect, &dstRect, angle, &center, flip);
 }
@@ -74,7 +74,7 @@ void Texture::draw(float x, float y) const
 
 void Texture::draw(float x, float y, float alpha) const
 {
-    draw(x, y, 0, 0, width(), height(), { 1.0f, 1.0f, 1.0f }, false, false, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+    draw(x, y, 0.0f, 0.0f, float(width()), float(height()), { 1.0f, 1.0f, 1.0f }, false, false, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f);
 }
 
 }

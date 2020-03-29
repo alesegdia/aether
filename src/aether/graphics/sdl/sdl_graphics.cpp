@@ -8,7 +8,8 @@ namespace graphics {
 
 void clear(float r, float g, float b)
 {
-    SDL_SetRenderDrawColor(aether_sdl_get_renderer(), r, g, b, 0);
+    aether::graphics::Color c(r, g, b);
+    SDL_SetRenderDrawColor(aether_sdl_get_renderer(), c.r, c.g, c.b, 0);
     SDL_RenderClear(aether_sdl_get_renderer());
 }
 

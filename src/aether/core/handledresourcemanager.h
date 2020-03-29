@@ -40,7 +40,7 @@ public:
     {
         assert( handle >= 0 );
         assert( handle < m_usedResources );
-        ResourceType res = m_resources[handle];
+        ResourceType res = m_resources[size_t(handle)];
         return res;
     }
 

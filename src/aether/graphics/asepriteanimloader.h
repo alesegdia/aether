@@ -62,7 +62,7 @@ public:
             while( frameStart <= frameEnd )
             {
                 auto duration = frames[frameStart]["duration"].int_value();
-                animobj->addFrame(data.sheet->getFrame(frameStart), duration);
+                animobj->addFrame(*data.sheet->getFrame(frameStart), duration);
                 frameStart++;
             }
 
