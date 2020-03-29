@@ -14,6 +14,7 @@ void Font::load(const char *path, int size)
 void Font::destroy()
 {
 
+}
 
 void Font::print(const char *text, float x, float y, Color c)
 {

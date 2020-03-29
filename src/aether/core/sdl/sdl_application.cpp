@@ -26,7 +26,7 @@ int SDLApplication::init(int argc, char **argv)
         return -1;
     }
 
-	TTF_Init();
+	//TTF_Init();
 
     m_display = SDL_CreateWindow("WindowName",
 								 SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -38,14 +38,8 @@ int SDLApplication::init(int argc, char **argv)
 
 	m_renderer = SDL_CreateRenderer(m_display, -1, SDL_RENDERER_ACCELERATED);
 
-    al_clear_to_color(al_map_rgb(255, 0, 255));
-    al_set_target_bitmap(al_get_backbuffer(m_display));
-
-    al_clear_to_color(al_map_rgb(0,0,0));
-
-    al_set_target_bitmap(al_get_backbuffer(m_display));
-
-    al_set_new_display_option(ALLEGRO_VSYNC, 2, 1000);
+    SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
+    SDL_RenderClear(m_renderer);
 
     // initialize input
     //Input::Initialize();
@@ -59,12 +53,12 @@ int SDLApplication::init(int argc, char **argv)
 
 void SDLApplication::preRender()
 {
-    al_set_target_bitmap(al_get_backbuffer(m_display));
+
 }
 
 void SDLApplication::postRender()
 {
-    al_flip_display();
+    SDL_RenderPresent(m_renderer);
 }
 
 void aether::core::SDLApplication::cleanup()
@@ -94,7 +88,7 @@ void aether::core::SDLApplication::preUpdate()
         }
         else if( ev.type == SDL_MOUSEBUTTONDOWN)
         {
-            _notify_mouse_button_down(ev.button.button);
+            _notify_mouse_button_down((MouseButton)ev.button.button);
         }
     }
 
@@ -102,9 +96,9 @@ void aether::core::SDLApplication::preUpdate()
     int x, y;
     auto buttons = SDL_GetMouseState(&x, &y);
     MouseState& aether_mouse_state = _get_mouse_state();
-    aether_mouse_state.x = allegro_mouse_state.x;
-    aether_mouse_state.y = allegro_mouse_state.y;
-    aether_mouse_state.buttons = allegro_mouse_state.buttons;
+    aether_mouse_state.x = x;
+    aether_mouse_state.y = y;
+    aether_mouse_state.buttons = buttons;
 }
 
 void aether::core::SDLApplication::postUpdate()
