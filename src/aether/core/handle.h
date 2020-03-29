@@ -10,6 +10,7 @@ public:
     Handle();
 
     Handle(const Handle& other);
+    Handle(int handle);
 
     bool valid() const;
     bool notValid() const

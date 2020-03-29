@@ -79,3 +79,10 @@ void Texture::draw(float x, float y, float alpha) const
 
 }
 }
+
+aether::graphics::Texture aether_sdl_create_texture(SDL_Texture* texture)
+{
+    auto handle = aether::graphics::texture_manager.createNewHandle(texture);
+    return aether::graphics::Texture(handle);
+}
+

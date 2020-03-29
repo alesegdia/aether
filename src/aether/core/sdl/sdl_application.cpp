@@ -27,7 +27,7 @@ int SDLApplication::init(int argc, char **argv)
         return -1;
     }
 
-	//TTF_Init();
+	TTF_Init();
 
     m_display = SDL_CreateWindow("WindowName",
 								 SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,

@@ -11,6 +11,11 @@ Handle::Handle()
     m_handle = -1;
 }
 
+Handle::Handle(int handle)
+{
+    m_handle = handle;
+}
+
 Handle::Handle(const Handle &other)
 {
     m_handle = other.m_handle;
