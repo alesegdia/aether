@@ -14,3 +14,4 @@ SDL_Renderer* aether_sdl_get_renderer()
 {
 	return sRenderer;
 }
+

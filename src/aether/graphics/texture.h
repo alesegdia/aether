@@ -28,7 +28,7 @@ public:
               aether::graphics::Color color = aether::graphics::Color(1.f,1.f,1.f),
               bool xflip=false, bool yflip=false,
               float centerx=0.0f, float centery=0.0f, float angle=0.0f, float xscale=1.0f, float yscale=1.0f) const;
-	void draw(float x, float y, float alpha);
+	void draw(float x, float y, float alpha) const;
     void load(const char* path);
 
 

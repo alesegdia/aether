@@ -1,5 +1,6 @@
 #include "../graphics.h"
 
+#include "sdl_locator.h"
 
 namespace aether {
 namespace graphics {
@@ -7,7 +8,8 @@ namespace graphics {
 
 void clear(float r, float g, float b)
 {
-
+    SDL_SetRenderDrawColor(aether_sdl_get_renderer(), r, g, b, 0);
+    SDL_RenderClear(aether_sdl_get_renderer());
 }
 
 void draw_rectangle(float x1, float y1, float x2, float y2, Color c, float thickness)
