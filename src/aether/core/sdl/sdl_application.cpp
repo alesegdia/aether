@@ -1,4 +1,5 @@
 #include "sdl_application.h"
+#include "sdl_keycode.h"
 
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -40,22 +41,6 @@ int SDLApplication::init(int argc, char **argv)
     al_clear_to_color(al_map_rgb(255, 0, 255));
     al_set_target_bitmap(al_get_backbuffer(m_display));
 
-    m_eventQueue = al_create_event_queue();
-    if(!m_eventQueue) {
-        fprintf(stderr, "failed to create event_queue!\n");
-        al_destroy_display(m_display);
-        return -1;
-    }
-
-    if (!al_reserve_samples(3)){
-        fprintf(stderr, "failed to reserve samples!\n");
-        return -1;
-    }
-
-    al_register_event_source(m_eventQueue, al_get_display_event_source(m_display));
-    al_register_event_source(m_eventQueue, al_get_keyboard_event_source());
-    al_register_event_source(m_eventQueue, al_get_mouse_event_source());
-
     al_clear_to_color(al_map_rgb(0,0,0));
 
     al_set_target_bitmap(al_get_backbuffer(m_display));
@@ -65,12 +50,9 @@ int SDLApplication::init(int argc, char **argv)
     // initialize input
     //Input::Initialize();
 
-    uint32_t version = al_get_allegro_version();
-    int major = version >> 24;
-    int minor = (version >> 16) & 255;
-    int revision = (version >> 8) & 255;
-    int release = version & 255;
-    //printf("Allegro %d.%d.%d.%d\n", major, minor, revision, release);
+    SDL_version version;
+    SDL_GetVersion(&version);
+    printf("SDL Version: %u.%u.%u", version.major, version.minor, version.patch);
 
     return 0;
 }
@@ -87,42 +69,38 @@ void SDLApplication::postRender()
 
 void aether::core::SDLApplication::cleanup()
 {
-    al_destroy_display(m_display);
-    al_shutdown_image_addon();
-    al_shutdown_primitives_addon();
-    al_shutdown_ttf_addon();
-    al_shutdown_font_addon();
-    al_uninstall_audio();
-    al_uninstall_keyboard();
-    al_uninstall_mouse();
+    SDL_DestroyRenderer(m_renderer);
+    SDL_DestroyWindow(m_display);
+    IMG_Quit();
+    SDL_Quit();
 }
 
 void aether::core::SDLApplication::preUpdate()
 {
-    ALLEGRO_EVENT ev;
-    while( al_get_next_event(m_eventQueue, &ev) )
+    SDL_Event ev;
+    while( SDL_PollEvent(&ev) )
     {
-        if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+        if(ev.type == SDL_QUIT)
         {
             close();
         }
-        else if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
+        else if(ev.type == SDL_KEYDOWN)
         {
-            _notify_key_down((KeyCode)ev.keyboard.keycode);
+            _notify_key_down((KeyCode)ev.key.keysym.sym);
         }
-        else if(ev.type == ALLEGRO_EVENT_KEY_UP)
+        else if(ev.type == SDL_KEYUP)
         {
-            _notify_key_up((KeyCode)ev.keyboard.keycode);
+            _notify_key_up((KeyCode)ev.key.keysym.sym);
         }
-        else if( ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN )
+        else if( ev.type == SDL_MOUSEBUTTONDOWN)
         {
-            _notify_mouse_button_down((MouseButton)ev.mouse.button);
+            _notify_mouse_button_down(ev.button.button);
         }
     }
 
     // setup mouse state
-    ALLEGRO_MOUSE_STATE allegro_mouse_state;
-    al_get_mouse_state(&allegro_mouse_state);
+    int x, y;
+    auto buttons = SDL_GetMouseState(&x, &y);
     MouseState& aether_mouse_state = _get_mouse_state();
     aether_mouse_state.x = allegro_mouse_state.x;
     aether_mouse_state.y = allegro_mouse_state.y;
@@ -136,7 +114,7 @@ void aether::core::SDLApplication::postUpdate()
 
 void aether::core::SDLApplication::grabMouse()
 {
-    assert(al_grab_mouse(m_display));
+    SDL_SetWindowGrab(m_display, SDL_TRUE);
 }
 
 }

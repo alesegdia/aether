@@ -2,6 +2,8 @@
 
 #include "vec.h"
 
+#include <algorithm>
+
 namespace aether {
 namespace math {
 
