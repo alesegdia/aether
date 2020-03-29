@@ -1,11 +1,15 @@
 #include <stdio.h>
 
+#include <SDL.h>
+
+#include "sdl_locator.h"
 #include "../texture.h"
 #include "../../core/handledresourcemanager.h"
 
 namespace aether {
 namespace graphics {
 
+core::HandledResourceManager<SDL_Surface*> texture_manager;
 
 void Texture::load(const char *path)
 {
