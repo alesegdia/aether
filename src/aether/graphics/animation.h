@@ -34,7 +34,14 @@ public:
 
     typedef std::shared_ptr<Animation> SharedPtr;
 
+    enum class WrapMode
+    {
+        Once,
+        Loop
+    };
+
     Animation(uint64_t default_frame_duration = 500);
+    Animation(const std::vector<TextureRegion>& frames, uint64_t default_frame_duration = 500);
 
     /**
      * @brief addFrame adds a frame with a specified duration
@@ -72,11 +79,17 @@ public:
         return m_frames[i];
     }
 
+    void setWrapMode(WrapMode wrapMode)
+    {
+        m_wrapMode = wrapMode;
+    }
+
 
 private:
     std::vector<AnimationFrame> m_frames;
     int64_t m_defaultFrameDuration = 0;
     int64_t m_totalAnimDuration = 0;
+    WrapMode m_wrapMode = WrapMode::Loop;
 
 };
 

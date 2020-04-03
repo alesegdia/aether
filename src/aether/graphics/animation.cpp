@@ -19,6 +19,12 @@ Animation::Animation(uint64_t default_frame_duration)
 
 }
 
+Animation::Animation(const std::vector<TextureRegion>& frames, uint64_t default_frame_duration)
+    : Animation(default_frame_duration)
+{
+    addFrames(frames);
+}
+
 void Animation::addFrame(const TextureRegion& texture, int64_t duration)
 {
     int64_t accumulated = 0;
@@ -58,12 +64,20 @@ void Animation::updateData(AnimationData &data)
     int64_t time_accumulated = frame->accumulated_duration;
     size_t frame_index = size_t(data.animationFrameIndex);
 
-    while( frame->accumulated_duration + frame->frame_duration < data.timer )
+    bool lastFrame = frame_index >= m_frames.size();
+    while( frame->accumulated_duration + frame->frame_duration < data.timer &&
+         !(m_wrapMode == WrapMode::Once && lastFrame) )
     {
         frame_index++;
         time_accumulated = frame->accumulated_duration + frame->frame_duration;
+
+        bool lastFrame = frame_index >= m_frames.size();
         if( frame_index >= m_frames.size() )
         {
+            if (m_wrapMode == WrapMode::Once)
+            {
+                break;
+            }
             frame_index = 0;
             data.timer -= m_totalAnimDuration;
         }

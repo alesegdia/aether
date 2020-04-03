@@ -48,6 +48,11 @@ protected:
 class TextureRegion
 {
 public:
+    TextureRegion()
+    {
+
+    }
+
     TextureRegion(const TextureRegion& texreg)
         : m_texture(texreg.m_texture)
         , m_clip(texreg.m_clip)
@@ -100,6 +105,11 @@ public:
     const aether::math::Rectf& clip() const
     {
         return m_clip;
+    }
+
+    bool valid() const
+    {
+        return m_texture.valid();
     }
 
 private:
