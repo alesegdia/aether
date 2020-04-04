@@ -67,6 +67,27 @@ void Texture::draw(float x, float y,
     SDL_RenderCopyEx(renderer, texture, &srcRect, &dstRect, angle, NULL, flip);
 }
 
+void Texture::drawScaledCentered(float x, float y,
+    float rx, float ry, float rw, float rh,
+    aether::graphics::Color color,
+    bool xflip, bool yflip,
+    float centerx, float centery,
+    float angle,
+    float xscale, float yscale) const
+{
+    SDL_Texture* texture = texture_manager.fetchPresentHandle(handle());
+    SDL_Renderer* renderer = aether_sdl_get_renderer();
+    SDL_Point center{ int(centerx), int(centery) };
+    SDL_Rect srcRect{ int(rx), int(ry), int(rw), int(rh) };
+    int dstW = int(rw * xscale);
+    int dstH = int(rh * yscale);
+    SDL_Rect dstRect{ int(x) - dstW / 2, int(y) - dstW / 2, dstW, dstH };
+    SDL_RendererFlip flip = SDL_RendererFlip((xflip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE) | (yflip ? SDL_FLIP_VERTICAL : SDL_FLIP_NONE));
+    SDL_RenderCopyEx(renderer, texture, &srcRect, &dstRect, angle, NULL, flip);
+}
+
+
+
 void Texture::draw(float x, float y) const
 {
     draw(x, y, 1.0f);

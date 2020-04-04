@@ -24,11 +24,16 @@ public:
     void destroy();
     void draw(float x, float y) const;
     void draw(float x, float y,
-              float rx, float ry, float rw, float rh,
-              aether::graphics::Color color = aether::graphics::Color(1.f,1.f,1.f),
-              bool xflip=false, bool yflip=false,
-              float centerx=0.0f, float centery=0.0f, float angle=0.0f, float xscale=1.0f, float yscale=1.0f) const;
-	void draw(float x, float y, float alpha) const;
+        float rx, float ry, float rw, float rh,
+        aether::graphics::Color color = aether::graphics::Color(1.f, 1.f, 1.f),
+        bool xflip = false, bool yflip = false,
+        float centerx = 0.0f, float centery = 0.0f, float angle = 0.0f, float xscale = 1.0f, float yscale = 1.0f) const;
+    void drawScaledCentered(float x, float y,
+        float rx, float ry, float rw, float rh,
+        aether::graphics::Color color = aether::graphics::Color(1.f, 1.f, 1.f),
+        bool xflip = false, bool yflip = false,
+        float centerx = 0.0f, float centery = 0.0f, float angle = 0.0f, float xscale = 1.0f, float yscale = 1.0f) const;
+    void draw(float x, float y, float alpha) const;
     void load(const char* path);
 
 
@@ -107,6 +112,12 @@ public:
     void drawRotatedScaled(float x, float y, float xscale, float yscale, float rotation) const
     {
         m_texture.draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(), aether::graphics::Color(1.0f, 1.0f, 1.0f),
+            false, false, 0.0f, 0.0f, rotation, xscale, yscale);
+    }
+
+    void drawRotatedScaledCentered(float x, float y, float xscale, float yscale, float rotation) const
+    {
+        m_texture.drawScaledCentered(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(), aether::graphics::Color(1.0f, 1.0f, 1.0f),
             false, false, 0.0f, 0.0f, rotation, xscale, yscale);
     }
 
