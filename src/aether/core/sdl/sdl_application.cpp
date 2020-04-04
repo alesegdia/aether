@@ -84,11 +84,11 @@ void aether::core::SDLApplication::preUpdate()
         }
         else if(ev.type == SDL_KEYDOWN)
         {
-            _notify_key_down((KeyCode)ev.key.keysym.sym);
+            _notify_key_down((KeyCode)ev.key.keysym.scancode);
         }
         else if(ev.type == SDL_KEYUP)
         {
-            _notify_key_up((KeyCode)ev.key.keysym.sym);
+            _notify_key_up((KeyCode)ev.key.keysym.scancode);
         }
         else if( ev.type == SDL_MOUSEBUTTONDOWN)
         {

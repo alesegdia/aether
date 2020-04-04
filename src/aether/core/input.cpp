@@ -52,7 +52,7 @@ void _notify_key_down(KeyCode key)
 {
     if (key >= KeyCode::NumKeys)
     {
-        std::cout << "WARNING: key outside NumKeys on key up " << (int)key << std::endl;
+        std::cout << "WARNING: key outside NumKeys on key down " << (int)key << std::endl;
         return;
     }
 

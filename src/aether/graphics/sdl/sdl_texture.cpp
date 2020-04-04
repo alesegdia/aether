@@ -64,7 +64,7 @@ void Texture::draw(float x, float y,
     SDL_Rect srcRect{ int(rx), int(ry), int(rw), int(rh) };
     SDL_Rect dstRect{ int(x), int(y), int(rw * xscale), int(rh * yscale) };
     SDL_RendererFlip flip = SDL_RendererFlip((xflip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE) | (yflip ? SDL_FLIP_VERTICAL : SDL_FLIP_NONE));
-    SDL_RenderCopyEx(renderer, texture, &srcRect, &dstRect, angle, &center, flip);
+    SDL_RenderCopyEx(renderer, texture, &srcRect, &dstRect, angle, NULL, flip);
 }
 
 void Texture::draw(float x, float y) const
