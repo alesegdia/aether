@@ -20,7 +20,7 @@ void draw_rectangle(float x1, float y1, float x2, float y2, Color c, float thick
 
 void draw_filled_rectangle(float x1, float y1, float x2, float y2, Color c)
 {
-    math::Recti rect = { int(x1), int(y1), int(x2 - x1), int(y2 - y2) };
+    math::Recti rect = { int(x1), int(y1), int(x2 - x1), int(y2 - y1) };
     draw_filled_rectangle(rect, c);
 }
 
