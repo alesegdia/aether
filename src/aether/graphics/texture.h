@@ -48,6 +48,13 @@ protected:
 class TextureRegion
 {
 public:
+    static TextureRegion Create(std::string path)
+    {
+        aether::graphics::Texture t;
+        t.load(path.c_str());
+        return TextureRegion(t);
+    }
+
     TextureRegion()
     {
 

@@ -71,7 +71,7 @@ void Animation::updateData(AnimationData &data)
         frame_index++;
         time_accumulated = frame->accumulated_duration + frame->frame_duration;
 
-        bool lastFrame = frame_index >= m_frames.size();
+        lastFrame = frame_index >= m_frames.size();
         if( frame_index >= m_frames.size() )
         {
             if (m_wrapMode == WrapMode::Once)
