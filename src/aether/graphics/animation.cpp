@@ -84,6 +84,11 @@ void Animation::updateData(AnimationData &data)
         frame = &m_frames[frame_index];
     }
 
+    if (lastFrame && m_wrapMode == WrapMode::Once)
+    {
+        data.animationFinished = true;
+    }
+
     data.currentFrame = frame;
     data.animationFrameIndex = frame_index;
 }

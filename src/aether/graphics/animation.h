@@ -26,6 +26,7 @@ struct AnimationData
     int64_t timer = 0;
     AnimationFrame* currentFrame = nullptr;
     size_t animationFrameIndex = 0;
+    bool animationFinished = false;
 };
 
 class Animation
