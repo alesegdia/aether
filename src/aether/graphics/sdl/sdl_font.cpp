@@ -38,12 +38,13 @@ void Font::destroy()
 
 void Font::print(const char *text, float x, float y, Color c)
 {
-
+    print(text, x, y, c);
 }
 
 void Font::print(const char *text, float x, float y, float width, float line_height, Color c, bool noalign)
 {
-
+    TextData td = createTextTexture(text, c);
+    td.draw(x, y);
 }
 
 TextData Font::createTextTexture(const char* text, Color color)

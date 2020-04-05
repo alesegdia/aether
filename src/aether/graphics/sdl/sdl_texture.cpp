@@ -47,7 +47,8 @@ int Texture::height() const
 
 void Texture::destroy()
 {
-    SDL_DestroyTexture(fetch(handle()));
+    if(valid())
+        SDL_DestroyTexture(fetch(handle()));
 }
 
 void Texture::draw(float x, float y,
