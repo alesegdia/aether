@@ -1,5 +1,8 @@
 #include "../input.h"
 
+#include <cassert>
+#include <cstring>
+
 namespace aether {
 namespace core {
 

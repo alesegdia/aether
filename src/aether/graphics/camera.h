@@ -50,7 +50,7 @@ public:
     }
 
 private:
-	ALLEGRO_TRANSFORM m_transform{};
+	//ALLEGRO_TRANSFORM m_transform{};
 
 	// cache last (position, scale) if performance issues
     aether::math::Vec2f m_scale = aether::math::Vec2f(1, 1);

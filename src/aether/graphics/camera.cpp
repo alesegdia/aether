@@ -14,13 +14,15 @@ Camera::Camera(const aether::math::Vec2f& viewport)
 
 void Camera::bind()
 {
-	al_identity_transform(&m_transform);
+	/*
+    al_identity_transform(&m_transform);
     al_build_transform(&m_transform,
                        m_position.x() + m_viewport.x() / 2.f,
                        m_position.y() + m_viewport.y() / 2.f,
                        m_scale.x(),
                        m_scale.y(), m_rotation);
 	al_use_transform(&m_transform);
+    */
 }
 
 void Camera::position(const aether::math::Vec2f& new_position)
