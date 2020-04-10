@@ -54,10 +54,14 @@ if(${AETHER_USE_ALLEGRO})
     find_package(Allegro REQUIRED)
     list(APPEND AETHER_SOURCES ${AETHER_ALLEGRO_SOURCES})
 elseif(${AETHER_USE_SDL})
-    set(SDL2_PATH           ${CMAKE_CURRENT_LIST_DIR}/module/sdl/SDL2-2.0.10/)
-    set(SDL2_IMAGE_PATH     ${CMAKE_CURRENT_LIST_DIR}/module/sdl/SDL2_image-2.0.5/)
-    set(SDL2_TTF_PATH       ${CMAKE_CURRENT_LIST_DIR}/module/sdl/SDL2_ttf-2.0.15/)
-    find_package(SDL2 REQUIRED)
+
+	if(WIN32 AND MSVC)
+		set(SDL2_PATH           ${CMAKE_CURRENT_LIST_DIR}/module/sdl/SDL2-2.0.10/)
+		set(SDL2_IMAGE_PATH     ${CMAKE_CURRENT_LIST_DIR}/module/sdl/SDL2_image-2.0.5/)
+		set(SDL2_TTF_PATH       ${CMAKE_CURRENT_LIST_DIR}/module/sdl/SDL2_ttf-2.0.15/)
+    endif()
+	
+	find_package(SDL2 REQUIRED)
     find_package(SDL2_image REQUIRED)
     find_package(SDL2_ttf REQUIRED)
 

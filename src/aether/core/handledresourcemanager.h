@@ -2,13 +2,13 @@
 
 #include <stdio.h>
 #include <assert.h>
-
+#include <rztl/rztl.h>
 
 namespace aether {
 namespace core {
 
 
-template <typename ResourceType, size_t NumResources = 512>
+template <typename ResourceType>
 /**
  * @brief The HandledResourceManager class keeps track of resources
  * that are used externally via a handle instead of directly
@@ -24,10 +24,8 @@ public:
      */
     int createNewHandle(ResourceType element)
     {
-        assert(m_usedResources + 1 < NumResources);
-        int handle = m_usedResources;
-        m_usedResources++;
-        m_resources[handle] = element;
+        int handle = m_resources.size();
+        m_resources.add(element);
         return handle;
     }
 
@@ -39,7 +37,7 @@ public:
     ResourceType fetchPresentHandle(int handle)
     {
         assert( handle >= 0 );
-        assert( handle < m_usedResources );
+        assert( handle < m_resources.size() );
         ResourceType res = m_resources[size_t(handle)];
         return res;
     }
@@ -52,15 +50,14 @@ public:
     ResourceType& fetchPresentHandleReference(int handle)
     {
         assert( handle >= 0 );
-        assert( handle < m_usedResources );
+        assert( handle < m_resources.size() );
         return m_resources[handle];
     }
-
-
+   
+ 
 private:
 
-    ResourceType m_resources[NumResources];
-    int m_usedResources = 0;
+    rztl::UnorderedDynamicArray<ResourceType> m_resources;
 
 };
 
