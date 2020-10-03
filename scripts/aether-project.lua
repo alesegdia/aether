@@ -8,7 +8,9 @@ function newAetherExample(exampleName)
 		"sdl-image",
 		"tinyxml2",
 		"tmxparser",
-		"aether"
+		"aether",
+		"secs",
+		"hadron",
 	}
 	
 	dofile(path.join(AETHER_DIR, "scripts/common-flags.lua"))
