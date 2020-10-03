@@ -1,4 +1,4 @@
-function newAetherExample(exampleName)
+function aetherProject(exampleName)
 	project ("aether-" .. exampleName)
 	kind "ConsoleApp"
 	language "C++"
@@ -41,9 +41,9 @@ function newAetherExample(exampleName)
 			path.join(AETHER_DIR, "module/hadron/src/lib"),
 			path.join(AETHER_DIR, "module/json11"),
 		}
-	defines {
-		"AETHER_USE_SDL"
-	}
+		defines {
+			"AETHER_USE_SDL"
+		}
 		flags {
 			"Symbols",
 			"StaticRuntime"

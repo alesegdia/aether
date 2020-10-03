@@ -10,13 +10,13 @@ solution "aether"
 
 	dofile("aether-build.lua")
 
-	newAetherExample("basic")
+	aetherProject("basic")
 		debugdir (AETHER_DIR)
 		files {
 			path.join(AETHER_DIR, "examples/basic/main.cpp")
 		}
 
-	newAetherExample("input")
+	aetherProject("input")
 		debugdir (AETHER_DIR)
 		files {
 			path.join(AETHER_DIR, "examples/input/main.cpp")
@@ -26,7 +26,7 @@ solution "aether"
 			"StaticRuntime"
 		}
 
-	newAetherExample("texture")
+	aetherProject("texture")
 		debugdir (AETHER_DIR)
 		files {
 			path.join(AETHER_DIR, "examples/basic/texture.cpp")
