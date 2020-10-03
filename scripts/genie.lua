@@ -8,61 +8,7 @@ solution "aether"
 	configurations { "debug", "release" }
 	platforms { "x32", "x64" }
 
-	dofile("external/sdl.lua")
-		flags {
-			"Symbols",
-			"StaticRuntime"
-		}
-	dofile("external/sdl_ttf.lua")
-		flags {
-			"Symbols",
-			"StaticRuntime"
-		}
-	dofile("external/sdl_image.lua")
-		flags {
-			"Symbols",
-			"StaticRuntime"
-		}
-	dofile("external/tinyxml2.lua")
-		flags {
-			"Symbols",
-			"StaticRuntime"
-		}
-	dofile("external/tmxparser.lua")
-		flags {
-			"Symbols",
-			"StaticRuntime"
-		}
-	dofile("external/tmxparser.lua")
-		flags {
-			"Symbols",
-			"StaticRuntime"
-		}
-	dofile("external/json11.lua")
-		flags {
-			"Symbols",
-			"StaticRuntime"
-		}
-	dofile("external/hadron.lua")
-		flags {
-			"Symbols",
-			"StaticRuntime"
-		}
-	dofile("external/secs.lua")
-		flags {
-			"Symbols",
-			"StaticRuntime"
-		}
-	dofile("external/rztl.lua")
-		flags {
-			"Symbols",
-			"StaticRuntime"
-		}
-	dofile("aether.lua")
-		flags {
-			"Symbols",
-			"StaticRuntime"
-		}
+	dofile("aether-build.lua")
 
 	newAetherExample("basic")
 		debugdir (AETHER_DIR)
