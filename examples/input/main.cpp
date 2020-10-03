@@ -7,7 +7,7 @@ public:
     {
         if( false == m_texture.valid() )
         {
-            m_texture.load("media/aether-logo.png");
+            m_texture.load("media/aether-logo.PNG");
         }
 
         m_position.set(0, 0);
@@ -77,5 +77,5 @@ private:
 
 int main( int argc, char** argv )
 {
-    MyGame(200, 200).exec(argc, argv);
+    return MyGame(200, 200).exec(argc, argv);
 }

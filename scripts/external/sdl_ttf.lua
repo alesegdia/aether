@@ -4,7 +4,7 @@ project "sdl-ttf"
 	language "C++"
 
 	configuration {}
-
+	
 	includedirs {
 		path.join(AETHER_DIR, "module/sdl-ttf"),
 		path.join(AETHER_DIR, "module/sdl-ttf/external/freetype-2.10.1/include"),

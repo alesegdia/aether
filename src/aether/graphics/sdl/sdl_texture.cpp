@@ -25,6 +25,7 @@ void Texture::load(const char* path)
     auto* renderer = aether_sdl_get_renderer();
     assert(renderer);
     auto* texture = IMG_LoadTexture(renderer, path);
+    printf("Oh My Goodness, an error : %s", IMG_GetError());
     assert(texture);
     handle(texture_manager.createNewHandle(texture));
 }

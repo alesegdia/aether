@@ -7,12 +7,7 @@
 #include <vector>
 #include <functional>
 
-#include <TmxMap.h>
-#include <TmxLayer.h>
-#include <TmxTileLayer.h>
-#include <TmxTileset.h>
-#include <TmxTile.h>
-#include <TmxObject.h>
+#include <Tmx.h>
 
 
 namespace aether {

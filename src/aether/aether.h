@@ -7,6 +7,7 @@
 
 #include "core/time.h"
 #include "core/resourcemanager.h"
+#include "core/iscreen.h"
 
 #include "graphics/color.h"
 #include "graphics/font.h"

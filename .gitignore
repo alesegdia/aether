@@ -13,3 +13,6 @@
 *.ilk
 *.lib
 *.exp
+*.idb
+*.pdb
+*.exp

@@ -4,7 +4,7 @@ project "tinyxml2"
 	language "C++"
 
 	configuration {}
-
+	
 	includedirs {
 		path.join(AETHER_DIR, "module/tinyxml2"),
 	}

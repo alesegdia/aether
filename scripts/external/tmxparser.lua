@@ -4,7 +4,7 @@ project "tmxparser"
 	language "C++"
 
 	configuration {}
-
+	
 	includedirs {
 		path.join(AETHER_DIR, "module/tmxparser/include"),
 		path.join(AETHER_DIR, "module/tinyxml2"),
