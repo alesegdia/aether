@@ -10,3 +10,9 @@
 [submodule "module/json11"]
 	path = module/json11
 	url = git@github.com:dropbox/json11.git
+[submodule "module/sdl"]
+	path = module/sdl
+	url = git@github.com:SDL-mirror/SDL.git
+[submodule "module/sdl-ttf"]
+	path = module/sdl-ttf
+	url = git@github.com:SDL-mirror/SDL_ttf.git

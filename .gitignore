@@ -4,3 +4,11 @@
 *.autosave
 *.user
 *.a
+*.obj
+*.tlog
+*.log
+*.vcxproj*
+*.recipe
+*.exe
+*.ilk
+*.lib
