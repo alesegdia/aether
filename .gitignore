@@ -12,3 +12,4 @@
 *.exe
 *.ilk
 *.lib
+*.exp

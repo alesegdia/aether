@@ -4,6 +4,8 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+#include <Tmx.h>
+
 extern "C" int main(int argc, char* argv[])
 {
     using std::cerr;

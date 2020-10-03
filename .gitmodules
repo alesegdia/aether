@@ -16,3 +16,9 @@
 [submodule "module/sdl-ttf"]
 	path = module/sdl-ttf
 	url = git@github.com:SDL-mirror/SDL_ttf.git
+[submodule "module/hadron"]
+	path = module/hadron
+	url = git@github.com:alesegdia/hadron.git
+[submodule "module/secs"]
+	path = module/secs
+	url = git@github.com:alesegdia/secs.git
