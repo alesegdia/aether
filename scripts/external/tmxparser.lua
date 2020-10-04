@@ -1,17 +1,8 @@
-project "tmxparser"
-	location "../build"
-	kind "StaticLib"
-	language "C++"
+commonLibSetup("tmxparser")
 
-	configuration {}
-	
 	includedirs {
 		path.join(AETHER_DIR, "module/tmxparser/include"),
 		path.join(AETHER_DIR, "module/tinyxml2"),
-	}
-
-	links {
-		"tinyxml2"
 	}
 
 	files {

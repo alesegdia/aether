@@ -104,4 +104,4 @@ commonLibSetup("sdl-image")
 			"CRT_SECURE_NO_DEPRECATE"
 		}
 
-		configuration {}
+	configuration {}

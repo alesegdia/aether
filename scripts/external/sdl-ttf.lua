@@ -12,8 +12,6 @@ commonLibSetup("sdl-ttf")
 		"FT2_BUILD_LIBRARY",
 	}
 
-	configuration {}
-
 	files {
 		path.join(AETHER_DIR, "module/sdl-ttf/SDL_ttf.h"),
 		path.join(AETHER_DIR, "module/sdl-ttf/SDL_ttf.c"),

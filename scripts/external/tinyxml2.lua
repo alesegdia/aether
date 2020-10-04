@@ -1,10 +1,5 @@
-project "tinyxml2"
-	location "../build"
-	kind "StaticLib"
-	language "C++"
+commonLibSetup("tinyxml2")
 
-	configuration {}
-	
 	includedirs {
 		path.join(AETHER_DIR, "module/tinyxml2"),
 	}
@@ -13,4 +8,6 @@ project "tinyxml2"
 		path.join(AETHER_DIR, "module/tinyxml2/tinyxml2.h"),
 		path.join(AETHER_DIR, "module/tinyxml2/tinyxml2.cpp"),
 	}
+
+
 

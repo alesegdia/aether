@@ -13,8 +13,6 @@ function aetherProject(exampleName)
 		"hadron",
 	}
 	
-	dofile(path.join(AETHER_DIR, "scripts/common-flags.lua"))
-
 	configuration { "vs20*" }
 		links {
 			"DelayImp",
