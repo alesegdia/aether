@@ -46,4 +46,3 @@ dofile(path.join(AETHER_DIR, "scripts/external/rztl.lua"))
 		"Symbols",
 		"StaticRuntime"
 	}
-	

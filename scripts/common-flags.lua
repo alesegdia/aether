@@ -1,6 +1,6 @@
 flags {
 	"Cpp17",
-	"ExtraWarnings",
-	"PedanticWarnings",
+	-- "ExtraWarnings",
+	-- "PedanticWarnings",
 }
 

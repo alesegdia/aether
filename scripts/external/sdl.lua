@@ -1,9 +1,4 @@
-project "sdl"
-	location "../build"
-	kind "StaticLib"
-	language "C++"
-
-	configuration {}
+commonLibSetup("sdl")
 
 	includedirs {
 		path.join(AETHER_DIR, "module/sdl/include"),

@@ -1,7 +1,4 @@
-project "hadron"
-	location "../build"
-	kind "StaticLib"
-	language "C++"
+commonLibSetup("hadron")
 
 	configuration {}
 	

@@ -1,6 +1,8 @@
 AETHER_DIR = path.getabsolute("../")
 
+dofile("common-lib-setup.lua")
 dofile("aether-project.lua")
+dofile("sdl-backend.lua")
 
 solution "aether"
 

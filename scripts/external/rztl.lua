@@ -1,7 +1,4 @@
-project "rztl"
-	location "../build"
-	kind "StaticLib"
-	language "C++"
+commonLibSetup("rztl")
 
 	configuration {}
 	

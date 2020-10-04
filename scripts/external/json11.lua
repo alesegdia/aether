@@ -1,7 +1,4 @@
-project "json11"
-	location "../build"
-	kind "StaticLib"
-	language "C++"
+commonLibSetup("json11")
 
 	configuration {}
 	
