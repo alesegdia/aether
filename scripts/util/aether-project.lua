@@ -39,12 +39,17 @@ function aetherProject(exampleName)
 			path.join(AETHER_DIR, "module/hadron/src/lib"),
 			path.join(AETHER_DIR, "module/json11"),
 		}
+
+	configuration { "sdl" }
 		defines {
 			"AETHER_USE_SDL"
 		}
-		flags {
-			"Symbols",
-			"StaticRuntime"
+
+	configuration { "allegro" }
+		defines {
+			"AETHER_USE_ALLEGRO"
 		}
+
+	commonFlags()
 
 end

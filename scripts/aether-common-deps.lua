@@ -1,0 +1,7 @@
+dofile(path.join(AETHER_DIR, "scripts/libs/tinyxml2.lua"))
+dofile(path.join(AETHER_DIR, "scripts/libs/tmxparser.lua"))
+dofile(path.join(AETHER_DIR, "scripts/libs/tmxparser.lua"))
+dofile(path.join(AETHER_DIR, "scripts/libs/json11.lua"))
+dofile(path.join(AETHER_DIR, "scripts/libs/hadron.lua"))
+dofile(path.join(AETHER_DIR, "scripts/libs/secs.lua"))
+dofile(path.join(AETHER_DIR, "scripts/libs/rztl.lua"))
