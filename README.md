@@ -6,13 +6,9 @@ Aether aims to be a very simple 2D framework intended to be used in several plat
 
 ## Platform backends
 
-* Linux and Windows using [allegro](https://github.com/liballeg/allegro5)
+* Linux and Windows using [allegro](https://github.com/liballeg/allegro5) or [sdl](https://github.com/SDL-mirror/SDL)
 
-## To-Do
+## To-Do very far in the future
 
 * Support for 3DS Homebrew using [Citro2D](https://github.com/devkitPro/citro2d) (**in progress**)
 * Support for Vita Homebrew 
-* Reuse handles for resources management
-* Copy Animation and Spritesheet classes from alligator
-* Refactor math code, inherited from alligator
-
