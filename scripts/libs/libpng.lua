@@ -7,7 +7,7 @@ commonLibSetup("libpng")
 		path.join(AETHER_DIR, "module/zlib/"),
 	}
 
-    postbuildcommands {
+    prebuildcommands {
 		"cp " .. path.join(AETHER_DIR, "module/libpng/scripts/pnglibconf.h.prebuilt") .. " " .. path.join(AETHER_DIR, "module/libpng/pnglibconf.h")
     }
     
