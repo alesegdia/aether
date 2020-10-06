@@ -59,10 +59,22 @@ void Texture::draw(float x, float y) const
     al_draw_bitmap(fetch(handle()), x, y, 0);
 }
 
+/*
 void Texture::draw(float x, float y, float alpha)
 {
     al_draw_tinted_bitmap(fetch(handle()), al_map_rgba_f(alpha, alpha, alpha, alpha), x, y, 0);
 }
+*/
+
+void Texture::drawScaledCentered(float x, float y,
+    float rx, float ry, float rw, float rh,
+    aether::graphics::Color color,
+    bool xflip, bool yflip,
+    float centerx, float centery, float angle, float xscale, float yscale) const
+{
+
+}
+
 
 }
 }

@@ -25,3 +25,15 @@
 [submodule "module/secs"]
 	path = module/secs
 	url = git@github.com:alesegdia/secs.git
+[submodule "module/allegro"]
+	path = module/allegro
+	url = git@github.com:liballeg/allegro5.git
+[submodule "module/libpng"]
+	path = module/libpng
+	url = git@github.com:glennrp/libpng.git
+[submodule "module/zlib"]
+	path = module/zlib
+	url = git@github.com:madler/zlib.git
+[submodule "module/freetype"]
+	path = module/freetype
+	url = git@github.com:aseprite/freetype2.git

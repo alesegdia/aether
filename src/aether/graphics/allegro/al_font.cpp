@@ -49,6 +49,12 @@ void Font::print(const char *text, float x, float y, float width, float line_hei
     }
 }
 
+TextData Font::createTextTexture(const char* text, Color color)
+{
+    assert(false);
+    return {};
+}
+
 
 }
 }

@@ -1,57 +1,46 @@
+dofile("aether-files.lua")
+
 commonLibSetup("aether")
-
+	language "C++"
 	targetdir (path.join(AETHER_DIR, "/bin/lib"))
+	flags { "Cpp17" }
+	includedirs { AETHER_COMMON_INCLUDE_DIRS }
+	files { AETHER_COMMON_SOURCES }
 
-	files {
-		path.join(AETHER_DIR, "src/aether/aether.h"),
-		path.join(AETHER_DIR, "src/aether/platform.h"),
-		path.join(AETHER_DIR, "src/aether/audio/*.h"),
-		path.join(AETHER_DIR, "src/aether/audio/*.cpp"),
-		path.join(AETHER_DIR, "src/aether/core/*.h"),
-		path.join(AETHER_DIR, "src/aether/core/*.cpp"),
-		path.join(AETHER_DIR, "src/aether/debug/*.h"),
-		path.join(AETHER_DIR, "src/aether/debug/*.cpp"),
-		path.join(AETHER_DIR, "src/aether/graphics/*.h"),
-		path.join(AETHER_DIR, "src/aether/graphics/*.cpp"),
-		path.join(AETHER_DIR, "src/aether/map/*.h"),
-		path.join(AETHER_DIR, "src/aether/map/*.cpp"),
-		path.join(AETHER_DIR, "src/aether/math/*.h"),
-		path.join(AETHER_DIR, "src/aether/math/*.cpp"),
-		path.join(AETHER_DIR, "src/aether/resources/*.h"),
-		path.join(AETHER_DIR, "src/aether/resources/*.cpp"),
-		path.join(AETHER_DIR, "src/aether/scene/*.h"),
-		path.join(AETHER_DIR, "src/aether/scene/*.cpp"),
-	}
-
-	configuration {}	
-		flags {
-			"Cpp17"
-		}
-
-	configuration { "vs20*" }
+	configuration { "backend-allegro" }
 		defines {
-			"AETHER_USE_SDL"
+			"AETHER_USE_ALLEGRO",
+			"ALLEGRO_STATICLINK",
+        	"ALLEGRO_USE_SDL",
+        	"ALLEGRO_CFG_D3D",
 		}
-
 		files {
-			path.join(AETHER_DIR, "src/aether/audio/sdl/*.h"),
-			path.join(AETHER_DIR, "src/aether/audio/sdl/*.cpp"),
-			path.join(AETHER_DIR, "src/aether/core/sdl/*.h"),
-			path.join(AETHER_DIR, "src/aether/core/sdl/*.cpp"),
-			path.join(AETHER_DIR, "src/aether/graphics/sdl/*.h"),
-			path.join(AETHER_DIR, "src/aether/graphics/sdl/*.cpp"),
+			AETHER_ALLEGRO_CORE_SOURCES,
+			AETHER_ALLEGRO_GRAPHICS_SOURCES,
+		}
+		includedirs {
+			AETHER_ALLEGRO_INCLUDE_DIRS
 		}
 
-		includedirs {
-			path.join(AETHER_DIR, "module/sdl/include"),
-			path.join(AETHER_DIR, "module/sdl/src/hidapi/hidapi"),
-			path.join(AETHER_DIR, "module/sdl-ttf/external/freetype-2.10.1/include"),
-			path.join(AETHER_DIR, "module/sdl-ttf"),
-			path.join(AETHER_DIR, "module/sdl-image"),
-			path.join(AETHER_DIR, "module/tinyxml2"),
-			path.join(AETHER_DIR, "module/tmxparser/include"),
-			path.join(AETHER_DIR, "module/rztl/include"),
-			path.join(AETHER_DIR, "module/secs/src/lib"),
-			path.join(AETHER_DIR, "module/hadron/src/lib"),
-			path.join(AETHER_DIR, "module/json11"),
+	configuration { "backend-sdl" }
+		defines { "AETHER_USE_SDL" }
+		files {
+			AETHER_SDL_CORE_SOURCES,
+			AETHER_SDL_GRAPHICS_SOURCES,
 		}
+		includedirs {
+			AETHER_SDL_INCLUDE_DIRS
+		}
+
+	configuration { "disable-audio" }
+		files { AETHER_DUMMY_AUDIO_SOURCES }
+
+	configuration { "enable-audio" }	
+		defines { "AETHER_ENABLE_AUDIO" }
+
+	configuration { "backend-allegro", "enable-audio" }
+		files { AETHER_ALLEGRO_AUDIO_SOURCES }
+
+	configuration { "backend-sdl", "enable-audio" }
+		files { AETHER_SDL_AUDIO_SOURCES }
+

@@ -1,5 +1,10 @@
 #include "al_application.h"
 
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_ttf.h>
+
 namespace aether {
 namespace core {
 
@@ -31,11 +36,13 @@ int AllegroApplication::init(int argc, char **argv)
         return -1;
     }
 
-    if(!al_init_primitives_addon()) {
+    if (!al_init_primitives_addon()) {
         fprintf(stderr, "failed to initialize primitives addon!\n");
         return -1;
     }
 
+
+#ifdef AETHER_ENABLE_AUDIO
     if(!al_init_acodec_addon()) {
         fprintf(stderr, "failed to initialize audio codecs!\n");
         return -1;
@@ -45,6 +52,12 @@ int AllegroApplication::init(int argc, char **argv)
         fprintf(stderr, "failed to initialize audio!\n");
         return -1;
     }
+
+    if (!al_reserve_samples(3)) {
+        fprintf(stderr, "failed to reserve samples!\n");
+        return -1;
+    }
+#endif
 
     al_init_font_addon();
 
@@ -66,11 +79,6 @@ int AllegroApplication::init(int argc, char **argv)
     if(!m_eventQueue) {
         fprintf(stderr, "failed to create event_queue!\n");
         al_destroy_display(m_display);
-        return -1;
-    }
-
-    if (!al_reserve_samples(3)){
-        fprintf(stderr, "failed to reserve samples!\n");
         return -1;
     }
 
@@ -111,10 +119,16 @@ void aether::core::AllegroApplication::cleanup()
 {
     al_destroy_display(m_display);
     al_shutdown_image_addon();
+
     al_shutdown_primitives_addon();
+
     al_shutdown_ttf_addon();
     al_shutdown_font_addon();
+
+#ifdef AETHER_ENABLE_AUDIO
     al_uninstall_audio();
+#endif
+
     al_uninstall_keyboard();
     al_uninstall_mouse();
 }

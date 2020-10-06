@@ -1,5 +1,5 @@
 commonLibSetup("secs")
-
+	language "C++"
 	includedirs {
 		path.join(AETHER_DIR, "module/secs/src/lib"),
 	}

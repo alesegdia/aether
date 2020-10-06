@@ -1,6 +1,8 @@
 AETHER_DIR = path.getabsolute("../")
 
-dofile("util/util.lua")
+dofile(path.join(AETHER_DIR, "scripts/util/util.lua"))
+
+aetherConfig()
 
 solution "aether"
 
@@ -8,7 +10,7 @@ solution "aether"
 	configurations { "debug", "release" }
 	platforms { "x32", "x64" }
 
-	dofile("aether-build.lua")
+	aetherBuild()
 
 	aetherProject("basic")
 		debugdir (AETHER_DIR)

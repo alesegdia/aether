@@ -1,4 +1,5 @@
 commonLibSetup("tinyxml2")
+	language "C++"
 
 	includedirs {
 		path.join(AETHER_DIR, "module/tinyxml2"),

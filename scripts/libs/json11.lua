@@ -1,5 +1,5 @@
 commonLibSetup("json11")
-
+	language "C++"
 	configuration {}
 	
 	includedirs {

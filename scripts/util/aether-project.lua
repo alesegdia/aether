@@ -1,55 +1,40 @@
-function aetherProject(exampleName)
-	project ("aether-" .. exampleName)
+dofile("../libs/aether-files.lua")
+dofile("common.lua")
+
+function aetherProject(projectName)
+	project (projectName)
 	kind "ConsoleApp"
 	language "C++"
-	links {
-		"sdl",
-		"sdl-ttf",
-		"sdl-image",
-		"tinyxml2",
-		"tmxparser",
-		"aether",
-		"secs",
-		"hadron",
-	}
-	
-	configuration { "vs20*" }
-		links {
-			"DelayImp",
-			"gdi32",
-			"psapi",
-			"Winmm",
-			"imm32",
-			"version",
-			"Setupapi",
-			"MSVCRTD",
-		}
+	configurations { "debug", "release" }
+	platforms { "x32", "x64" }
+
 	configuration {}
-		includedirs {
-			path.join(AETHER_DIR, "src"),
-			path.join(AETHER_DIR, "module/sdl/include"),
-			path.join(AETHER_DIR, "module/sdl/src/hidapi/hidapi"),
-			path.join(AETHER_DIR, "module/sdl-ttf/external/freetype-2.10.1/include"),
-			path.join(AETHER_DIR, "module/sdl-ttf"),
-			path.join(AETHER_DIR, "module/sdl-image"),
-			path.join(AETHER_DIR, "module/tinyxml2"),
-			path.join(AETHER_DIR, "module/tmxparser/include"),
-			path.join(AETHER_DIR, "module/rztl/include"),
-			path.join(AETHER_DIR, "module/secs/src/lib"),
-			path.join(AETHER_DIR, "module/hadron/src/lib"),
-			path.join(AETHER_DIR, "module/json11"),
-		}
+		links { AETHER_COMMON_LIBS }
+		includedirs { AETHER_COMMON_INCLUDE_DIRS }
 
-	configuration { "sdl" }
-		defines {
-			"AETHER_USE_SDL"
-		}
+	-- https://support.microsoft.com/es-es/help/154753/description-of-the-default-c-and-c-libraries-that-a-program-will-link
+	configuration { "vs20*", "debug" }
+		links { "LIBCMTD" }
 
-	configuration { "allegro" }
-		defines {
-			"AETHER_USE_ALLEGRO"
-		}
+	configuration { "vs20*", "release" }
+		links { "LIBCMT" }
+
+	configuration { "backend-sdl" }
+		defines { "AETHER_USE_SDL" }
+		includedirs { AETHER_SDL_INCLUDE_DIRS }
+		links { AETHER_SDL_COMMON_LIBS }
+
+	configuration { "backend-allegro" }
+		defines { "AETHER_USE_ALLEGRO", "ALEGRO_STATICLINK" }
+		includedirs { AETHER_ALLEGRO_INCLUDE_DIRS }
+		links { AETHER_ALLEGRO_COMMON_LIBS }
+
+	configuration { "vs20*", "backend-sdl" }
+		links { AETHER_SDL_WIN_LIBS }
+		--flags { "WinMain" }
+
+	configuration { "vs20*", "backend-allegro" }
+        links { AETHER_ALLEGRO_WIN_LIBS }
 
 	commonFlags()
-
 end

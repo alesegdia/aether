@@ -1,5 +1,5 @@
 commonLibSetup("hadron")
-
+	language "C++"
 	configuration {}
 	
 	includedirs {
