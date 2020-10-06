@@ -87,6 +87,7 @@ AETHER_COMMON_LIBS = {
 	"hadron",
 	"aether",
 	"freetype",
+	"json11"
 }
 
 AETHER_SDL_WIN_LIBS = {

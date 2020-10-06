@@ -17,19 +17,15 @@
 #include "graphics/animation.h"
 #include "graphics/asepriteanimloader.h"
 
-#ifdef AETHER_USE_CAMERA
 #include "graphics/camera.h"
-#endif
 
 #include "math/matrix.h"
 #include "math/vec.h"
 #include "math/rect.h"
 #include "math/rng.h"
 
-#ifdef AETHER_USE_MAP
 #include "map/collisiontilemap.h"
 #include "map/tilemap.h"
-#endif
 
 #include "scene/scene.h"
 #include "scene/texturenode.h"
