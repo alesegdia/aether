@@ -37,3 +37,6 @@
 [submodule "module/freetype"]
 	path = module/freetype
 	url = git@github.com:aseprite/freetype2.git
+[submodule "module/dxsdk"]
+	path = module/dxsdk
+	url = git@github.com:apitrace/dxsdk.git
