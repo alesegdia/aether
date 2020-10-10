@@ -36,5 +36,19 @@ function aetherProject(projectName)
 	configuration { "vs20*", "backend-allegro" }
         links { AETHER_ALLEGRO_WIN_LIBS }
 
+    
+        links {
+            "opengl32",
+            "glu32",
+        }
+        defines {
+            "ALLEGRO_CFG_OPENGL",
+            "ALLEGRO_CFG_OPENGL_PROGRAMMABLE_PIPELINE",
+            "ALLEGRO_CFG_SHADER_GLSL",
+        	"ALLEGRO_CFG_RELEASE_LOGGING",
+        	"DEBUGMODE",
+        }
+
+
 	commonFlags()
 end

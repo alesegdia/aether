@@ -359,6 +359,10 @@ ALLEGRO_ADDON_IMAGE_INCLUDE = {
     path.join(AETHER_DIR, "module/allegro/addons/image"),
 }
 
+ALLEGRO_ADDON_COLOR_INCLUDE = {
+    path.join(AETHER_DIR, "module/allegro/addons/color"),
+}
+
 ALLEGRO_ADDON_IMAGE_FILES = {
     path.join(AETHER_DIR, "module/allegro/addons/image/bmp.c"),
     path.join(AETHER_DIR, "module/allegro/addons/image/iio.c"),
@@ -389,4 +393,8 @@ ALLEGRO_ADDON_PRIMITIVE_WINDOWS_FILES = {
 
 ALLEGRO_ADDON_TTF_FILES = {
     path.join(AETHER_DIR, "module/allegro/addons/ttf/ttf.c"),
+}
+
+ALLEGRO_ADDON_COLOR_FILES = {
+    path.join(AETHER_DIR, "module/allegro/addons/color/color.c"),
 }

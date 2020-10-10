@@ -16,6 +16,10 @@ AllegroApplication::AllegroApplication(int sw, int sh)
 
 int AllegroApplication::init(int argc, char **argv)
 {
+    al_register_trace_handler([](const char* message) {
+        std::cout << "ALLEGRO MESSAGE: " << message;
+        });
+
     if(!al_init()) {
         fprintf(stderr, "failed to initialize allegro!\n");
         return -1;
@@ -66,6 +70,8 @@ int AllegroApplication::init(int argc, char **argv)
         return -1;
     }
 
+    al_set_new_display_flags(ALLEGRO_DIRECT3D_INTERNAL);
+    al_set_new_display_option(ALLEGRO_VSYNC, 2, 1000);
     m_display = al_create_display(screenWidth(), screenHeight());
     if(!m_display) {
         fprintf(stderr, "failed to create display!\n");
@@ -100,7 +106,7 @@ int AllegroApplication::init(int argc, char **argv)
     int minor = (version >> 16) & 255;
     int revision = (version >> 8) & 255;
     int release = version & 255;
-    //printf("Allegro %d.%d.%d.%d\n", major, minor, revision, release);
+    printf("Allegro %d.%d.%d.%d\n", major, minor, revision, release);
 
     return 0;
 }

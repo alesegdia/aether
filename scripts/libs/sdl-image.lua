@@ -9,7 +9,7 @@ commonLibSetup("sdl-image")
 	includedirs {
 		path.join(AETHER_DIR, "module/sdl-image"),
 		path.join(AETHER_DIR, "module/libpng"),
-		path.join(AETHER_DIR, "module/sdl-image/external/zlib-1.2.11"),
+		path.join(AETHER_DIR, "module/zlib"),
 		path.join(AETHER_DIR, "module/sdl/include"),
 	}
 
