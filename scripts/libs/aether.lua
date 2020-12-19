@@ -4,8 +4,8 @@ commonLibSetup("aether")
 	language "C++"
 	targetdir (path.join(AETHER_DIR, "/bin/lib"))
 	flags { "Cpp17" }
-	includedirs { AETHER_COMMON_INCLUDE_DIRS }
-	files { AETHER_COMMON_SOURCES }
+	includedirs { AETHER_COMMON_INCLUDE_DIRS, AETHER_API_INCLUDE_DIRS }
+	files { AETHER_COMMON_SOURCES, AETHER_API_SOURCES }
 
 	configuration { "backend-allegro" }
 		defines {

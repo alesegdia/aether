@@ -14,6 +14,9 @@ public:
     virtual ~ApplicationBase() = 0 ;
 
     int exec(int argc, char** argv);
+    int initialize(int argc, char** argv);
+    void step();
+    void deinitialize();
 
     void setScreen(std::shared_ptr<IScreen> screen);
 
@@ -92,6 +95,8 @@ private:
 
     int m_screenWidth;
     int m_screenHeight;
+    uint64_t now, then;
+    uint64_t accum[2] = { 0, 0 };
 
     bool m_doExit = false;
 

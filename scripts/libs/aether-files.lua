@@ -19,6 +19,15 @@ AETHER_COMMON_SOURCES = {
 	path.join(AETHER_DIR, "src/aether/scene/*.cpp"),
 }
 
+AETHER_API_SOURCES = {
+	path.join(AETHER_DIR ,"src/aether/api/*.h"),
+	path.join(AETHER_DIR ,"src/aether/api/*.cpp")
+}
+
+AETHER_API_INCLUDE_DIRS = {
+	path.join(AETHER_DIR ,"src/aether/api/")
+}
+
 AETHER_COMMON_INCLUDE_DIRS = {
 	path.join(AETHER_DIR, "src"),
 	path.join(AETHER_DIR, "module/tinyxml2"),
