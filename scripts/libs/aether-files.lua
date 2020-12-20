@@ -36,6 +36,8 @@ AETHER_COMMON_INCLUDE_DIRS = {
 	path.join(AETHER_DIR, "module/secs/src/lib"),
 	path.join(AETHER_DIR, "module/hadron/src/lib"),
 	path.join(AETHER_DIR, "module/json11"),
+	path.join(AETHER_DIR, "module/imgui"),
+	path.join(AETHER_DIR, "module/imgui/backends")
 }
 
 AETHER_ALLEGRO_CORE_SOURCES = {
@@ -96,7 +98,8 @@ AETHER_COMMON_LIBS = {
 	"hadron",
 	"aether",
 	"freetype",
-	"json11"
+	"json11",
+	"imgui",
 }
 
 AETHER_SDL_WIN_LIBS = {

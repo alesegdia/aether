@@ -31,3 +31,40 @@ function commonLibSetup(name)
 		commonFlags()
 end
 
+function configSDL()
+	configuration { "backend-sdl" }
+		defines { "AETHER_USE_SDL" }
+		includedirs { AETHER_SDL_INCLUDE_DIRS }
+		links { AETHER_SDL_COMMON_LIBS }
+
+	configuration { "vs20*", "backend-sdl" }
+		links { AETHER_SDL_WIN_LIBS }
+		--flags { "WinMain" }
+
+end
+
+function configAllegro(magicMain)
+	configuration { "backend-allegro" }
+		defines { "AETHER_USE_ALLEGRO", "ALEGRO_STATICLINK", }
+		if not magicMain then
+			defines "ALLEGRO_NO_MAGIC_MAIN"
+		end
+		includedirs { AETHER_ALLEGRO_INCLUDE_DIRS }
+		links { AETHER_ALLEGRO_COMMON_LIBS }
+
+	configuration { "vs20*", "backend-allegro" }
+	    links {
+	    	"allegro",
+	    	AETHER_ALLEGRO_WIN_LIBS,
+		    "opengl32",
+		    "glu32",
+		}
+		defines {
+		    "ALLEGRO_CFG_OPENGL",
+		    "ALLEGRO_CFG_OPENGL_PROGRAMMABLE_PIPELINE",
+		    "ALLEGRO_CFG_SHADER_GLSL",
+			"ALLEGRO_CFG_RELEASE_LOGGING",
+			"DEBUGMODE",
+		}
+
+end

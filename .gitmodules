@@ -40,3 +40,6 @@
 [submodule "module/dxsdk"]
 	path = module/dxsdk
 	url = git@github.com:apitrace/dxsdk.git
+[submodule "module/imgui"]
+	path = module/imgui
+	url = git@github.com:ocornut/imgui.git
