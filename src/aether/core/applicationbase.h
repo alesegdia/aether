@@ -15,6 +15,7 @@ public:
 
     int exec(int argc, char** argv);
     int initialize(int argc, char** argv);
+    void run();
     void step();
     void deinitialize();
 

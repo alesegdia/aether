@@ -32,6 +32,15 @@ int ApplicationBase::initialize(int argc, char** argv)
     _init_input();
 
     now = then = get_time();
+    return 0;
+}
+
+void ApplicationBase::run()
+{
+    while (false == m_doExit)
+    {
+        step();
+    }
 }
 
 int ApplicationBase::exec(int argc, char **argv)

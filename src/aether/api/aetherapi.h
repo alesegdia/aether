@@ -1,12 +1,11 @@
 #pragma once
 
-#include "../core/applicationbase.h"
+#include "../core/iscreen.h"
+#include <aether/platform.h>
 
 #define DLLEXPORT __declspec(dllexport)
 
 extern "C" {int DLLEXPORT janio(); }
 
-aether::core::ApplicationBase* aether_create_app(int width, int height);
-
 int aether_run_app(int argc, char** argv);
-void aether_boot_app();
+std::shared_ptr<aether::core::IScreen> aether_boot_screen();

@@ -5,6 +5,8 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
 
+#include <iostream>
+
 namespace aether {
 namespace core {
 
@@ -92,11 +94,8 @@ int AllegroApplication::init(int argc, char **argv)
     al_register_event_source(m_eventQueue, al_get_keyboard_event_source());
     al_register_event_source(m_eventQueue, al_get_mouse_event_source());
 
-    al_clear_to_color(al_map_rgb(0,0,0));
 
     al_set_target_bitmap(al_get_backbuffer(m_display));
-
-    al_set_new_display_option(ALLEGRO_VSYNC, 2, 1000);
 
     // initialize input
     //Input::Initialize();
