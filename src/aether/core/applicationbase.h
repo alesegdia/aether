@@ -91,7 +91,7 @@ protected:
 private:
     void setFPS(uint64_t& timer, uint64_t fps)
     {
-        timer = uint64_t(1e6) / fps;
+        timer = ((uint64_t)1e6) / fps;
     }
 
     int m_screenWidth;
@@ -101,8 +101,8 @@ private:
 
     bool m_doExit = false;
 
-    uint64_t m_renderStepTimer = uint64_t(1e6) / 32;
-    uint64_t m_updateStepTimer = uint64_t(1e6) / 64;
+    uint64_t m_renderStepTimer = ((uint64_t)1e6) / 32;
+    uint64_t m_updateStepTimer = ((int64_t)1e6) / 64;
 
     std::shared_ptr<IScreen> m_currentScreen = nullptr;
 
