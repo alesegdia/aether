@@ -1,9 +1,12 @@
 #include "al_application.h"
 
+#include <iostream>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
+#include <imgui.h>
+#include <imgui_impl_allegro5.h>
 
 #include <iostream>
 
@@ -97,6 +100,22 @@ int AllegroApplication::init(int argc, char **argv)
 
     al_set_target_bitmap(al_get_backbuffer(m_display));
 
+    al_set_new_display_option(ALLEGRO_VSYNC, 2, 1000);
+
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
+    //ImGui::StyleColorsClassic();
+
+    // Setup Platform/Renderer backends
+    ImGui_ImplAllegro5_Init(m_display);
+
+
     // initialize input
     //Input::Initialize();
 
@@ -113,10 +132,14 @@ int AllegroApplication::init(int argc, char **argv)
 void AllegroApplication::preRender()
 {
     al_set_target_bitmap(al_get_backbuffer(m_display));
+    ImGui_ImplAllegro5_NewFrame();
+    ImGui::NewFrame();
 }
 
 void AllegroApplication::postRender()
 {
+    ImGui::Render();
+    ImGui_ImplAllegro5_RenderDrawData(ImGui::GetDrawData());
     al_flip_display();
 }
 
@@ -143,6 +166,7 @@ void aether::core::AllegroApplication::preUpdate()
     ALLEGRO_EVENT ev;
     while( al_get_next_event(m_eventQueue, &ev) )
     {
+        ImGui_ImplAllegro5_ProcessEvent(&ev);
         if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         {
             close();
@@ -158,6 +182,12 @@ void aether::core::AllegroApplication::preUpdate()
         else if( ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN )
         {
             _notify_mouse_button_down((MouseButton)ev.mouse.button);
+        }
+        else if (ev.type == ALLEGRO_EVENT_DISPLAY_RESIZE)
+        {
+            ImGui_ImplAllegro5_InvalidateDeviceObjects();
+            al_acknowledge_resize(m_display);
+            ImGui_ImplAllegro5_CreateDeviceObjects();
         }
     }
 

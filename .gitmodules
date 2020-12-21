@@ -43,3 +43,6 @@
 [submodule "module/imgui"]
 	path = module/imgui
 	url = git@github.com:ocornut/imgui.git
+[submodule "module/l2dfiledialog"]
+	path = module/l2dfiledialog
+	url = https://github.com/Limeoats/L2DFileDialog

@@ -25,9 +25,14 @@ function aetherProject(projectName)
 	configurations { "debug", "release" }
 	platforms { "x32", "x64" }
 
+	flags("Cpp17")
+
 	configuration {}
 		links { AETHER_COMMON_LIBS }
-		includedirs { AETHER_COMMON_INCLUDE_DIRS }
+		includedirs {
+			AETHER_COMMON_INCLUDE_DIRS,
+			path.join(AETHER_DIR, "module/L2DFileDialog/"),
+		}			
 
 	-- https://support.microsoft.com/es-es/help/154753/description-of-the-default-c-and-c-libraries-that-a-program-will-link
 	configuration { "vs20*", "debug" }

@@ -65,6 +65,7 @@ function configAllegro(magicMain)
 		    "ALLEGRO_CFG_SHADER_GLSL",
 			"ALLEGRO_CFG_RELEASE_LOGGING",
 			"DEBUGMODE",
+			"ALLEGRO_STATICLINK",
 		}
 
 end
