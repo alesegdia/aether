@@ -39,3 +39,12 @@ function cmakeConfigureFile(inputFilePath, refTable)
     outputFile:close()
 end
 
+function copyFile(inFile, outFile)
+    infile = io.open(inFile, "r")
+    instr = infile:read("*a")
+    infile:close()
+
+    outfile = io.open(outFile, "w")
+    outfile:write(instr)
+    outfile:close()
+end

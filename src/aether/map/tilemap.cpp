@@ -239,11 +239,16 @@ TileSet::Shared TileLayer::tileSet()
 
 TileCollisionBehaviour TileLayer::getTileCollisionBehaviour(size_t x, size_t y) const
 {
-    auto cell = m_data->get( x, y );
-    if( cell == -1 || m_tileset->get(cell) == nullptr ) {
-        return TileCollisionBehaviour::Empty;
+    if(x >= 0 && x < m_data->cols() &&
+       y >= 0 && y < m_data->rows())
+    {
+        auto cell = m_data->get(x, y);
+        if (cell == -1 || m_tileset->get(cell) == nullptr) {
+            return TileCollisionBehaviour::Empty;
+        }
+        return m_tileset->get(cell)->collisionBehaviour;
     }
-    return m_tileset->get(cell)->collisionBehaviour;
+    return TileCollisionBehaviour::Empty;
 }
 
 int TileLayer::tileWidth() const

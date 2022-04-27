@@ -1,3 +1,5 @@
+copyFile(path.join(AETHER_DIR, "module/libpng/scripts/pnglibconf.h.prebuilt"), path.join(AETHER_DIR, "module/libpng/pnglibconf.h"))
+
 commonLibSetup("libpng")
 
 	configuration {}
@@ -7,10 +9,6 @@ commonLibSetup("libpng")
 		path.join(AETHER_DIR, "module/zlib/"),
 	}
 
-    prebuildcommands {
-		"cp " .. path.join(AETHER_DIR, "module/libpng/scripts/pnglibconf.h.prebuilt") .. " " .. path.join(AETHER_DIR, "module/libpng/pnglibconf.h")
-    }
-    
 	files {
 		path.join(AETHER_DIR, "module/libpng/png.c"),
 		path.join(AETHER_DIR, "module/libpng/pngerror.c"),
