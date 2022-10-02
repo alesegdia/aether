@@ -10,19 +10,19 @@ namespace scene {
 class AnimationNode : public TextureNode
 {
 public:
-    void setAnimation(graphics::Animation* anim)
+    void SetAnimation(graphics::Animation* anim)
     {
-        anim->reset(m_animationData);
+        anim->Reset(m_animationData);
         m_animation = anim;
     }
 
-    void render() override
+    void Render() override
     {
         m_texregion = m_animationData.currentFrame->texture;
-        TextureNode::render();
+        TextureNode::Render();
     }
 
-    void update(uint64_t delta);
+    void Update(uint64_t delta);
 
 private:
     graphics::Animation* m_animation;

@@ -10,63 +10,63 @@ SceneNode::~SceneNode()
 
 }
 
-math::Vec2f &SceneNode::relativePos()
+math::Vec2f &SceneNode::GetRelativePosition()
 {
     return m_relativePosition;
 }
 
-const math::Vec2f &SceneNode::relativePos() const
+const math::Vec2f &SceneNode::GetRelativePosition() const
 {
     return m_relativePosition;
 }
 
-math::Vec2f &SceneNode::renderPos()
+math::Vec2f &SceneNode::GetRenderPosition()
 {
     return m_renderPosition;
 }
 
-const math::Vec2f &SceneNode::renderPos() const
+const math::Vec2f &SceneNode::GetRenderPosition() const
 {
     return m_renderPosition;
 }
 
-int SceneNode::zIndex() const
+int SceneNode::GetZIndex() const
 {
     return m_zIndex;
 }
 
-void SceneNode::zIndex(int pzindex)
+void SceneNode::SetZIndex(int pzindex)
 {
     m_zIndex = pzindex;
 }
 
-void SceneNode::render()
+void SceneNode::Render()
 {
 
 }
 
-std::vector<SceneNode::Shared> &SceneNode::children()
+std::vector<SceneNode::Shared> &SceneNode::GetChildren()
 {
     return m_children;
 }
 
-SceneNode::Shared &SceneNode::parent()
+SceneNode::Shared &SceneNode::GetParent()
 {
     return m_parent;
 }
 
-void SceneNode::parent(SceneNode::Shared newParent)
+void SceneNode::SetParent(SceneNode::Shared newParent)
 {
     if( m_parent != nullptr ) {
         auto me = shared_from_this();
-        core::remove_by_value(m_parent->children(), me);
+        core::remove_by_value(m_parent->GetChildren(), me);
         m_parent = newParent;
-        newParent->children().push_back(shared_from_this());
+        newParent->GetChildren().push_back(shared_from_this());
     }
     m_parent = newParent;
 }
 
-void SceneNode::addChild(const SceneNode::Shared &sceneNode)
+void SceneNode::AddChild(const SceneNode::Shared &sceneNode)
 {
     m_children.push_back(sceneNode);
 }

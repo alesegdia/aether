@@ -7,41 +7,41 @@ namespace aether {
 namespace audio {
 
 
-void Stream::load(const char *path)
+void Stream::Load(const char *path)
 {
 
 }
 
-void Stream::playmode(PlayMode playmode)
+void Stream::SetPlayMode(PlayMode playmode)
 {
 
 }
 
-void Stream::play()
+void Stream::Play()
 {
 
 }
 
-void Stream::pause()
+void Stream::Pause()
 {
 
 }
 
-void Stream::resume()
+void Stream::Resume()
 {
 }
 
-bool Stream::playing()
-{
-    return false;
-}
-
-bool Stream::rewind()
+bool Stream::Playing()
 {
     return false;
 }
 
-void Stream::destroy()
+bool Stream::Rewind()
+{
+    return false;
+}
+
+void Stream::Destroy()
 {
 
 }

@@ -17,22 +17,22 @@ std::vector<const TextureRegion*> Spritesheet::getAllFrames()
 
 Spritesheet::Spritesheet(size_t width, size_t height, Texture texture)
 {
-    reset( width, height, std::move(texture) );
+    Reset( width, height, std::move(texture) );
 }
 
 Spritesheet::Spritesheet() = default;
 
-const TextureRegion *Spritesheet::getFrame(size_t num_frame) const
+const TextureRegion *Spritesheet::GetFrame(size_t num_frame) const
 {
     assert( num_frame < m_frames.size() );
     return &m_frames[num_frame];
 }
 
-const TextureRegion *Spritesheet::getFrame(size_t x_frame, size_t y_frame) const
+const TextureRegion *Spritesheet::GetFrame(size_t x_frame, size_t y_frame) const
 {
-    size_t index = coordToIndex(x_frame, y_frame);
+    size_t index = CoordToIndex(x_frame, y_frame);
     assert( index < m_frames.size() );
-    return getFrame(coordToIndex(x_frame, y_frame));
+    return GetFrame(CoordToIndex(x_frame, y_frame));
 }
 
 std::vector<const TextureRegion*> Spritesheet::getFrames(size_t start, size_t end)
@@ -49,13 +49,13 @@ std::vector<const TextureRegion*> Spritesheet::getFrames(size_t start, size_t en
     return frames;
 }
 
-void Spritesheet::reset(size_t width, size_t height, Texture texture)
+void Spritesheet::Reset(size_t width, size_t height, Texture texture)
 {
     m_width = int(width);
     m_height = int(height);
 
-    int tw = texture.width() / m_width;
-    int th = texture.height() / m_height;
+    int tw = texture.GetWidth() / m_width;
+    int th = texture.GetHeight() / m_height;
 
     m_frames.clear();
 
@@ -68,12 +68,12 @@ void Spritesheet::reset(size_t width, size_t height, Texture texture)
     }
 }
 
-void Spritesheet::load(size_t width, size_t height, Texture texture)
+void Spritesheet::Load(size_t width, size_t height, Texture texture)
 {
-    reset(width, height, std::move(texture));
+    Reset(width, height, std::move(texture));
 }
 
-size_t Spritesheet::coordToIndex(size_t x, size_t y) const
+size_t Spritesheet::CoordToIndex(size_t x, size_t y) const
 {
     return y * m_width + x;
 }

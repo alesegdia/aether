@@ -31,7 +31,7 @@ public:
      * @param num_frame frame index
      * @return the sub bitmap associated to the index
      */
-    const TextureRegion* getFrame( size_t num_frame ) const;
+    const TextureRegion* GetFrame( size_t num_frame ) const;
 
     /**
      * @brief retrieves a frame by its coordinate
@@ -39,7 +39,7 @@ public:
      * @param y_frame the y coordinate
      * @return the sub bitmap in specified coordinate
      */
-    const TextureRegion* getFrame( size_t x_frame, size_t y_frame ) const;
+    const TextureRegion* GetFrame( size_t x_frame, size_t y_frame ) const;
 
     std::vector<const TextureRegion *> getFrames(size_t start, size_t end );
     std::vector<const TextureRegion *> getAllFrames();
@@ -50,8 +50,8 @@ public:
      * @param height in tiles of the spritesheet
      * @param bitmap the whole spritesheet
      */
-    void reset( size_t width, size_t height, Texture texture );
-    void load( size_t width, size_t height, Texture texture );
+    void Reset( size_t width, size_t height, Texture texture );
+    void Load( size_t width, size_t height, Texture texture );
 
 
 private:
@@ -62,7 +62,7 @@ private:
      * @param y coordinate
      * @return the index
      */
-    size_t coordToIndex(size_t x, size_t y ) const;
+    size_t CoordToIndex(size_t x, size_t y ) const;
 
     std::vector<TextureRegion> m_frames;
     Texture m_parentTexture;

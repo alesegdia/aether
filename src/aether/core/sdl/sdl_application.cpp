@@ -14,7 +14,7 @@ SDLApplication::SDLApplication(int sw, int sh)
 
 }
 
-int SDLApplication::init(int argc, char **argv)
+int SDLApplication::AppImplementationInit(int argc, char **argv)
 {
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         fprintf(stderr, "failed to initialize SDL video!\n");
@@ -31,7 +31,7 @@ int SDLApplication::init(int argc, char **argv)
 
     m_display = SDL_CreateWindow("WindowName",
 								 SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-							     screenWidth(), screenHeight(), SDL_WINDOW_SHOWN);
+							     GetApplicationWindowScreenWidth(), GetApplicationWindowScreenHeight(), SDL_WINDOW_SHOWN);
     if(!m_display) {
         fprintf(stderr, "failed to create display! %s\n", SDL_GetError());
         return -1;
@@ -55,17 +55,17 @@ int SDLApplication::init(int argc, char **argv)
     return 0;
 }
 
-void SDLApplication::preRender()
+void SDLApplication::PreRender()
 {
 
 }
 
-void SDLApplication::postRender()
+void SDLApplication::PostRender()
 {
     SDL_RenderPresent(m_renderer);
 }
 
-void aether::core::SDLApplication::cleanup()
+void aether::core::SDLApplication::Deinit()
 {
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_display);
@@ -73,14 +73,14 @@ void aether::core::SDLApplication::cleanup()
     SDL_Quit();
 }
 
-void aether::core::SDLApplication::preUpdate()
+void aether::core::SDLApplication::PreUpdate()
 {
     SDL_Event ev;
     while( SDL_PollEvent(&ev) )
     {
         if(ev.type == SDL_QUIT)
         {
-            close();
+            Close();
         }
         else if(ev.type == SDL_KEYDOWN)
         {
@@ -105,12 +105,12 @@ void aether::core::SDLApplication::preUpdate()
     aether_mouse_state.buttons = buttons;
 }
 
-void aether::core::SDLApplication::postUpdate()
+void aether::core::SDLApplication::PostUpdate()
 {
     _input_post_update();
 }
 
-void aether::core::SDLApplication::grabMouse()
+void aether::core::SDLApplication::GrabMouse()
 {
     SDL_SetWindowGrab(m_display, SDL_TRUE);
 }

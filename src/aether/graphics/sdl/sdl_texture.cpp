@@ -19,40 +19,40 @@ static SDL_Texture* fetch(int handle)
     return texture;
 }
 
-void Texture::load(const char* path)
+void Texture::Load(const char* path)
 {
-    assert(notValid());
+    assert(IsNotValid());
     auto* renderer = aether_sdl_get_renderer();
     assert(renderer);
     auto* texture = IMG_LoadTexture(renderer, path);
     printf("Oh My Goodness, an error : %s", IMG_GetError());
     assert(texture);
-    handle(texture_manager.createNewHandle(texture));
+    SetHandle(texture_manager.createNewHandle(texture));
 }
 
-int Texture::width() const
+int Texture::GetWidth() const
 {
-    auto* texture = fetch(handle());
+    auto* texture = fetch(GetHandle());
     int w;
     SDL_QueryTexture(texture, nullptr, nullptr, &w, nullptr);
     return w;
 }
 
-int Texture::height() const
+int Texture::GetHeight() const
 {
-    auto* texture = fetch(handle());
+    auto* texture = fetch(GetHandle());
     int h;
     SDL_QueryTexture(texture, nullptr, nullptr, nullptr, &h);
     return h;
 }
 
-void Texture::destroy()
+void Texture::Destroy()
 {
-    if(valid())
-        SDL_DestroyTexture(fetch(handle()));
+    if(IsValid())
+        SDL_DestroyTexture(fetch(GetHandle()));
 }
 
-void Texture::draw(float x, float y,
+void Texture::Draw(float x, float y,
                    float rx, float ry, float rw, float rh,
                    aether::graphics::Color color,
                    bool xflip, bool yflip,
@@ -60,7 +60,7 @@ void Texture::draw(float x, float y,
                    float angle,
                    float xscale, float yscale) const
 {
-    SDL_Texture* texture = texture_manager.fetchPresentHandle(handle());
+    SDL_Texture* texture = texture_manager.fetchPresentHandle(GetHandle());
     SDL_Renderer* renderer = aether_sdl_get_renderer();
     SDL_Point center{ int(centerx), int(centery) };
     SDL_Rect srcRect{ int(rx), int(ry), int(rw), int(rh) };
@@ -69,7 +69,7 @@ void Texture::draw(float x, float y,
     SDL_RenderCopyEx(renderer, texture, &srcRect, &dstRect, angle, NULL, flip);
 }
 
-void Texture::drawScaledCentered(float x, float y,
+void Texture::DrawScaledCentered(float x, float y,
     float rx, float ry, float rw, float rh,
     aether::graphics::Color color,
     bool xflip, bool yflip,
@@ -77,7 +77,7 @@ void Texture::drawScaledCentered(float x, float y,
     float angle,
     float xscale, float yscale) const
 {
-    SDL_Texture* texture = texture_manager.fetchPresentHandle(handle());
+    SDL_Texture* texture = texture_manager.fetchPresentHandle(GetHandle());
     SDL_Renderer* renderer = aether_sdl_get_renderer();
     SDL_Point center{ int(centerx), int(centery) };
     SDL_Rect srcRect{ int(rx), int(ry), int(rw), int(rh) };
@@ -90,14 +90,14 @@ void Texture::drawScaledCentered(float x, float y,
 
 
 
-void Texture::draw(float x, float y) const
+void Texture::Draw(float x, float y) const
 {
-    draw(x, y, 1.0f);
+    Draw(x, y, 1.0f);
 }
 
-void Texture::draw(float x, float y, float alpha) const
+void Texture::Draw(float x, float y, float alpha) const
 {
-    draw(x, y, 0.0f, 0.0f, float(width()), float(height()), { 1.0f, 1.0f, 1.0f }, false, false, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+    Draw(x, y, 0.0f, 0.0f, float(GetWidth()), float(GetHeight()), { 1.0f, 1.0f, 1.0f }, false, false, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f);
 }
 
 }

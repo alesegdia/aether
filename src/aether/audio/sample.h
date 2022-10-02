@@ -12,10 +12,10 @@ class Sample : public core::Handle
 public:
     Sample() {}
 
-    void load(const char* path);
-    void destroy();
-    void play(float volume=1.f, PlayMode playmode = PlayMode::Once);
-    void rewind();
+    void Load(const char* path);
+    void Destroy();
+    void Play(float volume=1.f, PlayMode playmode = PlayMode::Once);
+    void Rewind();
 
 };
 

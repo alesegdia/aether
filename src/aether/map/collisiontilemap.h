@@ -31,25 +31,25 @@ public:
     GenericCollisionTileMap(TileLayer::Shared tilelayer);
     virtual ~GenericCollisionTileMap();
 
-    CollisionInfo realmove(math::Rect<int> &rect, int new_x, int new_y);
+    CollisionInfo Move(math::Rect<int> &rect, int new_x, int new_y);
 
-    bool isSolidTile( float x, float y )
+    bool IsSolidTile( float x, float y )
     {
-        auto pos = getTilePos(x, y);
-        return isSolid(pos.x(), pos.y());
+        auto pos = GetTilePos(x, y);
+        return IsSolid(pos.GetX(), pos.GetY());
     }
 
 protected:
-    virtual void move(math::Recti& rect, int new_x, int new_y, CollisionInfo* ci) = 0;
+    virtual void Internal_Move(math::Recti& rect, int new_x, int new_y, CollisionInfo* ci) = 0;
 
-    bool isSolid( size_t x, size_t y );
+    bool IsSolid( size_t x, size_t y );
     bool isOneway( size_t x, size_t y );
 
-    math::Vec2i getTilePos( int x, int y );
+    math::Vec2i GetTilePos( int x, int y );
 
-    int tileWidth();
+    int GetTileWidth();
 
-    int tileHeight();
+    int GetTileHeight();
 
 
 private:
@@ -67,7 +67,7 @@ public:
     ~CollisionTilemap() override;
 
 private:
-    virtual void move(math::Recti& rect, int new_x, int new_y, CollisionInfo* ci) override;
+    virtual void Internal_Move(math::Recti& rect, int new_x, int new_y, CollisionInfo* ci) override;
 
 };
 

@@ -13,22 +13,20 @@ public:
     ApplicationBase( int screen_width, int screen_height );
     virtual ~ApplicationBase() = 0 ;
 
-    int exec(int argc, char** argv);
-    int initialize(int argc, char** argv);
-    void run();
-    void step();
-    void deinitialize();
+    int Exec(int argc, char** argv);
+	int Initialize(int argc, char** argv);
+	void Run();
+	void Deinitialize();
+	void SetScreen(std::shared_ptr<IScreen> screen);
+	int GetApplicationWindowScreenWidth() const;
+	int GetApplicationWindowScreenHeight() const;
+	void Close();
 
-    void setScreen(std::shared_ptr<IScreen> screen);
+private:
+	void Step();
 
-    void setUpdateFPS(uint64_t fps);
-    void setRenderFPS(uint64_t fps);
-
-    int screenWidth();
-
-    int screenHeight();
-
-    void close();
+	void SetUpdateFPS(uint64_t fps);
+	void SetRenderFPS(uint64_t fps);
 
 protected:
 
@@ -38,61 +36,46 @@ protected:
      * @param argc
      * @param argv
      */
-    virtual int init(int argc, char** argv) = 0;
+    virtual int Init(int argc, char** argv) = 0;
 
     /**
      * @brief ready to be implemented in derived class
      * @param argc
      * @param argv
      */
-    virtual int ready(int argc, char** argv);
+    virtual int Ready(int argc, char** argv);
 
     /**
      * @brief dispose called to clean user code
      */
-    virtual void dispose();
+    virtual void Dispose();
 
     /**
      * @brief cleanup called to clean the implementation resources
      */
-    virtual void cleanup() = 0 ;
+    virtual void Deinit() = 0 ;
 
     /**
      * @brief preUpdate executed BEFORE updating the screen
      */
-    virtual void preUpdate() = 0 ;
+    virtual void PreUpdate() = 0 ;
 
-    virtual void update(uint64_t delta)
-    {
-        if( m_currentScreen != nullptr )
-        {
-            m_currentScreen->updateWithSubscreen(delta);
-        }
-    }
+    virtual void Update(uint64_t delta);
 
-    virtual void render()
-    {
-        if( m_currentScreen != nullptr )
-        {
-            m_currentScreen->renderWithSubscreen();
-        }
-    }
+    virtual void Render();
 
-    virtual void preRender() = 0 ;
-    virtual void postRender() = 0 ;
+    virtual void PreRender() = 0 ;
+    virtual void PostRender() = 0 ;
 
     /**
      * @brief postUpdate executed AFTER updating the screen
      */
-    virtual void postUpdate() = 0 ;
+    virtual void PostUpdate() = 0 ;
 
-    virtual void grabMouse() = 0 ;
+    virtual void GrabMouse() = 0 ;
 
 private:
-    void setFPS(uint64_t& timer, uint64_t fps)
-    {
-        timer = ((uint64_t)1e6) / fps;
-    }
+    void SetFPS(uint64_t& timer, uint64_t fps);
 
     int m_screenWidth;
     int m_screenHeight;

@@ -15,45 +15,45 @@ public:
 
     static float Distance( const Vec2<T>& a, const Vec2<T>& b )
     {
-        float dx = ((float)a.x()) - ((float)b.x());
-        float dy = ((float)a.y()) - ((float)b.y());
+        float dx = ((float)a.GetX()) - ((float)b.GetX());
+        float dy = ((float)a.GetY()) - ((float)b.GetY());
         return sqrtf( dx * dx + dy * dy );
     }
 
-    void x( T newx )
+    void SetX( T newx )
     {
         m_x = newx;
     }
 
-    void y( T newy )
+    void SetY( T newy )
     {
         m_y = newy;
     }
 
-    T x() const
+    T GetX() const
     {
         return m_x;
     }
 
-    T y() const
+    T GetY() const
     {
         return m_y;
     }
 
-    void set( T x, T y )
+    void Set( T x, T y )
     {
         m_x = x; m_y = y;
     }
 
-    void set( const Vec2<T>& other )
+    void Set( const Vec2<T>& other )
     {
-        m_x = other.x(); m_y = other.y();
+        m_x = other.GetX(); m_y = other.GetY();
     }
 
-    void translate( const Vec2<T>& other )
+    void Translate( const Vec2<T>& other )
     {
-        m_x += other.x();
-        m_y += other.y();
+        m_x += other.GetX();
+        m_y += other.GetY();
     }
 
     Vec2<T> operator+( const Vec2<T>& other ) const
@@ -73,8 +73,8 @@ public:
 
     Vec2& operator+= ( const Vec2<T>& other )
     {
-        m_x += other.x();
-        m_y += other.y();
+        m_x += other.GetX();
+        m_y += other.GetY();
         return *this;
     }
 
@@ -97,8 +97,8 @@ public:
 
     Vec2& operator*= ( const Vec2& v )
     {
-        m_x *= v.x();
-        m_y *= v.y();
+        m_x *= v.GetX();
+        m_y *= v.GetY();
         return *this;
     }
 
@@ -118,15 +118,15 @@ public:
 
     Vec2& operator= ( const Vec2& other )
     {
-        this->set(other.x(), other.y());
+        this->Set(other.GetX(), other.GetY());
         return *this;
     }
     
     template <typename U>
-    Vec2<U> cast() const
+    Vec2<U> Cast() const
     {
         Vec2<U> casted;
-        casted.set( U(m_x), U(m_y) );
+        casted.Set( U(m_x), U(m_y) );
         return casted;
     }
 
@@ -137,7 +137,7 @@ private:
 template <typename T>
 std::ostream &operator<<( std::ostream& os, const Vec2<T>& v )
 {
-    os << "(" << v.x() << "," << v.y() << ")";
+    os << "(" << v.GetX() << "," << v.GetY() << ")";
     return os;
 }
 
@@ -150,16 +150,16 @@ namespace allig { namespace math {
 template <typename T>
 T distance( const Vec2<T>& a, const Vec2<T>& b )
 {
-    double dx = double(a.x()) - double(b.x());
-    double dy = double(a.y()) - double(b.y());
+    double dx = double(a.GetX()) - double(b.GetX());
+    double dy = double(a.GetY()) - double(b.GetY());
     return sqrt(dx * dx + dy * dy);
 }
 
 template <typename T>
 T distancef( const Vec2<T>& a, const Vec2<T>& b )
 {
-    float dx = float(a.x()) - float(b.x());
-    float dy = float(a.y()) - float(b.y());
+    float dx = float(a.GetX()) - float(b.GetX());
+    float dy = float(a.GetY()) - float(b.GetY());
     return sqrtf(dx * dx + dy * dy);
 }
 
@@ -169,8 +169,8 @@ template <typename T>
 Vec2<T> ortho_to_iso( const Vec2<T>& ortho )
 {
     int x, y;
-    x = ortho.x();
-    y = ortho.y();
+    x = ortho.GetX();
+    y = ortho.GetY();
     return Vec2i( x - y, (x + y) / 2 );
 }
 
@@ -178,8 +178,8 @@ template <typename T>
 Vec2<T> iso_to_ortho( const Vec2<T>& iso )
 {
     int x, y;
-    x = iso.x();
-    y = iso.y();
+    x = iso.GetX();
+    y = iso.GetY();
     return Vec2<T>( 2 * y + x, 2 * y - x );
 }
 
@@ -188,31 +188,31 @@ float lerp(float v0, float v1, float t);
 template <typename T>
 Vec2<T> lerp( const Vec2<T>& v0, const Vec2<T>& v1, float t )
 {
-    return Vec2<T>( lerp(v0.x(), v1.x(), t ), lerp(v0.y(), v1.y(), t ) );
+    return Vec2<T>( lerp(v0.GetX(), v1.GetX(), t ), lerp(v0.GetY(), v1.GetY(), t ) );
 }
 
 template <typename T>
 class Range : public Vec2<T>
 {
 public:
-    T min()
+    T GetMin()
     {
-        return Vec2<T>::x();
+        return Vec2<T>::GetX();
     }
 
-    T max()
+    T GetMax()
     {
-        return Vec2<T>::y();
+        return Vec2<T>::GetY();
     }
 
-    void min(T new_min)
+    void SetMin(T new_min)
     {
-        x(new_min);
+        SetX(new_min);
     }
 
-    void max(T new_max)
+    void GetMax(T new_max)
     {
-        y(new_max);
+        SetY(new_max);
     }
 
 };

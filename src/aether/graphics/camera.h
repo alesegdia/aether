@@ -18,38 +18,40 @@ public:
 
     Camera( const aether::math::Vec2f& viewport = aether::math::Vec2f(0, 0) );
 
-	void bind();
+	void Bind();
 
-    void position( const aether::math::Vec2f& new_position );
+    void GetPosition( const aether::math::Vec2f& new_position );
 
-	float x();
+	float GetX();
 
-	float y();
+	float GetY();
 
-    aether::math::Rectf boundary() const;
+    aether::math::Rectf GetBoundary() const;
 
-	void position( float x, float y );
+	void SetPosition( float x, float y );
 
-	void move( float x, float y );
+	void Move( float x, float y );
 
-	void scale( float x, float y );
+	void SetScale( float x, float y );
 
-    const aether::math::Vec2f& viewport()
+    const aether::math::Vec2f& GetViewport()
     {
         return m_viewport;
     }
 
-    const aether::math::Vec2f scale()
+    const aether::math::Vec2f GetScale()
     {
         return m_scale;
     }
 
-    const aether::math::Vec2f& pos()
+    const aether::math::Vec2f& GetPosition()
     {
         return m_position;
     }
 
 private:
+
+    // move this to implementation
 	ALLEGRO_TRANSFORM m_transform{};
 
 	// cache last (position, scale) if performance issues
@@ -58,35 +60,6 @@ private:
 	float m_rotation = 0;
 
     aether::math::Vec2f m_viewport;
-
-};
-
-
-class PlatformerScroller
-{
-public:
-    PlatformerScroller(const Camera::SharedPtr& cam,
-                        const aether::math::Rectf& globalBounds,
-                        const math::Vec2f &innerLimits);
-
-    void focus(float x, float y);
-
-    void update(double delta);
-
-    void snapToPlatform(float y);
-
-    void setSnapToPlatform(bool set)
-    {
-        m_snappedToPlatform = set;
-    }
-
-private:
-    Camera::SharedPtr m_cam;
-    aether::math::Rectf m_globalBounds;
-    aether::math::Vec2f m_innerLimits;
-    aether::math::Vec2f m_focusPos;
-    float m_snappedOrdinate = 0.f;
-    bool m_snappedToPlatform = false;
 
 };
 

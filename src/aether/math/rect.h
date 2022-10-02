@@ -54,7 +54,7 @@ public:
 
     void position( float x, float y )
     {
-        m_position.set(x, y);
+        m_position.Set(x, y);
         computeCenter();
     }
 
@@ -70,34 +70,34 @@ public:
 
     void x( T new_x )
     {
-        m_position.x(new_x);
+        m_position.SetX(new_x);
         computeCenter();
     }
 
     void y( T new_y )
     {
-        m_position.y(new_y);
+        m_position.SetY(new_y);
         computeCenter();
     }
 
     T x() const
     {
-        return m_position.x();
+        return m_position.GetX();
     }
 
     T y() const
     {
-        return m_position.y();
+        return m_position.GetY();
     }
 
     T w() const
     {
-        return m_size.x();
+        return m_size.GetX();
     }
 
     T h() const
     {
-        return m_size.y();
+        return m_size.GetY();
     }
 
     T x1() const
@@ -139,7 +139,7 @@ public:
 private:
     void computeCenter()
     {
-        m_center.set(x() + w() / 2, y() + h() / 2);
+        m_center.Set(x() + w() / 2, y() + h() / 2);
     }
 
     Vec2<T> m_position, m_size, m_center;
@@ -166,8 +166,8 @@ template <typename T>
 Rect<T> clamp( Rect<T> container, Rect<T> contained )
 {
     Rect<T> rect;
-    rect.x( clamp<T>(contained.x(), container.x(), container.x() + container.w() ) );
-    rect.y( clamp<T>(contained.y(), container.y(), container.y() + container.w() ) );
+    rect.SetX( clamp<T>(contained.GetX(), container.GetX(), container.GetX() + container.w() ) );
+    rect.SetY( clamp<T>(contained.GetY(), container.GetY(), container.GetY() + container.w() ) );
     return rect;
 }
 
