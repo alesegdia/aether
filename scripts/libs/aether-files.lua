@@ -17,6 +17,8 @@ AETHER_COMMON_SOURCES = {
 	path.join(AETHER_DIR, "src/aether/resources/*.cpp"),
 	path.join(AETHER_DIR, "src/aether/scene/*.h"),
 	path.join(AETHER_DIR, "src/aether/scene/*.cpp"),
+	path.join(AETHER_DIR, "src/aether/lua/*.h"),
+	path.join(AETHER_DIR, "src/aether/lua/*.cpp"),
 }
 
 AETHER_API_SOURCES = {
@@ -37,7 +39,8 @@ AETHER_COMMON_INCLUDE_DIRS = {
 	path.join(AETHER_DIR, "module/hadron/src/lib"),
 	path.join(AETHER_DIR, "module/json11"),
 	path.join(AETHER_DIR, "module/imgui"),
-	path.join(AETHER_DIR, "module/imgui/backends")
+	path.join(AETHER_DIR, "module/imgui/backends"),
+	path.join(AETHER_DIR, "module/lua")
 }
 
 AETHER_ALLEGRO_CORE_SOURCES = {
@@ -100,6 +103,7 @@ AETHER_COMMON_LIBS = {
 	"freetype",
 	"json11",
 	"imgui",
+	"lua",
 }
 
 AETHER_SDL_WIN_LIBS = {
