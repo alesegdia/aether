@@ -1,5 +1,5 @@
 
-#include "camera.h"
+#include "aether/graphics/camera.h"
 
 
 namespace aether {
