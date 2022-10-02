@@ -36,19 +36,19 @@ class TileSet
 public:
     using Shared = std::shared_ptr<TileSet>;
 
-    Tile* get( uint16_t tile_index );
+    Tile* GetTile( uint16_t tile_index );
 
-    Tile& addTile(size_t index, const graphics::TextureRegion* tex, TileCollisionBehaviour tcb);
+    Tile& AddTile(size_t index, const graphics::TextureRegion* tex, TileCollisionBehaviour tcb);
 
-    void setName(const std::string& name);
+    void SetName(const std::string& name);
 
-    void setFirstGid( int gid );
+    void SetFirstGid( int gid );
 
-    int getFirstGid();
+    int GetFirstGid();
 
-    const math::Vec2i& tileSize();
+    const math::Vec2i& GetTileSize();
 
-    void setTileSize(int w, int h);
+    void SetTileSize(int w, int h);
 
 private:
     std::vector<Tile> m_tiles;
@@ -66,15 +66,15 @@ public:
     Layer(const std::string& id, int zOrder);
 
     virtual ~Layer();
-    virtual void render() = 0;
+    virtual void Render() = 0;
 
-    const std::string& getName();
+    const std::string& GetName();
 
-    int zOrder() const;
+    int GetDepthOrder() const;
 
 private:
     std::string m_name;
-    int m_zOrder = 0;
+    int m_depthOrder = 0;
 
 };
 
@@ -91,11 +91,11 @@ public:
 
     ObjectLayer(const std::string& id, int zOrder);
 
-    Object& newObject(const std::string& name, int x, int y, int w, int h);
+    Object& CreateNewObject(const std::string& name, int x, int y, int w, int h);
 
-    const std::vector<Object>& objects() const;
+    const std::vector<Object>& GetAllObjects() const;
 
-    void foreach(std::function<void(const Object&)> callback)
+    void ForEachObject(std::function<void(const Object&)> callback)
     {
         for( const auto& object : m_objects )
         {
@@ -103,7 +103,7 @@ public:
         }
     }
 
-    void render() override;
+    void Render() override;
 
 private:
     std::vector<Object> m_objects;
@@ -118,37 +118,37 @@ public:
 
     TileLayer(const std::string& id, int zOrder);
 
-    void setTileset(TileSet::Shared tileset);
+    void SetTileset(TileSet::Shared tileset);
 
-    void setMapSize(size_t mapWidth, size_t mapHeight);
+    void SetMapSize(size_t mapWidth, size_t mapHeight);
 
-    void setTileSize(size_t tileWidth, size_t tileHeight);
+    void SetTileSize(size_t tileWidth, size_t tileHeight);
 
-    void setData(const Data& data);
+    void SetData(const Data& data);
 
-    TileSet::Shared tileSet();
+    TileSet::Shared GetTileSet();
 
-    TileCollisionBehaviour getTileCollisionBehaviour( size_t x, size_t y ) const;
+    TileCollisionBehaviour GetTileCollisionBehaviour( size_t x, size_t y ) const;
 
-    int tileWidth() const;
+    int GetTileWidth() const;
 
-    int tileHeight() const;
+    int GetTileHeight() const;
 
-    int mapWidth() const
+    int GetMapWidth() const
     {
-        return m_mapSizeInTiles.x();
+        return m_mapSizeInTiles.GetX();
     }
 
-    int mapHeight() const
+    int GetMapHeight() const
     {
-        return m_mapSizeInTiles.y();
+        return m_mapSizeInTiles.GetY();
     }
 
-    bool isValidTile(size_t x, size_t y) const;
+    bool IsValidTile(size_t x, size_t y) const;
 
-    void render() override;
+    void Render() override;
 
-    void addProperty(const std::string& key, const std::string& value);
+    void AddProperty(const std::string& key, const std::string& value);
 
 private:
     std::unique_ptr<Data> m_data;
@@ -156,6 +156,7 @@ private:
     std::map<std::string, std::string> m_props;
     math::Vec2sz m_mapSizeInTiles;
     math::Vec2f m_tileSize;
+
 };
 
 
@@ -167,13 +168,13 @@ public:
     using SharedRes = std::shared_ptr<ResourceType>;
 
     template <typename... Args>
-    const SharedRes& create(const std::string& id, Args... args)
+    const SharedRes& Create(const std::string& id, Args... args)
     {
         m_storage[id] = std::make_shared<ResourceType>(args...);
         return m_storage[id];
     }
 
-    const SharedRes& get(const std::string& id)
+    const SharedRes& Get(const std::string& id)
     {
         if(m_storage.count(id) == 0) {
             m_storage[id] = nullptr;
@@ -192,47 +193,47 @@ class TileMap
 {
 public:
 
-    void addSheet(const graphics::Spritesheet::SharedPtr& sheet);
+    void AddSheet(const graphics::Spritesheet::SharedPtr& sheet);
 
-    void addTileset(const TileSet::Shared& tileset);
+    void AddTileset(const TileSet::Shared& tileset);
 
-    void addTileLayer(const TileLayer::Shared& tilelayer);
+    void AddTileLayer(const TileLayer::Shared& tilelayer);
 
-    void addObjectLayer(const ObjectLayer::Shared& objectLayer);
+    void AddObjectLayer(const ObjectLayer::Shared& objectLayer);
 
     template<typename LayerType>
-    void addLayer(std::shared_ptr<LayerType> layer)
+    void AddLayer(std::shared_ptr<LayerType> layer)
     {
         static_assert(std::is_base_of<Layer, LayerType>::value);
         m_layers.push_back(std::static_pointer_cast<Layer>(layer));
     }
 
-    TileLayer::Shared getTileLayer(const std::string& layerId);
+    TileLayer::Shared GetTileLayer(const std::string& layerId);
 
-    ObjectLayer::Shared getObjectLayer(const std::string& layerId);
+    ObjectLayer::Shared GetObjectLayer(const std::string& layerId);
 
-    TileSet::Shared getTileset(int i);
+    TileSet::Shared GetTileset(int i);
 
-    void render();
+    void Render();
 
-    std::unordered_map<std::string, TileLayer::Shared>& getTileLayers();
+    std::unordered_map<std::string, TileLayer::Shared>& GetTileLayers();
 
-    void setBasePath(const std::string& basePath);
+    void SetBasePath(const std::string& basePath);
 
-    const std::string& getBasePath();
+    const std::string& GetBasePath();
 
-    float width() const
+    float GetWidth() const
     {
         assert(!m_layers.empty() && "must have some tile layer to fetch width");
         const auto& layer = *(*(m_tileLayers.begin())).second;
-        return layer.mapWidth() * layer.tileWidth();
+        return layer.GetMapWidth() * layer.GetTileWidth();
     }
 
-    float height() const
+    float GetHeight() const
     {
         assert(!m_layers.empty() && "must have some tile layer to fetch height");
         const auto& layer = *(*(m_tileLayers.begin())).second;
-        return layer.mapHeight() * layer.tileHeight();
+        return layer.GetMapHeight() * layer.GetTileHeight();
     }
 
 private:
@@ -246,7 +247,7 @@ private:
 };
 
 
-std::shared_ptr<TileMap> buildMap(const Tmx::Map& inmap);
+std::shared_ptr<TileMap> BuildMap(const Tmx::Map& inmap);
 
 
 }

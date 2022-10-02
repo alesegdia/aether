@@ -16,12 +16,12 @@ public:
     /**
      * @brief called every time the screen is put to active
      */
-    virtual void show() = 0 ;
+    virtual int Load() = 0 ;
 
     /**
      * @brief called every time the screen is removed from current active
      */
-    virtual void hide() = 0 ;
+    virtual int Unload() = 0 ;
 
     bool updateInactive()
     {
@@ -35,12 +35,12 @@ public:
 
     void updateWithSubscreen(uint64_t delta)
     {
-        applyAction(&IScreen::updateInactive, &IScreen::update, delta);
+        applyAction(&IScreen::updateInactive, &IScreen::Update, delta);
     }
 
     void renderWithSubscreen()
     {
-        applyAction(&IScreen::renderInactive, &IScreen::render);
+        applyAction(&IScreen::renderInactive, &IScreen::Render);
     }
 
     template <typename... Args>
@@ -76,12 +76,12 @@ protected:
      * @brief for game logic
      * @param delta time between current and last frames
      */
-    virtual void update(uint64_t delta) = 0 ;
+    virtual void Update(uint64_t delta) = 0 ;
 
     /**
      * @brief called in a fixed rate, for rendering
      */
-    virtual void render() = 0 ;
+    virtual void Render() = 0 ;
 
     void pushSubscreen(std::shared_ptr<IScreen> subscreen)
     {

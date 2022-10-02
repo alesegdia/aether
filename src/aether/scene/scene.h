@@ -22,29 +22,29 @@ public:
 
     virtual ~SceneNode();
 
-    math::Vec2f& relativePos();
+    math::Vec2f& GetRelativePosition();
 
-    const math::Vec2f& relativePos() const;
+    const math::Vec2f& GetRelativePosition() const;
 
-    math::Vec2f& renderPos();
+    math::Vec2f& GetRenderPosition();
 
-    const math::Vec2f& renderPos() const;
+    const math::Vec2f& GetRenderPosition() const;
 
-    int zIndex() const;
+    int GetZIndex() const;
 
-    void zIndex(int pzindex);
+    void SetZIndex(int pzindex);
 
-    virtual void render();
+    virtual void Render();
 
-    std::vector<SceneNode::Shared>& children();
+    std::vector<SceneNode::Shared>& GetChildren();
 
-    SceneNode::Shared& parent();
+    SceneNode::Shared& GetParent();
 
-    void parent(Shared newParent);
+    void SetParent(Shared newParent);
 
-    void addChild(const SceneNode::Shared& sceneNode);
+    void AddChild(const SceneNode::Shared& sceneNode);
 
-    float& angle()
+    float& GetAngle()
     {
         return m_angle;
     }
@@ -71,19 +71,19 @@ public:
     Scene()
     {
         m_root = std::make_shared<SceneNode>();
-        m_root->parent(std::make_shared<SceneNode>());
+        m_root->SetParent(std::make_shared<SceneNode>());
     }
 
-    void render()
+    void Render()
     {
         m_nodesSortedByZindex.clear();
-        traverse(m_root);
+        Traverse(m_root);
         for( auto child : m_nodesSortedByZindex ) {
-            child->render();
+            child->Render();
         }
     }
 
-    void traverse(const SceneNode::Shared& node)
+    void Traverse(const SceneNode::Shared& node)
     {
         /*
         core::insert_sorted(m_nodesSortedByZindex, node, [](auto val,  auto iter) {
@@ -97,11 +97,11 @@ public:
     }
 
     template <typename SceneNodeType, typename... Args>
-    std::shared_ptr<SceneNodeType> addToScene(Args&&... args)
+    std::shared_ptr<SceneNodeType> AddToScene(Args&&... args)
     {
         auto ptr = std::make_shared<SceneNodeType>(args...);
-        m_root->addChild(ptr);
-        ptr->parent(m_root);
+        m_root->AddChild(ptr);
+        ptr->SetParent(m_root);
         return ptr;
     }
 

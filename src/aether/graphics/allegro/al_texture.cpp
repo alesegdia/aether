@@ -13,12 +13,12 @@ namespace graphics {
 // en un futuro se pueden usar bitset con findfirstfree!
 core::HandledResourceManager<ALLEGRO_BITMAP*> texture_manager;
 
-void Texture::load(const char *path)
+void Texture::Load(const char *path)
 {
-    assert(notValid());
+    assert(IsNotValid());
     ALLEGRO_BITMAP* bitmap = al_load_bitmap(path);
     assert(bitmap != nullptr);
-    handle(texture_manager.createNewHandle(bitmap));
+    SetHandle(texture_manager.createNewHandle(bitmap));
 }
 
 static ALLEGRO_BITMAP* fetch(int handle)
@@ -28,25 +28,25 @@ static ALLEGRO_BITMAP* fetch(int handle)
     return texture;
 }
 
-int Texture::width() const
+int Texture::GetWidth() const
 {
-    return al_get_bitmap_width(fetch(handle()));
+    return al_get_bitmap_width(fetch(GetHandle()));
 }
 
-int Texture::height() const
+int Texture::GetHeight() const
 {
-    return al_get_bitmap_height(fetch(handle()));
+    return al_get_bitmap_height(fetch(GetHandle()));
 }
 
-void Texture::destroy()
+void Texture::Destroy()
 {
-    al_destroy_bitmap(fetch(handle()));
-    invalidate();
+    al_destroy_bitmap(fetch(GetHandle()));
+    Invalidate();
 }
 
-void Texture::draw(float x, float y, float rx, float ry, float rw, float rh, aether::graphics::Color color, bool xflip, bool yflip, float centerx, float centery, float angle, float xscale, float yscale) const
+void Texture::Draw(float x, float y, float rx, float ry, float rw, float rh, aether::graphics::Color color, bool xflip, bool yflip, float centerx, float centery, float angle, float xscale, float yscale) const
 {
-    al_draw_tinted_scaled_rotated_bitmap_region(fetch(handle()),
+    al_draw_tinted_scaled_rotated_bitmap_region(fetch(GetHandle()),
                                                 rx, ry, rw, rh,
                                                 al_map_rgb(color.r, color.g, color.b),
                                                 centerx, centery, x, y, xscale, yscale, angle,
@@ -54,9 +54,9 @@ void Texture::draw(float x, float y, float rx, float ry, float rw, float rh, aet
 }
 
 
-void Texture::draw(float x, float y) const
+void Texture::Draw(float x, float y) const
 {
-    al_draw_bitmap(fetch(handle()), x, y, 0);
+    al_draw_bitmap(fetch(GetHandle()), x, y, 0);
 }
 
 /*
@@ -66,7 +66,7 @@ void Texture::draw(float x, float y, float alpha)
 }
 */
 
-void Texture::drawScaledCentered(float x, float y,
+void Texture::DrawScaledCentered(float x, float y,
     float rx, float ry, float rw, float rh,
     aether::graphics::Color color,
     bool xflip, bool yflip,

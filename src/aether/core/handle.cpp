@@ -21,22 +21,27 @@ Handle::Handle(const Handle &other)
     m_handle = other.m_handle;
 }
 
-bool Handle::valid() const
+bool Handle::IsValid() const
 {
     return m_handle != -1;
 }
 
-int Handle::handle() const
+bool Handle::IsNotValid() const
+{
+	return !IsValid();
+}
+
+int Handle::GetHandle() const
 {
     return m_handle;
 }
 
-void Handle::handle(int h)
+void Handle::SetHandle(int h)
 {
     m_handle = h;
 }
 
-void Handle::invalidate()
+void Handle::Invalidate()
 {
     m_handle = -1;
 }

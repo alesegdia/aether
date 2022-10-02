@@ -6,22 +6,22 @@ namespace aether {
 namespace audio {
 
 
-void Sample::load(const char *path)
+void Sample::Load(const char *path)
 {
 
 }
 
-void Sample::destroy()
+void Sample::Destroy()
 {
 
 }
 
-void Sample::play(float volume, PlayMode playmode)
+void Sample::Play(float volume, PlayMode playmode)
 {
 
 }
 
-void Sample::rewind()
+void Sample::Rewind()
 {
 
 }

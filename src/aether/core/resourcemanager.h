@@ -17,7 +17,7 @@ class IResourceStorage
 {
 public:
     virtual ~IResourceStorage();
-    virtual void cleanup() = 0;
+    virtual void Cleanup() = 0;
 };
 
 
@@ -25,12 +25,12 @@ class ResourceTraits
 {
 public:
     template <typename T>
-    static uint64_t getIndex() {
+    static uint64_t GetIndex() {
         static const uint64_t index = nextTypeIndex++;
         return index;
     }
 
-    static uint64_t getNumResources() {
+    static uint64_t GetNumResources() {
         return nextTypeIndex;
     }
 
@@ -45,17 +45,17 @@ class ResourceStorage : public IResourceStorage
 {
 public:
     template <typename... Args>
-    void add(Args&&... args)
+    void Add(Args&&... args)
     {
         m_resources.emplace_back(std::forward<ResourceType>(args)...);
     }
 
     template <typename... Args>
-    ResourceType load(const char* path, Args&&... args)
+    ResourceType Load(const char* path, Args&&... args)
     {
         if( m_resourcesByString.count(path) == 0 ) {
             ResourceType resource;
-            resource.load(path, args...);
+            resource.Load(path, args...);
             m_resourcesByString[std::string(path)] = resource;
             m_resources.push_back(resource);
             return resource;
@@ -64,9 +64,9 @@ public:
         }
     }
 
-    void cleanup() {
+    void Cleanup() {
         for( auto& resource : m_resources ) {
-            resource.destroy();
+            resource.Destroy();
         }
     }
 
@@ -82,21 +82,21 @@ public:
 
 
     template <typename ResourceType, typename... Args>
-    ResourceType load(const char* path, Args&&... args)
+    ResourceType Load(const char* path, Args&&... args)
     {
-        auto index = ResourceTraits::getIndex<ResourceType>();
-        ensureIndexFits(index);
+        auto index = ResourceTraits::GetIndex<ResourceType>();
+        EnsureIndexFits(index);
         if(m_resourceStorages[index] == nullptr) {
             m_resourceStorages[index] = new ResourceStorage<ResourceType>();
         }
         auto resourceStorage = static_cast<ResourceStorage<ResourceType>*>(m_resourceStorages[index]);
-        return resourceStorage->load(path, std::forward<ResourceType>(args)...);
+        return resourceStorage->Load(path, std::forward<ResourceType>(args)...);
     }
 
-    void cleanup()
+    void Cleanup()
     {
         for( auto storage : m_resourceStorages ) {
-            storage->cleanup();
+            storage->Cleanup();
             delete storage;
         }
     }
@@ -104,7 +104,7 @@ public:
 
 private:
 
-    void ensureIndexFits(uint64_t index)
+    void EnsureIndexFits(uint64_t index)
     {
         for( size_t i = m_resourceStorages.size(); i <= index; i++ ) {
             m_resourceStorages.push_back(nullptr);

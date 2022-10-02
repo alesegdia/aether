@@ -7,6 +7,5 @@ aetherProject("aether-tests")
 	targetdir ("../build")
 	links { "gtest" }
 	files {
-    	path.join(AETHER_DIR, "src/tests/maintests.cpp"),
-    	path.join(AETHER_DIR, "module/secs/src/gtests/**.cpp"),
+    		path.join(AETHER_DIR, "module/secs/src/gtests/**.cpp"),
 	}

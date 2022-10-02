@@ -19,28 +19,28 @@ public:
 
     }
 
-    int height() const;
-    int width() const;
-    void destroy();
-    void draw(float x, float y) const;
-    void draw(float x, float y,
+    int GetHeight() const;
+    int GetWidth() const;
+    void Destroy();
+    void Draw(float x, float y) const;
+    void Draw(float x, float y,
         float rx, float ry, float rw, float rh,
         aether::graphics::Color color = aether::graphics::Color(1.f, 1.f, 1.f),
         bool xflip = false, bool yflip = false,
         float centerx = 0.0f, float centery = 0.0f, float angle = 0.0f, float xscale = 1.0f, float yscale = 1.0f) const;
-    void drawScaledCentered(float x, float y,
+    void DrawScaledCentered(float x, float y,
         float rx, float ry, float rw, float rh,
         aether::graphics::Color color = aether::graphics::Color(1.f, 1.f, 1.f),
         bool xflip = false, bool yflip = false,
         float centerx = 0.0f, float centery = 0.0f, float angle = 0.0f, float xscale = 1.0f, float yscale = 1.0f) const;
-    void draw(float x, float y, float alpha) const;
-    void load(const char* path);
+    void Draw(float x, float y, float alpha) const;
+    void Load(const char* path);
 
 
     // temporary here, was protected
     Texture(int h)
     {
-        handle(h);
+        SetHandle(h);
     }
 
 
@@ -50,13 +50,14 @@ protected:
 };
 
 
+    // TODO: move to its own file
 class TextureRegion
 {
 public:
     static TextureRegion Create(std::string path)
     {
         aether::graphics::Texture t;
-        t.load(path.c_str());
+        t.Load(path.c_str());
         return TextureRegion(t);
     }
 
@@ -74,7 +75,7 @@ public:
 
     TextureRegion(const Texture& texture)
 	    : m_texture(texture)
-	    , m_clip(aether::math::Rectf(0.0f, 0.0f, float(texture.width()), float(texture.height())))
+	    , m_clip(aether::math::Rectf(0.0f, 0.0f, float(texture.GetWidth()), float(texture.GetHeight())))
 	{
 
 	}
@@ -86,54 +87,54 @@ public:
 
 	}
 
-	void setRegion(float x, float y, float w, float h)
+	void SetRegion(float x, float y, float w, float h)
 	{
 		m_clip = aether::math::Rectf(x, y, w, h);
 	}
 
-    void draw(float x, float y, bool xflip = false, bool yflip = false) const
+    void Draw(float x, float y, bool xflip = false, bool yflip = false) const
 	{
-        m_texture.draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(), graphics::Color(1.0f, 1.0f, 1.0f), xflip, yflip);
+        m_texture.Draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(), graphics::Color(1.0f, 1.0f, 1.0f), xflip, yflip);
 	}
 
-    void draw(float x, float y, float cx, float cy, float angle) const
+    void Draw(float x, float y, float cx, float cy, float angle) const
     {
-        m_texture.draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(),
+        m_texture.Draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(),
                        Color(1.f,1.f,1.f),
                        false, false, cx, cy, angle);
     }
 
-    void draw(float x, float y, float xscale, float yscale) const
+    void Draw(float x, float y, float xscale, float yscale) const
     {
-        m_texture.draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(), aether::graphics::Color(1.0f, 1.0f, 1.0f),
+        m_texture.Draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(), aether::graphics::Color(1.0f, 1.0f, 1.0f),
             false, false, 0.0f, 0.0f, 0.0f, xscale, yscale);
     }
 
-    void drawRotatedScaled(float x, float y, float xscale, float yscale, float rotation) const
+    void DrawRotatedScaled(float x, float y, float xscale, float yscale, float rotation) const
     {
-        m_texture.draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(), aether::graphics::Color(1.0f, 1.0f, 1.0f),
+        m_texture.Draw(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(), aether::graphics::Color(1.0f, 1.0f, 1.0f),
             false, false, 0.0f, 0.0f, rotation, xscale, yscale);
     }
 
-    void drawRotatedScaledCentered(float x, float y, float xscale, float yscale, float rotation) const
+    void DrawRotatedScaledCentered(float x, float y, float xscale, float yscale, float rotation) const
     {
-        m_texture.drawScaledCentered(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(), aether::graphics::Color(1.0f, 1.0f, 1.0f),
+        m_texture.DrawScaledCentered(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(), aether::graphics::Color(1.0f, 1.0f, 1.0f),
             false, false, 0.0f, 0.0f, rotation, xscale, yscale);
     }
 
-    const Texture& texture() const
+    const Texture& GetTexture() const
     {
         return m_texture;
     }
 
-    const aether::math::Rectf& clip() const
+    const aether::math::Rectf& GetClip() const
     {
         return m_clip;
     }
 
-    bool valid() const
+    bool IsValid() const
     {
-        return m_texture.valid();
+        return m_texture.IsValid();
     }
 
 private:

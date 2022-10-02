@@ -11,13 +11,13 @@ GridNode::GridNode(float x, float y, int numXTiles, int numYTiles, float tileWid
     , m_tileWidth(tileWidth)
     , m_tileHeight(tileHeight)
 {
-    m_relativePosition.set(x, y);
+    m_relativePosition.Set(x, y);
 }
 
-void GridNode::render()
+void GridNode::Render()
 {
-    auto offx = renderPos().x();
-    auto offy = renderPos().y();
+    auto offx = GetRenderPosition().GetX();
+    auto offy = GetRenderPosition().GetY();
     for( float x = offx; x <= offx + m_numXTiles * m_tileWidth; x += m_tileHeight ) {
         aether::graphics::draw_line(x, offy, x, offy + m_tileHeight * m_numYTiles, aether::graphics::Color(0.f,0.f,0.f), 2.f);
     }

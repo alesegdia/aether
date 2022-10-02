@@ -24,9 +24,9 @@ public:
 
     }
 
-    void set(const graphics::TextureRegion& tr);
+    void SetTextureRegion(const graphics::TextureRegion& tr);
 
-    void render() override;
+    void Render() override;
 
 protected:
     graphics::TextureRegion m_texregion;

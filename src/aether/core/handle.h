@@ -12,16 +12,13 @@ public:
     Handle(const Handle& other);
     Handle(int handle);
 
-    bool valid() const;
-    bool notValid() const
-    {
-        return ! valid();
-    }
+    bool IsValid() const;
+    bool IsNotValid() const;
 
 protected:
-	int handle() const;
-    void handle(int h);
-    void invalidate();
+	int GetHandle() const;
+    void SetHandle(int h);
+    void Invalidate();
 
 private:
     int m_handle;

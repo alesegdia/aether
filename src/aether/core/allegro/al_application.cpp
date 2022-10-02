@@ -19,7 +19,12 @@ AllegroApplication::AllegroApplication(int sw, int sh)
 
 }
 
-int AllegroApplication::init(int argc, char **argv)
+AllegroApplication::~AllegroApplication()
+{
+
+}
+
+int AllegroApplication::Init(int argc, char **argv)
 {
     al_register_trace_handler([](const char* message) {
         std::cout << "ALLEGRO MESSAGE: " << message;
@@ -77,7 +82,7 @@ int AllegroApplication::init(int argc, char **argv)
 
     al_set_new_display_flags(ALLEGRO_DIRECT3D_INTERNAL);
     al_set_new_display_option(ALLEGRO_VSYNC, 2, 1000);
-    m_display = al_create_display(screenWidth(), screenHeight());
+    m_display = al_create_display(GetApplicationWindowScreenWidth(), GetApplicationWindowScreenHeight());
     if(!m_display) {
         fprintf(stderr, "failed to create display!\n");
         return -1;
@@ -129,21 +134,21 @@ int AllegroApplication::init(int argc, char **argv)
     return 0;
 }
 
-void AllegroApplication::preRender()
+void AllegroApplication::PreRender()
 {
     al_set_target_bitmap(al_get_backbuffer(m_display));
     ImGui_ImplAllegro5_NewFrame();
     ImGui::NewFrame();
 }
 
-void AllegroApplication::postRender()
+void AllegroApplication::PostRender()
 {
     ImGui::Render();
     ImGui_ImplAllegro5_RenderDrawData(ImGui::GetDrawData());
     al_flip_display();
 }
 
-void aether::core::AllegroApplication::cleanup()
+void AllegroApplication::Deinit()
 {
     al_destroy_display(m_display);
     al_shutdown_image_addon();
@@ -161,7 +166,7 @@ void aether::core::AllegroApplication::cleanup()
     al_uninstall_mouse();
 }
 
-void aether::core::AllegroApplication::preUpdate()
+void AllegroApplication::PreUpdate()
 {
     ALLEGRO_EVENT ev;
     while( al_get_next_event(m_eventQueue, &ev) )
@@ -169,7 +174,7 @@ void aether::core::AllegroApplication::preUpdate()
         ImGui_ImplAllegro5_ProcessEvent(&ev);
         if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         {
-            close();
+            Close();
         }
         else if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
         {
@@ -200,12 +205,12 @@ void aether::core::AllegroApplication::preUpdate()
     aether_mouse_state.buttons = allegro_mouse_state.buttons;
 }
 
-void aether::core::AllegroApplication::postUpdate()
+void AllegroApplication::PostUpdate()
 {
     _input_post_update();
 }
 
-void aether::core::AllegroApplication::grabMouse()
+void AllegroApplication::GrabMouse()
 {
     assert(al_grab_mouse(m_display));
 }

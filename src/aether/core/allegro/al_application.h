@@ -12,34 +12,23 @@ class AllegroApplication : public ApplicationBase
 {
 public:
     AllegroApplication(int sw, int sh);
-    virtual ~AllegroApplication()
-    {
+    virtual ~AllegroApplication();
 
-    }
+    void GrabMouse() final;
 
-    void grabMouse() final;
-
-
-    // ApplicationBase interface
 protected:
-    int init(int argc, char **argv) final;
+    int Init(int argc, char **argv) final;
 
 private:
     ALLEGRO_DISPLAY* m_display = NULL;
     ALLEGRO_EVENT_QUEUE* m_eventQueue = NULL;
 
-    // ApplicationBase interface
 protected:
-    void cleanup();
-
-    void preUpdate() final;
-
-    void postUpdate() final;
-
-    void preRender() final;
-
-    void postRender() final;
-
+    void Deinit() final;
+    void PreUpdate() final;
+    void PostUpdate() final;
+    void PreRender() final;
+    void PostRender() final;
 
 };
 

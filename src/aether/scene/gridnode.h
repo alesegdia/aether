@@ -14,7 +14,7 @@ public:
 
     GridNode(float x, float y, int numXTiles, int numYTiles, float tileWidth, float tileHeight);
 
-    void render() override;
+    void Render() override;
 
 
 private:

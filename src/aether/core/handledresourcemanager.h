@@ -24,8 +24,8 @@ public:
      */
     int createNewHandle(ResourceType element)
     {
-        int handle = m_resources.size();
-        m_resources.add(element);
+        int handle = m_resources.GetSize();
+        m_resources.Add(element);
         return handle;
     }
 
@@ -37,7 +37,7 @@ public:
     ResourceType fetchPresentHandle(int handle)
     {
         assert( handle >= 0 );
-        assert( handle < m_resources.size() );
+        assert( handle < m_resources.GetSize() );
         ResourceType res = m_resources[size_t(handle)];
         return res;
     }
@@ -50,7 +50,7 @@ public:
     ResourceType& fetchPresentHandleReference(int handle)
     {
         assert( handle >= 0 );
-        assert( handle < m_resources.size() );
+        assert( handle < m_resources.GetSize() );
         return m_resources[handle];
     }
    

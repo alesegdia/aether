@@ -7,19 +7,19 @@ namespace scene {
 
 
 
-void TextureNode::set(const graphics::TextureRegion &tr)
+void TextureNode::SetTextureRegion(const graphics::TextureRegion &tr)
 {
     m_texregion = tr;
 }
 
-void TextureNode::render()
+void TextureNode::Render()
 {
     float rx, ry, rw, rh;
-    rx = m_texregion.clip().x();
-    ry = m_texregion.clip().y();
-    rw = m_texregion.clip().w();
-    rh = m_texregion.clip().h();
-    m_texregion.texture().draw(m_renderPosition.x(), m_renderPosition.y(),
+    rx = m_texregion.GetClip().x();
+    ry = m_texregion.GetClip().y();
+    rw = m_texregion.GetClip().w();
+    rh = m_texregion.GetClip().h();
+    m_texregion.GetTexture().Draw(m_renderPosition.GetX(), m_renderPosition.GetY(),
                                rx, ry, rw, rh,      // sub region coordinates
                                m_color,             // tint
                                false, false,        // xflip and yflip

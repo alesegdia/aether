@@ -3,14 +3,14 @@
 namespace aether {
 namespace graphics {
 
-void AnimationData::reset()
+void AnimationData::ResetAnimationTimer()
 {
     timer = 0;
 }
 
-void AnimationData::render(float x, float y)
+void AnimationData::Render(float x, float y)
 {
-    currentFrame->texture.draw(x, y);
+    currentFrame->texture.Draw(x, y);
 }
 
 Animation::Animation(uint64_t default_frame_duration)
@@ -22,10 +22,10 @@ Animation::Animation(uint64_t default_frame_duration)
 Animation::Animation(const std::vector<TextureRegion>& frames, uint64_t default_frame_duration)
     : Animation(default_frame_duration)
 {
-    addFrames(frames);
+    AddFrames(frames);
 }
 
-void Animation::addFrame(const TextureRegion& texture, int64_t duration)
+void Animation::AddFrame(const TextureRegion& texture, int64_t duration)
 {
     int64_t accumulated = 0;
     if( m_frames.size() > 0 )
@@ -37,27 +37,27 @@ void Animation::addFrame(const TextureRegion& texture, int64_t duration)
     m_totalAnimDuration += duration;
 }
 
-void Animation::addFrame(const TextureRegion& texture)
+void Animation::AddFrame(const TextureRegion& texture)
 {
-    addFrame( texture, m_defaultFrameDuration );
+    AddFrame( texture, m_defaultFrameDuration );
 }
 
-void Animation::addFrames(const std::vector<TextureRegion>& frames)
+void Animation::AddFrames(const std::vector<TextureRegion>& frames)
 {
     for( auto texture : frames )
     {
-        addFrame(texture);
+        AddFrame(texture);
     }
 }
 
-void Animation::reset(AnimationData &data)
+void Animation::Reset(AnimationData &data)
 {
     //assert(data.currentFrame == nullptr && "The AnimationData instance is not null");
-    data.reset();
+    data.ResetAnimationTimer();
     data.currentFrame = &m_frames[0];
 }
 
-void Animation::updateData(AnimationData &data)
+void Animation::UpdateData(AnimationData &data)
 {
     assert(data.currentFrame != nullptr);
     AnimationFrame *frame = data.currentFrame;
@@ -93,6 +93,16 @@ void Animation::updateData(AnimationData &data)
     data.animationFrameIndex = frame_index;
 }
 
+
+const aether::graphics::AnimationFrame& Animation::GetFrame(size_t i)
+{
+	return m_frames[i];
+}
+
+void Animation::SetWrapMode(WrapMode wrapMode)
+{
+	m_wrapMode = wrapMode;
+}
 
 }
 }

@@ -11,8 +11,8 @@ public:
 
     typedef IInputProcessor* Ptr;
 
-    virtual void onKeyUp(KeyCode key) = 0 ;
-    virtual void onKeyDown(KeyCode key) = 0 ;
+    virtual void OnKeyUp(KeyCode key) = 0 ;
+    virtual void OnKeyDown(KeyCode key) = 0 ;
 
 };
 

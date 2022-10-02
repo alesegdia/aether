@@ -19,9 +19,9 @@ struct AnimationFrame
 
 struct AnimationData
 {
-    void reset();
+    void ResetAnimationTimer();
 
-    void render(float x, float y);
+    void Render(float x, float y);
 
     int64_t timer = 0;
     AnimationFrame* currentFrame = nullptr;
@@ -49,41 +49,35 @@ public:
      * @param texture
      * @param duration
      */
-    void addFrame(const TextureRegion& texture, int64_t duration);
+    void AddFrame(const TextureRegion& texture, int64_t duration);
 
     /**
      * @brief addFrame adds a frame with the default set frame duration
      * @param texture
      */
-    void addFrame(const TextureRegion& texture);
+    void AddFrame(const TextureRegion& texture);
 
     /**
      * @brief addFrames adds a list of frames with the default set frame duration
      * @param frames
      */
-    void addFrames(const std::vector<TextureRegion>&);
+    void AddFrames(const std::vector<TextureRegion>&);
 
     /**
      * @brief reset resets the AnimationData state for this animation
      * @param data
      */
-    void reset( AnimationData& data );
+    void Reset( AnimationData& data );
 
     /**
      * @brief updates frame and fix timer to data
      * @param data the animation data to be updated
      */
-    void updateData( AnimationData& data );
+    void UpdateData( AnimationData& data );
 
-    const AnimationFrame& getFrame(size_t i)
-    {
-        return m_frames[i];
-    }
+    const AnimationFrame& GetFrame(size_t i);
 
-    void setWrapMode(WrapMode wrapMode)
-    {
-        m_wrapMode = wrapMode;
-    }
+    void SetWrapMode(WrapMode wrapMode);
 
 
 private:

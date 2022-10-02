@@ -18,12 +18,12 @@ public:
 
     }
 
-    void grabMouse() final;
+    void GrabMouse() final;
 
 
     // ApplicationBase interface
 protected:
-    int init(int argc, char **argv) final;
+    int AppImplementationInit(int argc, char **argv) final;
 
 private:
     SDL_Window* m_display = NULL;
@@ -31,15 +31,15 @@ private:
 
     // ApplicationBase interface
 protected:
-    void cleanup();
+    void Deinit();
 
-    void preUpdate() final;
+    void PreUpdate() final;
 
-    void postUpdate() final;
+    void PostUpdate() final;
 
-    void preRender() final;
+    void PreRender() final;
 
-    void postRender() final;
+    void PostRender() final;
 
 
 };

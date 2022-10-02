@@ -54,7 +54,7 @@ void _notify_key_down(KeyCode key)
 
     AETHER_FOREACH_PROCESSOR
     {
-        processors[pidx]->onKeyDown(key);
+        processors[pidx]->OnKeyDown(key);
     }
 }
 
@@ -63,7 +63,7 @@ void _notify_key_up(KeyCode key)
     key_states[(int)key] = false;
     AETHER_FOREACH_PROCESSOR
     {
-        processors[pidx]->onKeyUp(key);
+        processors[pidx]->OnKeyUp(key);
     }
 }
 

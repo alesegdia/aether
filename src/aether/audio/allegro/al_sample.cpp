@@ -17,21 +17,21 @@ struct AllegroSample
 
 core::HandledResourceManager<AllegroSample> sample_manager;
 
-void Sample::load(const char *path)
+void Sample::Load(const char *path)
 {
     AllegroSample as;
     as.sample = al_load_sample(path);
-    handle(sample_manager.createNewHandle(as));
+    SetHandle(sample_manager.createNewHandle(as));
 }
 
-void Sample::destroy()
+void Sample::Destroy()
 {
-    al_destroy_sample(sample_manager.fetchPresentHandle(handle()).sample);
+    al_destroy_sample(sample_manager.fetchPresentHandle(GetHandle()).sample);
 }
 
-void Sample::play(float volume, PlayMode playmode)
+void Sample::Play(float volume, PlayMode playmode)
 {
-    AllegroSample as = sample_manager.fetchPresentHandle(handle());
+    AllegroSample as = sample_manager.fetchPresentHandle(GetHandle());
     ALLEGRO_PLAYMODE pm = ALLEGRO_PLAYMODE_ONCE;
     if( playmode == PlayMode::Loop )
     {
@@ -40,9 +40,9 @@ void Sample::play(float volume, PlayMode playmode)
     al_play_sample(as.sample, volume, 0, 1, pm, &as.id);
 }
 
-void Sample::rewind()
+void Sample::Rewind()
 {
-    AllegroSample as = sample_manager.fetchPresentHandle(handle());
+    AllegroSample as = sample_manager.fetchPresentHandle(GetHandle());
     al_stop_sample(&as.id);
 }
 

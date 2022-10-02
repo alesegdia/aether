@@ -16,29 +16,29 @@ static ALLEGRO_FONT* fetch(int handle)
     return font;
 }
 
-void Font::load(const char *path, int size)
+void Font::Load(const char *path, int size)
 {
-    assert(notValid());
+    assert(IsNotValid());
     ALLEGRO_FONT* font = al_load_font(path, size, 0);
     assert(font != nullptr);
-    handle(font_manager.createNewHandle(font));
+    SetHandle(font_manager.createNewHandle(font));
 }
 
-void Font::destroy()
+void Font::Destroy()
 {
-    al_destroy_font(fetch(handle()));
-    invalidate();
+    al_destroy_font(fetch(GetHandle()));
+    Invalidate();
 }
 
-void Font::print(const char *text, float x, float y, Color c)
+void Font::Print(const char *text, float x, float y, Color c)
 {
-    ALLEGRO_FONT* font = fetch(handle());
+    ALLEGRO_FONT* font = fetch(GetHandle());
     al_draw_text(font, al_map_rgb(c.r, c.g, c.b), x, y, 0, text);
 }
 
-void Font::print(const char *text, float x, float y, float width, float line_height, Color c, bool noalign)
+void Font::Print(const char *text, float x, float y, float width, float line_height, Color c, bool noalign)
 {
-    ALLEGRO_FONT* font = fetch(handle());
+    ALLEGRO_FONT* font = fetch(GetHandle());
     if( noalign )
     {
         al_draw_multiline_text(font, al_map_rgb(c.r, c.g, c.b), x, y, width, line_height, ALLEGRO_ALIGN_LEFT, text);
@@ -49,7 +49,7 @@ void Font::print(const char *text, float x, float y, float width, float line_hei
     }
 }
 
-TextData Font::createTextTexture(const char* text, Color color)
+TextData Font::CreateTextTexture(const char* text, Color color)
 {
     assert(false);
     return {};

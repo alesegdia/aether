@@ -14,29 +14,29 @@ GenericCollisionTileMap::GenericCollisionTileMap(TileLayer::Shared tilelayer)
 GenericCollisionTileMap::~GenericCollisionTileMap()
 = default;
 
-bool GenericCollisionTileMap::isSolid(size_t x, size_t y)
+bool GenericCollisionTileMap::IsSolid(size_t x, size_t y)
 {
-    return m_tileLayer->getTileCollisionBehaviour(x, y) == TileCollisionBehaviour::Solid;
+    return m_tileLayer->GetTileCollisionBehaviour(x, y) == TileCollisionBehaviour::Solid;
 }
 
 bool GenericCollisionTileMap::isOneway(size_t x, size_t y)
 {
-    return m_tileLayer->getTileCollisionBehaviour(x, y) == TileCollisionBehaviour::Oneway;
+    return m_tileLayer->GetTileCollisionBehaviour(x, y) == TileCollisionBehaviour::Oneway;
 }
 
-math::Vec2i GenericCollisionTileMap::getTilePos(int x, int y)
+math::Vec2i GenericCollisionTileMap::GetTilePos(int x, int y)
 {
-    return math::Vec2i( int(x / m_tileLayer->tileWidth()), int(y / m_tileLayer->tileHeight()) );
+    return math::Vec2i( int(x / m_tileLayer->GetTileWidth()), int(y / m_tileLayer->GetTileHeight()) );
 }
 
-int GenericCollisionTileMap::tileWidth()
+int GenericCollisionTileMap::GetTileWidth()
 {
-    return m_tileLayer->tileWidth();
+    return m_tileLayer->GetTileWidth();
 }
 
-int GenericCollisionTileMap::tileHeight()
+int GenericCollisionTileMap::GetTileHeight()
 {
-    return m_tileLayer->tileHeight();
+    return m_tileLayer->GetTileHeight();
 }
 
 
@@ -50,7 +50,7 @@ CollisionTilemap::~CollisionTilemap()
 = default;
 
 
-void CollisionTilemap::move(math::Recti &rect, int new_x, int new_y, CollisionInfo* ci)
+void CollisionTilemap::Internal_Move(math::Recti &rect, int new_x, int new_y, CollisionInfo* ci)
 {
     int fixed_col, fixed_row;
     fixed_col = fixed_row = -1;
@@ -77,50 +77,50 @@ void CollisionTilemap::move(math::Recti &rect, int new_x, int new_y, CollisionIn
     if( dx > 0 )
     {
         horizontal = Direction::Right;
-        r0 = getTilePos( x1, y0+1 );
-        r1 = getTilePos( x1, y1-1 );
+        r0 = GetTilePos( x1, y0+1 );
+        r1 = GetTilePos( x1, y1-1 );
     }
     // moving left
     else if( dx < 0 )
     {
         horizontal = Direction::Left;
-        r0 = getTilePos( x0, y0+1 );
-        r1 = getTilePos( x0, y1-1 );
+        r0 = GetTilePos( x0, y0+1 );
+        r1 = GetTilePos( x0, y1-1 );
     }
 
     // moving bottom
     if( dy > 0 )
     {
         vertical = Direction::Down;
-        c0 = getTilePos( x0+1, y1 );
-        c1 = getTilePos( x1-1, y1 );
+        c0 = GetTilePos( x0+1, y1 );
+        c1 = GetTilePos( x1-1, y1 );
     }
     // moving up
     else if( dy < 0 )
     {
         vertical = Direction::Up;
-        c0 = getTilePos( x0+1, y0 );
-        c1 = getTilePos( x1-1, y0 );
+        c0 = GetTilePos( x0+1, y0 );
+        c1 = GetTilePos( x1-1, y0 );
     }
 
     // horizontal movement?
     if( horizontal != Direction::None )
     {
         int depth = 0;
-        for( int y = r0.y(); y <= r1.y(); y++ )
+        for( int y = r0.GetY(); y <= r1.GetY(); y++ )
         {
-            int xxx = r0.x() < 0 ? 0 : r0.x();
+            int xxx = r0.GetX() < 0 ? 0 : r0.GetX();
             int yyy = y < 0 ? 0 : y;
-            if( isSolid( xxx, yyy ) )
+            if( IsSolid( xxx, yyy ) )
             {
                 if( Direction::Left == horizontal )
                 {
-                    depth = -((r0.x()+1) * tileWidth() - x0);
+                    depth = -((r0.GetX()+1) * GetTileWidth() - x0);
                     ci->x_collision_direction = -1;
                 }
                 else // Direction::Right
                 {
-                    depth = x1 - (r0.x()) * tileWidth();
+                    depth = x1 - (r0.GetX()) * GetTileWidth();
                     ci->x_collision_direction = 1;
                 }
             }
@@ -140,15 +140,15 @@ void CollisionTilemap::move(math::Recti &rect, int new_x, int new_y, CollisionIn
     if( vertical != Direction::None )
     {
         int depth = 0;
-        for( int x = c0.x(); x <= c1.x(); x++ )
+        for( int x = c0.GetX(); x <= c1.GetX(); x++ )
         {
             size_t tile_x = x < 0 ? 0 : x;
-            size_t tile_y = c0.y() < 0 ? 0 : c0.y();
+            size_t tile_y = c0.GetY() < 0 ? 0 : c0.GetY();
 
-            bool solid = isSolid( tile_x, tile_y );
+            bool solid = IsSolid( tile_x, tile_y );
             bool oneway = isOneway( tile_x, tile_y );
 
-            int a = tile_y * tileHeight();
+            int a = tile_y * GetTileHeight();
             int b = int(rect.y2());
 
             auto diff = a - b; // - rect.h() / 4;
@@ -157,13 +157,13 @@ void CollisionTilemap::move(math::Recti &rect, int new_x, int new_y, CollisionIn
 
             if( (solid || (oneway && diff > -rect.h() - OneWayPlatformCorrectionThreshold)) && Direction::Down == vertical  )
             {
-                auto d = y1 - (c0.y()) * tileHeight();
+                auto d = y1 - (c0.GetY()) * GetTileHeight();
                 depth = d;
                 ci->y_collision_direction = 1;
             }
             else if( solid && Direction::Up == vertical )
             {
-                depth = -((c0.y()+1) * tileHeight() - y0);
+                depth = -((c0.GetY()+1) * GetTileHeight() - y0);
                 ci->y_collision_direction = -1;
             }
         }
@@ -182,11 +182,11 @@ void CollisionTilemap::move(math::Recti &rect, int new_x, int new_y, CollisionIn
 
 }
 
-CollisionInfo GenericCollisionTileMap::realmove(math::Recti &rect, int new_x, int new_y)
+CollisionInfo GenericCollisionTileMap::Move(math::Recti &rect, int new_x, int new_y)
 {
     CollisionInfo ci;
-    move(rect, new_x, rect.y(), &ci);
-    move(rect, rect.x(), new_y, &ci);
+    Internal_Move(rect, new_x, rect.y(), &ci);
+    Internal_Move(rect, rect.x(), new_y, &ci);
     return ci;
 }
 

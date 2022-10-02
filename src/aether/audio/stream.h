@@ -12,14 +12,14 @@ public:
 
     Stream() {}
 
-    void load(const char* path);
-    void playmode(PlayMode playmode);
-    void play();
-    void pause();
-    void resume();
-    bool playing();
-    bool rewind();
-    void destroy();
+    void Load(const char* path);
+    void SetPlayMode(PlayMode playmode);
+    void Play();
+    void Pause();
+    void Resume();
+    bool Playing();
+    bool Rewind();
+    void Destroy();
 
 };
 
