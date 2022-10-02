@@ -46,3 +46,4 @@ function aetherProject(projectName)
 
 	commonFlags()
 end
+

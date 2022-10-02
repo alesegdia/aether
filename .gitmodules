@@ -49,3 +49,6 @@
 [submodule "module/lua"]
 	path = module/lua
 	url = git@github.com:lua/lua.git
+[submodule "module/googletest"]
+	path = module/googletest
+	url = https://github.com/google/googletest.git
