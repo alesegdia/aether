@@ -46,3 +46,6 @@
 [submodule "module/l2dfiledialog"]
 	path = module/l2dfiledialog
 	url = https://github.com/Limeoats/L2DFileDialog
+[submodule "module/lua"]
+	path = module/lua
+	url = git@github.com:lua/lua.git
