@@ -1,6 +1,6 @@
 dofile("../util/common.lua")
 
-commonLibSetup("imgui")
+commonLibSetup("imgui", true)
     language "C++"
     configuration {}
 

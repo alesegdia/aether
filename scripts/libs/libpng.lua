@@ -1,6 +1,6 @@
 copyFile(path.join(AETHER_DIR, "module/libpng/scripts/pnglibconf.h.prebuilt"), path.join(AETHER_DIR, "module/libpng/pnglibconf.h"))
 
-commonLibSetup("libpng")
+commonLibSetup("libpng", true)
 
 	configuration {}
 	

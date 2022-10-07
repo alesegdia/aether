@@ -1,7 +1,7 @@
 dofile("allegro-files.lua")
 dofile("../util/cmake-configure.lua")
 
-if _ACTION == "vs2019" and _OPTIONS["backend"] == "backend-allegro" then
+if (_ACTION == "vs2019" or _ACTION == "vs2022") and _OPTIONS["backend"] == "backend-allegro" then
     cmakeConfigureFileImmediate(path.join(AETHER_DIR, "module/allegro/include/allegro5/platform/alplatf.h.cmake"),
         {
             "ALLEGRO_MSVC",
@@ -25,7 +25,7 @@ if _ACTION == "vs2019" and _OPTIONS["backend"] == "backend-allegro" then
 
 end
 
-commonLibSetup("allegro")
+commonLibSetup("allegro", true)
     language "C++"
     configuration {}
 

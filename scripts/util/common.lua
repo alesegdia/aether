@@ -20,7 +20,7 @@ function commonFlags()
 	configuration {}
 end
 
-function commonLibSetup(name)
+function commonLibSetup(name, ignoreWarnings)
 	project(name)
 		location (path.join(AETHER_DIR, "build"))
 		kind "StaticLib"
@@ -29,6 +29,12 @@ function commonLibSetup(name)
 		platforms { "x32", "x64" }
 		targetdir ("../build")
 		commonFlags()
+		if ignoreWarnings == true then
+			flags(
+			{
+				"MinimumWarnings"
+			})
+		end
 end
 
 function configSDL()

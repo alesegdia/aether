@@ -1,4 +1,4 @@
-commonLibSetup("freetype")
+commonLibSetup("freetype", true)
 
 	configuration {}
 	

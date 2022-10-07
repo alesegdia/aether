@@ -30,6 +30,8 @@ int ApplicationBase::Initialize(int argc, char** argv)
 		return ready_retcode;
 	}
 
+    std::cout << "ARGUMENTS: " << argc << std::endl;
+
     _init_input();
 
     now = then = get_time();
@@ -158,7 +160,7 @@ void ApplicationBase::Update(uint64_t delta)
 {
 	if (m_currentScreen != nullptr)
 	{
-		m_currentScreen->updateWithSubscreen(delta);
+		m_currentScreen->UpdateWithSubscreen(delta);
 	}
 }
 
@@ -166,7 +168,7 @@ void ApplicationBase::Render()
 {
 	if (m_currentScreen != nullptr)
 	{
-		m_currentScreen->renderWithSubscreen();
+		m_currentScreen->RenderWithSubscreen();
 	}
 }
 

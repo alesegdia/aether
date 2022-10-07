@@ -1,4 +1,4 @@
-commonLibSetup("lua")
+commonLibSetup("lua", true)
 	language "C"
 	configuration {}
 	

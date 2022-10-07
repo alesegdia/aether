@@ -1,4 +1,4 @@
-commonLibSetup("tmxparser")
+commonLibSetup("tmxparser", true)
 	language "C++"
 	includedirs {
 		path.join(AETHER_DIR, "module/tmxparser/include"),

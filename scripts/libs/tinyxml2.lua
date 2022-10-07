@@ -1,4 +1,4 @@
-commonLibSetup("tinyxml2")
+commonLibSetup("tinyxml2", true)
 	language "C++"
 
 	includedirs {

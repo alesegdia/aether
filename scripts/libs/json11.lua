@@ -1,4 +1,4 @@
-commonLibSetup("json11")
+commonLibSetup("json11", true)
 	language "C++"
 	configuration {}
 	

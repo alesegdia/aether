@@ -23,28 +23,28 @@ public:
      */
     virtual int Unload() = 0 ;
 
-    bool updateInactive()
+    bool UpdateInactive()
     {
         return m_updateOnParent;
     }
 
-    bool renderInactive()
+    bool RenderInactive()
     {
         return m_renderOnParent;
     }
 
-    void updateWithSubscreen(uint64_t delta)
+    void UpdateWithSubscreen(uint64_t delta)
     {
-        applyAction(&IScreen::updateInactive, &IScreen::Update, delta);
+        ApplyAction(&IScreen::UpdateInactive, &IScreen::Update, delta);
     }
 
-    void renderWithSubscreen()
+    void RenderWithSubscreen()
     {
-        applyAction(&IScreen::renderInactive, &IScreen::Render);
+        ApplyAction(&IScreen::RenderInactive, &IScreen::Render);
     }
 
     template <typename... Args>
-    void applyAction( bool (IScreen::*checkMethod) (void), void (IScreen::*applyMethod)(Args...), Args... args )
+    void ApplyAction( bool (IScreen::*checkMethod) (void), void (IScreen::*applyMethod)(Args...), Args... args )
     {
         if( m_subScreens.size() > 0 )
         {
@@ -83,19 +83,19 @@ protected:
      */
     virtual void Render() = 0 ;
 
-    void pushSubscreen(std::shared_ptr<IScreen> subscreen)
+    void PushSubscreen(std::shared_ptr<IScreen> subscreen)
     {
         m_subScreens.push_back(subscreen);
     }
 
-    std::shared_ptr<IScreen> popSubscreen()
+    std::shared_ptr<IScreen> PopSubscreen()
     {
         std::shared_ptr<IScreen> item = m_subScreens.back();
         m_subScreens.pop_back();
         return item;
     }
 
-    void setOnParentBehaviour(bool update, bool render)
+    void SetOnParentBehaviour(bool update, bool render)
     {
         m_updateOnParent = update;
         m_renderOnParent = render;
