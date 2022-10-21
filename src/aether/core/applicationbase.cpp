@@ -93,6 +93,10 @@ void ApplicationBase::Step()
         PreUpdate();
         Update(m_updateStepTimer);
         PostUpdate();
+        if(m_currentScreen->HasRequestedCloseApp())
+        {
+	        Close();
+        }
     }
 }
 

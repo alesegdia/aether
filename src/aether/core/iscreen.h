@@ -70,6 +70,11 @@ public:
         }
     }
 
+    bool HasRequestedCloseApp()
+    {
+	    return m_requestCloseApp;
+    }
+
 protected:
 
     /**
@@ -101,10 +106,16 @@ protected:
         m_renderOnParent = render;
     }
 
+    void RequestCloseApp()
+    {
+	    m_requestCloseApp = true;
+    }
+
 private:
     std::deque<std::shared_ptr<IScreen>> m_subScreens;
     bool m_updateOnParent = false;
     bool m_renderOnParent = false;
+    bool m_requestCloseApp = false;
 
 };
 
