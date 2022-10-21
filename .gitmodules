@@ -52,3 +52,6 @@
 [submodule "module/googletest"]
 	path = module/googletest
 	url = https://github.com/google/googletest.git
+[submodule "module/inipp"]
+	path = module/inipp
+	url = git@github.com:mcmtroffaes/inipp.git

@@ -19,6 +19,7 @@ AETHER_COMMON_SOURCES = {
 	path.join(AETHER_DIR, "src/aether/scene/*.cpp"),
 	path.join(AETHER_DIR, "src/aether/lua/*.h"),
 	path.join(AETHER_DIR, "src/aether/lua/*.cpp"),
+	path.join(AETHER_DIR, "module/inipp/inipp/*.h"),
 }
 
 AETHER_API_SOURCES = {
@@ -40,7 +41,8 @@ AETHER_COMMON_INCLUDE_DIRS = {
 	path.join(AETHER_DIR, "module/json11"),
 	path.join(AETHER_DIR, "module/imgui"),
 	path.join(AETHER_DIR, "module/imgui/backends"),
-	path.join(AETHER_DIR, "module/lua")
+	path.join(AETHER_DIR, "module/lua"),
+	path.join(AETHER_DIR, "module/inipp"),
 }
 
 AETHER_ALLEGRO_CORE_SOURCES = {
