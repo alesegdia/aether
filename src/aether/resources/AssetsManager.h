@@ -1,12 +1,14 @@
 #pragma once
 
-#include <filesystem>
 #include <iostream>
 #include <unordered_map>
 #include <cassert>
 
 #include "aether/graphics/texture.h"
 #include "aether/graphics/font.h"
+
+#include <filesystem>
+
 
 namespace aether
 {
@@ -19,104 +21,100 @@ namespace aether
 			virtual ~IAssetStorage() = default;
 
 			virtual void Load(std::string path) = 0;
+			virtual std::string GetLoadMessage() = 0;
 		};
 
 		template <typename StoredAssetType>
 		class BaseAssetStorage : public IAssetStorage
 		{
 		public:
-			std::shared_ptr<StoredAssetType> GetItem(std::string path)
-			{
-				if (m_storageMap.count(path) == 0)
-				{
-					return nullptr;
-				}
-				return m_storageMap[path];
-			}
+			std::shared_ptr<StoredAssetType> GetItem(std::string path);
 
-			void Load(std::string path) override
-			{
-				auto asset = LoadImpl(path);
-				m_storageMap[path] = asset;
-			}
+			void Load(std::string path) override;
 
 			virtual std::shared_ptr<StoredAssetType> LoadImpl(std::string path) = 0;
 
+			std::string GetLoadMessage() override
+			{
+				return m_loadMessage;
+			}
+
+		protected:
+			void SetLoadMessage(std::string msg)
+			{
+				m_loadMessage = msg;
+			}
+
 		private:
 			std::unordered_map<std::string, std::shared_ptr<StoredAssetType>> m_storageMap;
+			std::string m_loadMessage;
 
 		};
+
+		template <typename StoredAssetType>
+		std::shared_ptr<StoredAssetType> aether::resources::BaseAssetStorage<StoredAssetType>::GetItem(std::string path)
+		{
+			if (m_storageMap.count(path) == 0)
+			{
+				return nullptr;
+			}
+			return m_storageMap[path];
+		}
+
+		template <typename StoredAssetType>
+		void aether::resources::BaseAssetStorage<StoredAssetType>::Load(std::string path)
+		{
+			m_loadMessage = path + " loaded successfully.";
+			auto asset = LoadImpl(path);
+			m_storageMap[path] = asset;
+		}
 
 		class TextureAssetManager : public BaseAssetStorage<aether::graphics::Texture>
 		{
 		public:
-			std::shared_ptr<aether::graphics::Texture> LoadImpl(std::string path) override
-			{
-				auto texture = std::make_shared<graphics::Texture>();
-				texture->Load(path.c_str());
-				return texture;
-			}
+			std::shared_ptr<aether::graphics::Texture> LoadImpl(std::string path) override;
+
 		};
 
 		class FontAssetManager : public BaseAssetStorage<aether::graphics::Font>
 		{
 		public:
-			std::shared_ptr<aether::graphics::Texture> LoadImpl(std::string path) override
-			{
-				auto font = std::make_shared<graphics::Font>();
-				font->Load(path.c_str());
-				return font;
-			}
+			std::shared_ptr<aether::graphics::Font> LoadImpl(std::string path) override;
 		};
 
 		class AssetsManager
 		{
 		public:
-			AssetsManager()
-			{
+			AssetsManager();
 
-			}
-
-			void LoadFolder(const char* path)
-			{
-				using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
-
-				for (const auto& dirEntry : recursive_directory_iterator(path))
-				{
-					std::cout << dirEntry << std::endl;
-					std::cout << GetExtension(dirEntry) << std::endl;
-				}
-			}
+			void LoadFolder(const char* path);
 
 			template <typename T>
-			std::shared_ptr<T> GetAsset(std::string path)
-			{
-				auto file_extension = GetExtension(path);
-				auto storage_iface = m_storages[file_extension];
-				auto storage = std::static_pointer_cast<BaseAssetStorage<T>>(storage_iface);
-				return storage->GetItem(path);
-			}
+			std::shared_ptr<T> GetAsset(std::string path);
 			
-			void AddStorage(std::string extension, std::shared_ptr<IAssetStorage> storage)
-			{
-				assert(m_storages.count(extension) == 0);
-				m_storages[extension] = storage;
-			}
-
+			void AddStorage(std::string extension, std::shared_ptr<IAssetStorage> storage);
+			
 		private:
-			std::filesystem::path GetExtension(std::string path)
+			std::string GetExt(std::string lepath);
+			std::filesystem::path GetExt()
 			{
-				return std::filesystem::path(path.c_str()).extension();
-			}
-
-			std::filesystem::path GetExtension(std::filesystem::directory_entry entry)
-			{
-				return std::filesystem::path(entry).extension();
+				return std::filesystem::path{  };
 			}
 
 			std::unordered_map<std::string, std::shared_ptr<IAssetStorage>> m_storages;
+			std::string m_basePath;
 
 		};
+
+		template <typename T>
+		std::shared_ptr<T>
+			aether::resources::AssetsManager::GetAsset(std::string path)
+		{
+			auto file_extension = std::filesystem::path(path).extension();
+			auto storage_iface = m_storages[file_extension];
+			auto storage = std::static_pointer_cast<BaseAssetStorage<T>>(storage_iface);
+			return storage->GetItem(path);
+		}
 
 	}
 }
