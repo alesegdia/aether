@@ -65,7 +65,6 @@ private:
     size_t CoordToIndex(size_t x, size_t y ) const;
 
     std::vector<TextureRegion> m_frames;
-    Texture m_parentTexture;
     int m_height{}, m_width{};
 
 

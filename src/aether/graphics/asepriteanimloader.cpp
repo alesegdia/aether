@@ -12,20 +12,25 @@ namespace aether::graphics {
 		buffer << t.rdbuf();
 		auto result = json11::Json::parse(buffer.str(), error);
 		auto frames = result["frames"].array_items();
+		auto meta = result["meta"];
+		data.texture.Load(meta["image"].string_value().c_str());
+		data.sheet = std::make_shared<aether::graphics::Spritesheet>();
+
+		for(auto frame : frames)
+		{
+			
+		}
 
 		auto firstFrame = frames[0];
 		auto frameWidth = firstFrame["frame"]["w"].int_value();
 		auto frameHeight = firstFrame["frame"]["h"].int_value();
 
-		auto meta = result["meta"];
 		auto imgWidth = meta["size"]["w"].int_value();
 		auto imgHeight = meta["size"]["h"].int_value();
 
 		int numColumns = imgWidth / frameWidth;
 		int numRows = imgHeight / frameHeight;
 
-		data.texture.Load(meta["image"].string_value().c_str());
-		data.sheet = std::make_shared<aether::graphics::Spritesheet>(numColumns, numRows, data.texture);
 
 		for (auto anim : meta["frameTags"].array_items())
 		{

@@ -1,4 +1,7 @@
-#include "AssetsManager.h"
+#include "aether/resources/AssetsManager.h"
+
+#include "aether/resources/textureassetstorage.h"
+#include "aether/resources/fontassetstorage.h"
 
 namespace aether
 {
@@ -7,15 +10,18 @@ namespace aether
 
 		AssetsManager::AssetsManager()
 		{
-			AddStorage(".font", std::make_shared<FontAssetManager>());
-			AddStorage(".png", std::make_shared<TextureAssetManager>());
+			AddStorage(".font", std::make_shared<FontAssetStorage>());
+			AddStorage(".png", std::make_shared<TextureAssetStorage>());
 		}
 
-		std::string AssetsManager::GetExt(std::string lepath)
+		std::string AssetsManager::GetExt(std::string path)
 		{
-			std::wstring ext = std::filesystem::path(lepath).extension().c_str();
-			std::string sext(ext.begin(), ext.end());
-			return sext;
+			return std::filesystem::path(path).extension().generic_string();
+		}
+
+		std::string AssetsManager::GetExt(std::filesystem::directory_entry dir)
+		{
+			return std::filesystem::path(dir).extension().generic_string();
 		}
 
 		void AssetsManager::LoadFolder(const char* path)
@@ -25,8 +31,7 @@ namespace aether
 
 			for (const auto& dirEntry : recursive_directory_iterator(path))
 			{
-				auto pathString = dirEntry.path().generic_string();
-				auto ext = GetExt(pathString);
+				auto ext = GetExt(dirEntry);
 				std::cout << "Loading " << dirEntry << " with extension " << ext << "..." << std::endl;
 				if (m_storages.count(ext) == 0)
 				{
@@ -34,7 +39,7 @@ namespace aether
 				}
 				else
 				{
-					m_storages[ext]->Load(pathString);
+					m_storages[ext]->Load(dirEntry.path().generic_string());
 					std::cout << m_storages[ext]->GetLoadMessage() << std::endl;
 				}
 				std::cout << std::endl;
@@ -47,20 +52,6 @@ namespace aether
 			m_storages[extension] = storage;
 		}
 
-
-		std::shared_ptr<aether::graphics::Texture> TextureAssetManager::LoadImpl(std::string path)
-		{
-			auto texture = std::make_shared<graphics::Texture>();
-			texture->Load(path.c_str());
-			return texture;
-		}
-
-		std::shared_ptr<aether::graphics::Font> FontAssetManager::LoadImpl(std::string path)
-		{
-			auto font = std::make_shared<graphics::Font>();
-			font->Load(path.c_str(), 9);
-			return font;
-		}
 
 	}
 }
