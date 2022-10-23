@@ -8,7 +8,7 @@ function aetherGameLib(projectName)
 	language "C++"
 	configurations { "debug", "release" }
 	platforms { "x32", "x64" }
-
+	flags{ "CppLatest" }
 	configuration {}
 		links { AETHER_COMMON_LIBS }
 		includedirs { AETHER_COMMON_INCLUDE_DIRS }
@@ -25,7 +25,7 @@ function aetherProject(projectName)
 	configurations { "debug", "release" }
 	platforms { "x32", "x64" }
 
-	flags("Cpp17")
+	flags{ "CppLatest" }
 
 	configuration {}
 		links { AETHER_COMMON_LIBS }
