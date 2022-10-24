@@ -14,7 +14,12 @@ namespace aether
 			std::string fontFile;
 			cfg.GetValue("default", "size", size);
 			cfg.GetValue("default", "asset", fontFile);
-			//font->Load(fontFile.c_str(), size);
+
+			auto basePath = std::filesystem::path(path).parent_path().generic_string();
+			auto fullPath = basePath + "/" + fontFile;
+
+
+			font->Load(fullPath.c_str(), size);
 			return font;
 		}
 
