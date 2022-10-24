@@ -1,4 +1,5 @@
-#include "aether/graphics/scroll.h"
+
+#include "aether/graphics/platformerscroller.h"
 
 namespace aether::graphics
 {
@@ -45,7 +46,8 @@ namespace aether::graphics
 			deltaX *= (dx > 0) ? -1 : 1;
 			pos.Set(pos.GetX() + deltaX, pos.GetY());
 		}
-		else {
+		else
+		{
 			pos.SetX(m_cam->GetX());
 		}
 
@@ -58,7 +60,7 @@ namespace aether::graphics
 			pos.SetY(m_cam->GetY() + toMove);
 		}
 
-		m_cam->GetPosition(pos);
+		m_cam->SetPosition(pos);
 		m_cam->Bind();
 	}
 

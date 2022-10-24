@@ -1,5 +1,6 @@
 #include "aether/resources/AssetsManager.h"
 
+#include "asepriteanimstorage.h"
 #include "aether/resources/textureassetstorage.h"
 #include "aether/resources/fontassetstorage.h"
 
@@ -12,6 +13,7 @@ namespace aether
 		{
 			AddStorage(".font", std::make_shared<FontAssetStorage>());
 			AddStorage(".png", std::make_shared<TextureAssetStorage>());
+			AddStorage(".json", std::make_shared<AsepriteAnimStorage>());
 		}
 
 		std::string AssetsManager::GetExt(std::string path)

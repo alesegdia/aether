@@ -26,7 +26,7 @@ public:
 
 	virtual void Bind() = 0;
 
-    void GetPosition( const aether::math::Vec2f& new_position );
+    void SetPosition( const aether::math::Vec2f& new_position );
 
 	float GetX();
 

@@ -52,7 +52,7 @@ namespace graphics {
 		return m_position;
 	}
 
-	void BaseCamera::GetPosition(const aether::math::Vec2f& new_position)
+	void BaseCamera::SetPosition(const aether::math::Vec2f& new_position)
 	{
 		m_position = new_position;
 		m_position.SetY(-(m_position.GetY()) * m_scale.GetY());

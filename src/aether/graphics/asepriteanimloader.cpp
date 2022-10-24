@@ -1,10 +1,12 @@
 #include "asepriteanimloader.h"
 
+#include <filesystem>
+
 namespace aether::graphics {
 
-	LoadedAnimationData AsepriteAnimationLoader::Load(const std::string& path)
+	AsepriteAnimationData AsepriteAnimationLoader::Load(const std::string& path)
 	{
-		LoadedAnimationData data;
+		AsepriteAnimationData data;
 
 		std::string error;
 		std::ifstream t(path);
@@ -13,24 +15,25 @@ namespace aether::graphics {
 		auto result = json11::Json::parse(buffer.str(), error);
 		auto frames = result["frames"].array_items();
 		auto meta = result["meta"];
-		data.texture.Load(meta["image"].string_value().c_str());
+		auto image = meta["image"];
+		auto basePath = std::filesystem::path(path).parent_path().generic_string();
+		auto fullPath = basePath + "/" + std::string(meta["image"].string_value().c_str());
+		data.texture.Load(fullPath.c_str());
 		data.sheet = std::make_shared<aether::graphics::Spritesheet>();
+		auto frameDatas = std::vector<FrameData>();
 
 		for(auto frame : frames)
 		{
-			
+			FrameData fd;
+			auto x = frame["frame"]["x"].int_value();
+			auto y = frame["frame"]["y"].int_value();
+			auto w = frame["frame"]["w"].int_value();
+			auto h = frame["frame"]["h"].int_value();
+			auto frame_name = frame["filename"].string_value();
+			fd.region = TextureRegion(data.texture, x, y, w, h);
+			fd.duration = frame["duration"].int_value();
+			frameDatas.push_back(fd);
 		}
-
-		auto firstFrame = frames[0];
-		auto frameWidth = firstFrame["frame"]["w"].int_value();
-		auto frameHeight = firstFrame["frame"]["h"].int_value();
-
-		auto imgWidth = meta["size"]["w"].int_value();
-		auto imgHeight = meta["size"]["h"].int_value();
-
-		int numColumns = imgWidth / frameWidth;
-		int numRows = imgHeight / frameHeight;
-
 
 		for (auto anim : meta["frameTags"].array_items())
 		{
@@ -42,11 +45,12 @@ namespace aether::graphics {
 
 			auto animobj = std::make_shared<aether::graphics::Animation>();
 
-			while (frameStart <= frameEnd)
+			for(auto currentFrame = frameStart; currentFrame <= frameEnd; currentFrame++)
 			{
-				auto duration = frames[frameStart]["duration"].int_value();
-				animobj->AddFrame(*data.sheet->GetFrame(frameStart), duration);
-				frameStart++;
+				auto currentFrameData = frameDatas[currentFrame];
+				auto duration = frameDatas[currentFrame].duration;
+				auto region = currentFrameData.region;
+				animobj->AddFrame(region, duration);
 			}
 
 			data.anims[name] = animobj;

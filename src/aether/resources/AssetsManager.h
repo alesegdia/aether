@@ -7,6 +7,7 @@
 #include <filesystem>
 
 #include "aether/resources/iassetstorage.h"
+#include "aether/resources/baseassetstorage.h"
 
 
 namespace aether
