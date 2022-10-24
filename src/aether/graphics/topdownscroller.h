@@ -17,6 +17,7 @@ namespace aether::graphics
 		Camera::SharedPtr m_cam;
 		aether::math::Rectf m_globalBounds;
 		aether::math::Vec2f m_focusPos;
+		bool m_pixelPerfect = true;
 
 	};
 

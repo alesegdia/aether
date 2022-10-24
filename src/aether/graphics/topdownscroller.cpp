@@ -19,7 +19,14 @@ namespace aether::graphics
 		float ymax = m_globalBounds.h() - halfViewportY;
 		auto newx = std::max(std::min(pos.GetX(), xmax), xmin);
 		auto newy = std::max(std::min(pos.GetY(), ymax), ymin);
-		pos.Set(floor(newx), floor(newy));
+
+		if(m_pixelPerfect)
+		{
+			newx = floor(newx);
+			newy = floor(newy);
+		}
+		
+		pos.Set(newx, newy);
 
 		m_cam->SetPosition(pos);
 		m_cam->Bind();
