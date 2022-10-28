@@ -24,7 +24,6 @@ using AnimationsMap = std::unordered_map<std::string, std::shared_ptr<aether::gr
 struct AsepriteAnimationData
 {
     AnimationsMap anims;
-    std::shared_ptr<aether::graphics::Spritesheet> sheet;
     aether::graphics::Texture texture;
 };
 

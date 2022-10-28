@@ -19,7 +19,6 @@ namespace aether::graphics {
 		auto basePath = std::filesystem::path(path).parent_path().generic_string();
 		auto fullPath = basePath + "/" + std::string(meta["image"].string_value().c_str());
 		data.texture.Load(fullPath.c_str());
-		data.sheet = std::make_shared<aether::graphics::Spritesheet>();
 		auto frameDatas = std::vector<FrameData>();
 
 		for(auto frame : frames)
