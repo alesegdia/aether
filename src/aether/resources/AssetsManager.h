@@ -6,6 +6,8 @@
 
 #include <filesystem>
 
+#include <regex>
+
 #include "aether/resources/iassetstorage.h"
 #include "aether/resources/baseassetstorage.h"
 
@@ -32,10 +34,19 @@ namespace aether
 				}
 				auto storage_iface = m_storages[file_extension];
 				auto storage = std::static_pointer_cast<BaseAssetStorage<T>>(storage_iface);
-				return storage->GetItem(path);
+				return storage->GetItem(m_basePath + path);
 			}
 			
 			void AddStorage(std::string extension, std::shared_ptr<IAssetStorage> storage);
+
+			bool ValidatePath(const char* path)
+			{
+				std::string strpath = path;
+				char lastChar = strpath[strpath.length() - 1];
+				char preLastChar = strpath[strpath.length() - 2];
+				if(lastChar == '/' && preLastChar != '/') return true;
+				return false;
+			}
 			
 		private:
 			std::string GetExt(std::string path);

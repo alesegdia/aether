@@ -97,6 +97,11 @@ void ApplicationBase::Step()
         {
 	        Close();
         }
+        auto nextScreen = m_currentScreen->PopNextScreen();
+        if(nextScreen != nullptr)
+        {
+	       SetScreen(nextScreen);
+        }
     }
 }
 

@@ -8,22 +8,25 @@ namespace aether
 	namespace resources
 	{
 
-		std::shared_ptr<aether::graphics::Spritesheet> TextureAssetStorage::LoadImpl(std::string path)
+		std::shared_ptr<aether::graphics::Spritesheet> SheetAssetStorage::LoadImpl(std::string path)
 		{
-			/*
 			auto spritesheet = std::make_shared<graphics::Spritesheet>();
 			auto texture = std::make_shared<graphics::Texture>();
 
 			ConfigFile configFile;
 			configFile.Load(path.c_str());
 
+			int rows, cols;
+			std::string relPath;
+			configFile.GetValue("default", "rows", rows);
+			configFile.GetValue("default", "cols", cols);
+			configFile.GetValue("default", "asset", relPath);
 
+			texture->Load(GetPath(relPath).c_str());
+			m_cachedTextures.push_back(texture);
 
-			texture->Load(path);
-			spritesheet->Load(10, 10, m_cachedTextures[0]);
-			return spritesheet;
-			*/
-			return nullptr;
+			spritesheet->Load(cols, rows, *texture);
+			return spritesheet;		
 		}
 
 	}

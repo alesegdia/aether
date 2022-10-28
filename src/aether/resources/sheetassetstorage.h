@@ -8,7 +8,7 @@ namespace aether
 	namespace resources
 	{
 
-		class TextureAssetStorage : public BaseAssetStorage<aether::graphics::Spritesheet>
+		class SheetAssetStorage : public BaseAssetStorage<aether::graphics::Spritesheet>
 		{
 		public:
 			std::shared_ptr<aether::graphics::Spritesheet> LoadImpl(std::string path) override;

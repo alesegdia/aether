@@ -21,11 +21,12 @@ namespace aether
 			std::shared_ptr<StoredAssetType> GetItem(std::string path)
 			{
 				{
-					if (m_storageMap.count(path) == 0)
+					auto p = std::filesystem::path(path);
+					if (m_storageMap.count(p.generic_string()) == 0)
 					{
 						return nullptr;
 					}
-					return m_storageMap[path];
+					return m_storageMap[p.generic_string()];
 				}
 			}
 

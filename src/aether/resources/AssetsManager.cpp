@@ -1,6 +1,7 @@
 #include "aether/resources/AssetsManager.h"
 
 #include "asepriteanimstorage.h"
+#include "sheetassetstorage.h"
 #include "aether/resources/textureassetstorage.h"
 #include "aether/resources/fontassetstorage.h"
 
@@ -14,6 +15,7 @@ namespace aether
 			AddStorage(".font", std::make_shared<FontAssetStorage>());
 			AddStorage(".png", std::make_shared<TextureAssetStorage>());
 			AddStorage(".json", std::make_shared<AsepriteAnimStorage>());
+			AddStorage(".sheet", std::make_shared<SheetAssetStorage>());
 		}
 
 		std::string AssetsManager::GetExt(std::string path)
@@ -28,7 +30,13 @@ namespace aether
 
 		void AssetsManager::LoadFolder(const char* path)
 		{
-			
+			assert(ValidatePath(path));
+			m_basePath = path;
+			for(auto storage : m_storages)
+			{
+				storage.second->SetBasePath(path);
+			}
+
 			using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
 
 			for (const auto& dirEntry : recursive_directory_iterator(path))

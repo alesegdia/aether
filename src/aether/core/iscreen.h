@@ -75,6 +75,13 @@ public:
 	    return m_requestCloseApp;
     }
 
+    std::shared_ptr<IScreen> PopNextScreen()
+    {
+	    auto tmp = m_nextScreen;
+        m_nextScreen = nullptr;
+        return tmp;
+    }
+
 protected:
 
     /**
@@ -111,11 +118,17 @@ protected:
 	    m_requestCloseApp = true;
     }
 
+    void GoToScreen(std::shared_ptr<IScreen> nextScreen)
+    {
+	    m_nextScreen = nextScreen;
+    }
+
 private:
     std::deque<std::shared_ptr<IScreen>> m_subScreens;
     bool m_updateOnParent = false;
     bool m_renderOnParent = false;
     bool m_requestCloseApp = false;
+    std::shared_ptr<IScreen> m_nextScreen = nullptr;
 
 };
 

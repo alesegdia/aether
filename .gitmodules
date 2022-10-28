@@ -55,3 +55,6 @@
 [submodule "module/inipp"]
 	path = module/inipp
 	url = git@github.com:mcmtroffaes/inipp.git
+[submodule "module/astarcpp"]
+	path = module/astarcpp
+	url = git@github.com:alesegdia/astarcpp.git
