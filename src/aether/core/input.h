@@ -8,17 +8,12 @@
 #include "sdl/sdl_keycode.h"
 #elif AETHER_USE_3DS
 #include "3ds/3ds_keycode.h"
+#elif AETHER_USE_RAYLIB
+#include "raylib/rl_keycode.h"
 #endif
 
 #include "iinputprocessor.h"
 
-#ifdef AETHER_USE_ALLEGRO
-#include "allegro/al_keycode.h"
-#elif AETHER_USE_SDL
-#include "sdl/sdl_keycode.h"
-#elif AETHER_USE_3DS
-#include "3ds/3ds_keycode.h"
-#endif
 
 namespace aether {
 namespace core {

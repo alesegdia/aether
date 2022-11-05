@@ -9,6 +9,7 @@ function aetherConfig()
 		allowed = {
 			{ "backend-sdl", 		"SDL 2.0"},
 			{ "backend-allegro", 	"Allegro 5.X"},
+			{ "backend-raylib", 	"raylib 4.2.0"},
 			{ "backend-dummy", 		"Don't do anything"}
 		}
 	}

@@ -29,7 +29,6 @@ namespace aether::graphics
 		pos.Set(newx, newy);
 
 		m_cam->SetPosition(pos);
-		m_cam->Bind();
 	}
 
 	void TopDownMapScroller::Setup(const aether::graphics::Camera::SharedPtr& cam, const aether::math::Rectf& globalBounds)

@@ -100,13 +100,27 @@ AETHER_SDL_INCLUDE_DIRS = {
 	path.join(AETHER_DIR, "module/sdl-image"),
 }
 
+AETHER_RAYLIB_SOURCES = {
+	path.join(AETHER_DIR, "src/aether/audio/raylib/*.h"),
+	path.join(AETHER_DIR, "src/aether/audio/raylib/*.cpp"),
+	path.join(AETHER_DIR, "src/aether/graphics/raylib/*.h"),
+	path.join(AETHER_DIR, "src/aether/graphics/raylib/*.cpp"),
+	path.join(AETHER_DIR, "src/aether/core/raylib/*.h"),
+	path.join(AETHER_DIR, "src/aether/core/raylib/*.cpp"),
+}
+
+AETHER_RAYLIB_INCLUDE_DIRS = {
+    path.join(AETHER_DIR, "module/raylib/src"),
+    path.join(AETHER_DIR, "module/raylib/src/external/glfw/deps/mingw"),
+    path.join(AETHER_DIR, "module/raylib/src/external/glfw/include"),
+}
+
 AETHER_COMMON_LIBS = {
 	"tinyxml2",
 	"tmxparser",
 	"secs",
 	"hadron",
 	"aether",
-	"freetype",
 	"json11",
 	"imgui",
 	"lua",

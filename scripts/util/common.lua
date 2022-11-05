@@ -75,3 +75,19 @@ function configAllegro(magicMain)
 		}
 
 end
+
+
+function configRaylib()
+	configuration { "backend-raylib" }
+		defines { "AETHER_USE_RAYLIB", "SUPPORT_CUSTOM_FRAME_CONTROL" }
+		includedirs {
+			path.join(AETHER_DIR, "module/raylib/src"),
+			path.join(AETHER_DIR, "module/raylib/src/external/glfw/deps/mingw"),
+		}
+		links {
+			"winmm",
+		    "opengl32",
+		    "glu32",
+		    "raylib",
+		}
+end

@@ -61,7 +61,6 @@ namespace aether::graphics
 		}
 
 		m_cam->SetPosition(pos);
-		m_cam->Bind();
 	}
 
 	void PlatformerScroller::Update(double delta)

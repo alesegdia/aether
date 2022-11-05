@@ -15,6 +15,7 @@ function aetherGameLib(projectName)
 
 	configSDL()
 	configAllegro(false)
+	configRaylib()
 	commonFlags()
 end
 
@@ -43,6 +44,7 @@ function aetherProject(projectName)
 
 	configSDL()
 	configAllegro(true)
+	configRaylib()
 
 	commonFlags()
 end

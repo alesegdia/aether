@@ -6,6 +6,8 @@
 
 #elif AETHER_USE_SDL
 
+#elif AETHER_USE_RAYLIB
+#include "aether/graphics/raylib/rl_camera.h"
 #else
 #error You must declare what backend to use
 #endif

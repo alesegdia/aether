@@ -25,6 +25,7 @@ public:
     }
 
 	virtual void Bind() = 0;
+	virtual void UnBind() = 0;
 
     void SetPosition( const aether::math::Vec2f& new_position );
 

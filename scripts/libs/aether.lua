@@ -32,6 +32,15 @@ commonLibSetup("aether")
 			AETHER_SDL_INCLUDE_DIRS
 		}
 
+	configuration { "backend-raylib" }
+		defines {"AETHER_USE_RAYLIB"}
+		files {
+			AETHER_RAYLIB_SOURCES
+		}
+		includedirs {
+			AETHER_RAYLIB_INCLUDE_DIRS
+		}
+
 	configuration { "disable-audio" }
 		files { AETHER_DUMMY_AUDIO_SOURCES }
 

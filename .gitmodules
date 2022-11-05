@@ -58,3 +58,6 @@
 [submodule "module/astarcpp"]
 	path = module/astarcpp
 	url = git@github.com:alesegdia/astarcpp.git
+[submodule "module/raylib"]
+	path = module/raylib
+	url = git@github.com:alesegdia/raylib.git
