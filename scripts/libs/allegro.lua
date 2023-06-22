@@ -2,7 +2,7 @@ dofile("allegro-files.lua")
 dofile("../util/cmake-configure.lua")
 
 if (_ACTION == "vs2019" or _ACTION == "vs2022") and _OPTIONS["backend"] == "backend-allegro" then
-    cmakeConfigureFileImmediate(path.join(AETHER_DIR, "module/allegro/include/allegro5/platform/alplatf.h.cmake"),
+    cmakeConfigureFileImmediate(path.join(AETHER_EXTERNALS_DIR, "allegro/include/allegro5/platform/alplatf.h.cmake"),
         {
             "ALLEGRO_MSVC",
             "ALLEGRO_LITTLE_ENDIAN",
@@ -12,12 +12,12 @@ if (_ACTION == "vs2019" or _ACTION == "vs2022") and _OPTIONS["backend"] == "back
             "ALLEGRO_HAVE_STDINT_H",
             "ALLEGRO_HAVE_SYS_STAT_H"
         })
-    cmakeConfigureFileImmediate(path.join(AETHER_DIR, "module/allegro/addons/ttf/allegro5/internal/aintern_ttf_cfg.h.cmake"),
+    cmakeConfigureFileImmediate(path.join(AETHER_EXTERNALS_DIR, "allegro/addons/ttf/allegro5/internal/aintern_ttf_cfg.h.cmake"),
         {
             "ALLEGRO_CFG_TTF_FREETYPE",
         })
 
-    cmakeConfigureFileImmediate(path.join(AETHER_DIR, "module/allegro/addons/image/allegro5/internal/aintern_image_cfg.h.cmake"),
+    cmakeConfigureFileImmediate(path.join(AETHER_EXTERNALS_DIR, "allegro/addons/image/allegro5/internal/aintern_image_cfg.h.cmake"),
         {
             "ALLEGRO_CFG_IIO_HAVE_PNG",
             "ALLEGRO_CFG_IIO_SUPPORT_PNG",
@@ -25,21 +25,21 @@ if (_ACTION == "vs2019" or _ACTION == "vs2022") and _OPTIONS["backend"] == "back
 
 end
 
-commonLibSetup("allegro", true)
+externalCommonLibSetup("allegro", true)
     language "C++"
     configuration {}
 
     includedirs {
-        path.join(AETHER_DIR, "module/allegro/include"),
+        path.join(AETHER_EXTERNALS_DIR, "allegro/include"),
         ALLEGRO_ADDON_TTF_INCLUDE,
         ALLEGRO_ADDON_FONT_INCLUDE,
         ALLEGRO_ADDON_IMAGE_INCLUDE,
         ALLEGRO_ADDON_COLOR_INCLUDE,
-        path.join(AETHER_DIR, "module/freetype/include"),
-        path.join(AETHER_DIR, "module/libpng/"),
-        --path.join(AETHER_DIR, "module/sdl/include"),
-        path.join(AETHER_DIR, "module/zlib/"),
-        path.join(AETHER_DIR, "module/dxsdk/Include")
+        path.join(AETHER_EXTERNALS_DIR, "freetype/include"),
+        path.join(AETHER_EXTERNALS_DIR, "libpng/"),
+        --path.join(AETHER_EXTERNALS_DIR, "sdl/include"),
+        path.join(AETHER_EXTERNALS_DIR, "zlib/"),
+        path.join(AETHER_EXTERNALS_DIR, "dxsdk/Include")
     }
 
     files {

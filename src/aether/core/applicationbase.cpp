@@ -48,6 +48,8 @@ void ApplicationBase::Run()
 
 int ApplicationBase::Exec(int argc, char **argv)
 {
+    AppImplementationInit(argc, argv);
+
     Initialize(argc, argv);
 
     while( false == m_doExit )
@@ -93,14 +95,17 @@ void ApplicationBase::Step()
         PreUpdate();
         Update(m_updateStepTimer);
         PostUpdate();
-        if(m_currentScreen->HasRequestedCloseApp())
+        if (m_currentScreen != nullptr)
         {
-	        Close();
-        }
-        auto nextScreen = m_currentScreen->PopNextScreen();
-        if(nextScreen != nullptr)
-        {
-	       SetScreen(nextScreen);
+            if (m_currentScreen->HasRequestedCloseApp())
+            {
+                Close();
+            }
+            auto nextScreen = m_currentScreen->PopNextScreen();
+            if (nextScreen != nullptr)
+            {
+                SetScreen(nextScreen);
+            }
         }
     }
 }
@@ -167,6 +172,7 @@ void ApplicationBase::Dispose()
 
 void ApplicationBase::Update(uint64_t delta)
 {
+    GameStep(delta);
 	if (m_currentScreen != nullptr)
 	{
 		m_currentScreen->UpdateWithSubscreen(delta);
@@ -175,6 +181,7 @@ void ApplicationBase::Update(uint64_t delta)
 
 void ApplicationBase::Render()
 {
+    GameRender();
 	if (m_currentScreen != nullptr)
 	{
 		m_currentScreen->RenderWithSubscreen();

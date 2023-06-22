@@ -5,7 +5,7 @@
 #elif AETHER_USE_3DS
 
 #elif AETHER_USE_SDL
-
+#include "aether/graphics/sdl/sdl_camera.h"
 #elif AETHER_USE_RAYLIB
 #include "aether/graphics/raylib/rl_camera.h"
 #else

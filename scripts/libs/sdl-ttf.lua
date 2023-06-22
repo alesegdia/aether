@@ -1,13 +1,13 @@
-commonLibSetup("sdl-ttf")
+externalCommonLibSetup("sdl-ttf")
 
 	includedirs {
-		path.join(AETHER_DIR, "module/sdl-ttf"),
-		path.join(AETHER_DIR, "module/freetype/include"),
-		path.join(AETHER_DIR, "module/sdl/include"),
+		path.join(AETHER_EXTERNALS_DIR, "sdl-ttf"),
+		path.join(AETHER_EXTERNALS_DIR, "freetype/include"),
+		path.join(AETHER_EXTERNALS_DIR, "sdl/include"),
 	}
 
 	files {
-		path.join(AETHER_DIR, "module/sdl-ttf/SDL_ttf.h"),
-		path.join(AETHER_DIR, "module/sdl-ttf/SDL_ttf.c"),
+		path.join(AETHER_EXTERNALS_DIR, "sdl-ttf/SDL_ttf.h"),
+		path.join(AETHER_EXTERNALS_DIR, "sdl-ttf/SDL_ttf.c"),
 	}
 

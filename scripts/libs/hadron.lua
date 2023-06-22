@@ -1,12 +1,12 @@
-commonLibSetup("hadron")
+pluginCommonLibSetup("hadron")
 	language "C++"
 	configuration {}
 	
 	includedirs {
-		path.join(AETHER_DIR, "module/hadron/src/lib"),
+		path.join(AETHER_PLUGINS_DIR, "hadron/src/lib"),
 	}
 
 	files {
-		path.join(AETHER_DIR, "module/hadron/src/lib/**.h"),
-		path.join(AETHER_DIR, "module/hadron/src/lib/**.cpp"),
+		path.join(AETHER_PLUGINS_DIR, "hadron/src/lib/**.h"),
+		path.join(AETHER_PLUGINS_DIR, "hadron/src/lib/**.cpp"),
 	}

@@ -1,7 +1,7 @@
 
 dofile("sdl-files.lua")
 
-commonLibSetup("sdl")
+externalCommonLibSetup("sdl")
 
 	includedirs {
 		SDL_INCLUDE_DIRS

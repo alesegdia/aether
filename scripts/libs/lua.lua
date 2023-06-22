@@ -1,12 +1,12 @@
-commonLibSetup("lua", true)
+externalCommonLibSetup("lua", true)
 	language "C"
 	configuration {}
 	
 	includedirs {
-		path.join(AETHER_DIR, "module/lua/"),
+		path.join(AETHER_EXTERNALS_DIR, "lua/"),
 	}
 
 	files {
-		path.join(AETHER_DIR, "module/lua/l*.h"),
-		path.join(AETHER_DIR, "module/lua/l*.c"),
+		path.join(AETHER_EXTERNALS_DIR, "lua/l*.h"),
+		path.join(AETHER_EXTERNALS_DIR, "lua/l*.c"),
 	}

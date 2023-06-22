@@ -1,7 +1,7 @@
 dofile("raylib-files.lua")
 dofile("../util/cmake-configure.lua")
 
-commonLibSetup("raylib")
+externalCommonLibSetup("raylib")
 
 	configuration {}
 	

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<GtaTestDurations xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Executable>C:\Repos\aether-platformer\module\aether\scripts\build\aether-tests.exe</Executable>
-  <TestDurations>
-    <TestDuration Test="BaseEngineTests.BaseTests_Test1" Duration="1" />
-  </TestDurations>
-</GtaTestDurations>

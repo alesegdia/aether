@@ -1,6 +1,6 @@
 dofile("aether-files.lua")
 
-commonLibSetup("aether")
+pluginCommonLibSetup("aether")
 	language "C++"
 	targetdir (path.join(AETHER_DIR, "/bin/lib"))
 	flags { "CppLatest" }

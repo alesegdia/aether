@@ -23,7 +23,7 @@ public:
 
     // ApplicationBase interface
 protected:
-    int AppImplementationInit(int argc, char **argv) final;
+    virtual int AppImplementationInit(int argc, char **argv) final;
 
 private:
     SDL_Window* m_display = NULL;

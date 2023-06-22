@@ -1,13 +1,13 @@
-commonLibSetup("tinyxml2", true)
+externalCommonLibSetup("tinyxml2", true)
 	language "C++"
 
 	includedirs {
-		path.join(AETHER_DIR, "module/tinyxml2"),
+		path.join(AETHER_EXTERNALS_DIR, "tinyxml2"),
 	}
 
 	files {
-		path.join(AETHER_DIR, "module/tinyxml2/tinyxml2.h"),
-		path.join(AETHER_DIR, "module/tinyxml2/tinyxml2.cpp"),
+		path.join(AETHER_EXTERNALS_DIR, "tinyxml2/tinyxml2.h"),
+		path.join(AETHER_EXTERNALS_DIR, "tinyxml2/tinyxml2.cpp"),
 	}
 
 

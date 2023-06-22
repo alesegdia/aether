@@ -36,7 +36,7 @@ void Font::Destroy()
     Invalidate();
 }
 
-void Font::Print(const char *text, float x, float y, Color c)
+void Font::Print(const char *text, float x, float y, Color c, TextAlign align)
 {
     Print(text, x, y, c);
 }

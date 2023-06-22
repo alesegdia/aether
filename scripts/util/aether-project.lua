@@ -32,7 +32,7 @@ function aetherProject(projectName)
 		links { AETHER_COMMON_LIBS }
 		includedirs {
 			AETHER_COMMON_INCLUDE_DIRS,
-			path.join(AETHER_DIR, "module/L2DFileDialog/"),
+			path.join(AETHER_EXTERNALS_DIR, "L2DFileDialog/"),
 		}			
 
 	-- https://support.microsoft.com/es-es/help/154753/description-of-the-default-c-and-c-libraries-that-a-program-will-link

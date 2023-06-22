@@ -21,8 +21,8 @@ AETHER_COMMON_SOURCES = {
 	path.join(AETHER_DIR, "src/aether/lua/*.cpp"),
 	path.join(AETHER_DIR, "src/aether/gui/*.h"),
 	path.join(AETHER_DIR, "src/aether/gui/*.cpp"),
-	path.join(AETHER_DIR, "module/inipp/inipp/*.h"),
-	path.join(AETHER_DIR, "module/astarcpp/src/astar.h"),
+	path.join(AETHER_EXTERNALS_DIR, "inipp/inipp/*.h"),
+	path.join(AETHER_EXTERNALS_DIR, "astarcpp/src/astar.h"),
 }
 
 AETHER_API_SOURCES = {
@@ -36,17 +36,17 @@ AETHER_API_INCLUDE_DIRS = {
 
 AETHER_COMMON_INCLUDE_DIRS = {
 	path.join(AETHER_DIR, "src"),
-	path.join(AETHER_DIR, "module/tinyxml2"),
-	path.join(AETHER_DIR, "module/tmxparser/include"),
-	path.join(AETHER_DIR, "module/rztl/include"),
-	path.join(AETHER_DIR, "module/secs/src/lib"),
-	path.join(AETHER_DIR, "module/hadron/src/lib"),
-	path.join(AETHER_DIR, "module/json11"),
-	path.join(AETHER_DIR, "module/imgui"),
-	path.join(AETHER_DIR, "module/imgui/backends"),
-	path.join(AETHER_DIR, "module/lua"),
-	path.join(AETHER_DIR, "module/inipp"),
-	path.join(AETHER_DIR, "module/astarcpp/src"),
+	path.join(AETHER_EXTERNALS_DIR, "tinyxml2"),
+	path.join(AETHER_EXTERNALS_DIR, "tmxparser/include"),
+	path.join(AETHER_PLUGINS_DIR, "rztl/include"),
+	path.join(AETHER_PLUGINS_DIR, "secs/src/lib"),
+	path.join(AETHER_PLUGINS_DIR, "hadron/src/lib"),
+	path.join(AETHER_EXTERNALS_DIR, "json11"),
+	path.join(AETHER_EXTERNALS_DIR, "imgui"),
+	path.join(AETHER_EXTERNALS_DIR, "imgui/backends"),
+	path.join(AETHER_EXTERNALS_DIR, "lua"),
+	path.join(AETHER_EXTERNALS_DIR, "inipp"),
+	path.join(AETHER_PLUGINS_DIR, "astarcpp/src"),
 }
 
 AETHER_ALLEGRO_CORE_SOURCES = {
@@ -65,11 +65,11 @@ AETHER_ALLEGRO_AUDIO_SOURCES = {
 }
 
 AETHER_ALLEGRO_INCLUDE_DIRS = {
-	path.join(AETHER_DIR, "module/allegro/include"),
-	path.join(AETHER_DIR, "module/allegro/addons/font/"),
-	path.join(AETHER_DIR, "module/allegro/addons/image"),
-	path.join(AETHER_DIR, "module/allegro/addons/primitives"),
-	path.join(AETHER_DIR, "module/allegro/addons/ttf"),
+	path.join(AETHER_EXTERNALS_DIR, "allegro/include"),
+	path.join(AETHER_EXTERNALS_DIR, "allegro/addons/font/"),
+	path.join(AETHER_EXTERNALS_DIR, "allegro/addons/image"),
+	path.join(AETHER_EXTERNALS_DIR, "allegro/addons/primitives"),
+	path.join(AETHER_EXTERNALS_DIR, "allegro/addons/ttf"),
 }
 
 AETHER_DUMMY_AUDIO_SOURCES = {
@@ -93,11 +93,11 @@ AETHER_SDL_AUDIO_SOURCES = {
 }
 
 AETHER_SDL_INCLUDE_DIRS = {
-	path.join(AETHER_DIR, "module/sdl/include"),
-	path.join(AETHER_DIR, "module/sdl/src/hidapi/hidapi"),
-	path.join(AETHER_DIR, "module/sdl-ttf/external/freetype-2.10.1/include"),
-	path.join(AETHER_DIR, "module/sdl-ttf"),
-	path.join(AETHER_DIR, "module/sdl-image"),
+	path.join(AETHER_EXTERNALS_DIR, "sdl/include"),
+	path.join(AETHER_EXTERNALS_DIR, "sdl/src/hidapi/hidapi"),
+	path.join(AETHER_EXTERNALS_DIR, "sdl-ttf/external/freetype-2.10.1/include"),
+	path.join(AETHER_EXTERNALS_DIR, "sdl-ttf"),
+	path.join(AETHER_EXTERNALS_DIR, "sdl-image"),
 }
 
 AETHER_RAYLIB_SOURCES = {
@@ -110,9 +110,9 @@ AETHER_RAYLIB_SOURCES = {
 }
 
 AETHER_RAYLIB_INCLUDE_DIRS = {
-    path.join(AETHER_DIR, "module/raylib/src"),
-    path.join(AETHER_DIR, "module/raylib/src/external/glfw/deps/mingw"),
-    path.join(AETHER_DIR, "module/raylib/src/external/glfw/include"),
+    path.join(AETHER_EXTERNALS_DIR, "raylib/src"),
+    path.join(AETHER_EXTERNALS_DIR, "raylib/src/external/glfw/deps/mingw"),
+    path.join(AETHER_EXTERNALS_DIR, "raylib/src/external/glfw/include"),
 }
 
 AETHER_COMMON_LIBS = {

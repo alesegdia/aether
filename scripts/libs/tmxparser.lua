@@ -1,19 +1,19 @@
-commonLibSetup("tmxparser", true)
+externalCommonLibSetup("tmxparser", true)
 	language "C++"
 	includedirs {
-		path.join(AETHER_DIR, "module/tmxparser/include"),
-		path.join(AETHER_DIR, "module/tinyxml2"),
+		path.join(AETHER_EXTERNALS_DIR, "tmxparser/include"),
+		path.join(AETHER_EXTERNALS_DIR, "tinyxml2"),
 	}
 
 	files {
-		path.join(AETHER_DIR, "module/tmxparser/include/**.h"),
-		path.join(AETHER_DIR, "module/tmxparser/src/**.cpp"),
-		path.join(AETHER_DIR, "module/tmxparser/src/**.c"),
+		path.join(AETHER_EXTERNALS_DIR, "tmxparser/include/**.h"),
+		path.join(AETHER_EXTERNALS_DIR, "tmxparser/src/**.cpp"),
+		path.join(AETHER_EXTERNALS_DIR, "tmxparser/src/**.c"),
 	}
 
 	os.copyfile(
-		path.join(AETHER_DIR, "module/tmxparser/include/Tmx.h.in"),
-		path.join(AETHER_DIR, "module/tmxparser/include/Tmx.h"))
+		path.join(AETHER_EXTERNALS_DIR, "tmxparser/include/Tmx.h.in"),
+		path.join(AETHER_EXTERNALS_DIR, "tmxparser/include/Tmx.h"))
 
 	defines {
 		"USE_MINIZ"

@@ -1,4 +1,6 @@
 AETHER_DIR = path.getabsolute("../")
+AETHER_EXTERNALS_DIR = path.getabsolute("../3rdparty")
+AETHER_PLUGINS_DIR = path.getabsolute("../module")
 
 dofile(path.join(AETHER_DIR, "scripts/util/util.lua"))
 
@@ -12,6 +14,7 @@ solution "aether"
 
 	aetherBuild()
 
+	group "tests"
 	aetherProject("basic")
 		debugdir (AETHER_DIR)
 		files {
@@ -31,5 +34,5 @@ solution "aether"
 	aetherProject("texture")
 		debugdir (AETHER_DIR)
 		files {
-			path.join(AETHER_DIR, "examples/basic/texture.cpp")
+			path.join(AETHER_DIR, "examples/texture/main.cpp")
 		}

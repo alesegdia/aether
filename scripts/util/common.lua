@@ -20,21 +20,36 @@ function commonFlags()
 	configuration {}
 end
 
-function commonLibSetup(name, ignoreWarnings)
+function baseCommonLibSetup(name, ignoreWarnings)
 	project(name)
-		location (path.join(AETHER_DIR, "build"))
-		kind "StaticLib"
-		language "C"
-		configurations { "debug", "release" }
-		platforms { "x32", "x64" }
-		targetdir ("../build")
-		commonFlags()
-		if ignoreWarnings == true then
-			flags(
-			{
-				"MinimumWarnings"
-			})
-		end
+	location (path.join(AETHER_DIR, "build"))
+	kind "StaticLib"
+	language "C"
+	configurations { "debug", "release" }
+	platforms { "x32", "x64" }
+	targetdir ("../build")
+	commonFlags()
+	if ignoreWarnings == true then
+		flags(
+		{
+			"MinimumWarnings"
+		})
+	end
+end
+
+function commonLibSetup(name, ignoreWarnings)
+	group "nonsortedlibs"
+	baseCommonLibSetup(name, ignoreWarnings)
+end
+
+function externalCommonLibSetup(name, ignoreWarnings)
+	group "external"
+	baseCommonLibSetup(name, ignoreWarnings)
+end
+
+function pluginCommonLibSetup(name, ignoreWarnings)
+	group "plugins"
+	baseCommonLibSetup(name, ignoreWarnings)
 end
 
 function configSDL()
@@ -81,8 +96,8 @@ function configRaylib()
 	configuration { "backend-raylib" }
 		defines { "AETHER_USE_RAYLIB", "SUPPORT_CUSTOM_FRAME_CONTROL" }
 		includedirs {
-			path.join(AETHER_DIR, "module/raylib/src"),
-			path.join(AETHER_DIR, "module/raylib/src/external/glfw/deps/mingw"),
+			path.join(AETHER_EXTERNALS_DIR, "raylib/src"),
+			path.join(AETHER_EXTERNALS_DIR, "raylib/src/external/glfw/deps/mingw"),
 		}
 		links {
 			"winmm",
