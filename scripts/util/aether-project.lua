@@ -1,4 +1,4 @@
-dofile("../libs/aether-files.lua")
+dofile(path.join(AETHER_GENIE_PLUGINS_DIR, "aether/aether-files.lua"))
 dofile("common.lua")
 
 

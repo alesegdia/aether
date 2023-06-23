@@ -2,7 +2,7 @@
 
 function aetherBuild()
 	dofile(path.join(AETHER_DIR, "scripts/deps/aether-common-deps.lua"))
-	dofile(path.join(AETHER_DIR, "scripts/libs/aether.lua"))
+	dofile(path.join(AETHER_GENIE_PLUGINS_DIR, "aether/aether.lua"))
 
 	local backend = _OPTIONS["backend"]
 	if backend == "backend-sdl" then

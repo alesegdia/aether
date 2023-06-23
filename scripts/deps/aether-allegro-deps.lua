@@ -1,4 +1,4 @@
-dofile(path.join(AETHER_DIR, "scripts/libs/allegro.lua"))
-dofile(path.join(AETHER_DIR, "scripts/libs/libpng.lua"))
-dofile(path.join(AETHER_DIR, "scripts/libs/zlib.lua"))
-dofile(path.join(AETHER_DIR, "scripts/libs/freetype.lua"))
+dofile(path.join(AETHER_GENIE_EXTERNALS_DIR, "allegro/allegro.lua"))
+dofile(path.join(AETHER_GENIE_EXTERNALS_DIR, "libpng/libpng.lua"))
+dofile(path.join(AETHER_GENIE_EXTERNALS_DIR, "zlib/zlib.lua"))
+dofile(path.join(AETHER_GENIE_EXTERNALS_DIR, "freetype/freetype.lua"))

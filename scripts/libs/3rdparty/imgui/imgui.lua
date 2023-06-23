@@ -1,4 +1,4 @@
-dofile("../util/common.lua")
+dofile(path.join(AETHER_DIR, "scripts/util/common.lua"))
 
 externalCommonLibSetup("imgui", true)
     language "C++"

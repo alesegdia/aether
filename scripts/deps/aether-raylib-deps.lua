@@ -1,1 +1,1 @@
-dofile(path.join(AETHER_DIR, "scripts/libs/raylib.lua"))
+dofile(path.join(AETHER_GENIE_EXTERNALS_DIR, "raylib/raylib.lua"))
