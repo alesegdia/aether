@@ -32,6 +32,16 @@ pluginCommonLibSetup("aether")
 			AETHER_SDL_INCLUDE_DIRS
 		}
 
+	configuration { "backend-gl" }
+		defines { "AETHER_USE_GL" }
+		files {
+			AETHER_GL_CORE_SOURCES,
+			AETHER_GL_GRAPHICS_SOURCES,
+		}
+		includedirs {
+			AETHER_GL_INCLUDE_DIRS
+		}
+
 	configuration { "backend-raylib" }
 		defines {"AETHER_USE_RAYLIB"}
 		files {

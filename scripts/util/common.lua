@@ -64,6 +64,20 @@ function configSDL()
 
 end
 
+function configGL()
+	configuration { "backend-gl" }
+		defines { "AETHER_USE_GL" }
+		includedirs { AETHER_GL_INCLUDE_DIRS }
+		links {
+			AETHER_GL_COMMON_LIBS,
+			"opengl32"
+		}
+
+	configuration { "vs20*", "backend-gl" }
+		links { AETHER_GL_WIN_LIBS }
+
+end
+
 function configAllegro(magicMain)
 	configuration { "backend-allegro" }
 		defines { "AETHER_USE_ALLEGRO", "ALEGRO_STATICLINK", }

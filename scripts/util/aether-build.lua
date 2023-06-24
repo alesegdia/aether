@@ -11,6 +11,8 @@ function aetherBuild()
 		dofile(path.join(AETHER_DIR, "scripts/deps/aether-allegro-deps.lua"))		
 	elseif backend == "backend-raylib" then
 		dofile(path.join(AETHER_DIR, "scripts/deps/aether-raylib-deps.lua"))		
+	elseif backend == "backend-gl" then
+		dofile(path.join(AETHER_DIR, "scripts/deps/aether-gl-deps.lua"))		
 	else
 		print("backend not defined yet")
 		os.exit(-1)
