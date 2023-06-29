@@ -1,7 +1,11 @@
 #pragma once
 
-#include "../applicationbase.h"
+#include "aether/core/applicationbase.h"
 #include "SDL.h"
+
+#ifdef AETHER_USE_GL
+#include "glad/gl.h"
+#endif
 
 #include "../input.h"
 
@@ -26,8 +30,9 @@ protected:
     virtual int AppImplementationInit(int argc, char **argv) final;
 
 private:
-    SDL_Window* m_display = NULL;
+    SDL_Window* m_window = NULL;
     SDL_Renderer* m_renderer = NULL;
+    SDL_GLContext glContext;
 
     bool IsOpenGLActivated()
     {

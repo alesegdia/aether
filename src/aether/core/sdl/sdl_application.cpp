@@ -26,6 +26,9 @@ int SDLApplication::AppImplementationInit(int argc, char **argv)
         Logger::LogMsg("SDL video initialized successfully.");
     }
 
+    Uint32 windowFlags = SDL_WINDOW_SHOWN;
+
+
 	int flags = IMG_INIT_PNG;
     if(IMG_Init(flags) & flags != flags) {
         Logger::LogError("Failed to initialize SDL image.");
@@ -38,19 +41,64 @@ int SDLApplication::AppImplementationInit(int argc, char **argv)
 
 	TTF_Init();
 
-    m_display = SDL_CreateWindow("WindowName",
+
+    if (IsOpenGLActivated())
+    {
+        SDL_GL_LoadLibrary(nullptr);
+        SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
+
+        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+        SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+
+        windowFlags |= SDL_WINDOW_OPENGL;
+    }
+
+    m_window = SDL_CreateWindow("WindowName",
 								 SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-							     GetApplicationWindowScreenWidth(), GetApplicationWindowScreenHeight(), SDL_WINDOW_SHOWN);
-    if(!m_display) {
+							     GetApplicationWindowScreenWidth(), GetApplicationWindowScreenHeight(), windowFlags);
+    if(!m_window) {
         fprintf(stderr, "failed to create display! %s\n", SDL_GetError());
         return -1;
     }
 
-	m_renderer = SDL_CreateRenderer(m_display, -1, SDL_RENDERER_ACCELERATED);
-    aether_sdl_set_renderer(m_renderer);
+    if(IsOpenGLActivated())
+    {
+	    glContext = SDL_GL_CreateContext(m_window);
+        if(glContext == NULL)
+        {
+            fprintf(stderr, "failed to create GL context! %s\n", SDL_GetError());
+            return -1;
+        }
 
-    SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
-    SDL_RenderClear(m_renderer);
+        // Check OpenGL properties
+        printf("OpenGL loaded\n");
+        gladLoadGL((GLADloadfunc) SDL_GL_GetProcAddress);
+        printf("Vendor:   %s\n", glGetString(GL_VENDOR));
+        printf("Renderer: %s\n", glGetString(GL_RENDERER));
+        printf("Version:  %s\n", glGetString(GL_VERSION));
+
+        // Use v-sync
+        SDL_GL_SetSwapInterval(1);
+
+        // Disable depth test and face culling.
+        glDisable(GL_DEPTH_TEST);
+        glDisable(GL_CULL_FACE);
+
+        int w, h;
+        SDL_GetWindowSize(m_window, &w, &h);
+        glViewport(0, 0, w, h);
+        glClearColor(0.0f, 0.5f, 1.0f, 0.0f);
+    }
+    else
+    {
+        m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
+        aether_sdl_set_renderer(m_renderer);
+
+        SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
+        SDL_RenderClear(m_renderer);
+    }
 
     // initialize input
     //Input::Initialize();
@@ -71,18 +119,25 @@ void SDLApplication::PreRender()
 
 void SDLApplication::PostRender()
 {
-    SDL_RenderPresent(m_renderer);
+    if(m_renderer != nullptr)
+    {
+        SDL_RenderPresent(m_renderer);
+    }
 }
 
-void aether::core::SDLApplication::Deinit()
+void SDLApplication::Deinit()
 {
-    SDL_DestroyRenderer(m_renderer);
-    SDL_DestroyWindow(m_display);
+    if(m_renderer != nullptr)
+    {
+        SDL_DestroyRenderer(m_renderer);
+    }
+
+    SDL_DestroyWindow(m_window);
     IMG_Quit();
     SDL_Quit();
 }
 
-void aether::core::SDLApplication::PreUpdate()
+void SDLApplication::PreUpdate()
 {
     SDL_Event ev;
     while( SDL_PollEvent(&ev) )
@@ -114,14 +169,14 @@ void aether::core::SDLApplication::PreUpdate()
     aether_mouse_state.buttons = buttons;
 }
 
-void aether::core::SDLApplication::PostUpdate()
+void SDLApplication::PostUpdate()
 {
     _input_post_update();
 }
 
-void aether::core::SDLApplication::GrabMouse()
+void SDLApplication::GrabMouse()
 {
-    SDL_SetWindowGrab(m_display, SDL_TRUE);
+    SDL_SetWindowGrab(m_window, SDL_TRUE);
 }
 
 }

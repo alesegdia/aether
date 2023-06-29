@@ -66,7 +66,7 @@ end
 
 function configGL()
 	configuration { "backend-gl" }
-		defines { "AETHER_USE_GL" }
+		defines { "AETHER_USE_GL", "GLAD_GL_IMPLEMENTATION" }
 		includedirs { AETHER_GL_INCLUDE_DIRS }
 		links {
 			AETHER_GL_COMMON_LIBS,
