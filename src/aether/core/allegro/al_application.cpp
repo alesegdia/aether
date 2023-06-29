@@ -155,8 +155,9 @@ void AllegroApplication::Deinit()
 
     al_shutdown_primitives_addon();
 
-    al_shutdown_ttf_addon();
-    al_shutdown_font_addon();
+	al_shutdown_font_addon();
+
+    //al_shutdown_ttf_addon();
 
 #ifdef AETHER_ENABLE_AUDIO
     al_uninstall_audio();

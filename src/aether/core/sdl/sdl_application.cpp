@@ -1,6 +1,7 @@
 #include "sdl_application.h"
 #include "sdl_keycode.h"
 #include "../../graphics/sdl/sdl_locator.h"
+#include "aether/core/logger.h"
 
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -17,14 +18,22 @@ SDLApplication::SDLApplication(int sw, int sh)
 int SDLApplication::AppImplementationInit(int argc, char **argv)
 {
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-        fprintf(stderr, "failed to initialize SDL video!\n");
+        Logger::LogError("Failed to initialize SDL video.");
         return -1;
+    }
+    else
+    {
+        Logger::LogMsg("SDL video initialized successfully.");
     }
 
 	int flags = IMG_INIT_PNG;
     if(IMG_Init(flags) & flags != flags) {
-        fprintf(stderr, "failed to initialize SDL image!\n");
+        Logger::LogError("Failed to initialize SDL image.");
         return -1;
+    }
+    else
+    {
+        Logger::LogMsg("SDL video initialized successfully.");
     }
 
 	TTF_Init();

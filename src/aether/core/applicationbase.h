@@ -71,8 +71,13 @@ protected:
      * @brief postUpdate executed AFTER updating the screen
      */
     virtual void PostUpdate() = 0 ;
+    virtual void GameStep(uint64_t delta) {}
+    virtual void GameRender() {}
 
     virtual void GrabMouse() = 0 ;
+
+    virtual int AppImplementationInit(int argc, char** argv) = 0;
+
 
 private:
     void SetFPS(uint64_t& timer, uint64_t fps);

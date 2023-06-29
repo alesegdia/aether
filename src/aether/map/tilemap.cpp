@@ -223,7 +223,7 @@ void TileLayer::SetMapSize(size_t mapWidth, size_t mapHeight)
 
 void TileLayer::SetTileSize(size_t tileWidth, size_t tileHeight)
 {
-    m_tileSize.Set(tileWidth, tileHeight);
+    m_tileSize.Set(float(tileWidth), float(tileHeight));
 }
 
 void TileLayer::SetData(const TileLayer::Data& data)
@@ -253,12 +253,12 @@ TileCollisionBehaviour TileLayer::GetTileCollisionBehaviour(size_t x, size_t y) 
 
 int TileLayer::GetTileWidth() const
 {
-    return m_tileSize.GetX();
+    return int(m_tileSize.GetX());
 }
 
 int TileLayer::GetTileHeight() const
 {
-    return m_tileSize.GetY();
+    return int(m_tileSize.GetY());
 }
 
 bool TileLayer::IsValidTile(size_t x, size_t y) const

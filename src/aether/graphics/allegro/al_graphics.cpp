@@ -9,7 +9,17 @@ namespace graphics {
 
 void clear(float r, float g, float b)
 {
-    al_clear_to_color(al_map_rgb(r, g, b));
+    clear(uint8_t(r * 255), uint8_t(g * 255), uint8_t(b * 255));
+}
+
+void clear(uint8_t r, uint8_t g, uint8_t b)
+{
+	al_clear_to_color(al_map_rgb(r, g, b));
+}
+
+void clear(Color c)
+{
+	clear(c.r, c.g, c.b);
 }
 
 void draw_rectangle(float x1, float y1, float x2, float y2, Color c, float thickness)

@@ -30,10 +30,16 @@ void Font::Destroy()
     Invalidate();
 }
 
-void Font::Print(const char *text, float x, float y, Color c)
+void Font::Print(const char *text, float x, float y, Color c, TextAlign align)
 {
+    int flags = ALLEGRO_ALIGN_CENTRE;
+    switch(align)
+    {
+    case TextAlign::Left: flags = ALLEGRO_ALIGN_LEFT; break;
+    case TextAlign::Right: flags = ALLEGRO_ALIGN_RIGHT; break;
+    }
     ALLEGRO_FONT* font = fetch(GetHandle());
-    al_draw_text(font, al_map_rgb(c.r, c.g, c.b), x, y, 0, text);
+    al_draw_text(font, al_map_rgb(c.r, c.g, c.b), x, y, flags, text);
 }
 
 void Font::Print(const char *text, float x, float y, float width, float line_height, Color c, bool noalign)

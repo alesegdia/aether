@@ -13,11 +13,16 @@ public:
     Vec2(T x, T y) : m_x(x), m_y(y) {}
     Vec2(const Vec2<T>& other) : Vec2(other.m_x, other.m_y) {}
 
-    static float Distance( const Vec2<T>& a, const Vec2<T>& b )
+    static float EuclideanDistance( const Vec2<T>& a, const Vec2<T>& b )
     {
         float dx = ((float)a.GetX()) - ((float)b.GetX());
         float dy = ((float)a.GetY()) - ((float)b.GetY());
         return sqrtf( dx * dx + dy * dy );
+    }
+
+    static float ManhattanDistance( const Vec2<T>& a, const Vec2<T>& b )
+    {
+	    return abs(a.GetX() - b.GetX()) + abs(a.GetY() - b.GetY());
     }
 
     void SetX( T newx )

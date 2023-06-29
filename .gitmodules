@@ -2,22 +2,22 @@
 	path = module/rztl
 	url = git@github.com:alesegdia/rztl.git
 [submodule "module/tinyxml2"]
-	path = module/tinyxml2
+	path = 3rdparty/tinyxml2
 	url = https://github.com/leethomason/tinyxml2
 [submodule "module/tmxparser"]
-	path = module/tmxparser
+	path = 3rdparty/tmxparser
 	url = https://github.com/sainteos/tmxparser.git
 [submodule "module/json11"]
-	path = module/json11
+	path = 3rdparty/json11
 	url = git@github.com:dropbox/json11.git
 [submodule "module/sdl"]
-	path = module/sdl
+	path = 3rdparty/sdl
 	url = git@github.com:SDL-mirror/SDL.git
 [submodule "module/sdl-ttf"]
-	path = module/sdl-ttf
+	path = 3rdparty/sdl-ttf
 	url = git@github.com:SDL-mirror/SDL_ttf.git
 [submodule "module/sdl-image"]
-	path = module/sdl-image
+	path = 3rdparty/sdl-image
 	url = git@github.com:SDL-mirror/SDL_image.git
 [submodule "module/hadron"]
 	path = module/hadron
@@ -26,29 +26,38 @@
 	path = module/secs
 	url = git@github.com:alesegdia/secs.git
 [submodule "module/allegro"]
-	path = module/allegro
+	path = 3rdparty/allegro
 	url = git@github.com:liballeg/allegro5.git
 [submodule "module/libpng"]
-	path = module/libpng
+	path = 3rdparty/libpng
 	url = git@github.com:glennrp/libpng.git
 [submodule "module/zlib"]
-	path = module/zlib
+	path = 3rdparty/zlib
 	url = git@github.com:madler/zlib.git
 [submodule "module/freetype"]
-	path = module/freetype
+	path = 3rdparty/freetype
 	url = git@github.com:aseprite/freetype2.git
 [submodule "module/dxsdk"]
-	path = module/dxsdk
+	path = 3rdparty/dxsdk
 	url = git@github.com:apitrace/dxsdk.git
 [submodule "module/imgui"]
-	path = module/imgui
+	path = 3rdparty/imgui
 	url = git@github.com:ocornut/imgui.git
 [submodule "module/l2dfiledialog"]
-	path = module/l2dfiledialog
+	path = 3rdparty/l2dfiledialog
 	url = https://github.com/Limeoats/L2DFileDialog
 [submodule "module/lua"]
-	path = module/lua
+	path = 3rdparty/lua
 	url = git@github.com:lua/lua.git
 [submodule "module/googletest"]
-	path = module/googletest
+	path = 3rdparty/googletest
 	url = https://github.com/google/googletest.git
+[submodule "module/inipp"]
+	path = 3rdparty/inipp
+	url = git@github.com:mcmtroffaes/inipp.git
+[submodule "module/astarcpp"]
+	path = module/astarcpp
+	url = git@github.com:alesegdia/astarcpp.git
+[submodule "module/raylib"]
+	path = 3rdparty/raylib
+	url = git@github.com:alesegdia/raylib.git

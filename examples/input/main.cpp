@@ -3,47 +3,48 @@
 class NormalScreen : public aether::core::IScreen
 {
 public:
-    void show() final
+    virtual int Load() final
     {
-        if( false == m_texture.valid() )
+        if (false == m_texture.IsValid())
         {
-            m_texture.load("media/aether-logo.PNG");
+            m_texture.Load("media/aether-logo.PNG");
         }
 
-        m_position.set(0, 0);
+        m_position.Set(0, 0);
+        return 0;
     }
 
-    void hide() final
+    virtual int Unload() final
     {
-
+        return 0;
     }
 
-    void render() final
+    virtual void Render() final
     {
-        aether::graphics::clear(255, 0, 0);
-        m_texture.draw(m_position.x(), m_position.y());
+        aether::graphics::clear(1.f, 0.f, 0.f);
+        m_texture.Draw(m_position.GetX(), m_position.GetY());
     }
 
-    void update(uint64_t delta) final
+    virtual void Update(uint64_t delta) final
     {
         aether::math::Vec2f delta_pos(0, 0);
 
         if( aether::core::is_key_down(aether::core::KeyCode::Left) )
         {
-            delta_pos.x(-1);
+            delta_pos.SetX(-1);
         }
         else if( aether::core::is_key_down(aether::core::KeyCode::Right) )
         {
-            delta_pos.x(1);
+            delta_pos.SetX(1);
         }
 
         if( aether::core::is_key_down(aether::core::KeyCode::Up) )
         {
-            delta_pos.y(-1);
+            delta_pos.SetY(-1);
         }
         else if( aether::core::is_key_down(aether::core::KeyCode::Down) )
         {
-            delta_pos.y(1);
+            delta_pos.SetY(1);
         }
 
         float d = float(delta) / 10e6;
@@ -63,10 +64,11 @@ class MyGame : public aether::core::Application
 public:
     MyGame(int w, int h) : aether::core::Application(w, h) {}
 
-    int ready(int argc, char **argv) override
+    virtual int Init(int argc, char** argv) override { return 0; }
+    virtual int Ready(int argc, char **argv) override
     {
         auto scr = std::static_pointer_cast<aether::core::IScreen>(std::make_shared<NormalScreen>());
-        setScreen(scr);
+        SetScreen(scr);
         return 0;
     }
 
@@ -77,5 +79,5 @@ private:
 
 int main( int argc, char** argv )
 {
-    return MyGame(200, 200).exec(argc, argv);
+    return MyGame(200, 200).Exec(argc, argv);
 }

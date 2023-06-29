@@ -1,0 +1,26 @@
+#pragma once
+
+#include "aether/graphics/basecamera.h"
+#include "aether/math/vec.h"
+#include <raylib.h>
+
+
+namespace aether {
+namespace graphics {
+
+
+class Camera : public BaseCamera
+{
+public:
+	Camera(const aether::math::Vec2f& viewport = aether::math::Vec2f(0, 0));
+
+	void Bind() override;
+	void UnBind() override;
+
+private:
+	Camera2D m_camera;
+
+};
+
+}
+}

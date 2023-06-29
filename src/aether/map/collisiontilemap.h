@@ -35,7 +35,7 @@ public:
 
     bool IsSolidTile( float x, float y )
     {
-        auto pos = GetTilePos(x, y);
+        auto pos = GetTilePos(int(round(x)), int(round(y)));
         return IsSolid(pos.GetX(), pos.GetY());
     }
 

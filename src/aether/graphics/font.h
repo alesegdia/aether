@@ -17,6 +17,13 @@ struct TextData
     }
 };
 
+enum TextAlign
+{
+	Left,
+    Center,
+    Right
+};
+
 class Font : public core::Handle
 {
 public:
@@ -24,7 +31,7 @@ public:
 
     void Load( const char* path, int size );
     void Destroy();
-    void Print( const char* text, float x, float y, Color c = Color() );
+    void Print( const char* text, float x, float y, Color c = Color::White, TextAlign align = Left);
     void Print(const char* text, float x, float y, float width, float line_height , Color c, bool noalign=false);
     TextData CreateTextTexture(const char* text, Color color);
 

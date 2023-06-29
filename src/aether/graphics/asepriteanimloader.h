@@ -7,16 +7,23 @@
 #include <sstream>
 #include <unordered_map>
 
-namespace aether::graphics
+namespace aether
 {
+
+    namespace graphics{
 
 
 using AnimationsMap = std::unordered_map<std::string, std::shared_ptr<aether::graphics::Animation>>;
 
-struct LoadedAnimationData
+        struct FrameData
+        {
+	        TextureRegion region;
+            int duration;
+        };
+
+struct AsepriteAnimationData
 {
     AnimationsMap anims;
-    std::shared_ptr<aether::graphics::Spritesheet> sheet;
     aether::graphics::Texture texture;
 };
 
@@ -24,8 +31,9 @@ class AsepriteAnimationLoader
 {
 public:
 
-    LoadedAnimationData Load(const std::string& path);
+    AsepriteAnimationData Load(const std::string& path);
 };
 
         
+}
 }
