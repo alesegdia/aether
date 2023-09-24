@@ -1,13 +1,7 @@
 #include "rl_application.h"
 
-#include <iostream>
-
-#include <imgui.h>
-#include <imgui_impl_allegro5.h>
-
-#include <iostream>
-
 #include "raylib.h"
+#include "GLFW/glfw3.h"
 
 namespace aether {
 namespace core {
@@ -26,6 +20,8 @@ RaylibApplication::~RaylibApplication()
 int RaylibApplication::Init(int argc, char **argv)
 {
     InitWindow(GetApplicationWindowScreenWidth(), GetApplicationWindowScreenHeight(), "");
+    GLFWwindow* window = static_cast<GLFWwindow*>(GetGlfwWindowHandle());
+    //glfwSetKey
     return 0;
 }
 

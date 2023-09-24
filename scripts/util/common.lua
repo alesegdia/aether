@@ -83,6 +83,7 @@ function configRaylib()
 		includedirs {
 			path.join(AETHER_DIR, "module/raylib/src"),
 			path.join(AETHER_DIR, "module/raylib/src/external/glfw/deps/mingw"),
+			path.join(AETHER_DIR, "module/raylib/src/external/glfw/include"),
 		}
 		links {
 			"winmm",
