@@ -1,7 +1,11 @@
 #pragma once
 
-#include "../applicationbase.h"
+#include "aether/core/applicationbase.h"
 #include "SDL.h"
+
+#ifdef AETHER_USE_GL
+#include "glad/gl.h"
+#endif
 
 #include "../input.h"
 
@@ -18,28 +22,38 @@ public:
 
     }
 
-    void GrabMouse() final;
+    virtual void GrabMouse() final;
 
 
     // ApplicationBase interface
 protected:
-    int AppImplementationInit(int argc, char **argv) final;
+    virtual int AppImplementationInit(int argc, char **argv) final;
 
 private:
-    SDL_Window* m_display = NULL;
+    SDL_Window* m_window = NULL;
     SDL_Renderer* m_renderer = NULL;
+    SDL_GLContext glContext;
+
+    bool IsOpenGLActivated()
+    {
+#ifdef AETHER_USE_GL
+        return true;
+#else
+        return false;
+#endif
+    }
 
     // ApplicationBase interface
 protected:
     void Deinit();
 
-    void PreUpdate() final;
+    virtual void PreUpdate() final;
 
-    void PostUpdate() final;
+    virtual void PostUpdate() final;
 
-    void PreRender() final;
+    virtual void PreRender() final;
 
-    void PostRender() final;
+    virtual void PostRender() final;
 
 
 };

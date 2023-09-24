@@ -2,6 +2,8 @@
 
 #include <utility>
 #include <iostream>
+#include "aether/core/logger.h"
+
 #include "time.h"
 
 namespace aether{
@@ -19,18 +21,25 @@ ApplicationBase::~ApplicationBase()
 
 int ApplicationBase::Initialize(int argc, char** argv)
 {
+    Logger::LogMsg("Initializing Application.");
     int init_retcode = Init(argc, argv);
+
     if (init_retcode != 0) {
+        Logger::LogError("Application implementation failed to initialize with code <retcode>. Exiting.");
         return init_retcode;
     }
+    else
+    {
+        Logger::LogMsg("Application initialized successfully.");
+    }
 
+    Logger::LogMsg("Custom app init.");
 	int ready_retcode = Ready(argc, argv);
 	if (ready_retcode != 0)
 	{
+        Logger::LogError("Custom app init implementation failed to initialize with code <retcode>. Exiting.");
 		return ready_retcode;
 	}
-
-    std::cout << "ARGUMENTS: " << argc << std::endl;
 
     _init_input();
 
@@ -48,6 +57,8 @@ void ApplicationBase::Run()
 
 int ApplicationBase::Exec(int argc, char **argv)
 {
+    AppImplementationInit(argc, argv);
+
     Initialize(argc, argv);
 
     while( false == m_doExit )
@@ -93,14 +104,17 @@ void ApplicationBase::Step()
         PreUpdate();
         Update(m_updateStepTimer);
         PostUpdate();
-        if(m_currentScreen->HasRequestedCloseApp())
+        if (m_currentScreen != nullptr)
         {
-	        Close();
-        }
-        auto nextScreen = m_currentScreen->PopNextScreen();
-        if(nextScreen != nullptr)
-        {
-	       SetScreen(nextScreen);
+            if (m_currentScreen->HasRequestedCloseApp())
+            {
+                Close();
+            }
+            auto nextScreen = m_currentScreen->PopNextScreen();
+            if (nextScreen != nullptr)
+            {
+                SetScreen(nextScreen);
+            }
         }
     }
 }
@@ -167,6 +181,7 @@ void ApplicationBase::Dispose()
 
 void ApplicationBase::Update(uint64_t delta)
 {
+    GameStep(delta);
 	if (m_currentScreen != nullptr)
 	{
 		m_currentScreen->UpdateWithSubscreen(delta);
@@ -175,6 +190,7 @@ void ApplicationBase::Update(uint64_t delta)
 
 void ApplicationBase::Render()
 {
+    GameRender();
 	if (m_currentScreen != nullptr)
 	{
 		m_currentScreen->RenderWithSubscreen();

@@ -226,14 +226,14 @@ public:
     {
         assert(!m_layers.empty() && "must have some tile layer to fetch width");
         const auto& layer = *(*(m_tileLayers.begin())).second;
-        return layer.GetMapWidth() * layer.GetTileWidth();
+        return float(layer.GetMapWidth() * layer.GetTileWidth());
     }
 
     float GetHeight() const
     {
         assert(!m_layers.empty() && "must have some tile layer to fetch height");
         const auto& layer = *(*(m_tileLayers.begin())).second;
-        return layer.GetMapHeight() * layer.GetTileHeight();
+        return float(layer.GetMapHeight() * layer.GetTileHeight());
     }
 
 private:

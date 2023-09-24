@@ -5,17 +5,19 @@ class MyGame : public aether::core::Application
 public:
     MyGame(int w, int h) : aether::core::Application(w, h) {}
 
-    int ready(int argc, char **argv) override
+    int Ready(int argc, char **argv) override
     {
-        m_texture.load("media/aether-logo.png");
+        m_texture.Load("media/aether-logo.png");
         return 0;
     }
 
-    void render() override
+    void Render() override
     {
-        aether::core::Application::render();
-        m_texture.draw(10, 10);
+        aether::core::Application::Render();
+        m_texture.Draw(10, 10);
     }
+
+    virtual int Init(int argc, char** argv) override { return 0; }
 
 private:
     aether::graphics::Texture m_texture;
@@ -25,5 +27,5 @@ private:
 
 int main( int argc, char** argv )
 {
-    MyGame(200, 200).exec(argc, argv);
+    return MyGame(200, 200).Exec(argc, argv);
 }

@@ -35,7 +35,7 @@ namespace aether::lua
 			lua_getglobal(m_luaState, varName);
 			if(lua_isstring(m_luaState, -1))
 			{
-				
+				const char* strC = lua_tostring(m_luaState, -1);
 			}
 		}
 
@@ -43,5 +43,5 @@ namespace aether::lua
 		lua_State* m_luaState;
 
 	};
-
+	
 }
