@@ -12,11 +12,11 @@ namespace aether {
 namespace scene {
 
 
-
-
 class SceneNode : public std::enable_shared_from_this<SceneNode>
 {
 public:
+
+    SceneNode() = default;
 
     using Shared = std::shared_ptr<SceneNode>;
 

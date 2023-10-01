@@ -22,7 +22,10 @@ public:
         TextureNode::Render();
     }
 
-    void Update(uint64_t delta);
+    void Update(uint64_t delta)
+    {
+        m_animation->UpdateData(m_animationData, delta);
+    }
 
 private:
     graphics::Animation* m_animation;

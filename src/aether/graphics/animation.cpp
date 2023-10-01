@@ -57,8 +57,9 @@ void Animation::Reset(AnimationData &data)
     data.currentFrame = &m_frames[0];
 }
 
-void Animation::UpdateData(AnimationData &data)
+void Animation::UpdateData(AnimationData &data, uint64_t delta)
 {
+    data.timer += delta;
     assert(data.currentFrame != nullptr);
     AnimationFrame *frame = data.currentFrame;
     int64_t time_accumulated = frame->accumulated_duration;

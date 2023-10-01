@@ -73,7 +73,7 @@ public:
      * @brief updates frame and fix timer to data
      * @param data the animation data to be updated
      */
-    void UpdateData( AnimationData& data );
+    void UpdateData( AnimationData& data, uint64_t delta = 0 );
 
     const AnimationFrame& GetFrame(size_t i);
 
