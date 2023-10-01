@@ -17,7 +17,7 @@ public:
     void GrabMouse() final;
 
 protected:
-    int Init(int argc, char **argv) final;
+    int Init(int argc, char** argv) final;
 
 private:
     ALLEGRO_DISPLAY* m_display = NULL;
@@ -29,6 +29,7 @@ protected:
     void PostUpdate() final;
     void PreRender() final;
     void PostRender() final;
+
 
 };
 

@@ -1,5 +1,5 @@
 dofile("allegro-files.lua")
-dofile("../util/cmake-configure.lua")
+dofile("../../../util/cmake-configure.lua")
 
 if (_ACTION == "vs2019" or _ACTION == "vs2022") and _OPTIONS["backend"] == "backend-allegro" then
     cmakeConfigureFileImmediate(path.join(AETHER_EXTERNALS_DIR, "allegro/include/allegro5/platform/alplatf.h.cmake"),

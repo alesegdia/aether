@@ -5,6 +5,8 @@
 
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_video.h>
+#include <SDL_opengl.h>
 
 namespace aether {
 namespace core {

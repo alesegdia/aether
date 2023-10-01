@@ -76,7 +76,7 @@ protected:
 
     virtual void GrabMouse() = 0 ;
 
-    virtual int AppImplementationInit(int argc, char** argv) = 0;
+    virtual int AppImplementationInit(int argc, char** argv) { return 0; }
 
 
 private:
