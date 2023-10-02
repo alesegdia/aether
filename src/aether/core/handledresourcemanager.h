@@ -24,7 +24,7 @@ public:
      */
     int createNewHandle(ResourceType element)
     {
-        int handle = m_resources.GetSize();
+        int handle = int(m_resources.GetSize());
         m_resources.Add(element);
         return handle;
     }

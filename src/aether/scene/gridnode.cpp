@@ -6,8 +6,8 @@ namespace scene {
 
 
 GridNode::GridNode(float x, float y, int numXTiles, int numYTiles, float tileWidth, float tileHeight)
-    : m_numXTiles(numXTiles)
-    , m_numYTiles(numYTiles)
+    : m_numXTiles(float(numXTiles))
+    , m_numYTiles(float(numYTiles))
     , m_tileWidth(tileWidth)
     , m_tileHeight(tileHeight)
 {

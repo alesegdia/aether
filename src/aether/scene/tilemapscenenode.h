@@ -11,7 +11,7 @@ namespace aether {
         class TilemapSceneNode : public SceneNode
         {
         public:
-            TilemapSceneNode(std::shared_ptr<rztl::Matrix2Di> tilemap, graphics::Spritesheet* spritesheet, int tileSize)
+            TilemapSceneNode(std::shared_ptr<rztl::Matrix2Di> tilemap, std::shared_ptr<graphics::Spritesheet> spritesheet, int tileSize)
 				: m_tilemap(tilemap),
 				  m_spritesheet(spritesheet),
 				  m_tileSize(tileSize)
@@ -31,10 +31,6 @@ namespace aether {
 
 						int frame = m_tilemap->GetCell(c, r);
 
-						int ncx, ncy;
-						ncx = c / 2;
-						ncy = r / 2;
-
 						auto bm = m_spritesheet->GetFrame(frame);
 						bm->Draw(x1, y1);
 					}
@@ -43,8 +39,9 @@ namespace aether {
 
         private:
 			std::shared_ptr<rztl::Matrix2Di> m_tilemap;
-			graphics::Spritesheet* m_spritesheet;
+			std::shared_ptr<graphics::Spritesheet> m_spritesheet;
 			int m_tileSize = 0;
+
         };
 
 

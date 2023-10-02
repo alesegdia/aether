@@ -49,6 +49,11 @@ public:
         return m_angle;
     }
 
+    void SetRenderPosition(math::Vec2f renderPosition)
+    {
+        m_renderPosition = renderPosition;
+    }
+
 protected:
 
     SceneNode::Shared m_parent{nullptr};
@@ -68,6 +73,8 @@ protected:
 class Scene
 {
 public:
+    using SharedPtr = std::shared_ptr<Scene>;
+
     Scene()
     {
         m_root = std::make_shared<SceneNode>();
@@ -85,15 +92,15 @@ public:
 
     void Traverse(const SceneNode::Shared& node)
     {
-        /*
         core::insert_sorted(m_nodesSortedByZindex, node, [](auto val,  auto iter) {
-            return val->zIndex() < iter->zIndex();
+            return val->GetZIndex() < iter->GetZIndex();
         });
-        node->renderPos() = node->parent()->renderPos() + node->relativePos();
-        for( auto child : node->children() ) {
-            traverse(child);
+        auto parent = node->GetParent();
+        auto newRenderPosition = (parent != nullptr ? parent->GetRenderPosition() : math::Vec2f(0, 0)) + node->GetRelativePosition();
+        node->SetRenderPosition(newRenderPosition);
+        for( auto child : node->GetChildren() ) {
+            Traverse(child);
         }
-        */
     }
 
     template <typename SceneNodeType, typename... Args>

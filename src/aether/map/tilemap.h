@@ -136,12 +136,12 @@ public:
 
     int GetMapWidth() const
     {
-        return m_mapSizeInTiles.GetX();
+        return int(m_mapSizeInTiles.GetX());
     }
 
     int GetMapHeight() const
     {
-        return m_mapSizeInTiles.GetY();
+        return int(m_mapSizeInTiles.GetY());
     }
 
     bool IsValidTile(size_t x, size_t y) const;

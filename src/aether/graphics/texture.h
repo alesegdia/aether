@@ -80,14 +80,21 @@ public:
 
 	}
 
-	TextureRegion(const Texture& texture, float x, float y, float w, float h)
-	    : m_texture(texture)
-	    , m_clip(aether::math::Rectf(x, y, w, h))
-	{
+    TextureRegion(const Texture& texture, float x, float y, float w, float h)
+        : m_texture(texture)
+        , m_clip(aether::math::Rectf(x, y, w, h))
+    {
 
-	}
+    }
 
-	void SetRegion(float x, float y, float w, float h)
+    TextureRegion(const Texture& texture, int x, int y, int w, int h)
+        : m_texture(texture)
+        , m_clip(aether::math::Rectf(float(x), float(y), float(w), float(h)))
+    {
+
+    }
+
+    void SetRegion(float x, float y, float w, float h)
 	{
 		m_clip = aether::math::Rectf(x, y, w, h);
 	}
