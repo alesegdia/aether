@@ -1,26 +1,29 @@
 #pragma once
 
-#include "../graphics/animation.h"
-#include "aether/scene/scene.h"
+
 #include <rztl/rztl.h>
+
+#include "aether/graphics/animation.h"
+#include "aether/scene/scene.h"
+#include "aether/map/tilemap.h"
 
 namespace aether {
     namespace scene {
 
 
-        class TilemapSceneNode : public SceneNode
-        {
-        public:
-            TilemapSceneNode(std::shared_ptr<rztl::Matrix2Di> tilemap, std::shared_ptr<graphics::Spritesheet> spritesheet, int tileSize)
+		class TilemapSceneNode : public SceneNode
+		{
+		public:
+			TilemapSceneNode(std::shared_ptr<rztl::Matrix2Di> tilemap, std::shared_ptr<graphics::Spritesheet> spritesheet, int tileSize)
 				: m_tilemap(tilemap),
-				  m_spritesheet(spritesheet),
-				  m_tileSize(tileSize)
+				m_spritesheet(spritesheet),
+				m_tileSize(tileSize)
 			{
 
 			}
 
-            void Render() override
-            {
+			void Render() override
+			{
 				for (int r = 0; r < m_tilemap->GetRowsNumberInt(); r++)
 				{
 					for (int c = 0; c < m_tilemap->GetColsNumberInt(); c++)
@@ -37,12 +40,32 @@ namespace aether {
 				}
 			}
 
-        private:
+		private:
 			std::shared_ptr<rztl::Matrix2Di> m_tilemap;
 			std::shared_ptr<graphics::Spritesheet> m_spritesheet;
 			int m_tileSize = 0;
 
-        };
+		};
+
+
+		class TiledTilemapSceneNode : public SceneNode
+		{
+		public:
+			TiledTilemapSceneNode(std::shared_ptr<aether::tilemap::TileMap> tilemap)
+				: m_tilemap(tilemap)
+			{
+
+			}
+
+			void Render() override
+			{
+				m_tilemap->Render();
+			}
+
+		private:
+			std::shared_ptr<aether::tilemap::TileMap> m_tilemap;
+
+		};
 
 
     }
