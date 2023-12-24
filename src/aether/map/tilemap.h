@@ -72,9 +72,20 @@ public:
 
     int GetDepthOrder() const;
 
+    void SetVisible(bool visible)
+    {
+        m_visible = visible;
+    }
+
+    bool IsVisible()
+    {
+        return m_visible;
+    }
+
 private:
     std::string m_name;
     int m_depthOrder = 0;
+    bool m_visible = true;
 
 };
 

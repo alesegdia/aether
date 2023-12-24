@@ -27,8 +27,8 @@ std::shared_ptr<TileMap> BuildMap(const Tmx::Map &inmap)
         graphics::Texture t;
         t.Load(path.c_str());
 
-        auto columns = tileset->GetColumns();
-        auto rows = ceil(tileset->GetTileCount() / float(tileset->GetColumns()));
+        auto columns = tileset->GetImage()->GetWidth() / tileset->GetTileWidth();
+        auto rows = tileset->GetImage()->GetHeight() / tileset->GetTileHeight();
         auto newSheet = std::make_shared<graphics::Spritesheet>(columns, rows, t);
         outmap->AddSheet(newSheet);
         newTileset->SetFirstGid(tileset->GetFirstGid());
@@ -72,6 +72,9 @@ std::shared_ptr<TileMap> BuildMap(const Tmx::Map &inmap)
         // IGNORE IF THERE I
         // if( tilesetId == -1 ) continue;
 
+        bool hasVisibleProp = tmxTileLayer->GetProperties().HasProperty("visible");
+        bool visiblePropOn = tmxTileLayer->GetProperties().GetBoolProperty("visible");
+
         std::shared_ptr<TileLayer> tileLayer = std::make_shared<TileLayer>(layer->GetName(), layer->GetZOrder());
         tileLayer->SetMapSize(tmxTileLayer->GetWidth(), tmxTileLayer->GetHeight());
         outmap->AddTileLayer(tileLayer);
@@ -91,6 +94,7 @@ std::shared_ptr<TileMap> BuildMap(const Tmx::Map &inmap)
                 rawData.SetCell(size_t(i), size_t(j), cellValue);
             }
         }
+        tileLayer->SetVisible(!hasVisibleProp || visiblePropOn);
         tileLayer->SetData(rawData);
     }
 
@@ -332,8 +336,12 @@ TileSet::Shared TileMap::GetTileset(int i)
 
 void TileMap::Render()
 {
-    for( auto layer : m_layers ) {
-        layer->Render();
+    for( auto layer : m_layers )
+    {
+        if (layer->IsVisible())
+        {
+            layer->Render();
+        }
     }
 }
 
