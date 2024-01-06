@@ -10,7 +10,7 @@ namespace scene {
 class AnimationNode : public TextureNode
 {
 public:
-    void SetAnimation(graphics::Animation* anim)
+    void SetAnimation(std::shared_ptr<graphics::Animation> anim)
     {
         anim->Reset(m_animationData);
         m_animation = anim;
@@ -18,17 +18,23 @@ public:
 
     void Render() override
     {
-        m_texregion = m_animationData.currentFrame->texture;
-        TextureNode::Render();
+        if (m_animation != nullptr)
+        {
+            m_texregion = m_animationData.currentFrame->texture;
+            TextureNode::Render();
+        }
     }
 
     void Update(uint64_t delta)
     {
-        m_animation->UpdateData(m_animationData, delta);
+        if (m_animation != nullptr)
+        {
+            m_animation->UpdateData(m_animationData, delta);
+        }
     }
 
 private:
-    graphics::Animation* m_animation;
+    std::shared_ptr<graphics::Animation> m_animation;
     graphics::AnimationData m_animationData;
 
 };

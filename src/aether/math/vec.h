@@ -100,21 +100,35 @@ namespace aether {
                 return *this;
             }
 
-            Vec2& operator*= (const Vec2& v)
+            Vec2& operator*= (int p)
+            {
+                m_x *= p;
+                m_y *= p;
+                return *this;
+            }
+
+            Vec2& operator*= (const Vec2& v) 
             {
                 m_x *= v.GetX();
                 m_y *= v.GetY();
                 return *this;
             }
 
-            Vec2 operator* (float p)
+            Vec2 operator* (float p) const
             {
                 Vec2 ret = (*this);
                 ret *= p;
                 return ret;
             }
 
-            Vec2 operator* (const Vec2& other)
+            Vec2 operator* (int p) const
+            {
+                Vec2 ret = (*this);
+                ret *= p;
+                return ret;
+            }
+
+            Vec2 operator* (const Vec2& other) const
             {
                 Vec2 ret = (*this);
                 ret *= other;
@@ -133,6 +147,11 @@ namespace aether {
                 Vec2<U> casted;
                 casted.Set(U(m_x), U(m_y));
                 return casted;
+            }
+
+            static Vec2<T> ZeroVec()
+            {
+                return aether::math::Vec2<T>(T(0), T(0));
             }
 
         private:
@@ -171,6 +190,15 @@ namespace aether {
             float dx = float(a.GetX()) - float(b.GetX());
             float dy = float(a.GetY()) - float(b.GetY());
             return sqrtf(dx * dx + dy * dy);
+        }
+
+        template <typename T>
+        T manhattan_distance(const Vec2<T>& a, const Vec2<T>& b)
+        {
+            auto diff = b - a;
+            auto dx = abs(diff.GetX());
+            auto dy = abs(diff.GetY());
+            return dx + dy;
         }
 
         template <typename T>
