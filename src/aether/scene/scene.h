@@ -3,9 +3,10 @@
 #include <memory>
 #include <vector>
 
-#include "../math/vec.h"
-#include "../graphics/color.h"
-#include "../core/utility.h"
+#include "aether/math/vec.h"
+#include "aether/graphics/color.h"
+#include "aether/graphics/graphics.h"
+#include "aether/core/utility.h"
 
 
 namespace aether {
@@ -54,11 +55,33 @@ public:
         m_renderPosition = renderPosition;
     }
 
+    void SetRelativePosition(math::Vec2f relativePosition)
+    {
+        m_relativePosition = relativePosition;
+        if (relativePosition != m_relativePosition)
+        {
+            m_dirty = true;
+        }
+    }
+
+    // clears the dirty boolean value
+    // returns true if the dirty was set to false, and false if the dirty was already cleared
+    bool ClearDirty()
+    {
+        if (!m_dirty)
+        {
+            return false;
+        }
+        m_dirty = true;
+        return true;
+    }
+
 protected:
 
     SceneNode::Shared m_parent{nullptr};
     graphics::Color m_color = graphics::Color(1.0f, 1.0f, 1.0f);
     std::vector<SceneNode::Shared> m_children;
+    bool m_dirty;
 
     int m_zIndex;
     math::Vec2f m_relativePosition;
@@ -83,6 +106,7 @@ public:
 
     void Render()
     {
+        aether::graphics::clear(m_clearColor);
         m_nodesSortedByZindex.clear();
         Traverse(m_root);
         for( auto child : m_nodesSortedByZindex ) {
@@ -96,7 +120,7 @@ public:
             return val->GetZIndex() < iter->GetZIndex();
         });
         auto parent = node->GetParent();
-        auto newRenderPosition = (parent != nullptr ? parent->GetRenderPosition() : math::Vec2f(0, 0)) + node->GetRelativePosition();
+        auto newRenderPosition = (parent != nullptr ? parent->GetRenderPosition() + node->GetRelativePosition() : math::Vec2f(0, 0)) + node->GetRelativePosition();
         node->SetRenderPosition(newRenderPosition);
         for( auto child : node->GetChildren() ) {
             Traverse(child);
@@ -112,9 +136,16 @@ public:
         return ptr;
     }
 
+    void AddToScene(std::shared_ptr<SceneNode> sceneNode)
+    {
+        m_root->AddChild(sceneNode);
+        sceneNode->SetParent(m_root);
+    }
+
 private:
     SceneNode::Shared m_root;
     std::vector<SceneNode::Shared> m_nodesSortedByZindex;
+    aether::graphics::Color m_clearColor = aether::graphics::Color::Magenta;
 
 };
 

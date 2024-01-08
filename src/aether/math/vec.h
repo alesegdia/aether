@@ -107,7 +107,14 @@ namespace aether {
                 return *this;
             }
 
-            Vec2& operator*= (const Vec2& v) 
+            Vec2& operator*= (uint64_t p)
+            {
+                m_x *= p;
+                m_y *= p;
+                return *this;
+            }
+
+            Vec2& operator*= (const Vec2& v)
             {
                 m_x *= v.GetX();
                 m_y *= v.GetY();
@@ -122,6 +129,13 @@ namespace aether {
             }
 
             Vec2 operator* (int p) const
+            {
+                Vec2 ret = (*this);
+                ret *= p;
+                return ret;
+            }
+
+            Vec2 operator* (uint64_t p) const
             {
                 Vec2 ret = (*this);
                 ret *= p;
@@ -152,6 +166,11 @@ namespace aether {
             static Vec2<T> ZeroVec()
             {
                 return aether::math::Vec2<T>(T(0), T(0));
+            }
+
+            T SquaredModulus()
+            {
+                return abs(m_x) + abs(m_y);
             }
 
         private:

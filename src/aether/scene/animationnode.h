@@ -6,6 +6,25 @@
 namespace aether {
 namespace scene {
 
+    class CircleShapeNode : public SceneNode
+    {
+    public:
+        CircleShapeNode(float diameter)
+            : m_diameter(diameter)
+        {
+
+        }
+
+        void Render() override
+        {
+            aether::graphics::draw_filled_circle(m_renderPosition.GetX(), m_renderPosition.GetY(), m_diameter, m_color);
+        }
+
+    private:
+        float m_diameter = 32.0f;
+        graphics::Color m_color;
+
+    };
 
 class AnimationNode : public TextureNode
 {
