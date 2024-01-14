@@ -9,24 +9,45 @@ namespace scene {
     class CircleShapeNode : public SceneNode
     {
     public:
-        CircleShapeNode(float diameter)
-            : m_diameter(diameter)
+        CircleShapeNode(float radius)
+            : m_radius(radius)
         {
 
         }
 
         void Render() override
         {
-            aether::graphics::draw_filled_circle(m_renderPosition.GetX(), m_renderPosition.GetY(), m_diameter, m_color);
+            aether::graphics::draw_filled_circle(m_renderPosition.GetX(), m_renderPosition.GetY(), m_radius, m_color);
         }
 
     private:
-        float m_diameter = 32.0f;
+        float m_radius = 32.0f;
         graphics::Color m_color;
 
     };
 
-class AnimationNode : public TextureNode
+    class RectShapeNode : public SceneNode
+    {
+    public:
+        RectShapeNode(aether::math::Vec2i size)
+            : m_size(size)
+        {
+
+        }
+
+        void Render() override
+        {
+            //aether::graphics::draw_filled_rectangle(m_renderPosition.GetX(), m_renderPosition.GetY(), m_renderPosition.GetX() + m_size.GetX(), m_renderPosition.GetY() + m_size.GetY(), m_color);
+            aether::graphics::draw_filled_circle(m_renderPosition.GetX(), m_renderPosition.GetY(), 16, m_color);
+        }
+
+    private:
+        aether::math::Vec2i m_size;
+        graphics::Color m_color;
+
+    };
+
+    class AnimationNode : public TextureNode
 {
 public:
     void SetAnimation(std::shared_ptr<graphics::Animation> anim)

@@ -52,10 +52,15 @@ public:
         computeCenter();
     }
 
-    void position( float x, float y )
+    void position( T x, T y )
     {
         m_position.Set(x, y);
         computeCenter();
+    }
+
+    void size(T w, T h)
+    {
+        m_size.Set(w, h);
     }
 
     const Vec2<T>& position() const

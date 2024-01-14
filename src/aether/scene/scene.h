@@ -120,7 +120,7 @@ public:
             return val->GetZIndex() < iter->GetZIndex();
         });
         auto parent = node->GetParent();
-        auto newRenderPosition = (parent != nullptr ? parent->GetRenderPosition() + node->GetRelativePosition() : math::Vec2f(0, 0)) + node->GetRelativePosition();
+        auto newRenderPosition = (parent == nullptr ? node->GetRelativePosition() : parent->GetRelativePosition() + node->GetRelativePosition());
         node->SetRenderPosition(newRenderPosition);
         for( auto child : node->GetChildren() ) {
             Traverse(child);
