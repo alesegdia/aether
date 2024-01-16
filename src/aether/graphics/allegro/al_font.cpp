@@ -61,6 +61,14 @@ TextData Font::CreateTextTexture(const char* text, Color color)
     return {};
 }
 
+int Font::GetWidthForText(const char* text)
+{
+    ALLEGRO_FONT* font = fetch(GetHandle());
+    int bbx, bby, bbw, bbh;
+    al_get_text_dimensions(font, text, &bbx, &bby, &bbw, &bbh);
+    return bbw;
+}
+
 
 }
 }

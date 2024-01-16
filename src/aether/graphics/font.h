@@ -33,6 +33,7 @@ public:
     void Destroy();
     void Print( const char* text, float x, float y, Color c = Color::White, TextAlign align = Left);
     void Print(const char* text, float x, float y, float width, float line_height , Color c, bool noalign=false);
+    int GetWidthForText(const char* text);
     TextData CreateTextTexture(const char* text, Color color);
 
 };

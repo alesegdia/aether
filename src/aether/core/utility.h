@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <stack>
 #include <algorithm>
 
 
@@ -25,6 +26,9 @@ void remove_by_value(std::vector<T>& v, const T& t)
 {
     v.erase(std::remove(v.begin(), v.end(), t), v.end());
 }
+
+void split_string_by_delimiter(std::string str, const std::string& delimiter, std::vector<std::string>& out);
+void split_string_by_delimiter(std::string str, const std::string& delimiter, std::stack<std::string>& out);
 
 
 }
