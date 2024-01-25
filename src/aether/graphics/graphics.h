@@ -18,6 +18,8 @@ void draw_filled_rectangle_centered(const math::Rectf& r, Color c);
 void draw_filled_circle(float x, float y, float radius, Color c);
 void draw_filled_circle(float x, float y, float radius, Color c, int alpha);
 void draw_line(float x1, float y1, float x2, float y2, Color c, float thickness = 0.0f);
+void set_clipping_rect(const aether::math::Recti& r);
+void clear_clipping_rect();
 
 }
 }

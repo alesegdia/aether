@@ -67,6 +67,35 @@ void draw_line(float x1, float y1, float x2, float y2, Color c, float thickness)
     al_draw_line(x1, y1, x2, y2, al_map_rgb(c.r, c.g, c.b), thickness);
 }
 
+namespace
+{
+    aether::math::Recti base_clipping_rect;
+    bool clipping_rect_in_use = false;
+}
+
+void set_clipping_rect(const aether::math::Recti& r)
+{
+    if (!clipping_rect_in_use)
+    {
+        int x, y, w, h;
+        al_get_clipping_rectangle(&x, &y, &w, &h);
+        base_clipping_rect.position(x, y);
+        base_clipping_rect.size(w, h);
+        clipping_rect_in_use = true;
+    }
+    al_set_clipping_rectangle(r.x(), r.y(), r.w(), r.h());
+}
+
+void clear_clipping_rect()
+{
+    if (clipping_rect_in_use)
+    {
+        const auto& r = base_clipping_rect;
+        al_set_clipping_rectangle(r.x(), r.y(), r.w(), r.h());
+        clipping_rect_in_use = false;
+    }
+}
+
 
 }
 }
