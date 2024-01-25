@@ -1,3 +1,6 @@
+
+#include <string>
+
 #include "aether/core/utility.h"
 
 namespace aether::core

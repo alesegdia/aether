@@ -33,4 +33,6 @@
 #include "scene/animationnode.h"
 #include "scene/gridnode.h"
 
+#include "rztl/rztl.h"
+
 #include "json11.hpp"
