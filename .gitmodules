@@ -61,3 +61,6 @@
 [submodule "module/raylib"]
 	path = 3rdparty/raylib
 	url = git@github.com:alesegdia/raylib.git
+[submodule "3rdparty/tweeny"]
+	path = 3rdparty/tweeny
+	url = https://github.com/mobius3/tweeny.git
