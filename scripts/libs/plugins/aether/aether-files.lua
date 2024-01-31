@@ -28,6 +28,7 @@ AETHER_COMMON_SOURCES = {
 	path.join(AETHER_DIR, "src/aether/gui/*.h"),
 	path.join(AETHER_DIR, "src/aether/gui/*.cpp"),
 	path.join(AETHER_EXTERNALS_DIR, "inipp/inipp/*.h"),
+	path.join(AETHER_EXTERNALS_DIR, "tweeny/include/*"),
 	path.join(AETHER_EXTERNALS_DIR, "astarcpp/src/astar.h"),
 }
 
@@ -53,13 +54,13 @@ AETHER_COMMON_INCLUDE_DIRS = {
 	path.join(AETHER_EXTERNALS_DIR, "lua"),
 	path.join(AETHER_EXTERNALS_DIR, "inipp"),
 	path.join(AETHER_PLUGINS_DIR, "astarcpp/src"),
+	path.join(AETHER_EXTERNALS_DIR, "tweeny/include"),
 }
 
 AETHER_DUMMY_AUDIO_SOURCES = {
 	path.join(AETHER_DIR, "src/aether/audio/dummy/*.h"),
 	path.join(AETHER_DIR, "src/aether/audio/dummy/*.cpp"),
 }
-
 
 AETHER_COMMON_LIBS = {
 	"tinyxml2",
