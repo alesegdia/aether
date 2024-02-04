@@ -9,7 +9,6 @@
 #include <tweeny.h>
 
 namespace aether {
-namespace math {
 
 	class Timer
 	{
@@ -29,14 +28,32 @@ namespace math {
 			if (!m_expired && currentTime >= m_expireTimeMs)
 			{
 				m_expired = true;
-				onTimerExpired();
+				DispatchExpire();
 			}
 		}
 
+		bool IsExpired()
+		{
+			return m_expired;
+		}
+
+		Timer& OnExpire(std::function<void(void)> onExpire)
+		{
+			m_onTimerExpiredCallbacks.push_back(onExpire);
+		}
+
 	private:
+		void DispatchExpire()
+		{
+			for (const auto& item : m_onTimerExpiredCallbacks)
+			{
+				item();
+			}
+		}
+
 		uint64_t m_expireTimeMs;
 		uint64_t m_expired = false;
-		std::function<void(void)> onTimerExpired;
+		std::vector<std::function<void(void)>> m_onTimerExpiredCallbacks;
 
 	};
 
@@ -46,33 +63,44 @@ namespace math {
 		TimerManager() = default;
 
 	public:
-
-		std::shared_ptr<Timer> CreateTimer(float secondsToExpire)
+		Timer& CreateTimer(float secondsToExpire)
 		{
 			m_allTimers.push_back(std::make_shared<Timer>(secondsToExpire));
+			return *m_allTimers.back();
 		}
 
-		std::shared_ptr<Timer> CreateTimer(uint64_t microsecondsToExpire)
+		Timer& CreateTimer(uint64_t microsecondsToExpire)
 		{
 			m_allTimers.push_back(std::make_shared<Timer>(microsecondsToExpire));
+			return *m_allTimers.back();
 		}
 
 		void Update()
 		{
 			auto time = aether::core::get_time();
-			for (const auto& timer : m_allTimers)
+			auto iterator = m_allTimers.begin();
+			while (iterator != m_allTimers.end())
 			{
-				timer->Update(time);
+				auto timer = *iterator;
+				auto expired = timer->Update(time);
+				if (expired)
+				{
+					m_allTimers.erase(iterator++);
+				}
+				else
+				{
+					++iterator;
+				}
 			}
 		}
 
-		static TimerManager& Get()
+		static TimerManager& GetInstance()
 		{
 			return s_timerManager;
 		}
 
 	private:
-		std::vector<std::shared_ptr<Timer>> m_allTimers;
+		std::list<std::shared_ptr<Timer>> m_allTimers;
 
 		static TimerManager s_timerManager;
 	};
@@ -121,5 +149,4 @@ namespace math {
 	};
 
 
-}
 }
