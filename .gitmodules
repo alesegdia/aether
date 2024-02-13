@@ -6,7 +6,7 @@
 	url = https://github.com/leethomason/tinyxml2
 [submodule "module/tmxparser"]
 	path = 3rdparty/tmxparser
-	url = https://github.com/sainteos/tmxparser.git
+	url = https://github.com/alesegdia/tmxparser.git
 [submodule "module/json11"]
 	path = 3rdparty/json11
 	url = git@github.com:dropbox/json11.git
