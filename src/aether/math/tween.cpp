@@ -2,9 +2,8 @@
 
 
 namespace aether {
-namespace math {
+
+	TimerManager TimerManager::s_timerManager;
 
 
-
-}
 }

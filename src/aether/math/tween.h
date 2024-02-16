@@ -15,7 +15,7 @@ namespace aether {
 	public:
 		Timer(float secondsToExpire)
 		{
-			m_expireTimeMs = aether::core::get_time() + uint64_t(secondsToExpire * 10e6);
+			m_expireTimeMs = aether::core::get_time() + uint64_t(secondsToExpire * 1e6);
 		}
 
 		Timer(uint64_t microsecondsToExpire)
@@ -30,6 +30,7 @@ namespace aether {
 				m_expired = true;
 				DispatchExpire();
 			}
+			return m_expired;
 		}
 
 		bool IsExpired()
@@ -40,6 +41,7 @@ namespace aether {
 		Timer& OnExpire(std::function<void(void)> onExpire)
 		{
 			m_onTimerExpiredCallbacks.push_back(onExpire);
+			return *this;
 		}
 
 	private:
