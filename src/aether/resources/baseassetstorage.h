@@ -20,14 +20,12 @@ namespace aether
 		public:
 			std::shared_ptr<StoredAssetType> GetItem(std::string path)
 			{
+				auto p = std::filesystem::path(path);
+				if (m_storageMap.count(p.generic_string()) == 0)
 				{
-					auto p = std::filesystem::path(path);
-					if (m_storageMap.count(p.generic_string()) == 0)
-					{
-						return nullptr;
-					}
-					return m_storageMap[p.generic_string()];
+					return nullptr;
 				}
+				return m_storageMap[p.generic_string()];
 			}
 
 			void Load(std::string path) override

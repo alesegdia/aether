@@ -3,6 +3,8 @@
 namespace aether {
 namespace graphics {
 
+AnimationsManager AnimationsManager::instance;
+
 void AnimationData::ResetAnimationTimer()
 {
     timer = 0;
@@ -75,6 +77,7 @@ void Animation::UpdateData(AnimationData &data, uint64_t delta)
         lastFrame = frame_index >= m_frames.size();
         if( frame_index >= m_frames.size() )
         {
+            data.onAnimationFinished();
             if (m_wrapMode == WrapMode::Once)
             {
                 break;

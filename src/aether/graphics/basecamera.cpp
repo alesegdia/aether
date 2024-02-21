@@ -49,7 +49,10 @@ namespace graphics {
 
 	const aether::math::Vec2f& BaseCamera::GetPosition()
 	{
-		return m_position;
+		auto pos = m_position;
+		pos.SetX(pos.GetX() + m_shakeX);
+		pos.SetY(pos.GetY() + m_shakeY);
+		return pos;
 	}
 
 	void BaseCamera::SetPosition(const aether::math::Vec2f& new_position)

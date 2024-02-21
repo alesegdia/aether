@@ -3,6 +3,7 @@
 #include <memory>
 #include <cmath>
 #include <cassert>
+#include <functional>
 #include "spritesheet.h"
 
 
@@ -27,6 +28,7 @@ struct AnimationData
     AnimationFrame* currentFrame = nullptr;
     size_t animationFrameIndex = 0;
     bool animationFinished = false;
+    std::function<void(void)> onAnimationFinished;
 };
 
 class Animation
@@ -85,6 +87,72 @@ private:
     int64_t m_defaultFrameDuration = 0;
     int64_t m_totalAnimDuration = 0;
     WrapMode m_wrapMode = WrapMode::Loop;
+
+};
+
+// With this class you can trigger animations
+class AnimationsManager
+{
+private:
+    struct Entry
+    {
+        std::shared_ptr<Animation> animation;
+        AnimationData animData;
+        aether::math::Vec2i position;
+
+        Entry(std::shared_ptr<Animation> anim, int x, int y, std::function<void(void)> onEnd)
+        {
+            this->animation = anim;
+            this->animation->Reset(animData);
+            animData.onAnimationFinished = onEnd;
+            this->position.Set(x, y);
+        }
+    };
+
+public:
+    static AnimationsManager instance;
+
+    void AddAnimation(std::shared_ptr<Animation> animation, int x, int y, std::function<void(void)> onAnimationFinished)
+    {
+        animation->SetWrapMode(aether::graphics::Animation::WrapMode::Once);
+        Entry entry(animation, x, y, onAnimationFinished);
+        m_entries.push_back(entry);
+    }
+
+    void AddAnimation(std::shared_ptr<Animation> animation, int x, int y)
+    {
+        AddAnimation(animation, x, y, []() {});
+    }
+
+    void Update(uint64_t delta)
+    {
+        delta = delta / 1000;
+        auto it = m_entries.begin();
+        while (it != m_entries.end())
+        {
+            auto& entry = *it;
+            entry.animation->UpdateData(entry.animData, delta);
+            if (entry.animData.animationFinished)
+            {
+                it = m_entries.erase(it);
+            }
+            else
+            {
+                it++;
+            }
+        }
+    }
+
+    void Render()
+    {
+        for (auto& item : m_entries)
+        {
+            item.animData.Render(item.position.GetX(), item.position.GetY());
+        }
+    }
+
+private:
+    std::list<Entry> m_entries;
 
 };
 

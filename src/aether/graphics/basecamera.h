@@ -6,6 +6,7 @@
 
 #include "aether/math/rect.h"
 #include "aether/math/vec.h"
+#include "aether/core/time.h"
 
 
 namespace aether {
@@ -48,6 +49,31 @@ public:
 
 	float GetRotation() const;
 
+	void EnableShake()
+	{
+		m_shake = true;
+	}
+
+	void DisableShake()
+	{
+		m_shake = false;
+	}
+
+	void Update()
+	{
+		if (m_shake)
+		{
+			auto time = aether::core::get_time();
+			m_shakeX = sin(time) * 10;
+		}
+		else
+		{
+			m_shakeX = 0;
+			m_shakeY = 0;
+		}
+	}
+
+
 private:
 
 	// cache last (position, scale) if performance issues
@@ -56,6 +82,10 @@ private:
 	float m_rotation = 0;
 
     aether::math::Vec2f m_viewport;
+
+	bool m_shake = false;
+	float m_shakeX = 0.0f;
+	float m_shakeY = 0.0f;
 
 };
 

@@ -1,6 +1,7 @@
 
 #include "aether/graphics/allegro/al_camera.h"
 
+#include "aether/core/time.h"
 
 namespace aether {
 namespace graphics {
