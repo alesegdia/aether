@@ -142,6 +142,12 @@ public:
         sceneNode->SetParent(m_root);
     }
 
+    void SetClearColor(aether::graphics::Color color)
+    {
+        m_clearColor = color;
+    }
+
+
 private:
     SceneNode::Shared m_root;
     std::vector<SceneNode::Shared> m_nodesSortedByZindex;

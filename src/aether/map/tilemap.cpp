@@ -48,10 +48,17 @@ std::shared_ptr<TileMap> BuildMap(const Tmx::Map &inmap)
             auto newTile = newTileset->GetTile(tileId);
             if( tile->GetProperties().HasProperty("collision") ) {
                 auto collisionType = tile->GetProperties().GetStringProperty("collision");
-                if( collisionType == "solid" ) {
+                if( collisionType == "solid" )
+                {
                     newTile->collisionBehaviour = TileCollisionBehaviour::Solid;
-                } else if( collisionType == "oneway" ) {
+                }
+                else if( collisionType == "oneway" )
+                {
                     newTile->collisionBehaviour = TileCollisionBehaviour::Oneway;
+                }
+                else if (collisionType == "empty")
+                {
+                    newTile->collisionBehaviour = TileCollisionBehaviour::Empty;
                 }
             }
 
@@ -253,6 +260,12 @@ TileCollisionBehaviour TileLayer::GetTileCollisionBehaviour(size_t x, size_t y) 
         return m_tileset->GetTile(cell)->collisionBehaviour;
     }
     return TileCollisionBehaviour::Empty;
+}
+
+aether::math::Vec2i TileMap::GetObjectTilePosition(const ObjectLayer::Object& object)
+{
+    auto vec = object.aabb.position() / 16;
+    return vec;
 }
 
 int TileLayer::GetTileWidth() const

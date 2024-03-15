@@ -15,20 +15,24 @@ namespace aether {
 	public:
 		Timer(float secondsToExpire)
 		{
-			m_expireTimeMs = aether::core::get_time() + uint64_t(secondsToExpire * 1e6);
+			m_expireTimeMs = uint64_t(secondsToExpire * 1e6);
 		}
 
 		Timer(uint64_t microsecondsToExpire)
 		{
-			m_expireTimeMs = aether::core::get_time() + microsecondsToExpire;
+			m_expireTimeMs = microsecondsToExpire;
 		}
 
-		bool Update(uint64_t currentTime)
+		bool Update(uint64_t delta)
 		{
-			if (!m_expired && currentTime >= m_expireTimeMs)
+			if (!m_expired)
 			{
-				m_expired = true;
-				DispatchExpire();
+				m_currentTime += delta;
+				if (m_currentTime >= m_expireTimeMs)
+				{
+					m_expired = true;
+					DispatchExpire();
+				}
 			}
 			return m_expired;
 		}
@@ -55,6 +59,7 @@ namespace aether {
 
 		uint64_t m_expireTimeMs;
 		uint64_t m_expired = false;
+		uint64_t m_currentTime = 0;
 		std::vector<std::function<void(void)>> m_onTimerExpiredCallbacks;
 
 	};
@@ -77,14 +82,13 @@ namespace aether {
 			return *m_allTimers.back();
 		}
 
-		void Update()
+		void Update(uint64_t delta)
 		{
-			auto time = aether::core::get_time();
 			auto iterator = m_allTimers.begin();
 			while (iterator != m_allTimers.end())
 			{
 				auto timer = *iterator;
-				auto expired = timer->Update(time);
+				auto expired = timer->Update(delta);
 				if (expired)
 				{
 					m_allTimers.erase(iterator++);

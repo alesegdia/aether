@@ -4,6 +4,8 @@
 #include "../math/vec.h"
 #include "../graphics/spritesheet.h"
 
+#include "aether/core/utility.h"
+
 #include <vector>
 #include <functional>
 
@@ -121,6 +123,28 @@ private:
 
 };
 
+
+class TilesetCollection
+{
+public:
+    Tile* GetTile(int tileID)
+    {
+        return m_tilesets[0]->GetTile(tileID);
+    }
+
+    void AddTileset(const std::shared_ptr<TileSet>& tileset)
+    {
+        aether::core::insert_sorted(m_tilesets, tileset, [](const std::shared_ptr<TileSet> a, const std::shared_ptr<TileSet> b)
+            {
+                return a->GetFirstGid() > b->GetFirstGid();
+            });
+    }
+
+private:
+    std::vector<std::shared_ptr<TileSet>> m_tilesets;
+};
+
+
 class TileLayer : public Layer {
 public:
 
@@ -161,12 +185,18 @@ public:
 
     void AddProperty(const std::string& key, const std::string& value);
 
+    bool IsUnsetTile(size_t x, size_t y)
+    {
+        return m_data->GetCell(x, y) == -1;
+    }
+
 private:
     std::unique_ptr<Data> m_data;
     std::shared_ptr<TileSet> m_tileset;
     std::map<std::string, std::string> m_props;
     math::Vec2sz m_mapSizeInTiles;
     math::Vec2f m_tileSize;
+    std::shared_ptr<TilesetCollection> m_tilesetCollection;
 
 };
 
@@ -198,11 +228,14 @@ private:
 };
 
 
-
-
 class TileMap
 {
 public:
+
+    TileMap()
+    {
+        m_tilesetCollection = std::make_shared<TilesetCollection>();
+    }
 
     void AddSheet(const graphics::Spritesheet::SharedPtr& sheet);
 
@@ -211,6 +244,8 @@ public:
     void AddTileLayer(const TileLayer::Shared& tilelayer);
 
     void AddObjectLayer(const ObjectLayer::Shared& objectLayer);
+
+    aether::math::Vec2i GetObjectTilePosition(const ObjectLayer::Object& object);
 
     template<typename LayerType>
     void AddLayer(std::shared_ptr<LayerType> layer)
@@ -250,6 +285,7 @@ public:
 private:
     std::vector<Layer::Shared> m_layers;
     std::vector<TileSet::Shared> m_tilesets;
+    std::shared_ptr<TilesetCollection> m_tilesetCollection;
     std::vector<aether::graphics::Spritesheet::SharedPtr> m_sheetStore;
     std::unordered_map<std::string, TileLayer::Shared> m_tileLayers;
     std::unordered_map<std::string, ObjectLayer::Shared> m_objectLayers;
