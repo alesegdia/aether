@@ -26,7 +26,7 @@ void draw_filled_rectangle(float x1, float y1, float x2, float y2, Color c)
 
 void draw_filled_rectangle(const math::Recti& rect, Color c)
 {
-    SDL_SetRenderDrawColor(aether_sdl_get_renderer(), c.r, c.g, c.b, 255);
+    SDL_SetRenderDrawColor(aether_sdl_get_renderer(), c.r, c.g, c.b, c.a);
     SDL_Rect sdlrect = { rect.x(), rect.y(), rect.w(), rect.h() };
     SDL_RenderFillRect(aether_sdl_get_renderer(), &sdlrect);
 }

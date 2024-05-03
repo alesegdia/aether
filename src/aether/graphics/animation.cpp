@@ -77,7 +77,10 @@ void Animation::UpdateData(AnimationData &data, uint64_t delta)
         lastFrame = frame_index >= m_frames.size();
         if( frame_index >= m_frames.size() )
         {
-            data.onAnimationFinished();
+            if (data.onAnimationFinished)
+            {
+                data.onAnimationFinished();
+            }
             if (m_wrapMode == WrapMode::Once)
             {
                 break;

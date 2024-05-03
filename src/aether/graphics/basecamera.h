@@ -74,7 +74,15 @@ public:
 	}
 
 
-private:
+	/*void Update(uint64_t delta)
+	{
+		//m_deltaRotation = (rand() % 10 - 5) / 50.f;
+		//m_deltaPositionX = (rand() % 10) / 50.f;
+		//m_deltaPositionY = (rand() % 10) / 50.f;
+		//m_deltaZoom = (rand() % 10) / 50.f;
+	}*/
+
+protected:
 
 	// cache last (position, scale) if performance issues
     aether::math::Vec2f m_scale = aether::math::Vec2f(1, 1);
@@ -86,6 +94,19 @@ private:
 	bool m_shake = false;
 	float m_shakeX = 0.0f;
 	float m_shakeY = 0.0f;
+
+	// effect on zoom
+	float m_wowFX = 10.f;
+	float m_deltaZoom = 0;
+
+	// effect on position
+	float m_shakeEffect = 10.f;
+	float m_deltaPositionX = 0;
+	float m_deltaPositionY = 0;
+
+	// effect on rotation
+	float m_dazzleFX = 10.f;
+	float m_deltaRotation = 0.f;
 
 };
 

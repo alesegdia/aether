@@ -130,7 +130,7 @@ int AllegroApplication::Init(int argc, char **argv)
     int revision = (version >> 8) & 255;
     int release = version & 255;
     printf("Allegro %d.%d.%d.%d\n", major, minor, revision, release);
-
+    // al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
     return 0;
 }
 

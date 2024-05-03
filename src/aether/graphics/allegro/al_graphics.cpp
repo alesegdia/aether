@@ -22,49 +22,49 @@ void clear(Color c)
 	clear(c.r, c.g, c.b);
 }
 
-void draw_rectangle(float x1, float y1, float x2, float y2, Color c, float thickness)
+void draw_rectangle(float x, float y, float w, float h, Color c, float thickness)
 {
-    al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(c.r, c.g, c.b), thickness);
+    al_draw_rectangle(x, y, x + w, y + h, al_premul_rgba(c.r, c.g, c.b, c.a), thickness);
 }
 
-void draw_filled_rectangle(float x1, float y1, float x2, float y2, Color c)
+void draw_filled_rectangle(float x, float y, float w, float h, Color c)
 {
-    al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(c.r, c.g, c.b));
+    al_draw_filled_rectangle(x, y, x + w, y + h, al_premul_rgba(c.r, c.g, c.b, c.a));
 }
 
 void draw_filled_rectangle(const math::Rectf& r, Color c)
 {
-    al_draw_filled_rectangle(r.x1(), r.y1(), r.x2(), r.y2(), al_map_rgb(c.r, c.g, c.b));
+    al_draw_filled_rectangle(r.x1(), r.y1(), r.x2(), r.y2(), al_premul_rgba(c.r, c.g, c.b, c.a));
 }
 
 void draw_filled_rectangle(const math::Recti& r, Color c)
 {
-    al_draw_filled_rectangle(r.x1(), r.y1(), r.x2(), r.y2(), al_map_rgb(c.r, c.g, c.b));
+    al_draw_filled_rectangle(r.x1(), r.y1(), r.x2(), r.y2(), al_premul_rgba(c.r, c.g, c.b, c.a));
 }
 
 void draw_filled_rectangle_centered(const math::Recti& r, Color c)
 {
-    al_draw_filled_rectangle(r.x1() - r.w() / 2, r.y1() - r.h() / 2, r.x2() - r.w() / 2, r.y2() - r.h() / 2, al_map_rgb(c.r, c.g, c.b));
+    al_draw_filled_rectangle(r.x1() - r.w() / 2, r.y1() - r.h() / 2, r.x2() - r.w() / 2, r.y2() - r.h() / 2, al_premul_rgba(c.r, c.g, c.b, c.a));
 }
 
 void draw_filled_rectangle_centered(const math::Rectf& r, Color c)
 {
-    al_draw_filled_rectangle(r.x1() - r.w() / 2, r.y1() - r.h() / 2, r.x2() - r.w() / 2, r.y2() - r.h() / 2, al_map_rgb(c.r, c.g, c.b));
+    al_draw_filled_rectangle(r.x1() - r.w() / 2, r.y1() - r.h() / 2, r.x2() - r.w() / 2, r.y2() - r.h() / 2, al_premul_rgba(c.r, c.g, c.b, c.a));
 }
 
 void draw_filled_circle(float x, float y, float radius, Color c)
 {
-    al_draw_filled_circle(x, y, radius, al_map_rgb(c.r, c.g, c.b));
+    al_draw_filled_circle(x, y, radius, al_premul_rgba(c.r, c.g, c.b, c.a));
 }
 
 void draw_filled_circle(float x, float y, float radius, Color c, int alpha)
 {
-    al_draw_filled_circle(x, y, radius, al_map_rgba(alpha, alpha, alpha, alpha));
+    al_draw_filled_circle(x, y, radius, al_premul_rgba(alpha, alpha, alpha, alpha));
 }
 
 void draw_line(float x1, float y1, float x2, float y2, Color c, float thickness)
 {
-    al_draw_line(x1, y1, x2, y2, al_map_rgb(c.r, c.g, c.b), thickness);
+    al_draw_line(x1, y1, x2, y2, al_premul_rgba(c.r, c.g, c.b, c.a), thickness);
 }
 
 namespace

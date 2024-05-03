@@ -48,7 +48,7 @@ void Texture::Draw(float x, float y, float rx, float ry, float rw, float rh, aet
 {
     al_draw_tinted_scaled_rotated_bitmap_region(fetch(GetHandle()),
                                                 rx, ry, rw, rh,
-                                                al_map_rgb(color.r, color.g, color.b),
+                                                al_premul_rgba(color.r, color.g, color.b, color.a),
                                                 centerx, centery, x, y, xscale, yscale, angle,
                                                 (xflip ? ALLEGRO_FLIP_HORIZONTAL : 0) | (yflip ? ALLEGRO_FLIP_VERTICAL : 0));
 }

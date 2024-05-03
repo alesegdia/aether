@@ -39,7 +39,7 @@ void Font::Print(const char *text, float x, float y, Color c, TextAlign align)
     case TextAlign::Right: flags = ALLEGRO_ALIGN_RIGHT; break;
     }
     ALLEGRO_FONT* font = fetch(GetHandle());
-    al_draw_text(font, al_map_rgb(c.r, c.g, c.b), x, y, flags, text);
+    al_draw_text(font, al_premul_rgba(c.r, c.g, c.b, c.a), x, y, flags, text);
 }
 
 void Font::Print(const char *text, float x, float y, float width, float line_height, Color c, bool noalign)
@@ -47,11 +47,11 @@ void Font::Print(const char *text, float x, float y, float width, float line_hei
     ALLEGRO_FONT* font = fetch(GetHandle());
     if( noalign )
     {
-        al_draw_multiline_text(font, al_map_rgb(c.r, c.g, c.b), x, y, width, line_height, ALLEGRO_ALIGN_LEFT, text);
+        al_draw_multiline_text(font, al_premul_rgba(c.r, c.g, c.b, c.a), x, y, width, line_height, ALLEGRO_ALIGN_LEFT, text);
     }
     else
     {
-        al_draw_multiline_text(font, al_map_rgb(c.r, c.g, c.b), x, y, width, line_height, ALLEGRO_ALIGN_CENTER, text);
+        al_draw_multiline_text(font, al_premul_rgba(c.r, c.g, c.b, c.a), x, y, width, line_height, ALLEGRO_ALIGN_CENTER, text);
     }
 }
 

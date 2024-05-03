@@ -6,7 +6,7 @@
 
 #include <aether/aether.h>
 
-#include <tweeny.h>
+// #include <tweeny.h>
 
 namespace aether {
 
@@ -125,6 +125,7 @@ namespace aether {
 
 	};
 	              
+	/*
 	class TweenManager
 	{
 	public:
@@ -153,6 +154,6 @@ namespace aether {
 		std::vector<tweeny::tween<int>> m_intTweens;
 
 	};
-
+	*/
 
 }
