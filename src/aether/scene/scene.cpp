@@ -60,9 +60,8 @@ void SceneNode::SetParent(SceneNode::Shared newParent)
     if( m_parent != nullptr ) {
         auto me = shared_from_this();
         core::remove_by_value(m_parent->GetChildren(), me);
-        m_parent = newParent;
-        newParent->GetChildren().push_back(shared_from_this());
     }
+    newParent->AddChild(shared_from_this());
     m_parent = newParent;
 }
 

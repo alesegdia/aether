@@ -92,7 +92,6 @@ protected:
 
 };
 
-
 class Scene
 {
 public:
