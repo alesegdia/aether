@@ -105,6 +105,11 @@ namespace aether {
 			return s_timerManager;
 		}
 
+		void ClearAllTimers()
+		{
+			m_allTimers.clear();
+		}
+
 	private:
 		std::list<std::shared_ptr<Timer>> m_allTimers;
 
