@@ -150,7 +150,7 @@ public:
 private:
     SceneNode::Shared m_root;
     std::vector<SceneNode::Shared> m_nodesSortedByZindex;
-    aether::graphics::Color m_clearColor = aether::graphics::Color::Magenta;
+    aether::graphics::Color m_clearColor = aether::graphics::Color::Black;
 
 };
 

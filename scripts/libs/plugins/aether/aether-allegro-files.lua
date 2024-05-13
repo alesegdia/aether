@@ -17,6 +17,8 @@ AETHER_ALLEGRO_AUDIO_SOURCES = {
 AETHER_ALLEGRO_INCLUDE_DIRS = {
 	path.join(AETHER_EXTERNALS_DIR, "allegro/include"),
 	path.join(AETHER_EXTERNALS_DIR, "allegro/addons/font/"),
+	path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/"),
+	path.join(AETHER_EXTERNALS_DIR, "allegro/addons/acodec/"),
 	path.join(AETHER_EXTERNALS_DIR, "allegro/addons/image"),
 	path.join(AETHER_EXTERNALS_DIR, "allegro/addons/primitives"),
 	path.join(AETHER_EXTERNALS_DIR, "allegro/addons/ttf"),

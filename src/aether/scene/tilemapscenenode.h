@@ -34,8 +34,11 @@ namespace aether {
 
 						int frame = m_tilemap->GetCell(c, r);
 
-						auto bm = m_spritesheet->GetFrame(frame);
-						bm->Draw(float(x1), float(y1));
+						if (frame != 89)
+						{
+							auto bm = m_spritesheet->GetFrame(frame);
+							bm->Draw(float(x1), float(y1));
+						}
 					}
 				}
 			}

@@ -398,3 +398,27 @@ ALLEGRO_ADDON_TTF_FILES = {
 ALLEGRO_ADDON_COLOR_FILES = {
     path.join(AETHER_EXTERNALS_DIR, "allegro/addons/color/color.c"),
 }
+
+ALLEGRO_ADDON_AUDIO_FILES = {
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/audio.c"),
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/audio_io.c"),
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/kcm_dtor.cpp"),
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/kcm_instance.cpp"),
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/kcm_mixer.cpp"),
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/kcm_sample.c"),
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/kcm_stream.c"),
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/kcm_voice.c"),
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/recorder.c"),
+
+
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/acodec/acodec.c"),
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/acodec/wav.c"),
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/acodec/helper.c"),
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/acodec/voc.c"),
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/mp3.c"),
+}
+
+ALLEGRO_ADDON_AUDIO_INCLUDE = {
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio"),
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/acodec"),
+}
