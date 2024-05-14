@@ -64,3 +64,6 @@
 [submodule "3rdparty/tweeny"]
 	path = 3rdparty/tweeny
 	url = https://github.com/mobius3/tweeny.git
+[submodule "3rdparty/minimp3"]
+	path = 3rdparty/minimp3
+	url = git@github.com:lieff/minimp3.git
