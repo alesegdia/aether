@@ -1,12 +1,10 @@
-dofile("../aether.config.lua")
-AETHER_DIR = path.getabsolute("../plugin/aether")
-
+dofile("../aether-config.lua")
 dofile(path.join(AETHER_DIR, "scripts/util/util.lua"))
 
 aetherConfig()
 
-solution "lichwarrior"
-	startproject("lichwarrior-game")
+solution "<PROJECT-NAME>"
+	startproject("<PROJECT-NAME>-game")
 	location "../build/"
 	configurations { "debug", "release" }
 	platforms { "x32", "x64" }
@@ -14,7 +12,7 @@ solution "lichwarrior"
 	
 	aetherBuild()
 
-	aetherGameLib("lichwarrior-game")
+	aetherGameLib("<PROJECT-NAME>-game")
 		debugdir ("..")
 		targetdir ("../build")
 		files {

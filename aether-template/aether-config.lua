@@ -1,1 +1,1 @@
-AETHER_DIR = path.getabsolute("")
+AETHER_DIR = path.getabsolute("<AETHER_FULL_PATH>")

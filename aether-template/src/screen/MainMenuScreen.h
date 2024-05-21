@@ -14,9 +14,5 @@ public:
 	void Render() override;
 	int Unload() override;
 
-private:
-
-	aether::graphics::Camera::SharedPtr m_cam;
-
 };
 

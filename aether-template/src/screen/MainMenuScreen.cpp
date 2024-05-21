@@ -1,20 +1,8 @@
 
-#include "constants.h"
-
-
 #include "screen/MainMenuScreen.h"
-#include "screen/MapScreen.h"
-
-
-
-namespace lich
-{
 
 
 MainMenuScreen::MainMenuScreen()
-	: m_cam(
-		new aether::graphics::Camera(
-			{ Constants::WindowWidth, Constants::WindowHeight }))
 {
 
 }
@@ -43,5 +31,3 @@ int MainMenuScreen::Unload()
 }
 
 
-
-}
