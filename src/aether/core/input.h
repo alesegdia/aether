@@ -15,6 +15,7 @@
 #endif
 
 #include "iinputprocessor.h"
+#include "aether/math/vec.h"
 
 
 namespace aether {
@@ -33,6 +34,8 @@ bool is_key_just_pressed(KeyCode key);
 
 bool is_mouse_button_pressed(int button);
 bool is_mouse_button_just_pressed(int button);
+
+aether::math::Vec2i get_mouse_position();
 
 void _init_input();
 void _notify_key_down(KeyCode key);

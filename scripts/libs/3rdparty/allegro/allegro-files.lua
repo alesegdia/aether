@@ -409,7 +409,7 @@ ALLEGRO_ADDON_AUDIO_FILES = {
     path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/kcm_stream.c"),
     path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/kcm_voice.c"),
     path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/dsound.cpp"),
-    -- path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/recorder.c"),
+    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/recorder.c"),
 
 
     path.join(AETHER_EXTERNALS_DIR, "allegro/addons/acodec/acodec.c"),
@@ -424,7 +424,6 @@ ALLEGRO_ADDON_AUDIO_FILES = {
 
 ALLEGRO_ADDON_AUDIO_INCLUDE = {
     path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio"),
-    path.join(AETHER_EXTERNALS_DIR, "allegro/addons/acodec"),
     path.join(AETHER_EXTERNALS_DIR, "allegro/addons/acodec"),
     path.join(AETHER_EXTERNALS_DIR, "minimp3"),
 }

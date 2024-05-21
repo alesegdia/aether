@@ -13,14 +13,16 @@ public:
 
     virtual ~IScreen() = 0 ;
 
-    /**
-     * @brief called every time the screen is put to active
-     */
+    /// <summary>
+    /// Called everytime the screen is moved to active
+    /// </summary>
+    /// <returns>Zero if everything went fine, different than zero otherwise</returns>
     virtual int Load() = 0 ;
 
-    /**
-     * @brief called every time the screen is removed from current active
-     */
+    /// <summary>
+    /// Called everytime the screen is removed from active
+    /// </summary>
+    /// <returns></returns>
     virtual int Unload() = 0 ;
 
     bool UpdateInactive()

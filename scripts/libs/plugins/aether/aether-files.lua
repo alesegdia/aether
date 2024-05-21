@@ -53,6 +53,7 @@ AETHER_COMMON_INCLUDE_DIRS = {
 	path.join(AETHER_EXTERNALS_DIR, "imgui/backends"),
 	path.join(AETHER_EXTERNALS_DIR, "lua"),
 	path.join(AETHER_EXTERNALS_DIR, "inipp"),
+	path.join(AETHER_EXTERNALS_DIR, "enet/include"),
 	path.join(AETHER_PLUGINS_DIR, "astarcpp/src"),
 	path.join(AETHER_EXTERNALS_DIR, "tweeny/include"),
 }
@@ -71,4 +72,5 @@ AETHER_COMMON_LIBS = {
 	"json11",
 	"imgui",
 	"lua",
+	"enet"
 }

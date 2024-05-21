@@ -1,6 +1,6 @@
 #pragma once
 
-#include "scene.h"
+#include "aether/scene/SceneNode.h"
 
 #include "../graphics/graphics.h"
 

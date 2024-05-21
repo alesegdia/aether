@@ -2,12 +2,11 @@
 
 
 #include "../graphics/texture.h"
-#include "scene.h"
 
+#include "aether/scene/SceneNode.h"
 
 namespace aether {
 namespace scene {
-
 
 
 class TextureNode : public SceneNode
@@ -32,7 +31,6 @@ protected:
     graphics::TextureRegion m_texregion;
 
 };
-
 
 
 }

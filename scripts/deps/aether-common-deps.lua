@@ -4,6 +4,8 @@ dofile(path.join(AETHER_GENIE_EXTERNALS_DIR, "json11/json11.lua"))
 dofile(path.join(AETHER_GENIE_EXTERNALS_DIR, "imgui/imgui.lua"))
 dofile(path.join(AETHER_GENIE_EXTERNALS_DIR, "lua/lua.lua"))
 dofile(path.join(AETHER_GENIE_EXTERNALS_DIR, "googletest/googletest.lua"))
+dofile(path.join(AETHER_GENIE_EXTERNALS_DIR, "enet/enet.lua"))
+
 dofile(path.join(AETHER_GENIE_PLUGINS_DIR, "hadron/hadron.lua"))
 dofile(path.join(AETHER_GENIE_PLUGINS_DIR, "secs/secs.lua"))
 dofile(path.join(AETHER_GENIE_PLUGINS_DIR, "rztl/rztl.lua"))

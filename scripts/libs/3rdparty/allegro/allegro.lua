@@ -90,6 +90,7 @@ externalCommonLibSetup("allegro", true)
         "ALLEGRO_CFG_RELEASE_LOGGING",
         "ALLEGRO_CFG_ACODEC_MP3",
         "SUPPORT_DSOUND",
+        "ALLEGRO_KCM_AUDIO_SRC",
     }
 
     configuration { "vs20*" }

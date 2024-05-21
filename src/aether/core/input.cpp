@@ -46,6 +46,12 @@ bool is_mouse_button_just_pressed(int button)
     return (int)last_mousebutton_pressed == button;
 }
 
+aether::math::Vec2i get_mouse_position()
+{
+    return { mouse_state.x, mouse_state.y };
+}
+
+
 #define AETHER_FOREACH_PROCESSOR for( int pidx = 0; pidx <= last_processor_index; pidx++ )
 
 void _notify_key_down(KeyCode key)

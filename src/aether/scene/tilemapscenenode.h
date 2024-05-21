@@ -4,7 +4,8 @@
 #include <rztl/rztl.h>
 
 #include "aether/graphics/animation.h"
-#include "aether/scene/scene.h"
+
+#include "aether/scene/SceneNode.h"
 #include "aether/map/tilemap.h"
 
 namespace aether {

@@ -12,7 +12,7 @@ solution "<PROJECT-NAME>"
 	
 	aetherBuild()
 
-	aetherGameLib("<PROJECT-NAME>-game")
+	aetherGameLib("<PROJECT-NAME>-game-lib")
 		debugdir ("..")
 		targetdir ("../build")
 		files {
@@ -23,3 +23,14 @@ solution "<PROJECT-NAME>"
 			"../src"
 		}
 
+	aetherProject("<PROJECT-NAME>-game-bin")
+		debugdir ("..")
+		targetdir ("../build")
+		files {
+			"../src/**.cpp",
+			"../src/**.h",
+			path.join(AETHER_DIR, "src/main/main.cpp")
+		}
+		includedirs {
+			"../src"
+		}
