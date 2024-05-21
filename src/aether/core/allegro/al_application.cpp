@@ -5,6 +5,8 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include <imgui.h>
 #include <imgui_impl_allegro5.h>
 
@@ -56,13 +58,12 @@ int AllegroApplication::Init(int argc, char **argv)
     }
 
 
-#ifdef AETHER_ENABLE_AUDIO
-    if(!al_init_acodec_addon()) {
+    if (!al_init_acodec_addon()) {
         fprintf(stderr, "failed to initialize audio codecs!\n");
         return -1;
     }
 
-    if(!al_install_audio()) {
+    if (!al_install_audio()) {
         fprintf(stderr, "failed to initialize audio!\n");
         return -1;
     }
@@ -71,7 +72,6 @@ int AllegroApplication::Init(int argc, char **argv)
         fprintf(stderr, "failed to reserve samples!\n");
         return -1;
     }
-#endif
 
     al_init_font_addon();
 
