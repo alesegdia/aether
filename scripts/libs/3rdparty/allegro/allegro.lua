@@ -3,25 +3,36 @@ dofile("../../../util/cmake-configure.lua")
 
 if (_ACTION == "vs2019" or _ACTION == "vs2022") and _OPTIONS["backend"] == "backend-allegro" then
     cmakeConfigureFileImmediate(path.join(AETHER_EXTERNALS_DIR, "allegro/include/allegro5/platform/alplatf.h.cmake"),
-        {
-            "ALLEGRO_MSVC",
-            "ALLEGRO_LITTLE_ENDIAN",
-            "ALLEGRO_HAVE_STDBOOL_H",
-            "ALLEGRO_HAVE_SYS_TYPES_H",
-            "ALLEGRO_HAVE_INTTYPES_H",
-            "ALLEGRO_HAVE_STDINT_H",
-            "ALLEGRO_HAVE_SYS_STAT_H"
-        })
+    {
+        "ALLEGRO_MSVC",
+        "ALLEGRO_LITTLE_ENDIAN",
+        "ALLEGRO_HAVE_STDBOOL_H",
+        "ALLEGRO_HAVE_SYS_TYPES_H",
+        "ALLEGRO_HAVE_INTTYPES_H",
+        "ALLEGRO_HAVE_STDINT_H",
+        "ALLEGRO_HAVE_SYS_STAT_H"
+    })
+
     cmakeConfigureFileImmediate(path.join(AETHER_EXTERNALS_DIR, "allegro/addons/ttf/allegro5/internal/aintern_ttf_cfg.h.cmake"),
-        {
-            "ALLEGRO_CFG_TTF_FREETYPE",
-        })
+    {
+        "ALLEGRO_CFG_TTF_FREETYPE",
+    })
 
     cmakeConfigureFileImmediate(path.join(AETHER_EXTERNALS_DIR, "allegro/addons/image/allegro5/internal/aintern_image_cfg.h.cmake"),
-        {
-            "ALLEGRO_CFG_IIO_HAVE_PNG",
-            "ALLEGRO_CFG_IIO_SUPPORT_PNG",
-        })
+    {
+        "ALLEGRO_CFG_IIO_HAVE_PNG",
+        "ALLEGRO_CFG_IIO_SUPPORT_PNG",
+    })
+
+    cmakeConfigureFileImmediate(path.join(AETHER_EXTERNALS_DIR, "allegro/addons/acodec/allegro5/internal/aintern_acodec_cfg.h.cmake"),
+    {
+        "ALLEGRO_CFG_ACODEC_MP3",
+    })
+
+    cmakeConfigureFileImmediate(path.join(AETHER_EXTERNALS_DIR, "allegro/addons/audio/allegro5/internal/aintern_audio_cfg.h.cmake"),
+    {
+        "ALLEGRO_CFG_KCM_DSOUND",
+    })
 
 end
 
@@ -77,6 +88,8 @@ externalCommonLibSetup("allegro", true)
         "ALLEGRO_CFG_SHADER_HLSL",
         "ALLEGRO_CFG_D3DX9",
         "ALLEGRO_CFG_RELEASE_LOGGING",
+        "ALLEGRO_CFG_ACODEC_MP3",
+        "SUPPORT_DSOUND",
     }
 
     configuration { "vs20*" }

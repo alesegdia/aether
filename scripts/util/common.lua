@@ -93,6 +93,7 @@ function configAllegro(magicMain)
 	    	AETHER_ALLEGRO_WIN_LIBS,
 		    "opengl32",
 		    "glu32",
+			"dsound",
 		}
 		defines {
 		    "ALLEGRO_CFG_OPENGL",

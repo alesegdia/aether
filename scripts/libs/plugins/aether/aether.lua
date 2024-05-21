@@ -17,6 +17,7 @@ pluginCommonLibSetup("aether")
 		files {
 			AETHER_ALLEGRO_CORE_SOURCES,
 			AETHER_ALLEGRO_GRAPHICS_SOURCES,
+			AETHER_ALLEGRO_AUDIO_SOURCES,
 		}
 		includedirs {
 			AETHER_ALLEGRO_INCLUDE_DIRS
@@ -56,9 +57,6 @@ pluginCommonLibSetup("aether")
 
 	configuration { "enable-audio" }	
 		defines { "AETHER_ENABLE_AUDIO" }
-
-	configuration { "backend-allegro", "enable-audio" }
-		files { AETHER_ALLEGRO_AUDIO_SOURCES }
 
 	configuration { "backend-sdl", "enable-audio" }
 		files { AETHER_SDL_AUDIO_SOURCES }
