@@ -74,7 +74,8 @@ protected:
     virtual void GameStep(uint64_t delta) {}
     virtual void GameRender() {}
 
-    virtual void GrabMouse() = 0 ;
+    virtual void GrabMouse() = 0;
+    virtual void UngrabMouse() = 0;
 
     virtual int AppImplementationInit(int argc, char** argv) { return 0; }
 

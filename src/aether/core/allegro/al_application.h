@@ -15,6 +15,7 @@ public:
     virtual ~AllegroApplication();
 
     void GrabMouse() final;
+    void UngrabMouse() final;
 
 protected:
     int Init(int argc, char** argv) final;

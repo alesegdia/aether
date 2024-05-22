@@ -12,7 +12,8 @@ namespace graphics {
 class Camera : public BaseCamera
 {
 public:
-	Camera(const aether::math::Vec2f& viewport = aether::math::Vec2f(0, 0));
+	Camera(const aether::math::Vec2f& viewport);
+	Camera(float viewportWidth, float viewportHeight);
 
 	void Bind() override;
 

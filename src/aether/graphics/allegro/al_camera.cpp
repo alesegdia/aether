@@ -6,7 +6,14 @@
 namespace aether {
 namespace graphics {
 
-	Camera::Camera(const aether::math::Vec2f& viewport /*= aether::math::Vec2f(0, 0)*/) : BaseCamera(viewport)
+	Camera::Camera(const aether::math::Vec2f& viewport)
+		: BaseCamera(viewport)
+	{
+
+	}
+
+	Camera::Camera(float viewportWidth, float viewportHeight)
+		: Camera(aether::math::Vec2f(viewportWidth, viewportHeight))
 	{
 
 	}

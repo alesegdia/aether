@@ -9,6 +9,7 @@
 #include <allegro5/allegro_acodec.h>
 #include <imgui.h>
 #include <imgui_impl_allegro5.h>
+#include <enet/enet.h>
 
 #include <iostream>
 
@@ -124,6 +125,15 @@ int AllegroApplication::Init(int argc, char **argv)
     // initialize input
     //Input::Initialize();
 
+    if (enet_initialize() != 0)
+    {
+        std::cerr << "Couldn't initialize enet.\n" << std::endl;
+        return -1;
+    }
+
+    atexit(enet_deinitialize);
+
+
     uint32_t version = al_get_allegro_version();
     int major = version >> 24;
     int minor = (version >> 16) & 255;
@@ -214,6 +224,11 @@ void AllegroApplication::PostUpdate()
 void AllegroApplication::GrabMouse()
 {
     assert(al_grab_mouse(m_display));
+}
+
+void AllegroApplication::UngrabMouse()
+{
+    assert(al_ungrab_mouse());
 }
 
 }

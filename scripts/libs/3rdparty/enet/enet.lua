@@ -6,10 +6,10 @@ externalCommonLibSetup("enet", true)
     configuration {}
 
     includedirs {
-		path.join(AETHER_EXTERNALS_DIR, "enet/include/"),			
+		  path.join(AETHER_EXTERNALS_DIR, "enet/include/"),			
     }
 
     files {
-		path.join(AETHER_EXTERNALS_DIR, "enet/*.c"),
+		  path.join(AETHER_EXTERNALS_DIR, "enet/*.c"),
     }
 

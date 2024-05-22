@@ -1,4 +1,11 @@
 #include "rng.h"
+#include "vec.h"
+
+float aether::math::lerp(float a, float b, float t)
+{
+    return (1 - t) * a + t * b;
+}
+
 
 int aether::math::randi(int min, int max)
 {

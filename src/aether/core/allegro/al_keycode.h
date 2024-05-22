@@ -58,6 +58,20 @@ enum class KeyCode : int
     K7 = ALLEGRO_KEY_7,
     K8 = ALLEGRO_KEY_8,
     K9 = ALLEGRO_KEY_9,
+
+    F1  = ALLEGRO_KEY_F1,
+    F2  = ALLEGRO_KEY_F2,
+    F3  = ALLEGRO_KEY_F3,
+    F4  = ALLEGRO_KEY_F4,
+    F5  = ALLEGRO_KEY_F5,
+    F6  = ALLEGRO_KEY_F6,
+    F7  = ALLEGRO_KEY_F7,
+    F8  = ALLEGRO_KEY_F8,
+    F9  = ALLEGRO_KEY_F9,
+    F10 = ALLEGRO_KEY_F10,
+    F11 = ALLEGRO_KEY_F11,
+    F12 = ALLEGRO_KEY_F12,
+
     NumKeys = ALLEGRO_KEY_MAX
 };
 

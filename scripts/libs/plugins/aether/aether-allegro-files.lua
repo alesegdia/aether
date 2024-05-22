@@ -34,6 +34,7 @@ AETHER_ALLEGRO_WIN_LIBS = {
     "kernel32",
     "psapi",
     "shlwapi",
+	"ws2_32",
 }
 
 AETHER_ALLEGRO_COMMON_LIBS = {
