@@ -43,7 +43,7 @@ function commonLibSetup(name, ignoreWarnings)
 end
 
 function externalCommonLibSetup(name, ignoreWarnings)
-	group "external"
+	group "3rdparty"
 	baseCommonLibSetup(name, ignoreWarnings)
 end
 

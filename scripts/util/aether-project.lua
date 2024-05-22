@@ -52,3 +52,70 @@ function aetherProject(projectName)
 	commonFlags()
 end
 
+function aetherServerProject(projectName)
+	project (projectName)
+	kind "ConsoleApp"
+	language "C++"
+	configurations { "debug", "release" }
+	platforms { "x32", "x64" }
+
+	flags{ "CppLatest" }
+
+	debugdir ("..")
+	targetdir ("../build")
+
+	configuration {}
+		links { 
+			"enet",
+			"user32",
+			"gdi32",
+			"comdlg32",
+			"ole32",
+			"winmm",
+			"kernel32",
+			"psapi",
+			"shlwapi",
+			"ws2_32",		
+		}
+		includedirs {
+			path.join(AETHER_EXTERNALS_DIR, "enet/include"),
+		}			
+
+end
+
+function defineProject(projectName)
+	solution(projectName)
+	startproject(projectName .. "-game")
+	location "../build/"
+	configurations { "debug", "release" }
+	platforms { "x32", "x64" }
+	language "C++"
+	aetherBuild()
+end
+
+function defineGameTarget(targetName, dll)
+	if dll == true then
+		aetherGameLib("thesummoning-game")
+	else
+		aetherProject("thesummoning-game-bin")
+	end
+
+	debugdir ("..")
+	targetdir ("../build")
+	if dll == false then
+		files {
+			path.join(AETHER_DIR, "src/main/main.cpp")
+		}
+	end
+end
+
+function defineGameTargetExecutable(targetName)
+	group("executable")
+	defineGameTarget(targetName, false)
+end
+
+function defineGameTargetDLL(targetName)
+	group("library")
+	defineGameTarget(targetName, true)
+end
+

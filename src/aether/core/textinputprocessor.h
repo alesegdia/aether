@@ -31,7 +31,7 @@ public:
 		}
 		else if( key >= aether::core::KeyCode::K0 && key <= aether::core::KeyCode::K9 )
 		{
-			pushChar( char(int(key) - int(KeyCode::A)) + '0' );
+			pushChar( char(int(key) - int(KeyCode::K0)) + '0' );
 		}
 		else if( key == KeyCode::Fullstop)
 		{
