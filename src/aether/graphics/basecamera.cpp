@@ -42,12 +42,12 @@ namespace graphics {
 		return m_viewport;
 	}
 
-	const aether::math::Vec2f BaseCamera::GetScale()
+	const aether::math::Vec2f& BaseCamera::GetScale()
 	{
 		return m_scale;
 	}
 
-	const aether::math::Vec2f& BaseCamera::GetPosition()
+	aether::math::Vec2f BaseCamera::GetPosition()
 	{
 		auto pos = m_position;
 		pos.SetX(pos.GetX() + m_shakeX);

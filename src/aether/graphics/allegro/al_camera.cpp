@@ -29,5 +29,12 @@ namespace graphics {
 		al_use_transform(&m_transform);
 	}
 
+	void Camera::UnBind()
+	{
+		ALLEGRO_TRANSFORM identity;
+		al_identity_transform(&identity);
+		al_use_transform(&identity);
+	}
+
 }
 }

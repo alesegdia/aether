@@ -66,6 +66,12 @@ void Texture::draw(float x, float y, float alpha)
 }
 */
 
+
+void Texture::DrawTinted(float x, float y, float sx, float sy, float sw, float sh, const aether::graphics::Color& color) const
+{
+    al_draw_tinted_bitmap_region(fetch(GetHandle()), al_premul_rgba(color.r, color.g, color.b, color.a), sx, sy, sw, sh, x, y, 0);
+}
+
 void Texture::DrawScaledCentered(float x, float y,
     float rx, float ry, float rw, float rh,
     aether::graphics::Color color,

@@ -26,6 +26,7 @@ public:
     }
 
 	virtual void Bind() = 0;
+	virtual void UnBind() = 0;
 
     void SetPosition( const aether::math::Vec2f& new_position );
 
@@ -43,9 +44,14 @@ public:
 
     const aether::math::Vec2f& GetViewport();
 
-    const aether::math::Vec2f GetScale();
+    const aether::math::Vec2f& GetScale();
 
-    const aether::math::Vec2f& GetPosition();
+    /// <summary>
+    /// Returns the position of the camera with the added shake
+    /// THIS NEEDS TO RETURN A COPY BECAUSE THE RETURNED VECTOR IS CREATED NEWLY A
+    /// </summary>
+    /// <returns></returns>
+    aether::math::Vec2f GetPosition();
 
 	float GetRotation() const;
 

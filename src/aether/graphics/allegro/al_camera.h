@@ -17,6 +17,8 @@ public:
 
 	void Bind() override;
 
+	void UnBind() override;
+
 
 private:
 	ALLEGRO_TRANSFORM m_transform{};

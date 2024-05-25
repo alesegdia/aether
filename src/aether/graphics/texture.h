@@ -34,6 +34,7 @@ public:
         bool xflip = false, bool yflip = false,
         float centerx = 0.0f, float centery = 0.0f, float angle = 0.0f, float xscale = 1.0f, float yscale = 1.0f) const;
     void Draw(float x, float y, float alpha) const;
+    void DrawTinted(float x, float y, float sx, float sy, float sw, float sh, const aether::graphics::Color& color) const;
     void Load(const char* path);
 
 
@@ -127,6 +128,11 @@ public:
     {
         m_texture.DrawScaledCentered(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(), aether::graphics::Color(1.0f, 1.0f, 1.0f),
             false, false, 0.0f, 0.0f, rotation, xscale, yscale);
+    }
+
+    void Draw(float x, float y, const aether::graphics::Color& color) const
+    {
+        m_texture.DrawTinted(x, y, m_clip.x(), m_clip.y(), m_clip.w(), m_clip.h(), color);
     }
 
     const Texture& GetTexture() const
