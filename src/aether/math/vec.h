@@ -173,6 +173,11 @@ namespace math {
             return abs(m_x) + abs(m_y);
         }
 
+        bool Equals(T x, T y) const
+        {
+            return m_x == x && m_y == y;
+        }
+
     private:
         T m_x, m_y;
     };
