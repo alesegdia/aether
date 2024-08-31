@@ -6,7 +6,7 @@
 
 #include <aether/aether.h>
 
-// #include <tweeny.h>
+#include <tweeny.h>
 
 namespace aether {
 
@@ -82,6 +82,20 @@ namespace aether {
 			return *m_allTimers.back();
 		}
 
+		tweeny::tween<float>& from(float v)
+		{
+			auto tween = tweeny::from(v);
+			m_floatTweens.push_back(tween);
+			return m_floatTweens.back();
+		}
+
+		tweeny::tween<float, float>& from(float x, float y)
+		{
+			auto tween = tweeny::from(x, y);
+			m_floatPairTweens.push_back(tween);
+			return m_floatPairTweens.back();
+		}
+
 		void Update(uint64_t delta)
 		{
 			auto iterator = m_allTimers.begin();
@@ -92,6 +106,28 @@ namespace aether {
 				if (expired)
 				{
 					m_allTimers.erase(iterator++);
+				}
+				else
+				{
+					++iterator;
+				}
+			}
+
+			ClearTweenList(m_floatTweens);
+			ClearTweenList(m_floatPairTweens);
+		}
+
+		template <typename T>
+		void ClearTweenList(T list)
+		{
+			auto iterator = list.begin();
+			while (iterator != list.end())
+			{
+				auto tween = *iterator;
+				auto expired = tween.progress() >= 1.f;
+				if (expired)
+				{
+					list.erase(iterator++);
 				}
 				else
 				{
@@ -112,6 +148,8 @@ namespace aether {
 
 	private:
 		std::list<std::shared_ptr<Timer>> m_allTimers;
+		std::list<tweeny::tween<float>> m_floatTweens;
+		std::list<tweeny::tween<float, float>> m_floatPairTweens;
 
 		static TimerManager s_timerManager;
 	};
