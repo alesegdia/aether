@@ -4,9 +4,6 @@
 [submodule "module/tinyxml2"]
 	path = 3rdparty/tinyxml2
 	url = https://github.com/leethomason/tinyxml2
-[submodule "module/tmxparser"]
-	path = 3rdparty/tmxparser
-	url = https://github.com/alesegdia/tmxparser.git
 [submodule "module/json11"]
 	path = 3rdparty/json11
 	url = git@github.com:dropbox/json11.git
@@ -70,3 +67,6 @@
 [submodule "3rdparty/enet"]
 	path = 3rdparty/enet
 	url = git@github.com:lsalzman/enet.git
+[submodule "3rdparty/tmxparser"]
+	path = 3rdparty/tmxparser
+	url = git@github.com:alesegdia/tmxparser.git
