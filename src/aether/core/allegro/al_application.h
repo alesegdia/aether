@@ -18,7 +18,7 @@ public:
     void UngrabMouse() final;
 
 protected:
-    int Init(int argc, char** argv) final;
+    int Init(const CommandLineArguments& args) final;
 
 private:
     ALLEGRO_DISPLAY* m_display = NULL;

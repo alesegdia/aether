@@ -109,10 +109,10 @@ protected:
         return item;
     }
 
-    void SetOnParentBehaviour(bool update, bool render)
+    void SetOnParentBehaviour(bool update, bool Render)
     {
         m_updateOnParent = update;
-        m_renderOnParent = render;
+        m_renderOnParent = Render;
     }
 
     void RequestCloseApp()

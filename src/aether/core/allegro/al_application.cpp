@@ -27,7 +27,7 @@ AllegroApplication::~AllegroApplication()
 
 }
 
-int AllegroApplication::Init(int argc, char **argv)
+int AllegroApplication::Init(const CommandLineArguments& args)
 {
     al_register_trace_handler([](const char* message) {
         std::cout << "ALLEGRO MESSAGE: " << message;

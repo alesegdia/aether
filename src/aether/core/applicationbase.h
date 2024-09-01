@@ -2,10 +2,32 @@
 
 #include "iscreen.h"
 #include <stdint.h>
+#include <vector>
 #include "input.h"
 
 namespace aether {
 namespace core {
+
+class CommandLineArguments
+{
+public:
+    CommandLineArguments(int argc, char** argv)
+    {
+        for (int i = 0; i < argc; i++)
+        {
+            m_commandLineArguments.push_back(argv[i]);
+        }
+    }
+
+    bool Find(const std::string& item) const
+    {
+        return std::find(m_commandLineArguments.begin(), m_commandLineArguments.end(), item) != m_commandLineArguments.end();
+    }
+
+private:
+    std::vector<std::string> m_commandLineArguments;
+
+};
 
 class ApplicationBase
 {
@@ -13,8 +35,8 @@ public:
     ApplicationBase( int screen_width, int screen_height );
     virtual ~ApplicationBase() = 0 ;
 
-    int Exec(int argc, char** argv);
-	int Initialize(int argc, char** argv);
+    int Exec(const CommandLineArguments& args);
+	int Initialize(const CommandLineArguments& args);
 	void Run();
 	void Deinitialize();
 	void SetScreen(std::shared_ptr<IScreen> screen);
@@ -36,14 +58,14 @@ protected:
      * @param argc
      * @param argv
      */
-    virtual int Init(int argc, char** argv) = 0;
+    virtual int Init(const CommandLineArguments& args) = 0;
 
     /**
      * @brief ready to be implemented in derived class
      * @param argc
      * @param argv
      */
-    virtual int Ready(int argc, char** argv);
+    virtual int Ready(const CommandLineArguments& args);
 
     /**
      * @brief dispose called to clean user code
@@ -77,7 +99,7 @@ protected:
     virtual void GrabMouse() = 0;
     virtual void UngrabMouse() = 0;
 
-    virtual int AppImplementationInit(int argc, char** argv) { return 0; }
+    virtual int AppImplementationInit(const CommandLineArguments& args) { return 0; }
 
 
 private:

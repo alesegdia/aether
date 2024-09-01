@@ -19,10 +19,10 @@ ApplicationBase::ApplicationBase( int screen_width, int screen_height )
 ApplicationBase::~ApplicationBase()
 = default;
 
-int ApplicationBase::Initialize(int argc, char** argv)
+int ApplicationBase::Initialize(const CommandLineArguments& args)
 {
     Logger::LogMsg("Initializing Application.");
-    int init_retcode = Init(argc, argv);
+    int init_retcode = Init(args);
 
     if (init_retcode != 0) {
         Logger::LogError("Application implementation failed to initialize with code <retcode>. Exiting.");
@@ -34,7 +34,7 @@ int ApplicationBase::Initialize(int argc, char** argv)
     }
 
     Logger::LogMsg("Custom app init.");
-	int ready_retcode = Ready(argc, argv);
+	int ready_retcode = Ready(args);
 	if (ready_retcode != 0)
 	{
         Logger::LogError("Custom app init implementation failed to initialize with code <retcode>. Exiting.");
@@ -55,11 +55,11 @@ void ApplicationBase::Run()
     }
 }
 
-int ApplicationBase::Exec(int argc, char **argv)
+int ApplicationBase::Exec(const CommandLineArguments& args)
 {
-    AppImplementationInit(argc, argv);
+    AppImplementationInit(args);
 
-    Initialize(argc, argv);
+    Initialize(args);
 
     while( false == m_doExit )
     {
@@ -169,7 +169,7 @@ void ApplicationBase::Close()
     m_doExit = true;
 }
 
-int ApplicationBase::Ready(int argc, char **argv)
+int ApplicationBase::Ready(const CommandLineArguments& args)
 {
     return 0;
 }
