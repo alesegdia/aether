@@ -70,7 +70,7 @@ public:
 		if (m_shake)
 		{
 			auto time = aether::core::get_time();
-			m_shakeX = sin(time) * 10;
+			m_shakeX = sinf(float(time)) * 10.f;
 		}
 		else
 		{

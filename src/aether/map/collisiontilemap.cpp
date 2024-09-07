@@ -148,7 +148,7 @@ void CollisionTilemap::Internal_Move(math::Recti &rect, int new_x, int new_y, Co
             bool solid = IsSolid( tile_x, tile_y );
             bool oneway = isOneway( tile_x, tile_y );
 
-            int a = tile_y * int(GetTileHeight());
+            int a = int(tile_y) * GetTileHeight();
             int b = int(rect.y2());
 
             auto diff = a - b; // - rect.h() / 4;
