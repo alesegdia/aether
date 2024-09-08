@@ -19,6 +19,7 @@ void draw_rectangle(const aether::math::Vec2f& pos, const aether::math::Vec2f& s
 /// DRAW_FILLED_RECTANGLE //////////////////////
 void draw_filled_rectangle(float x, float y, float w, float h, Color c);
 void draw_filled_rectangle(const math::Rectf& r, Color c);
+void draw_filled_rectangle(const math::Recti& r, Color c);
 void draw_filled_rectangle_centered(const math::Recti& r, Color c);
 
 /// DRAW_FILLED_CIRCLE //////////////////////
