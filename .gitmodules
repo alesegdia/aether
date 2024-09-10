@@ -71,5 +71,5 @@
 	path = 3rdparty/tmxparser
 	url = git@github.com:alesegdia/tmxparser.git
 [submodule "3rdparty/nether"]
-	path = 3rdparty/nether
+	path = module/nether
 	url = git@github.com:alesegdia/nether.git
