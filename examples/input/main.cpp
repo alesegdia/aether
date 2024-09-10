@@ -64,8 +64,8 @@ class MyGame : public aether::core::Application
 public:
     MyGame(int w, int h) : aether::core::Application(w, h) {}
 
-    virtual int Init(int argc, char** argv) override { return 0; }
-    virtual int Ready(int argc, char **argv) override
+    virtual int Init(const aether::core::CommandLineArguments& args) override { return 0; }
+    virtual int Ready(const aether::core::CommandLineArguments& args) override
     {
         auto scr = std::static_pointer_cast<aether::core::IScreen>(std::make_shared<NormalScreen>());
         SetScreen(scr);
@@ -79,5 +79,6 @@ private:
 
 int main( int argc, char** argv )
 {
-    return MyGame(200, 200).Exec(argc, argv);
+    aether::core::CommandLineArguments args(argc, argv);
+    return MyGame(200, 200).Exec(args);
 }

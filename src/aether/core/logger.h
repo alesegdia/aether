@@ -4,6 +4,7 @@
 #include <ctime>
 #include <iostream>
 #include <chrono>
+#include <cassert>
 
 namespace aether
 {

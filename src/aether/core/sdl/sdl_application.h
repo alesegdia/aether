@@ -23,6 +23,10 @@ public:
     }
 
     virtual void GrabMouse() final;
+    virtual void UngrabMouse() final
+    {
+
+    }
 
 
     // ApplicationBase interface

@@ -33,7 +33,7 @@ public:
 		{
 			pushChar( char(int(key) - int(KeyCode::K0)) + '0' );
 		}
-		else if( key == KeyCode::Fullstop)
+		else if( key == KeyCode::Fullstop )
 		{
 			pushChar( '.' );
 		}
