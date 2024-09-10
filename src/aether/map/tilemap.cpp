@@ -349,6 +349,7 @@ TileSet::Shared TileMap::GetTileset(int i)
 
 void TileMap::Render()
 {
+    aether::graphics::hold_bitmap(true);
     for( auto layer : m_layers )
     {
         if (layer->IsVisible())
@@ -356,6 +357,7 @@ void TileMap::Render()
             layer->Render();
         }
     }
+    aether::graphics::hold_bitmap(false);
 }
 
 std::unordered_map<std::string, TileLayer::Shared> &TileMap::GetTileLayers()

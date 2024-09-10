@@ -3,6 +3,7 @@
 #include "../math/matrix.h"
 #include "../math/vec.h"
 #include "../graphics/spritesheet.h"
+#include "../graphics/graphics.h"
 
 #include "aether/core/utility.h"
 

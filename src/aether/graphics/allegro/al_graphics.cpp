@@ -96,6 +96,9 @@ void clear_clipping_rect()
     }
 }
 
-
+void hold_bitmap(bool hold)
+{
+    al_hold_bitmap_drawing(hold);
+}
 }
 }
