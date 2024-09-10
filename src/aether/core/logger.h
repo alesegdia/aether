@@ -42,6 +42,8 @@ namespace aether
 			case LogChannel::Warning: return "ATH_WARN";
 			case LogChannel::Error: return "ATH_ERR";
 			}
+			assert(false);
+			return "SHOULD NOT HAPPEN";
 		}
 	};
 }

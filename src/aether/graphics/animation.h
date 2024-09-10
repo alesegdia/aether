@@ -147,7 +147,7 @@ public:
     {
         for (auto& item : m_entries)
         {
-            item.animData.Render(item.position.GetX(), item.position.GetY());
+            item.animData.Render(float(item.position.GetX()), float(item.position.GetY()));
         }
     }
 
