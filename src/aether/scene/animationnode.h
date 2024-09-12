@@ -37,13 +37,12 @@ namespace scene {
 
         void Render() override
         {
-            aether::graphics::draw_filled_rectangle(m_renderPosition.GetX() - 8, m_renderPosition.GetY() - 8, m_renderPosition.GetX() + m_size.GetX() - 8, m_renderPosition.GetY() + m_size.GetY() - 8, m_color);
-            //aether::graphics::draw_filled_circle(m_renderPosition.GetX(), m_renderPosition.GetY(), 16, m_color);
+            aether::graphics::draw_filled_rectangle(m_renderPosition.GetX() - 8, m_renderPosition.GetY() - 8, m_size.GetX(),m_size.GetY(), m_color);
         }
 
     private:
         aether::math::Vec2i m_size;
-        graphics::Color m_color;
+        graphics::Color m_color = graphics::Color::Magenta;
 
     };
 

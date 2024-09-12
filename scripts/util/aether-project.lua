@@ -95,9 +95,9 @@ end
 
 function defineGameTarget(targetName, dll)
 	if dll == true then
-		aetherGameLib("thesummoning-game")
+		aetherGameLib(targetName .. "-game")
 	else
-		aetherProject("thesummoning-game-bin")
+		aetherProject(targetName .. "-game-bin")
 	end
 
 	debugdir ("..")
