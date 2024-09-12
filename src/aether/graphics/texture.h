@@ -19,12 +19,6 @@ public:
 
     }
 
-    int GetHeight() const;
-    int GetWidth() const;
-    void Destroy();
-    void Load(const char* path);
-
-
     // temporary here, was protected
     Texture(int h)
     {
