@@ -31,7 +31,7 @@ public:
      * @param num_frame frame index
      * @return the sub bitmap associated to the index
      */
-    const TextureRegion* GetFrame( size_t num_frame ) const;
+    const Frame* GetFrame( size_t num_frame ) const;
 
     /**
      * @brief retrieves a frame by its coordinate
@@ -64,7 +64,7 @@ private:
      */
     size_t CoordToIndex(size_t x, size_t y ) const;
 
-    std::vector<TextureRegion> m_frames;
+    Texture m_texture;
     int m_height{}, m_width{};
 
 

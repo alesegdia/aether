@@ -9,6 +9,53 @@ namespace aether {
 namespace graphics {
 
 
+    class IRenderModule;
+
+    class RenderModuleObject
+    {
+    public:
+        RenderModuleObject(IRenderModule* module)
+            : module(module)
+        {
+
+        }
+
+    protected:
+        IRenderModule* GetRenderModule()
+        {
+            return module;
+        }
+
+    private:
+        IRenderModule* module;
+        
+    };
+
+    class IRenderModule
+    {
+    public:
+        virtual aether::math::Vec2i GetTextureSize(Texture* tex) = 0;
+    };
+
+
+    class GLRenderModule : public IRenderModule
+    {
+    public:
+    };
+
+    class Texture : public RenderModuleObject
+    {
+    public:
+        aether::math::Vec2i GetSize()
+        {
+            GetRenderModule()->GetTextureSize(this);
+        }
+
+    };
+
+
+
+
 class Texture : public core::Handle
 {
 public:
@@ -25,9 +72,8 @@ public:
         SetHandle(h);
     }
 
-
-protected:
-
+    virtual int GetWidth() = 0;
+    virtual int GetHeight() = 0;
 
 };
 
@@ -36,13 +82,6 @@ protected:
 class TextureRegion
 {
 public:
-    static TextureRegion Create(std::string path)
-    {
-        aether::graphics::Texture t;
-        t.Load(path.c_str());
-        return TextureRegion(t);
-    }
-
     TextureRegion()
     {
 
@@ -55,9 +94,9 @@ public:
 
     }
 
-    TextureRegion(const Texture& texture)
+    TextureRegion(const std::shared_ptr<Texture>& texture)
 	    : m_texture(texture)
-	    , m_clip(aether::math::Rectf(0.0f, 0.0f, float(texture.GetWidth()), float(texture.GetHeight())))
+	    , m_clip(aether::math::Rectf(0.0f, 0.0f, float(texture->GetWidth()), float(texture->GetHeight())))
 	{
 
 	}
@@ -69,7 +108,7 @@ public:
 
     }
 
-    TextureRegion(const Texture& texture, int x, int y, int w, int h)
+    TextureRegion(const std::shared_ptr<Texture>& texture, int x, int y, int w, int h)
         : m_texture(texture)
         , m_clip(aether::math::Rectf(float(x), float(y), float(w), float(h)))
     {
@@ -83,7 +122,7 @@ public:
 
     const Texture& GetTexture() const
     {
-        return m_texture;
+        return *m_texture;
     }
 
     const aether::math::Rectf& GetClip() const
@@ -93,11 +132,11 @@ public:
 
     bool IsValid() const
     {
-        return m_texture.IsValid();
+        return m_texture->IsValid();
     }
 
 private:
-    Texture m_texture;
+    std::shared_ptr<Texture> m_texture;
 	aether::math::Rectf m_clip;
 
 };
