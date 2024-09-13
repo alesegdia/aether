@@ -1,5 +1,6 @@
 #pragma once
 
+#include "aether/core/ModuleObject.h"
 #include "../core/handle.h"
 #include "../math/rect.h"
 
@@ -8,74 +9,20 @@
 namespace aether {
 namespace graphics {
 
+    class RenderModule;
 
-    class IRenderModule;
-
-    class RenderModuleObject
+    class Texture : public core::ModuleObject
     {
-    public:
-        RenderModuleObject(IRenderModule* module)
-            : module(module)
-        {
-
-        }
-
     protected:
-        IRenderModule* GetRenderModule()
-        {
-            return module;
-        }
+        Texture(ModuleObject* o) : ModuleObject(o) {}
 
-    private:
-        IRenderModule* module;
-        
-    };
-
-    class IRenderModule
-    {
     public:
-        virtual aether::math::Vec2i GetTextureSize(Texture* tex) = 0;
+        RenderModule* GetRenderer() const;
+
+        virtual aether::math::Vec2i GetTextureSize(Texture tex) = 0;
     };
 
 
-    class GLRenderModule : public IRenderModule
-    {
-    public:
-    };
-
-    class Texture : public RenderModuleObject
-    {
-    public:
-        aether::math::Vec2i GetSize()
-        {
-            GetRenderModule()->GetTextureSize(this);
-        }
-
-    };
-
-
-
-
-class Texture : public core::Handle
-{
-public:
-
-    Texture()
-        : core::Handle ()
-    {
-
-    }
-
-    // temporary here, was protected
-    Texture(int h)
-    {
-        SetHandle(h);
-    }
-
-    virtual int GetWidth() = 0;
-    virtual int GetHeight() = 0;
-
-};
 
 
     // TODO: move to its own file

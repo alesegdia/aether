@@ -1,15 +1,24 @@
 #pragma once
 
-#include <string>
 
 #include "aether/graphics/texture.h"
 
-namespace aether::graphics {
+#include <memory>
 
-	class RenderContext
-	{
-	public:
-		virtual Texture LoadTexture(const std::string& path) = 0;
-	};
+
+#include "aether/core/ModuleObject.h"
+
+namespace aether::graphics
+{
+
+    class IRenderModule : public core::ModuleObject
+    {
+    protected:
+        IRenderModule(ModuleObject* o) : ModuleObject(o) {}
+
+    public:
+        virtual std::shared_ptr<Texture> LoadTexture(const std::string& path) = 0;
+    };
+
 
 }
