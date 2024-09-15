@@ -16,7 +16,7 @@ pluginCommonLibSetup("aether")
 		}
 		files {
 			AETHER_ALLEGRO_CORE_SOURCES,
-			AETHER_ALLEGRO_GRAPHICS_SOURCES,
+			AETHER_ALLEGRO_RENDER_SOURCES,
 			AETHER_ALLEGRO_AUDIO_SOURCES,
 		}
 		includedirs {
@@ -27,7 +27,7 @@ pluginCommonLibSetup("aether")
 		defines { "AETHER_USE_SDL" }
 		files {
 			AETHER_SDL_CORE_SOURCES,
-			AETHER_SDL_GRAPHICS_SOURCES,
+			AETHER_SDL_RENDER_SOURCES,
 		}
 		includedirs {
 			AETHER_SDL_INCLUDE_DIRS
@@ -37,7 +37,7 @@ pluginCommonLibSetup("aether")
 		defines { "AETHER_USE_GL" }
 		files {
 			AETHER_GL_CORE_SOURCES,
-			AETHER_GL_GRAPHICS_SOURCES,
+			AETHER_GL_RENDER_SOURCES,
 		}
 		includedirs {
 			AETHER_GL_INCLUDE_DIRS

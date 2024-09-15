@@ -1,9 +1,9 @@
 #pragma once
 
-#include "aether/graphics/texture.h"
+#include "aether/render/texture.h"
 
 
-namespace aether::graphics
+namespace aether::render
 {
 
 	RenderModule* Texture::GetRenderer() const { return (RenderModule*)owner; }

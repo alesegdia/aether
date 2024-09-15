@@ -68,11 +68,6 @@ public:
         return m_clip;
     }
 
-    bool IsValid() const
-    {
-        return m_texture->IsValid();
-    }
-
 private:
 
 };
