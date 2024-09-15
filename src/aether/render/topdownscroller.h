@@ -3,8 +3,7 @@
 #include "aether/math/rect.h"
 #include "aether/math/vec.h"
 
-namespace aether::graphics
-{
+namespace aether::render {
 
 	class TopDownMapScroller
 	{

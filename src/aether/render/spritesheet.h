@@ -4,8 +4,7 @@
 #include <memory>
 #include "texture.h"
 
-namespace aether {
-namespace graphics {
+namespace aether::render {
 
 
 class Spritesheet
@@ -71,5 +70,4 @@ private:
 };
 
 
-}
 }

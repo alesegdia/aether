@@ -6,10 +6,7 @@
 #include <memory>
 
 
-namespace aether {
-namespace graphics {
-
-
+namespace aether::render {
 
 
 	float BaseCamera::GetY()
@@ -72,5 +69,4 @@ namespace graphics {
 		return m_rotation;
 	}
 
-}
 }

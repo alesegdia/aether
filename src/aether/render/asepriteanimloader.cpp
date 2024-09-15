@@ -2,7 +2,7 @@
 
 #include <filesystem>
 
-namespace aether::graphics {
+namespace aether::render {
 
 	AsepriteAnimationData AsepriteAnimationLoader::Load(const std::string& path)
 	{

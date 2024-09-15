@@ -1,7 +1,6 @@
 #include "aether/graphics/topdownscroller.h"
 
-namespace aether::graphics
-{
+namespace aether::render {
 
 	void TopDownMapScroller::Focus(float x, float y)
 	{

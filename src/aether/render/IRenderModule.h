@@ -2,9 +2,9 @@
 
 #include "aether/core/ModuleObject.h"
 
-#include "aether/graphics/texture.h"
+#include "aether/render/texture.h"
 
-namespace aether::graphics
+namespace aether::render
 {
 
     class IRenderModule : public core::ModuleObject

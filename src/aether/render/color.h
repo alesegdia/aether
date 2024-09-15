@@ -2,8 +2,7 @@
 
 #include <cstdint>
 
-namespace aether {
-namespace graphics {
+namespace aether::render {
 
 
 
@@ -51,5 +50,4 @@ struct Color
 };
 
 
-}
 }

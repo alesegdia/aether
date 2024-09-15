@@ -4,9 +4,9 @@ AETHER_ALLEGRO_CORE_SOURCES = {
 	path.join(AETHER_DIR, "src/aether/core/allegro/*.cpp"),
 }
 
-AETHER_ALLEGRO_GRAPHICS_SOURCES = {
-	path.join(AETHER_DIR, "src/aether/graphics/allegro/*.h"),
-	path.join(AETHER_DIR, "src/aether/graphics/allegro/*.cpp"),
+AETHER_ALLEGRO_RENDER_SOURCES = {
+	path.join(AETHER_DIR, "src/aether/render/allegro/*.h"),
+	path.join(AETHER_DIR, "src/aether/render/allegro/*.cpp"),
 }
 
 AETHER_ALLEGRO_AUDIO_SOURCES = {

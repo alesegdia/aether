@@ -4,8 +4,7 @@
 #include "color.h"
 #include "texture.h"
 
-namespace aether {
-namespace graphics {
+namespace aether::render {
 
 struct TextData
 {
@@ -49,5 +48,4 @@ public:
 };
 
 
-}
 }

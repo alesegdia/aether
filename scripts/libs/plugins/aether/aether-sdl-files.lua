@@ -4,9 +4,9 @@ AETHER_SDL_CORE_SOURCES = {
 	path.join(AETHER_DIR, "src/aether/core/sdl/*.cpp"),
 }
 
-AETHER_SDL_GRAPHICS_SOURCES = {
-	path.join(AETHER_DIR, "src/aether/graphics/sdl/*.h"),
-	path.join(AETHER_DIR, "src/aether/graphics/sdl/*.cpp"),
+AETHER_SDL_RENDER_SOURCES = {
+	path.join(AETHER_DIR, "src/aether/render/sdl/*.h"),
+	path.join(AETHER_DIR, "src/aether/render/sdl/*.cpp"),
 }
 
 AETHER_SDL_AUDIO_SOURCES = {

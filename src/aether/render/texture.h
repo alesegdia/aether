@@ -6,8 +6,7 @@
 
 #include "color.h"
 
-namespace aether {
-namespace graphics {
+namespace aether::render {
 
     class RenderModule;
 

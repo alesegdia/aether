@@ -1,7 +1,7 @@
 #include "aether/graphics/graphics.h"
 
 
-namespace aether::graphics {
+namespace aether::render {
 
 
 void draw_rectangle(const aether::math::Vec2f& pos, float w, float h, Color c, float thickness)

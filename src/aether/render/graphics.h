@@ -3,8 +3,7 @@
 #include "color.h"
 #include "../math/rect.h"
 
-namespace aether {
-namespace graphics {
+namespace aether::render {
 
 void clear(float r, float g, float b);
 void clear(uint8_t r, uint8_t g, uint8_t b);
@@ -35,5 +34,5 @@ void clear_clipping_rect();
 
 void hold_bitmap(bool hold);
 
-}
+
 }

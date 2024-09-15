@@ -1,7 +1,6 @@
 #include "animation.h"
 
-namespace aether {
-namespace graphics {
+namespace aether::render {
 
 AnimationsManager AnimationsManager::instance;
 
@@ -111,5 +110,4 @@ void Animation::SetWrapMode(WrapMode wrapMode)
 	m_wrapMode = wrapMode;
 }
 
-}
 }

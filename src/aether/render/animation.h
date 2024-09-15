@@ -7,8 +7,7 @@
 #include "spritesheet.h"
 
 
-namespace aether {
-namespace graphics {
+namespace aether::render {
 
 
 struct AnimationFrame
@@ -157,5 +156,4 @@ private:
 };
 
 
-}
 }

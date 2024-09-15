@@ -7,10 +7,7 @@
 #include <sstream>
 #include <unordered_map>
 
-namespace aether
-{
-
-    namespace graphics{
+namespace aether::render {
 
 
 using AnimationsMap = std::unordered_map<std::string, std::shared_ptr<aether::graphics::Animation>>;
@@ -35,5 +32,4 @@ public:
 };
 
         
-}
 }

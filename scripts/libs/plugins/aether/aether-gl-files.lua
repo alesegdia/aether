@@ -7,9 +7,9 @@ AETHER_GL_CORE_SOURCES = {
 	path.join(AETHER)
 }
 
-AETHER_GL_GRAPHICS_SOURCES = {
-	path.join(AETHER_DIR, "src/aether/graphics/gl/*.h"),
-	path.join(AETHER_DIR, "src/aether/graphics/gl/*.cpp"),
+AETHER_GL_RENDER_SOURCES = {
+	path.join(AETHER_DIR, "src/aether/render/gl/*.h"),
+	path.join(AETHER_DIR, "src/aether/render/gl/*.cpp"),
 }
 
 AETHER_GL_AUDIO_SOURCES = {

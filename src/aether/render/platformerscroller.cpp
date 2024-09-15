@@ -1,8 +1,7 @@
 
 #include "aether/graphics/platformerscroller.h"
 
-namespace aether::graphics
-{
+namespace aether::render {
 
 
 	PlatformerScroller::PlatformerScroller(const Camera::SharedPtr& cam,
