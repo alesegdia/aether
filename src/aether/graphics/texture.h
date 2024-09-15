@@ -19,7 +19,7 @@ namespace graphics {
     public:
         RenderModule* GetRenderer() const;
 
-        virtual aether::math::Vec2i GetTextureSize(Texture tex) = 0;
+        virtual math::Vec2i GetSize() const = 0;
     };
 
 
@@ -28,22 +28,14 @@ namespace graphics {
     // TODO: move to its own file
 class TextureRegion
 {
+private:
+    std::shared_ptr<Texture> m_texture;
+    math::Rectf m_clip;
+
 public:
-    TextureRegion()
-    {
-
-    }
-
-    TextureRegion(const TextureRegion& texreg)
-        : m_texture(texreg.m_texture)
-        , m_clip(texreg.m_clip)
-    {
-
-    }
-
     TextureRegion(const std::shared_ptr<Texture>& texture)
 	    : m_texture(texture)
-	    , m_clip(aether::math::Rectf(0.0f, 0.0f, float(texture->GetWidth()), float(texture->GetHeight())))
+	    , m_clip(math::Rectf(0.0f, 0.0f, float(texture->GetSize().GetX()), float(texture->GetSize().GetY())))
 	{
 
 	}
@@ -83,8 +75,6 @@ public:
     }
 
 private:
-    std::shared_ptr<Texture> m_texture;
-	aether::math::Rectf m_clip;
 
 };
 

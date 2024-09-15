@@ -7,7 +7,7 @@ namespace aether::core
     class ModuleObject
     {
     public:
-        ModuleObject GetOwner() const { return owner; }
+        ModuleObject* GetOwner() const { return owner; }
 
     protected:
         ModuleObject* owner;

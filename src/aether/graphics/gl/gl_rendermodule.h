@@ -1,24 +1,21 @@
 #pragma once
 
-#include "aether/graphics/rendercontext.h"
+#include "aether/core/ModuleObject.h"
 #include "aether/core/handledresourcemanager.h"
+
+#include "aether/graphics/IRenderModule.h"
 
 #include <nether/nether.h>
 
 namespace aether::graphics {
 
-	class GLRenderContext : public RenderContext
+	class GLRenderContext : public IRenderModule
 	{
 	public:
-		Texture Load(const std::string& path)
+		std::shared_ptr<Texture> LoadTextureFromFile(const std::string& path) override
 		{
-
+			
 		}
-
-	private:
-		core::HandledResourceManager<nether::Texture*> texture_manager;
-
-
 	};
 
 }

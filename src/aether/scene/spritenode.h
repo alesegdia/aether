@@ -10,13 +10,7 @@ namespace scene {
 class SpriteNode : public SceneNode
 {
 public:
-    SpriteNode(aether::graphics::Texture tex)
-        : m_texture(tex)
-    {
-
-    }
-
-    SpriteNode(std::shared_ptr<graphics::Spritesheet> sheet)
+    SpriteNode(std::shared_ptr<graphics::Texture> tex)
         : m_texture(tex)
     {
 
@@ -38,7 +32,7 @@ public:
     }
 
 protected:
-    graphics::Texture m_texture;
+    std::shared_ptr<graphics::Texture> m_texture;
 
 };
 

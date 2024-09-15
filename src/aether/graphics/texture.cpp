@@ -8,5 +8,6 @@ namespace aether::graphics
 
 	RenderModule* Texture::GetRenderer() const { return (RenderModule*)owner; }
 
+
 }
 
