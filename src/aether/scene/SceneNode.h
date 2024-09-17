@@ -4,17 +4,21 @@
 #include <vector>
 
 #include "aether/math/vec.h"
+#include "aether/core/ModuleObject.h"
 #include "aether/render/Color.h"
 
 
 namespace aether::scene {
 
+    class IRenderModule;
 
-class SceneNode : public std::enable_shared_from_this<SceneNode>
+class SceneNode : public core::ModuleObject
 {
 public:
 
-    SceneNode() = default;
+    SceneNode(core::ModuleObject* o) : core::ModuleObject(o) {}
+
+    IRenderModule* GetRenderer() const;
 
     using Shared = std::shared_ptr<SceneNode>;
 
@@ -105,9 +109,9 @@ protected:
     SceneNode::Shared m_parent{nullptr};
     render::Color m_color = render::Color(1.0f, 1.0f, 1.0f);
     std::vector<SceneNode::Shared> m_children;
-    bool m_dirty;
+    bool m_dirty = true;
 
-    int m_zIndex;
+    int m_zIndex = 0;
     math::Vec2f m_relativePosition;
     math::Vec2f m_renderPosition;
     math::Vec2f m_center;

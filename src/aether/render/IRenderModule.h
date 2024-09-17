@@ -17,6 +17,8 @@ namespace aether::render
 
         virtual int LoadTextureFromFile(const Texture* tex, const std::string& path) = 0;
         virtual math::Vec2i GetTextureSize(const Texture* tex) = 0;
+
+        virtual void AddToBatch(const SceneNode* node)
         
     };
 

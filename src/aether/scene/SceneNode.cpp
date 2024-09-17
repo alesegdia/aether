@@ -12,6 +12,8 @@ SceneNode::~SceneNode()
 
 }
 
+IRenderModule* SceneNode::GetRenderer() const { return (IRenderModule*)owner; }
+
 math::Vec2f &SceneNode::GetRelativePosition()
 {
     return m_relativePosition;
