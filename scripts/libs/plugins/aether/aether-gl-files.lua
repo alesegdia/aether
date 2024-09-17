@@ -20,6 +20,7 @@ AETHER_GL_INCLUDE_DIRS = {
 	AETHER_SDL_INCLUDE_DIRS,
 	path.join(AETHER_PLUGINS_DIR, "nether/src/"),
 	path.join(AETHER_PLUGINS_DIR, "nether/3rdparty/stb/"),
+	path.join(AETHER_PLUGINS_DIR, "nether/3rdparty/glm/"),
 	path.join(AETHER_EXTERNALS_DIR, "glad/include"),
 }
 

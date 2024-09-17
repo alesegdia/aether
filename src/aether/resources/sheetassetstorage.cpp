@@ -8,7 +8,7 @@ namespace aether
 	namespace resources
 	{
 
-		std::shared_ptr<aether::graphics::Spritesheet> SheetAssetStorage::LoadImpl(std::string path)
+		std::shared_ptr<aether::render::Spritesheet> SheetAssetStorage::LoadImpl(std::string path)
 		{
 			auto spritesheet = std::make_shared<graphics::Spritesheet>();
 			auto texture = std::make_shared<graphics::Texture>();

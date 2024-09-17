@@ -1,5 +1,6 @@
 #pragma once
-#include "camera.h"
+
+#include "aether/render/Camera.h"
 #include "aether/math/rect.h"
 #include "aether/math/vec.h"
 
@@ -8,7 +9,7 @@ namespace aether::render {
 	class TopDownMapScroller
 	{
 	public:
-		void Setup(const aether::graphics::Camera::SharedPtr& cam, const aether::math::Rectf& globalBounds);
+		void Setup(const aether::render::Camera::SharedPtr& cam, const aether::math::Rectf& globalBounds);
 
 		void Focus(float x, float y);
 

@@ -1,5 +1,5 @@
 
-#include "aether/graphics/platformerscroller.h"
+#include "aether/render/platformerscroller.h"
 
 namespace aether::render {
 

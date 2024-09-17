@@ -13,7 +13,20 @@ namespace aether::render
         IRenderModule(ModuleObject* o) : ModuleObject(o) {}
 
     public:
-        virtual std::shared_ptr<Texture> LoadTextureFromFile(const std::string& path) = 0;
+        virtual Texture* CreateTexture() = 0;
+
+        virtual int LoadTextureFromFile(const Texture* tex, const std::string& path) = 0;
+        virtual math::Vec2i GetTextureSize(const Texture* tex) = 0;
+        
+    };
+
+    class IPrimitiveDrawInterface
+    {
+    public:
+        ~IPrimitiveDrawInterface() {}
+
+
+        virtual void DrawSprite(Texture texture, int uv, int uy, int x, int y, int rotation) = 0;
     };
 
 }

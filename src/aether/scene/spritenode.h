@@ -1,19 +1,17 @@
 #pragma once
 
 #include "aether/scene/SceneNode.h"
-#include "aether/graphics/spritesheet.h"
+#include "aether/render/TextureRegion.h"
 
-namespace aether {
-namespace scene {
+namespace aether::scene {
 
 
 class SpriteNode : public SceneNode
 {
 public:
-    SpriteNode(std::shared_ptr<graphics::Texture> tex)
-        : m_texture(tex)
+    SpriteNode(std::shared_ptr<render::Texture> tex)
     {
-
+        m_texRegion = std::make_unique<render::TextureRegion>();
     }
 
     virtual ~SpriteNode()
@@ -21,21 +19,26 @@ public:
 
     }
 
-    void SetTexture(const graphics::Texture& t)
+    void SetTexture(render::Texture* t)
     {
-
+        m_texRegion->SetTexture(t);
     }
 
-    void SetClippingRect(const graphics::Texture& t)
+    void AdjustClippingRectToTexture()
     {
+        auto sz = m_texRegion->GetTexture()->GetSize();
+        m_texRegion->SetClip(0, 0, sz.GetX(), sz.GetY());
+    }
 
+    void SetClippingRect(float x, float y, float w, float h)
+    {
+        m_texRegion->SetClip(aether::math::Rectf(x, y, w, h));
     }
 
 protected:
-    std::shared_ptr<graphics::Texture> m_texture;
+    std::unique_ptr<render::TextureRegion> m_texRegion;
 
 };
 
 
-}
 }

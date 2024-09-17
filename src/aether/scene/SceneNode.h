@@ -4,11 +4,10 @@
 #include <vector>
 
 #include "aether/math/vec.h"
-#include "aether/graphics/color.h"
+#include "aether/render/Color.h"
 
 
-namespace aether {
-namespace scene {
+namespace aether::scene {
 
 
 class SceneNode : public std::enable_shared_from_this<SceneNode>
@@ -104,7 +103,7 @@ public:
 protected:
 
     SceneNode::Shared m_parent{nullptr};
-    graphics::Color m_color = graphics::Color(1.0f, 1.0f, 1.0f);
+    render::Color m_color = render::Color(1.0f, 1.0f, 1.0f);
     std::vector<SceneNode::Shared> m_children;
     bool m_dirty;
 
@@ -118,5 +117,4 @@ protected:
 };
 
 
-}
 }

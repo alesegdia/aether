@@ -6,15 +6,6 @@
 
 namespace aether::render {
 
-struct TextData
-{
-    Texture texture;
-    math::Recti bounds;
-    void draw(float x, float y)
-    {
-        texture.Draw(x, y);
-    }
-};
 
 enum TextAlign
 {
@@ -43,7 +34,6 @@ public:
     }
 
     int GetWidthForText(const char* text);
-    TextData CreateTextTexture(const char* text, Color color);
 
 };
 

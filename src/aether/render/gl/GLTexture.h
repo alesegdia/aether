@@ -4,17 +4,17 @@
 
 #include <nether/nether.h>
 
-#include "aether/graphics/gl/gl_rendermodule.h"
+#include "aether/render/gl/GLRenderModule.h"
 
-#include "../texture.h"
+#include "aether/render/texture.h"
 
-namespace aether::graphics
+namespace aether::render
 {
 
 	class GLTexture : public Texture
 	{
 	public:
-		GLTexture(GLRenderContext* owner)
+		GLTexture(GLRenderModule* owner)
 			: Texture(owner)
 		{
 

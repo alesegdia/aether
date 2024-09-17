@@ -4,8 +4,8 @@
 #include <vector>
 
 #include "aether/math/vec.h"
-#include "aether/graphics/color.h"
-#include "aether/graphics/graphics.h"
+#include "aether/render/color.h"
+#include "aether/render/render.h"
 #include "aether/core/utility.h"
 
 
@@ -37,13 +37,13 @@ namespace aether::scene {
 
         void AddToScene(std::shared_ptr<SceneNode> sceneNode);
 
-        void SetClearColor(aether::graphics::Color color);
+        void SetClearColor(aether::render::Color color);
 
 
     private:
         std::shared_ptr<SceneNode> m_root;
         std::vector<std::shared_ptr<SceneNode>> m_nodesSortedByZindex;
-        aether::graphics::Color m_clearColor = aether::graphics::Color::Black;
+        aether::render::Color m_clearColor = aether::render::Color::Black;
 
     };
 
