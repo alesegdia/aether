@@ -1,6 +1,9 @@
 #pragma once
 
+#include <nether/nether.h>
+
 #include "aether/scene/SceneNode.h"
+#include "aether/render/TextureRegion.h"
 #include "aether/core/ModuleObject.h"
 
 namespace aether::render {
@@ -15,20 +18,9 @@ namespace aether::render {
 
         }
 
-        void SetText(const std::string& text)
-        {
-            m_text = text;
-        }
-
-        void SetFont(render::Font* font)
-        {
-            m_font = font;
-        }
-
-    protected:
-        std::unique_ptr<render::TextureRegion> m_texRegion;
-        std::string m_text;
-        render::Font* m_font;
+        virtual nether::Texture* GetTexture() = 0;
+        virtual nether::Shader* GetShader() = 0;
+        virtual nether::Vertices* GetVertices() = 0
 
     };
 

@@ -49,18 +49,6 @@ public:
     const math::Vec2f& GetRenderPosition() const;
 
     /// <summary>
-    /// Gets the depth render order, only useful for 2D
-    /// </summary>
-    /// <returns></returns>
-    int GetZIndex() const;
-
-    /// <summary>
-    /// Sets the depth render order, only useful for 2D
-    /// </summary>
-    /// <param name="pzindex"></param>
-    void SetZIndex(int pzindex);
-
-    /// <summary>
     /// Renders the
     /// </summary>
     virtual void Render();
