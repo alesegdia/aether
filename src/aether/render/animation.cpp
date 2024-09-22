@@ -11,7 +11,7 @@ void AnimationData::ResetAnimationTimer()
 
 void AnimationData::Render(float x, float y)
 {
-    currentFrame->texture.Draw(x, y);
+    //currentFrame->texture->Draw(x, y);
 }
 
 Animation::Animation(uint64_t default_frame_duration)
@@ -100,7 +100,7 @@ void Animation::UpdateData(AnimationData &data, uint64_t delta)
 }
 
 
-const aether::graphics::AnimationFrame& Animation::GetFrame(size_t i)
+const aether::render::AnimationFrame& Animation::GetFrame(size_t i)
 {
 	return m_frames[i];
 }

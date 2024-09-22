@@ -1,7 +1,6 @@
 #pragma once
 
-
-#include "../../aether/aether.h"
+#include "aether/render/Camera.h"
 
 #include <memory>
 
@@ -9,42 +8,42 @@
 namespace aether::render {
 
 
-	float BaseCamera::GetY()
+	float Camera::GetY()
 	{
 		return -m_position.GetY() / m_scale.GetY();
 	}
 
-	aether::math::Rectf BaseCamera::GetBoundary() const
+	aether::math::Rectf Camera::GetBoundary() const
 	{
 		return aether::math::Rectf(m_position, m_viewport);
 	}
 
-	void BaseCamera::SetPosition(float x, float y)
+	void Camera::SetPosition(float x, float y)
 	{
 		m_position.Set(x, y);
 	}
 
-	void BaseCamera::Move(float x, float y)
+	void Camera::Move(float x, float y)
 	{
 		m_position.Set(m_position.GetX() + x, m_position.GetY() + y);
 	}
 
-	void BaseCamera::SetScale(float x, float y)
+	void Camera::SetScale(float x, float y)
 	{
 		m_scale.Set(x, y);
 	}
 
-	const aether::math::Vec2f& BaseCamera::GetViewport()
+	const aether::math::Vec2f& Camera::GetViewport()
 	{
 		return m_viewport;
 	}
 
-	const aether::math::Vec2f& BaseCamera::GetScale()
+	const aether::math::Vec2f& Camera::GetScale()
 	{
 		return m_scale;
 	}
 
-	aether::math::Vec2f BaseCamera::GetPosition()
+	aether::math::Vec2f Camera::GetPosition()
 	{
 		auto pos = m_position;
 		pos.SetX(pos.GetX() + m_shakeX);
@@ -52,19 +51,19 @@ namespace aether::render {
 		return pos;
 	}
 
-	void BaseCamera::SetPosition(const aether::math::Vec2f& new_position)
+	void Camera::SetPosition(const aether::math::Vec2f& new_position)
 	{
 		m_position = new_position;
 		m_position.SetY(-(m_position.GetY()) * m_scale.GetY());
 		m_position.SetX(-(m_position.GetX()) * m_scale.GetX());
 	}
 
-	float BaseCamera::GetX()
+	float Camera::GetX()
 	{
 		return -m_position.GetX() / m_scale.GetX();
 	}
 
-	float BaseCamera::GetRotation() const
+	float Camera::GetRotation() const
 	{
 		return m_rotation;
 	}

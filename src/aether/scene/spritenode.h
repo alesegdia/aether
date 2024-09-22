@@ -9,7 +9,8 @@ namespace aether::scene {
 class SpriteNode : public SceneNode
 {
 public:
-    SpriteNode(std::shared_ptr<render::Texture> tex)
+    SpriteNode(core::ModuleObject* o, std::shared_ptr<render::Texture> tex)
+        : SceneNode(o)
     {
         m_texRegion = std::make_unique<render::TextureRegion>();
     }

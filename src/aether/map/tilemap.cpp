@@ -1,13 +1,15 @@
-#include "tilemap.h"
+#include "aether/map/tilemap.h"
 
 #include <utility>
+
+#include "aether/render/IRenderModule.h"
 
 
 namespace aether {
 namespace tilemap {
 
 
-std::shared_ptr<TileMap> BuildMap(const Tmx::Map &inmap)
+std::shared_ptr<TileMap> BuildMap(const Tmx::Map &inmap, aether::render::IRenderModule* renderer)
 {
     std::shared_ptr<TileMap> outmap(new TileMap());
     outmap->SetBasePath(inmap.GetFilepath());
@@ -24,12 +26,11 @@ std::shared_ptr<TileMap> BuildMap(const Tmx::Map &inmap)
         newTileset->SetTileSize(tileset->GetTileWidth(), tileset->GetTileHeight());
 
         auto path = inmap.GetFilepath() + "/" + tileset->GetImage()->GetSource();
-        graphics::Texture t;
-        t.Load(path.c_str());
+        render::Texture* t = renderer->LoadTextureFromFile(path);
 
         auto columns = tileset->GetImage()->GetWidth() / tileset->GetTileWidth();
         auto rows = tileset->GetImage()->GetHeight() / tileset->GetTileHeight();
-        auto newSheet = std::make_shared<graphics::Spritesheet>(columns, rows, t);
+        auto newSheet = std::make_shared<render::Spritesheet>(columns, rows, t);
         outmap->AddSheet(newSheet);
         newTileset->SetFirstGid(tileset->GetFirstGid());
 
@@ -121,7 +122,7 @@ std::shared_ptr<TileMap> BuildMap(const Tmx::Map &inmap)
     return outmap;
 }
 
-Tile::Tile(const graphics::TextureRegion *tex, TileCollisionBehaviour tcb)
+Tile::Tile(const render::TextureRegion *tex, TileCollisionBehaviour tcb)
     : texture(tex),
       collisionBehaviour(tcb)
 {
@@ -138,7 +139,7 @@ Tile *TileSet::GetTile(uint16_t tile_index)
     return &tile;
 }
 
-Tile &TileSet::AddTile(size_t index, const graphics::TextureRegion *tex, TileCollisionBehaviour tcb)
+Tile &TileSet::AddTile(size_t index, const render::TextureRegion *tex, TileCollisionBehaviour tcb)
 {
     assert(index >= 0);
     while( m_tiles.size() <= index ) {
@@ -286,6 +287,7 @@ bool TileLayer::IsValidTile(size_t x, size_t y) const
 
 void TileLayer::Render()
 {
+    /*
     for( size_t i = 0; i < m_data->GetRowsNumber(); i++ )
     {
         for( size_t j = 0; j < m_data->GetColsNumber(); j++ )
@@ -299,6 +301,7 @@ void TileLayer::Render()
             }
         }
     }
+    */
 }
 
 void TileLayer::AddProperty(const std::string &key, const std::string &value)
@@ -306,7 +309,7 @@ void TileLayer::AddProperty(const std::string &key, const std::string &value)
     m_props[key] = value;
 }
 
-void TileMap::AddSheet(const graphics::Spritesheet::SharedPtr& sheet)
+void TileMap::AddSheet(const render::Spritesheet::SharedPtr& sheet)
 {
     m_sheetStore.push_back(sheet);
 }
@@ -349,6 +352,7 @@ TileSet::Shared TileMap::GetTileset(int i)
 
 void TileMap::Render()
 {
+    /*
     aether::graphics::hold_bitmap(true);
     for( auto layer : m_layers )
     {
@@ -358,6 +362,7 @@ void TileMap::Render()
         }
     }
     aether::graphics::hold_bitmap(false);
+    */
 }
 
 std::unordered_map<std::string, TileLayer::Shared> &TileMap::GetTileLayers()

@@ -4,7 +4,7 @@
 namespace aether::render {
 
 
-	PlatformerScroller::PlatformerScroller(const Camera::SharedPtr& cam,
+	PlatformerScroller::PlatformerScroller(Camera* cam,
 		const math::Rectf& globalBounds,
 		const math::Vec2f& innerLimits)
 		: m_cam(cam),

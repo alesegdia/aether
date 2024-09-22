@@ -2,7 +2,8 @@
 
 #include <vector>
 #include <memory>
-#include "texture.h"
+#include "aether/render/Texture.h"
+#include "aether/render/TextureRegion.h"
 
 namespace aether::render {
 
@@ -19,7 +20,7 @@ public:
      * @param height in tiles
      * @param bitmap
      */
-    explicit Spritesheet( size_t width, size_t height, Texture texture );
+    explicit Spritesheet( size_t width, size_t height, Texture* texture );
 
     Spritesheet();
 
@@ -49,8 +50,8 @@ public:
      * @param height in tiles of the spritesheet
      * @param bitmap the whole spritesheet
      */
-    void Reset( size_t width, size_t height, Texture texture );
-    void Load( size_t width, size_t height, Texture texture );
+    void Reset( size_t width, size_t height, Texture* texture );
+    void Load( size_t width, size_t height, Texture* texture );
 
 
 private:
@@ -63,8 +64,9 @@ private:
      */
     size_t CoordToIndex(size_t x, size_t y ) const;
 
-    std::shared_ptr<Texture> m_texture;
+    Texture* m_texture;
     int m_height{}, m_width{};
+    std::vector<TextureRegion> m_frames;
 
 
 };

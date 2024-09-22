@@ -8,19 +8,45 @@
 
 namespace aether::render {
 
-    class GLSceneNode : public scene::SceneNode, core::ModuleObject
+    class GLRenderModule;
+
+    class GLSceneNode : public scene::SceneNode
     {
     public:
-        GLSceneNode(ModuleObject* o) : ModuleObject(o) {}
+        GLSceneNode(ModuleObject* o) : scene::SceneNode(o) {}
 
         virtual ~GLSceneNode()
         {
 
         }
 
-        virtual nether::Texture* GetTexture() = 0;
-        virtual nether::Shader* GetShader() = 0;
-        virtual nether::Vertices* GetVertices() = 0
+        GLRenderModule* GetRenderer();
+
+        void SetTexture(nether::Texture* tex);
+
+        void SetShader(nether::ShaderProgram* sha);
+
+        void SetVertices(nether::Vertices* verts)
+        {
+            m_vertices = verts;
+        }
+
+        nether::ShaderProgram* GetShader() const
+        {
+            return m_shader;
+        }
+
+        nether::Texture* GetTexture() const
+        {
+            return m_texture;
+        }
+
+    private:
+        nether::Texture* m_texture;
+        nether::ShaderProgram* m_shader;
+        nether::Vertices* m_vertices;
+
+
 
     };
 

@@ -10,16 +10,16 @@
 #include "core/iscreen.h"
 #include "core/textinputprocessor.h"
 
-#include "graphics/color.h"
-#include "graphics/font.h"
-#include "graphics/graphics.h"
-#include "graphics/spritesheet.h"
-#include "graphics/texture.h"
-#include "graphics/animation.h"
-#include "graphics/asepriteanimloader.h"
-#include "graphics/topdownscroller.h"
+#include "render/color.h"
+#include "render/font.h"
+#include "render/render.h"
+#include "render/spritesheet.h"
+#include "render/texture.h"
+#include "render/animation.h"
+#include "render/asepriteanimloader.h"
+#include "render/topdownscroller.h"
 
-#include "graphics/camera.h"
+#include "render/camera.h"
 
 #include "math/matrix.h"
 #include "math/vec.h"
@@ -30,10 +30,47 @@
 #include "map/tilemap.h"
 
 #include "scene/scene.h"
-#include "scene/texturenode.h"
+#include "scene/spritenode.h"
 #include "scene/animationnode.h"
 #include "scene/gridnode.h"
 
 #include "rztl/rztl.h"
 
 #include "json11.hpp"
+
+
+namespace aether
+{
+	class Engine
+	{
+	public:
+		template <typename RendererType>
+		void CreateRenderer()
+		{
+			assert(m_renderer == nullptr);
+			m_renderer = new RendererType();
+		}
+
+		render::IRenderModule* GetRenderer()
+		{
+			return m_renderer;
+		}
+
+
+		void ResetScene()
+		{
+			m_scene = {};
+		}
+
+		void Cleanup()
+		{
+			delete m_renderer;
+		}
+
+
+	private:
+		render::IRenderModule* m_renderer;
+		scene::Scene m_scene;
+
+	};
+}

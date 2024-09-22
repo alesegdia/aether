@@ -113,7 +113,7 @@ public:
 
     void AddAnimation(std::shared_ptr<Animation> animation, int x, int y, std::function<void(void)> onAnimationFinished)
     {
-        animation->SetWrapMode(aether::graphics::Animation::WrapMode::Once);
+        animation->SetWrapMode(aether::render::Animation::WrapMode::Once);
         Entry entry(animation, x, y, onAnimationFinished);
         m_entries.push_back(entry);
     }

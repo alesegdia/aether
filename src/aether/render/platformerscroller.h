@@ -8,7 +8,7 @@ namespace aether::render {
 	class PlatformerScroller
 	{
 	public:
-		PlatformerScroller(const aether::graphics::Camera::SharedPtr& cam,
+		PlatformerScroller(Camera* cam,
 			const aether::math::Rectf& globalBounds,
 			const math::Vec2f& innerLimits);
 
@@ -24,7 +24,7 @@ namespace aether::render {
 		}
 
 	private:
-		Camera::SharedPtr m_cam;
+		Camera* m_cam;
 		aether::math::Rectf m_globalBounds;
 		aether::math::Vec2f m_innerLimits;
 		aether::math::Vec2f m_focusPos;

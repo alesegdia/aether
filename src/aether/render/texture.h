@@ -1,10 +1,8 @@
 #pragma once
 
 #include "aether/core/ModuleObject.h"
-#include "../core/handle.h"
-#include "../math/rect.h"
+#include "aether/math/vec.h"
 
-#include "aether/render/Color.h"
 
 namespace aether::render {
 
@@ -18,7 +16,7 @@ namespace aether::render {
     public:
         IRenderModule* GetRenderer() const;
 
-        math::Vec2i GetSize() const;
+        virtual math::Vec2i GetSize() const = 0;
 
     };
 

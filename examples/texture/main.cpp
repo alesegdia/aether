@@ -20,7 +20,7 @@ public:
     virtual int Init(const aether::core::CommandLineArguments& args) override { return 0; }
 
 private:
-    aether::graphics::Texture m_texture;
+    aether::render::Texture* m_texture;
 
 
 };

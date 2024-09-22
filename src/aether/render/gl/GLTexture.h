@@ -1,12 +1,10 @@
 #pragma once
 
-#include <SDL.h>
-
 #include <nether/nether.h>
 
-#include "aether/render/gl/GLRenderModule.h"
-
 #include "aether/render/texture.h"
+#include "aether/render/IRenderModule.h"
+
 
 namespace aether::render
 {
@@ -14,20 +12,16 @@ namespace aether::render
 	class GLTexture : public Texture
 	{
 	public:
-		GLTexture(GLRenderModule* owner)
-			: Texture(owner)
-		{
+		GLTexture(IRenderModule* owner, std::shared_ptr<nether::Texture> tex);
 
-		}
-
-		nether::Texture GetNetherTexture()
+		std::shared_ptr<nether::Texture> GetNetherTexture()
 		{
-			return m_tex;
+			return m_texture;
 		}
 
 	private:
-		nether::Texture m_tex;
-
+		std::shared_ptr<nether::Texture> m_texture;
+	
 	};
 
 }

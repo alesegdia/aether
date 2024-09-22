@@ -1,8 +1,9 @@
 #pragma once
 
 #include "aether/core/ModuleObject.h"
-
-#include "aether/render/texture.h"
+#include "aether/render/Texture.h"
+#include "aether/render/Font.h"
+#include "aether/render/Camera.h"
 
 namespace aether::render
 {
@@ -13,12 +14,10 @@ namespace aether::render
         IRenderModule(ModuleObject* o) : ModuleObject(o) {}
 
     public:
-        virtual Texture* CreateTexture() = 0;
-
-        virtual int LoadTextureFromFile(const Texture* tex, const std::string& path) = 0;
+        virtual Texture* LoadTextureFromFile(const std::string& path) = 0;
+        virtual Font* LoadFontFromFile(const std::string& path) = 0;
+        virtual Camera* CreateCamera(const math::Vec2f& viewport) = 0;
         virtual math::Vec2i GetTextureSize(const Texture* tex) = 0;
-
-        virtual void AddToBatch(const SceneNode* node)
         
     };
 

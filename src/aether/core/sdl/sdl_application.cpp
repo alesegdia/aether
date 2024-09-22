@@ -1,6 +1,6 @@
 #include "sdl_application.h"
 #include "sdl_keycode.h"
-#include "../../graphics/sdl/sdl_locator.h"
+#include "aether/render/sdl/sdl_locator.h"
 #include "aether/core/logger.h"
 
 #include <SDL_image.h>
@@ -215,6 +215,8 @@ int SDLApplication::AppImplementationInit(int argc, char **argv)
     SDL_GetVersion(&version);
     printf("SDL Version: %u.%u.%u", version.major, version.minor, version.patch);
     */
+
+
 
     return 0;
 }

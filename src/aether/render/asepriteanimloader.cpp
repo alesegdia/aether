@@ -23,7 +23,7 @@ namespace aether::render {
 
 		for(auto frame : frames)
 		{
-			FrameData fd;
+			FrameData fd(data.texture);
 			auto x = frame["frame"]["x"].int_value();
 			auto y = frame["frame"]["y"].int_value();
 			auto w = frame["frame"]["w"].int_value();

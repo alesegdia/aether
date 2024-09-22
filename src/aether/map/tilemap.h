@@ -1,9 +1,8 @@
 #pragma once
 
-#include "../math/matrix.h"
-#include "../math/vec.h"
-#include "../graphics/spritesheet.h"
-#include "../graphics/graphics.h"
+#include "aether/math/matrix.h"
+#include "aether/math/vec.h"
+#include "aether/render/spritesheet.h"
 
 #include "aether/core/utility.h"
 
@@ -12,6 +11,8 @@
 
 #include <Tmx.h>
 
+
+class IRenderModule;
 
 namespace aether {
 namespace tilemap {
@@ -26,9 +27,9 @@ enum class TileCollisionBehaviour : uint8_t
 
 struct Tile
 {
-    Tile(const graphics::TextureRegion* tex, TileCollisionBehaviour tcb);
+    Tile(const render::TextureRegion* tex, TileCollisionBehaviour tcb);
 
-    const graphics::TextureRegion* texture;
+    const render::TextureRegion* texture;
     TileCollisionBehaviour collisionBehaviour = TileCollisionBehaviour::Empty;
     std::unordered_map<std::string, std::string> props;
 };
@@ -41,7 +42,7 @@ public:
 
     Tile* GetTile( uint16_t tile_index );
 
-    Tile& AddTile(size_t index, const graphics::TextureRegion* tex, TileCollisionBehaviour tcb);
+    Tile& AddTile(size_t index, const render::TextureRegion* tex, TileCollisionBehaviour tcb);
 
     void SetName(const std::string& name);
 
@@ -238,7 +239,7 @@ public:
         m_tilesetCollection = std::make_shared<TilesetCollection>();
     }
 
-    void AddSheet(const graphics::Spritesheet::SharedPtr& sheet);
+    void AddSheet(const render::Spritesheet::SharedPtr& sheet);
 
     void AddTileset(const TileSet::Shared& tileset);
 
@@ -287,7 +288,7 @@ private:
     std::vector<Layer::Shared> m_layers;
     std::vector<TileSet::Shared> m_tilesets;
     std::shared_ptr<TilesetCollection> m_tilesetCollection;
-    std::vector<aether::graphics::Spritesheet::SharedPtr> m_sheetStore;
+    std::vector<aether::render::Spritesheet::SharedPtr> m_sheetStore;
     std::unordered_map<std::string, TileLayer::Shared> m_tileLayers;
     std::unordered_map<std::string, ObjectLayer::Shared> m_objectLayers;
     std::string m_basePath;
@@ -295,7 +296,7 @@ private:
 };
 
 
-std::shared_ptr<TileMap> BuildMap(const Tmx::Map& inmap);
+std::shared_ptr<TileMap> BuildMap(const Tmx::Map& inmap, aether::render::IRenderModule* module);
 
 
 }

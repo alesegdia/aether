@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../graphics/animation.h"
+/*
+#include "aether/render/animation.h"
 #include "texturenode.h"
 
 namespace aether {
@@ -81,3 +82,4 @@ private:
 
 }
 }
+*/

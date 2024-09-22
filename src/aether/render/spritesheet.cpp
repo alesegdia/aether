@@ -3,8 +3,7 @@
 #include <utility>
 #include "spritesheet.h"
 
-namespace aether {
-namespace graphics {
+namespace aether::render {
 
 Spritesheet::~Spritesheet()
 = default;
@@ -15,7 +14,7 @@ std::vector<const TextureRegion*> Spritesheet::getAllFrames()
 }
 
 
-Spritesheet::Spritesheet(size_t width, size_t height, Texture texture)
+Spritesheet::Spritesheet(size_t width, size_t height, Texture* texture)
 {
     Reset( width, height, std::move(texture) );
 }
@@ -49,13 +48,14 @@ std::vector<const TextureRegion*> Spritesheet::getFrames(size_t start, size_t en
     return frames;
 }
 
-void Spritesheet::Reset(size_t width, size_t height, Texture texture)
+void Spritesheet::Reset(size_t width, size_t height, Texture* texture)
 {
     m_width = int(width);
     m_height = int(height);
 
-    int tw = texture.GetWidth() / m_width;
-    int th = texture.GetHeight() / m_height;
+    auto size = texture->GetSize();
+    int tw = size.GetX() / m_width;
+    int th = size.GetY() / m_height;
 
     m_frames.clear();
 
@@ -68,9 +68,9 @@ void Spritesheet::Reset(size_t width, size_t height, Texture texture)
     }
 }
 
-void Spritesheet::Load(size_t width, size_t height, Texture texture)
+void Spritesheet::Load(size_t width, size_t height, Texture* texture)
 {
-    Reset(width, height, std::move(texture));
+    Reset(width, height, texture);
 }
 
 size_t Spritesheet::CoordToIndex(size_t x, size_t y) const
@@ -79,4 +79,4 @@ size_t Spritesheet::CoordToIndex(size_t x, size_t y) const
 }
 
 }
-}
+

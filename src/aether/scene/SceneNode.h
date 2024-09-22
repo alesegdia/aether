@@ -7,6 +7,13 @@
 #include "aether/core/ModuleObject.h"
 #include "aether/render/Color.h"
 
+#include <glm/vec3.hpp> // glm::vec3
+#include <glm/vec4.hpp> // glm::vec4
+#include <glm/mat4x4.hpp> // glm::mat4
+#include <glm/ext/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale
+#include <glm/ext/matrix_clip_space.hpp> // glm::perspective
+#include <glm/ext/scalar_constants.hpp> // glm::pi
+
 
 namespace aether::scene {
 
@@ -66,30 +73,33 @@ public:
         return m_angle;
     }
 
-    void SetRenderPosition(math::Vec2f renderPosition)
+    void SetRenderMatrix(const glm::mat4& parentMatrix)
     {
-        m_renderPosition = renderPosition;
+        m_renderMatrix = parentMatrix * GetModel();
     }
 
-    void SetRelativePosition(math::Vec2f relativePosition)
+    void SetRelativePosition(glm::vec3 relativePosition)
     {
-        m_relativePosition = relativePosition;
         if (relativePosition != m_relativePosition)
         {
-            m_dirty = true;
+            m_modelDirty = true;
+            m_relativePosition = relativePosition;
         }
     }
 
-    // clears the dirty boolean value
-    // returns true if the dirty was set to false, and false if the dirty was already cleared
-    bool ClearDirty()
+    const glm::mat4x4& GetModel()
     {
-        if (!m_dirty)
+        if (m_modelDirty)
         {
-            return false;
+            m_model = glm::mat4(1.0f);
+            m_model = glm::scale(m_model, m_scale);
+            m_model = glm::rotate(m_model, m_rotation[0], glm::vec3(1.f, 0.f, 0.f));
+            m_model = glm::rotate(m_model, m_rotation[1], glm::vec3(0.f, 1.f, 0.f));
+            m_model = glm::rotate(m_model, m_rotation[2], glm::vec3(0.f, 0.f, 1.f));
+            m_model = glm::translate(m_model, m_relativePosition);
+            m_modelDirty = false;
         }
-        m_dirty = true;
-        return true;
+        return m_model;
     }
 
 protected:
@@ -97,11 +107,15 @@ protected:
     SceneNode::Shared m_parent{nullptr};
     render::Color m_color = render::Color(1.0f, 1.0f, 1.0f);
     std::vector<SceneNode::Shared> m_children;
-    bool m_dirty = true;
+    
+    bool m_modelDirty = true;
+    glm::mat4x4 m_model;
+    glm::vec3 m_scale;
+    glm::vec3 m_rotation;
+    glm::vec3 m_relativePosition;
+    glm::mat4x4 m_renderMatrix;
 
     int m_zIndex = 0;
-    math::Vec2f m_relativePosition;
-    math::Vec2f m_renderPosition;
     math::Vec2f m_center;
     float m_angle = 0.0f;
 

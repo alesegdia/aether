@@ -8,7 +8,8 @@ namespace aether::render {
     class GLTextNode : public render::GLSceneNode
     {
     public:
-        GLTextNode(std::shared_ptr<render::Texture> tex)
+        GLTextNode(ModuleObject* o, std::shared_ptr<render::Texture> tex)
+            : render::GLSceneNode(o)
         {
             m_texRegion = std::make_unique<render::TextureRegion>();
         }

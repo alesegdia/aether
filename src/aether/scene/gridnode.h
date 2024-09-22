@@ -1,8 +1,9 @@
+
 #pragma once
 
-#include "aether/scene/SceneNode.h"
+/*
 
-#include "../graphics/graphics.h"
+#include "aether/scene/SceneNode.h"
 
 namespace aether {
 namespace scene {
@@ -28,3 +29,4 @@ private:
 
 }
 }
+*/

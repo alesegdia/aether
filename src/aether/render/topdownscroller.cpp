@@ -30,9 +30,8 @@ namespace aether::render {
 		m_cam->SetPosition(pos);
 	}
 
-	void TopDownMapScroller::Setup(const aether::graphics::Camera::SharedPtr& cam, const aether::math::Rectf& globalBounds)
+	void TopDownMapScroller::Setup(Camera* cam, const aether::math::Rectf& globalBounds)
 	{
-		m_cam = cam;
 		m_globalBounds = globalBounds;
 	}
 

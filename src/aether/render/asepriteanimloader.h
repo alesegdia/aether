@@ -10,7 +10,7 @@
 namespace aether::render {
 
 
-using AnimationsMap = std::unordered_map<std::string, std::shared_ptr<aether::graphics::Animation>>;
+using AnimationsMap = std::unordered_map<std::string, std::shared_ptr<aether::render::Animation>>;
 
         struct FrameData
         {
@@ -21,13 +21,13 @@ using AnimationsMap = std::unordered_map<std::string, std::shared_ptr<aether::gr
 struct AsepriteAnimationData
 {
     AnimationsMap anims;
-    aether::graphics::Texture texture;
+    aether::render::Texture* texture;
 };
 
 class AsepriteAnimationLoader
 {
 public:
-
+    
     AsepriteAnimationData Load(const std::string& path);
 };
 
