@@ -41,10 +41,21 @@ namespace aether::render {
             return m_texture;
         }
 
+        bool IsBillboard()
+        {
+            return m_isBillboard;
+        }
+
+        void SetBillboard(bool billboard)
+        {
+            m_isBillboard = true;
+        }
+
     private:
         nether::Texture* m_texture;
         nether::ShaderProgram* m_shader;
         nether::Vertices* m_vertices;
+        bool m_isBillboard = false;
 
 
 
