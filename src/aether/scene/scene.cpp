@@ -6,13 +6,12 @@ namespace aether::scene {
 
     Scene::Scene()
     {
-        m_root = std::make_shared<SceneNode>();
-        m_root->SetParent(std::make_shared<SceneNode>());
+
     }
 
     void Scene::Render()
     {
-        aether::graphics::clear(m_clearColor);
+        aether::render::clear(m_clearColor);
         m_nodesSortedByZindex.clear();
         Traverse(m_root);
         for (auto child : m_nodesSortedByZindex) {
@@ -33,13 +32,13 @@ namespace aether::scene {
         }
     }
 
-    void Scene::AddToScene(std::shared_ptr<SceneNode> sceneNode)
+    void Scene::AddToScene(SceneNode* sceneNode)
     {
-        m_root->AddChild(sceneNode);
-        sceneNode->SetParent(m_root);
+        m_root.AddChild(sceneNode);
+        sceneNode->SetParent(&m_root);
     }
 
-    void Scene::SetClearColor(aether::graphics::Color color)
+    void Scene::SetClearColor(aether::render::Color color)
     {
         m_clearColor = color;
     }

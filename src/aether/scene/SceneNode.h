@@ -7,6 +7,8 @@
 #include "aether/core/ModuleObject.h"
 #include "aether/render/Color.h"
 
+#include "aether/core/utility.h"
+
 #include <glm/vec3.hpp> // glm::vec3
 #include <glm/vec4.hpp> // glm::vec4
 #include <glm/mat4x4.hpp> // glm::mat4
@@ -14,18 +16,19 @@
 #include <glm/ext/matrix_clip_space.hpp> // glm::perspective
 #include <glm/ext/scalar_constants.hpp> // glm::pi
 
+namespace aether::render
+{
+    class IRenderModule;
+}
 
 namespace aether::scene {
 
-    class IRenderModule;
 
 class SceneNode : public core::ModuleObject
 {
 public:
 
     SceneNode(core::ModuleObject* o) : core::ModuleObject(o) {}
-
-    IRenderModule* GetRenderer() const;
 
     using Shared = std::shared_ptr<SceneNode>;
 
@@ -35,43 +38,20 @@ public:
     /// Retrieves the position of this node relative to its parent
     /// </summary>
     /// <returns></returns>
-    math::Vec2f& GetRelativePosition();
-
-    /// <summary>
-    /// Retrieves the position of this node relative to its parent
-    /// </summary>
-    /// <returns></returns>
-    const math::Vec2f& GetRelativePosition() const;
-
-    /// <summary>
-    /// Retrieves the final rendering position
-    /// </summary>
-    /// <returns></returns>
-    math::Vec2f& GetRenderPosition();
-
-    /// <summary>
-    /// Retrieves the final rendering position
-    /// </summary>
-    /// <returns></returns>
-    const math::Vec2f& GetRenderPosition() const;
+    const glm::vec3& GetRelativePosition() const;
 
     /// <summary>
     /// Renders the
     /// </summary>
     virtual void Render();
 
-    std::vector<SceneNode::Shared>& GetChildren();
+    const std::vector<SceneNode*>& GetChildren() const;
 
-    SceneNode::Shared& GetParent();
+    SceneNode* GetParent();
 
-    void SetParent(Shared newParent);
+    void SetParent(SceneNode* newParent);
 
-    void AddChild(const SceneNode::Shared& sceneNode);
-
-    float& GetAngle()
-    {
-        return m_angle;
-    }
+    void AddChild(SceneNode* sceneNode);
 
     void SetRenderMatrix(const glm::mat4& parentMatrix)
     {
@@ -102,23 +82,23 @@ public:
         return m_model;
     }
 
+    void RemoveChild(SceneNode* child)
+    {
+        aether::core::remove_by_value(m_children, child);
+    }
+
 protected:
 
-    SceneNode::Shared m_parent{nullptr};
+    SceneNode* m_parent{nullptr};
     render::Color m_color = render::Color(1.0f, 1.0f, 1.0f);
-    std::vector<SceneNode::Shared> m_children;
+    std::vector<SceneNode*> m_children;
     
     bool m_modelDirty = true;
-    glm::mat4x4 m_model;
-    glm::vec3 m_scale;
-    glm::vec3 m_rotation;
-    glm::vec3 m_relativePosition;
-    glm::mat4x4 m_renderMatrix;
-
-    int m_zIndex = 0;
-    math::Vec2f m_center;
-    float m_angle = 0.0f;
-
+    glm::mat4x4 m_model = {};
+    glm::vec3 m_scale = {};
+    glm::vec3 m_rotation = {};
+    glm::vec3 m_relativePosition = {};
+    glm::mat4x4 m_renderMatrix = {};
 
 };
 

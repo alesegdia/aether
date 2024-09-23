@@ -5,28 +5,29 @@ namespace aether::render {
 
 	inline GLRenderModule::~GLRenderModule()
 	{
-		CleanVector(m_allFonts);
-		CleanVector(m_allTextures);
+		m_allFonts.clear();
+		m_allTextures.clear();
 	}
 	
 	inline Texture* GLRenderModule::LoadTextureFromFile(const std::string& path)
 	{
 		std::shared_ptr<nether::Texture> netherTex = std::make_shared<nether::Texture>();
-		aether::render::GLTexture* tex = new aether::render::GLTexture(this, netherTex);
+		m_allTextures.emplace_back(this, netherTex);
 		netherTex->LoadFromFile(path, nether::TextureFormat::RGBA8);
-		m_allTextures.push_back(tex);
-		return tex;
+		return &m_allTextures.back();
 	}
 	inline Font* GLRenderModule::LoadFontFromFile(const std::string& path)
 	{
+		/*
 		FT_Face face;
 		if (FT_New_Face(ft, "fonts/arial.ttf", 0, &face))
 		{
 			std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
 			return -1;
 		}
-
+		*/
 	}
+
 	inline math::Vec2i GLRenderModule::GetTextureSize(const Texture* tex)
 	{
 		auto texture = (GLTexture*)(tex);

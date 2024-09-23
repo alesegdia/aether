@@ -1,5 +1,6 @@
 #include <aether/aether.h>
 
+/*
 class NormalScreen : public aether::core::IScreen
 {
 public:
@@ -82,3 +83,4 @@ int main( int argc, char** argv )
     aether::core::CommandLineArguments args(argc, argv);
     return MyGame(200, 200).Exec(args);
 }
+*/

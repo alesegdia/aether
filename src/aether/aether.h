@@ -9,6 +9,7 @@
 #include "core/resourcemanager.h"
 #include "core/iscreen.h"
 #include "core/textinputprocessor.h"
+#include "core/Engine.h"
 
 #include "render/color.h"
 #include "render/font.h"
@@ -38,39 +39,3 @@
 
 #include "json11.hpp"
 
-
-namespace aether
-{
-	class Engine
-	{
-	public:
-		template <typename RendererType>
-		void CreateRenderer()
-		{
-			assert(m_renderer == nullptr);
-			m_renderer = new RendererType();
-		}
-
-		render::IRenderModule* GetRenderer()
-		{
-			return m_renderer;
-		}
-
-
-		void ResetScene()
-		{
-			m_scene = {};
-		}
-
-		void Cleanup()
-		{
-			delete m_renderer;
-		}
-
-
-	private:
-		render::IRenderModule* m_renderer;
-		scene::Scene m_scene;
-
-	};
-}

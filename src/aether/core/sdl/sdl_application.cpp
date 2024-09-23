@@ -210,13 +210,9 @@ int SDLApplication::AppImplementationInit(int argc, char **argv)
     // initialize input
     //Input::Initialize();
 
-    /*
     SDL_version version;
     SDL_GetVersion(&version);
     printf("SDL Version: %u.%u.%u", version.major, version.minor, version.patch);
-    */
-
-
 
     return 0;
 }

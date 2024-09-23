@@ -56,6 +56,12 @@ namespace aether::render {
 	class GLRenderModule : public IRenderModule
 	{
 	public:
+		GLRenderModule()
+			: IRenderModule(nullptr)
+		{
+
+		}
+
 		virtual ~GLRenderModule();
 
 		Texture* LoadTextureFromFile(const std::string& path) override;
@@ -72,17 +78,12 @@ namespace aether::render {
 
 		void Render();
 
-	private:
-
-		template <typename T>
-		void CleanVector(std::vector<T*>& v)
+		Camera* CreateCamera(const math::Vec2f& viewport) override
 		{
-			for (auto i : v)
-			{
-				delete i;
-			}
-			v.clear();
+			return nullptr;
 		}
+
+	private:
 
 		GLBatch* AddBatchForNode(const GLSceneNode* node);
 
@@ -90,8 +91,8 @@ namespace aether::render {
 		static constexpr int SameTextureScore = 1;
 
 		std::vector<GLBatch> m_batches;
-		std::vector<Texture*> m_allTextures;
-		std::vector<Font*> m_allFonts;
+		std::vector<Texture> m_allTextures;
+		std::vector<Font> m_allFonts;
 
 	};
 

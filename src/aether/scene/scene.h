@@ -35,13 +35,13 @@ namespace aether::scene {
             return ptr;
         }
 
-        void AddToScene(std::shared_ptr<SceneNode> sceneNode);
+        void AddToScene(SceneNode* sceneNode);
 
         void SetClearColor(aether::render::Color color);
 
 
     private:
-        std::shared_ptr<SceneNode> m_root;
+        SceneNode m_root;
         std::vector<std::shared_ptr<SceneNode>> m_nodesSortedByZindex;
         aether::render::Color m_clearColor = aether::render::Color::Black;
 

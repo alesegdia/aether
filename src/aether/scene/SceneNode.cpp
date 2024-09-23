@@ -2,46 +2,17 @@
 #include "aether/core/utility.h"
 
 
+namespace aether::scene {
 
-
-namespace aether {
-namespace scene {
 
 SceneNode::~SceneNode()
 {
 
 }
 
-IRenderModule* SceneNode::GetRenderer() const { return (IRenderModule*)owner; }
-
-math::Vec2f &SceneNode::GetRelativePosition()
+const glm::vec3& SceneNode::GetRelativePosition() const
 {
     return m_relativePosition;
-}
-
-const math::Vec2f &SceneNode::GetRelativePosition() const
-{
-    return m_relativePosition;
-}
-
-math::Vec2f &SceneNode::GetRenderPosition()
-{
-    return m_renderPosition;
-}
-
-const math::Vec2f &SceneNode::GetRenderPosition() const
-{
-    return m_renderPosition;
-}
-
-int SceneNode::GetZIndex() const
-{
-    return m_zIndex;
-}
-
-void SceneNode::SetZIndex(int pzindex)
-{
-    m_zIndex = pzindex;
 }
 
 void SceneNode::Render()
@@ -49,31 +20,29 @@ void SceneNode::Render()
 
 }
 
-std::vector<SceneNode::Shared> &SceneNode::GetChildren()
+const std::vector<SceneNode*>& SceneNode::GetChildren() const
 {
     return m_children;
 }
 
-SceneNode::Shared &SceneNode::GetParent()
+SceneNode* SceneNode::GetParent()
 {
     return m_parent;
 }
 
-void SceneNode::SetParent(SceneNode::Shared newParent)
+void SceneNode::SetParent(SceneNode* newParent)
 {
     if( m_parent != nullptr ) {
-        auto me = shared_from_this();
-        aether::core::remove_by_value(m_parent->GetChildren(), me);
+        m_parent->RemoveChild(this);
     }
-    newParent->AddChild(shared_from_this());
+    newParent->AddChild(this);
     m_parent = newParent;
 }
 
-void SceneNode::AddChild(const SceneNode::Shared &sceneNode)
+void SceneNode::AddChild(SceneNode* sceneNode)
 {
     m_children.push_back(sceneNode);
 }
 
 
-}
 }

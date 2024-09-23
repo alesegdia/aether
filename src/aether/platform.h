@@ -15,3 +15,15 @@
 	#error You must declare what backend to use
 #endif
 
+namespace aether
+{
+	namespace render
+	{
+		class IRenderModule;
+	}
+
+	core::ApplicationBase* CreateApp();
+	render::IRenderModule* CreateRenderModule();
+
+}
+
