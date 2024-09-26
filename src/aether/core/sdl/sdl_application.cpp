@@ -118,7 +118,7 @@ SDLApplication::SDLApplication(int sw, int sh)
 
 }
 
-int SDLApplication::AppImplementationInit(int argc, char **argv)
+int SDLApplication::Init(const CommandLineArguments& args)
 {
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         Logger::LogError("Failed to initialize SDL video.");
@@ -166,8 +166,7 @@ int SDLApplication::AppImplementationInit(int argc, char **argv)
         return -1;
     }
 
-    if(IsOpenGLActivated())
-    {
+#ifdef AETHER_USE_GL
 	    glContext = SDL_GL_CreateContext(m_window);
         if(glContext == NULL)
         {
@@ -197,15 +196,13 @@ int SDLApplication::AppImplementationInit(int argc, char **argv)
         SDL_GetWindowSize(m_window, &w, &h);
         glViewport(0, 0, w, h);
         glClearColor(0.0f, 0.5f, 1.0f, 0.0f);
-    }
-    else
-    {
+#else
         m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
         aether_sdl_set_renderer(m_renderer);
 
         SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
         SDL_RenderClear(m_renderer);
-    }
+#endif
 
     // initialize input
     //Input::Initialize();

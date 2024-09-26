@@ -3,6 +3,8 @@
 #include "configfile.h"
 #include "inipp/inipp.h"
 
+#include "aether/render/IRenderModule.h"
+
 namespace aether
 {
 	namespace resources
@@ -10,8 +12,7 @@ namespace aether
 
 		std::shared_ptr<aether::render::Spritesheet> SheetAssetStorage::LoadImpl(std::string path)
 		{
-			auto spritesheet = std::make_shared<graphics::Spritesheet>();
-			auto texture = std::make_shared<graphics::Texture>();
+			auto spritesheet = std::make_shared<render::Spritesheet>();
 
 			ConfigFile configFile;
 			configFile.Load(path.c_str());
@@ -22,10 +23,10 @@ namespace aether
 			configFile.GetValue("default", "cols", cols);
 			configFile.GetValue("default", "asset", relPath);
 
-			texture->Load(GetPath(relPath).c_str());
+			auto texture = m_renderModule->LoadTextureFromFile(path);
 			m_cachedTextures.push_back(texture);
 
-			spritesheet->Load(cols, rows, *texture);
+			spritesheet->Load(cols, rows, texture);
 			return spritesheet;		
 		}
 

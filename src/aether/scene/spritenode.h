@@ -6,7 +6,7 @@
 namespace aether::scene {
 
 
-class SpriteNode : public SceneNode
+class SpriteNode : public SceneNode, public render::IRenderable
 {
 public:
     SpriteNode(core::ModuleObject* o, std::shared_ptr<render::Texture> tex)
@@ -34,6 +34,11 @@ public:
     void SetClippingRect(float x, float y, float w, float h)
     {
         m_texRegion->SetClip(aether::math::Rectf(x, y, w, h));
+    }
+
+    const std::unique_ptr<render::TextureRegion>& GetRegion()
+    {
+        return m_texRegion;
     }
 
 protected:

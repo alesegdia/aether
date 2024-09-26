@@ -10,7 +10,16 @@ namespace aether::render {
 
     class GLRenderModule;
 
-    class GLSceneNode : public scene::SceneNode
+    class IRenderable
+    {
+    public:
+        virtual nether::ShaderProgram* GetShader() const = 0;
+        virtual nether::Texture* GetTexture() const = 0;
+        virtual nether::Vertices* GetVertices() const = 0;
+
+    };
+
+    class GLSceneNode : public scene::SceneNode, public IRenderable
     {
     public:
         GLSceneNode(ModuleObject* o) : scene::SceneNode(o) {}
@@ -39,6 +48,11 @@ namespace aether::render {
         nether::Texture* GetTexture() const
         {
             return m_texture;
+        }
+
+        nether::Vertices* GetVertices() const
+        {
+            return m_vertices;
         }
 
         bool IsBillboard()

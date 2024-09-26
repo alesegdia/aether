@@ -1,3 +1,4 @@
+
 #include <aether/aether.h>
 
 class MyGame : public aether::core::Application
@@ -7,17 +8,19 @@ public:
 
     int Ready(const aether::core::CommandLineArguments& args) override
     {
-        m_texture.Load("media/aether-logo.png");
+        auto texture = aether::get_engine()->GetRenderer()->LoadTextureFromFile("media/aether-logo.png");
+        auto scn = aether::get_scene();
+        auto sprite = scn.CreateSpriteNode();
+        
         return 0;
     }
 
     void Render() override
     {
         aether::core::Application::Render();
-        m_texture.Draw(10, 10);
+        // m_texture.Draw(10, 10);
     }
 
-    virtual int Init(const aether::core::CommandLineArguments& args) override { return 0; }
 
 private:
     aether::render::Texture* m_texture;

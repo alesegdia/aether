@@ -67,9 +67,6 @@ namespace aether::render {
 		Texture* LoadTextureFromFile(const std::string& path) override;
 		Font* LoadFontFromFile(const std::string& path) override;
 
-		math::Vec2i GetTextureSize(const Texture* tex);
-
-
 		void AddToBatch(const GLSceneNode* node);
 
 		void RemoveFromBatch(const GLSceneNode* node);
@@ -91,8 +88,8 @@ namespace aether::render {
 		static constexpr int SameTextureScore = 1;
 
 		std::vector<GLBatch> m_batches;
-		std::vector<Texture> m_allTextures;
-		std::vector<Font> m_allFonts;
+		std::vector<GLTexture> m_allTextures;
+		std::vector<GLFont> m_allFonts;
 
 	};
 

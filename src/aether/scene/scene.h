@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <vector>
+#include <functional>
 
 #include "aether/math/vec.h"
 #include "aether/render/color.h"
@@ -10,37 +11,39 @@
 
 
 #include "aether/scene/SceneNode.h"
+#include "aether/core/ModuleObject.h"
 
 namespace aether::scene {
 
     class SceneNode;
+    class SpriteNode;
 
-    class Scene
+    class Scene : public core::ModuleObject
     {
     public:
         using SharedPtr = std::shared_ptr<Scene>;
 
         Scene();
 
-        void Render();
+        void Traverse(const std::function<void(SceneNode*)>& functor);
 
-        void Traverse(const std::shared_ptr<SceneNode>& node);
-
-        template <typename SceneNodeType, typename... Args>
-        std::shared_ptr<SceneNodeType> AddToScene(Args&&... args)
+        void AddToSceneRoot(SceneNode* node)
         {
-            auto ptr = std::make_shared<SceneNodeType>(args...);
-            m_root->AddChild(ptr);
-            ptr->SetParent(m_root);
-            return ptr;
+            m_root.AddChild(node);
+            node->SetParent(&m_root);
         }
 
         void AddToScene(SceneNode* sceneNode);
 
         void SetClearColor(aether::render::Color color);
 
+        void Step();
+
+        SpriteNode
 
     private:
+        void Traverse(const std::function<void(SceneNode*)>& functor, SceneNode* node);
+
         SceneNode m_root;
         std::vector<std::shared_ptr<SceneNode>> m_nodesSortedByZindex;
         aether::render::Color m_clearColor = aether::render::Color::Black;

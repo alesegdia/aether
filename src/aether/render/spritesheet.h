@@ -12,8 +12,6 @@ class Spritesheet
 {
 public:
 
-    typedef std::shared_ptr<Spritesheet> SharedPtr;
-
     /**
      * @brief Spritesheet
      * @param width in tiles

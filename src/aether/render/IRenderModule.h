@@ -18,7 +18,7 @@ namespace aether::render
         virtual Font* LoadFontFromFile(const std::string& path) = 0;
         virtual Camera* CreateCamera(const math::Vec2f& viewport) = 0;
         virtual math::Vec2i GetTextureSize(const Texture* tex) = 0;
-        
+
     };
 
     class IPrimitiveDrawInterface

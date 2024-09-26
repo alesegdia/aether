@@ -74,7 +74,7 @@ namespace aether::render {
             m_v1 = m_v0 + ch / ty;
         }
         
-        Texture* m_texture;
+        Texture* m_texture = nullptr;
         math::Rectf m_clip;
         float m_u0 = 0;
         float m_v0 = 0;

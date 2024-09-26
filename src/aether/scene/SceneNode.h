@@ -53,9 +53,9 @@ public:
 
     void AddChild(SceneNode* sceneNode);
 
-    void SetRenderMatrix(const glm::mat4& parentMatrix)
+    void ComputeRenderMatrix()
     {
-        m_renderMatrix = parentMatrix * GetModel();
+        m_renderMatrix = m_parent != nullptr ? m_parent->GetModel() * GetModel() : GetModel();
     }
 
     void SetRelativePosition(glm::vec3 relativePosition)

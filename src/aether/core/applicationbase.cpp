@@ -3,6 +3,7 @@
 #include <utility>
 #include <iostream>
 #include "aether/core/logger.h"
+#include "aether/core/Engine.h"
 
 #include "time.h"
 
@@ -60,6 +61,8 @@ int ApplicationBase::Exec(const CommandLineArguments& args)
     AppImplementationInit(args);
 
     Initialize(args);
+
+    aether::init_engine();
 
     while( false == m_doExit )
     {

@@ -11,10 +11,17 @@ namespace aether
 		class SheetAssetStorage : public BaseAssetStorage<aether::render::Spritesheet>
 		{
 		public:
+			SheetAssetStorage(render::IRenderModule* renderModule)
+				: m_renderModule(renderModule)
+			{
+
+			}
+			
 			std::shared_ptr<aether::render::Spritesheet> LoadImpl(std::string path) override;
 
 		private:
-			std::vector<std::shared_ptr<aether::render::Texture>> m_cachedTextures;
+			std::vector<aether::render::Texture*> m_cachedTextures;
+			render::IRenderModule* m_renderModule = nullptr;
 
 		};
 

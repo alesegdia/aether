@@ -28,7 +28,7 @@ class AsepriteAnimationLoader
 {
 public:
     
-    AsepriteAnimationData Load(const std::string& path);
+    AsepriteAnimationData Load(IRenderModule* renderModule, const std::string& path);
 };
 
         

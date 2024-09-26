@@ -5,31 +5,31 @@
 namespace aether::scene {
 
     Scene::Scene()
+        : ModuleObject(nullptr)
+        , m_root(this)
     {
 
     }
 
-    void Scene::Render()
+    void Scene::Traverse(const std::function<void(SceneNode*)>& functor)
     {
-        aether::render::clear(m_clearColor);
-        m_nodesSortedByZindex.clear();
-        Traverse(m_root);
-        for (auto child : m_nodesSortedByZindex) {
-            child->Render();
+        Traverse(functor, &m_root);
+    }
+
+    void Scene::Traverse(const std::function<void(SceneNode*)>& functor, SceneNode* node)
+    {
+        functor(&m_root);
+        for (auto child : node->GetChildren())
+        {
+            Traverse(functor, child);
         }
     }
 
-    void Scene::Traverse(const std::shared_ptr<SceneNode>& node)
+    void Scene::Step()
     {
-        core::insert_sorted(m_nodesSortedByZindex, node, [](auto val, auto iter) {
-            return val->GetZIndex() < iter->GetZIndex();
-            });
-        auto parent = node->GetParent();
-        auto newRenderPosition = (parent == nullptr ? node->GetRelativePosition() : parent->GetRelativePosition() + node->GetRelativePosition());
-        node->SetRenderPosition(newRenderPosition);
-        for (auto child : node->GetChildren()) {
-            Traverse(child);
-        }
+        Traverse([](SceneNode* node) {
+            node->ComputeRenderMatrix();
+        }, &m_root);
     }
 
     void Scene::AddToScene(SceneNode* sceneNode)

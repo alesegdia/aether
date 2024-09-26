@@ -5,7 +5,7 @@ class MyGame : public aether::core::Application
 public:
     MyGame(int w, int h) : aether::core::Application(w, h) {}
 
-    virtual int Init(const aether::core::CommandLineArguments& args) override
+    virtual int Ready(const aether::core::CommandLineArguments& args) override
     {
         return 0;
     }

@@ -13,6 +13,7 @@ namespace aether::render
 	{
 	public:
 		GLTexture(IRenderModule* owner, std::shared_ptr<nether::Texture> tex);
+		math::Vec2i GetSize() const override;
 
 		std::shared_ptr<nether::Texture> GetNetherTexture()
 		{

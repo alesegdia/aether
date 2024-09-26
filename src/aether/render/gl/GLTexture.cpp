@@ -10,4 +10,12 @@ namespace aether::render {
 
 	}
 
+	math::Vec2i GLTexture::GetSize() const
+	{
+		int width, height;
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
+		return { width, height };
+	}
+
 }

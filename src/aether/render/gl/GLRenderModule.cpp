@@ -28,11 +28,6 @@ namespace aether::render {
 		*/
 	}
 
-	inline math::Vec2i GLRenderModule::GetTextureSize(const Texture* tex)
-	{
-		auto texture = (GLTexture*)(tex);
-		assert(tex->GetOwner() == this);
-	}
 	inline void GLRenderModule::AddToBatch(const GLSceneNode* node)
 	{
 		auto batch = GetBestBatchForNode(node);
@@ -134,6 +129,11 @@ inline GLBatch* GLRenderModule::AddBatchForNode(const GLSceneNode* node)
 
 	// return last element
 	return &(m_batches.back());
+}
+
+IRenderModule* create_render_module()
+{
+	return new GLRenderModule();
 }
 
 }

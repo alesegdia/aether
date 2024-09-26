@@ -29,9 +29,8 @@ public:
     }
 
 
-    // ApplicationBase interface
 protected:
-    virtual int AppImplementationInit(int argc, char **argv) final;
+    int Init(const CommandLineArguments& args) final;
 
 private:
     SDL_Window* m_window = NULL;
@@ -47,17 +46,12 @@ private:
 #endif
     }
 
-    // ApplicationBase interface
 protected:
     void Deinit();
-
-    virtual void PreUpdate() final;
-
-    virtual void PostUpdate() final;
-
-    virtual void PreRender() final;
-
-    virtual void PostRender() final;
+    void PreUpdate() final;
+    void PostUpdate() final;
+    void PreRender() final;
+    void PostRender() final;
 
 
 };

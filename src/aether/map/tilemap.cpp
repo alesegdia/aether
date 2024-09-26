@@ -309,7 +309,7 @@ void TileLayer::AddProperty(const std::string &key, const std::string &value)
     m_props[key] = value;
 }
 
-void TileMap::AddSheet(const render::Spritesheet::SharedPtr& sheet)
+void TileMap::AddSheet(const std::shared_ptr<render::Spritesheet>& sheet)
 {
     m_sheetStore.push_back(sheet);
 }

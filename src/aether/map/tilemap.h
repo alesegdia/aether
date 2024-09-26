@@ -239,7 +239,7 @@ public:
         m_tilesetCollection = std::make_shared<TilesetCollection>();
     }
 
-    void AddSheet(const render::Spritesheet::SharedPtr& sheet);
+    void AddSheet(const std::shared_ptr<render::Spritesheet>& sheet);
 
     void AddTileset(const TileSet::Shared& tileset);
 
@@ -288,7 +288,7 @@ private:
     std::vector<Layer::Shared> m_layers;
     std::vector<TileSet::Shared> m_tilesets;
     std::shared_ptr<TilesetCollection> m_tilesetCollection;
-    std::vector<aether::render::Spritesheet::SharedPtr> m_sheetStore;
+    std::vector<std::shared_ptr<render::Spritesheet>> m_sheetStore;
     std::unordered_map<std::string, TileLayer::Shared> m_tileLayers;
     std::unordered_map<std::string, ObjectLayer::Shared> m_objectLayers;
     std::string m_basePath;
