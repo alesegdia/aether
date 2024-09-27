@@ -10,14 +10,10 @@
 namespace aether::render
 {
 
-	class GLSpriteNode : public scene::SpriteNode, public IRenderable
+	class GLSpriteNode : public scene::SpriteNode
 	{
 	public:
 		GLSpriteNode(IRenderModule* owner, std::shared_ptr<nether::Texture> tex);
-
-	private:
-		GLSceneNode* m_glSceneNode;
-
 	};
 
 }

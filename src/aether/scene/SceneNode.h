@@ -23,7 +23,6 @@ namespace aether::render
 
 namespace aether::scene {
 
-
 class SceneNode : public core::ModuleObject
 {
 public:
@@ -53,39 +52,13 @@ public:
 
     void AddChild(SceneNode* sceneNode);
 
-    void ComputeRenderMatrix()
-    {
-        m_renderMatrix = m_parent != nullptr ? m_parent->GetModel() * GetModel() : GetModel();
-    }
+    void ComputeRenderMatrix();
 
-    void SetRelativePosition(glm::vec3 relativePosition)
-    {
-        if (relativePosition != m_relativePosition)
-        {
-            m_modelDirty = true;
-            m_relativePosition = relativePosition;
-        }
-    }
+    void SetRelativePosition(glm::vec3 relativePosition);
 
-    const glm::mat4x4& GetModel()
-    {
-        if (m_modelDirty)
-        {
-            m_model = glm::mat4(1.0f);
-            m_model = glm::scale(m_model, m_scale);
-            m_model = glm::rotate(m_model, m_rotation[0], glm::vec3(1.f, 0.f, 0.f));
-            m_model = glm::rotate(m_model, m_rotation[1], glm::vec3(0.f, 1.f, 0.f));
-            m_model = glm::rotate(m_model, m_rotation[2], glm::vec3(0.f, 0.f, 1.f));
-            m_model = glm::translate(m_model, m_relativePosition);
-            m_modelDirty = false;
-        }
-        return m_model;
-    }
+    const glm::mat4x4& GetModel();
 
-    void RemoveChild(SceneNode* child)
-    {
-        aether::core::remove_by_value(m_children, child);
-    }
+    void RemoveChild(SceneNode* child);
 
 protected:
 
