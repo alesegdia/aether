@@ -28,9 +28,43 @@ namespace aether::render {
 		*/
 	}
 
+	aether::render::Camera* GLRenderModule::CreateCamera(const math::Vec2f& viewport)
+	{
+		m_allCameras.emplace_back(viewport);
+		return &m_allCameras.back();
+	}
+
+	aether::render::Camera* GLRenderModule::CreateCamera(const math::Vec2f& viewport)
+	{
+		m_allCameras.emplace_back(viewport);
+		return &m_allCameras.back();
+	}
+
+	aether::render::Sprite* GLRenderModule::CreateSprite(Texture* texture, const math::Recti& rect)
+	{
+		m_allSprites.emplace_back(texture, rect);
+		return &m_allSprites.back();
+	}
+
+	aether::render::ShaderProgram* GLRenderModule::LoadShaderFromFile(const std::string& vspath, const std::string& fspath)
+	{
+
+	}
+
+	GLRenderModule::GLRenderModule() : IRenderModule(nullptr)
+	{
+
+	}
+
 	IRenderModule* create_render_module()
 	{
 		return new GLRenderModule();
+	}
+
+	void GLBatchDispatcher::BindTextures(Batch& batch)
+	{
+		auto gltex = ResourceCast(batch.GetTexture());
+		batch.GetTexture()->Bind(nether::TextureUnit::Texture0);
 	}
 
 }

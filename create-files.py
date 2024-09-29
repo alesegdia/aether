@@ -1,5 +1,6 @@
 import sys
 import os
+import subprocess
 
 def create_files(base_directory, base_name):
     # Ensure the base directory exists
@@ -25,10 +26,17 @@ def create_files(base_directory, base_name):
 
     # Create the .cpp file
     with open(cpp_file_name, 'w') as cpp_file:
-        cpp_content = f"#include \"{header_file_name}\"\n\n// Implementation for {base_name}\n"
+        cpp_content = f"#include \"{base_name}.h\"\n\n// Implementation for {base_name}\n"
         cpp_file.write(cpp_content)
     
     print(f"CPP file created: {cpp_file_name}")
+
+    # Trigger a command after creating the files
+    open_file_command = "genie.exe --backend=backend-gl vs2022"
+    
+    if open_file_command:
+        print(f"Executing command: {open_file_command}")
+        subprocess.run(open_file_command, shell=True)
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:

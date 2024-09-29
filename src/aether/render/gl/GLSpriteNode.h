@@ -8,6 +8,7 @@
 #include "aether/render/Topology.h"
 #include "aether/scene/SceneNode.h"
 #include "aether/scene/spritenode.h"
+#include "aether/render/IBatchedEntity.h"
 
 
 namespace aether::render
@@ -21,27 +22,40 @@ namespace aether::render
             , m_shader(shader)
             , m_sprite(o, texture)
         {
-
+            m_topology = std::make_unique<render::Topology>();
         }
 
-        void SetClippingRect(float x, float y, float w, float h) override
-        {
-            m_sprite.SetClippingRect(x, y, w, h);
-        }
+		void SetClippingRect(float x, float y, float w, float h) override
+		{
+			m_sprite.SetClippingRect(x, y, w, h);
+		}
 
-        render::ShaderProgram* GetShader() override
+		void SetTexture(Texture* texture) override
+		{
+            m_sprite.SetTexture(texture);
+		}
+
+        render::ShaderProgram* GetShader() const override
         {
             return m_shader;
         }
 
-        render::Topology* GetTopology() override
+        render::Topology* GetTopology() const override
         {
-            return nullptr;
+            return m_topology.get();
         }
+
+        render::Texture* GetTexture() const override
+        {
+            return m_sprite.GetRegion()->GetTexture();
+        }
+
 
     private:
         Sprite m_sprite;
         render::ShaderProgram* m_shader;
+        std::unique_ptr<render::Topology> m_topology;
+
     };
 
 }
