@@ -1,70 +1,101 @@
 #include "aether/render/gl/GLRenderModule.h"
-#include "aether/render/gl/GLSceneNode.h"
+#include "nether/nether.h"
+#include "aether/render/gl/GLShaderProgram.h"
+#include "aether/render/gl/GLTilemapNode.h"
 
 namespace aether::render {
 
-	inline GLRenderModule::~GLRenderModule()
-	{
-		m_allFonts.clear();
-		m_allTextures.clear();
-	}
-	
-	inline Texture* GLRenderModule::LoadTextureFromFile(const std::string& path)
-	{
-		std::shared_ptr<nether::Texture> netherTex = std::make_shared<nether::Texture>();
-		m_allTextures.emplace_back(this, netherTex);
-		netherTex->LoadFromFile(path, nether::TextureFormat::RGBA8);
-		return &m_allTextures.back();
-	}
-	inline Font* GLRenderModule::LoadFontFromFile(const std::string& path)
-	{
-		/*
-		FT_Face face;
-		if (FT_New_Face(ft, "fonts/arial.ttf", 0, &face))
-		{
-			std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
-			return -1;
-		}
-		*/
-	}
+    GLRenderModule::GLRenderModule()
+        : IRenderModule(this)
+        , m_batchDispatcher(this)
+    {
 
-	aether::render::Camera* GLRenderModule::CreateCamera(const math::Vec2f& viewport)
-	{
-		m_allCameras.emplace_back(viewport);
-		return &m_allCameras.back();
-	}
+    }
 
-	aether::render::Camera* GLRenderModule::CreateCamera(const math::Vec2f& viewport)
-	{
-		m_allCameras.emplace_back(viewport);
-		return &m_allCameras.back();
-	}
+    GLRenderModule::~GLRenderModule()
+    {
+        m_allFonts.clear();
+        m_allTextures.clear();
+        m_allCameras.clear();
+        m_allSprites.clear();
+    }
 
-	aether::render::Sprite* GLRenderModule::CreateSprite(Texture* texture, const math::Recti& rect)
-	{
-		m_allSprites.emplace_back(texture, rect);
-		return &m_allSprites.back();
-	}
+    Texture* GLRenderModule::LoadTextureFromFile(const std::string& path)
+    {
+        std::shared_ptr<nether::Texture> netherTex = std::make_shared<nether::Texture>();
+        netherTex->LoadFromFile(path, nether::TextureFormat::RGBA8);
+        m_allTextures.emplace_back(this, netherTex);
+        return &m_allTextures.back();
+    }
 
-	aether::render::ShaderProgram* GLRenderModule::LoadShaderFromFile(const std::string& vspath, const std::string& fspath)
-	{
+    Font* GLRenderModule::LoadFontFromFile(const std::string& path, int size)
+    {
+        m_allFonts.emplace_back(this, path, size);
+        return &m_allFonts.back();
+    }
 
-	}
+    ShaderProgram* GLRenderModule::LoadShaderFromFile(const std::string& vspath, const std::string& fspath)
+    {
+        auto shaderProgram = new GLShaderProgram(this, vspath, fspath);
+        return shaderProgram;
+    }
 
-	GLRenderModule::GLRenderModule() : IRenderModule(nullptr)
-	{
+    Camera* GLRenderModule::CreateCamera(const math::Vec2<float>& position, float rotation)
+    {
+        m_allCameras.emplace_back(this, position, rotation);
+        return &m_allCameras.back();
+    }
 
-	}
+    Sprite* GLRenderModule::CreateSprite(Texture* texture, const math::Recti& rect)
+    {
+        m_allSprites.emplace_back(this, texture);
+        m_allSprites.back().SetClippingRect(rect.x(), rect.y(), rect.w(), rect.h());
+        return &m_allSprites.back();
+    }
 
-	IRenderModule* create_render_module()
-	{
-		return new GLRenderModule();
-	}
+    void GLRenderModule::Render()
+    {
+        m_batchDispatcher.Render();
+    }
 
-	void GLBatchDispatcher::BindTextures(Batch& batch)
-	{
-		auto gltex = ResourceCast(batch.GetTexture());
-		batch.GetTexture()->Bind(nether::TextureUnit::Texture0);
-	}
+    scene::ISpriteNode* GLRenderModule::CreateSpriteNode()
+    {
+        return new GLSpriteNode(this);
+    }
 
-}
+    scene::ITilemapNode* GLRenderModule::CreateTilemapNode()
+    {
+        return new GLTilemapNode(this);
+    }
+
+    void GLRenderModule::RenderElement(const IBatchedEntity& element, Batch& batch)
+    {
+        // Implementation for rendering an element
+    }
+
+    void GLRenderModule::ShaderPreparationStep(Batch& batch)
+    {
+        batch.m_shader->Use();
+    }
+
+    void GLRenderModule::TexturePreparationStep(Batch& batch)
+    {
+        batch.m_texture->Bind(nether::TextureUnit::Texture0);
+    }
+
+    void GLRenderModule::StartRenderElementsStep()
+    {
+        // Implementation for starting the render elements step
+    }
+
+    void GLRenderModule::FinishRenderElementsStep()
+    {
+        // Implementation for finishing the render elements step
+    }
+
+    aether::render::IRenderModule* create_render_module()
+    {
+        return new aether::render::GLRenderModule();
+    }
+} // namespace aether::render
+

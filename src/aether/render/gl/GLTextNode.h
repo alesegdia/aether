@@ -1,15 +1,15 @@
 #pragma once
 
 #include "aether/scene/TextNode.h"
-#include "aether/render/gl/GLSceneNode.h"
+#include "aether/scene/SceneNode.h"
 
 namespace aether::render {
 
-    class GLTextNode : public render::GLSceneNode
+    class GLTextNode : public scene::SceneNode
     {
     public:
-        GLTextNode(ModuleObject* o, std::shared_ptr<render::Texture> tex)
-            : render::GLSceneNode(o)
+        GLTextNode(ModuleObject* o)
+            : scene::SceneNode(o)
         {
             m_texRegion = std::make_unique<render::TextureRegion>();
         }

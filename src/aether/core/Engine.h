@@ -7,28 +7,44 @@ namespace aether
 {
 	void init_engine();
 	render::IRenderModule* create_render_module();
+	scene::ISceneNodeFactory* get_node_factory();
 	scene::Scene& get_scene();
 
 	class World
 	{
 	public:
+		~World()
+		{
+			if (m_scene != nullptr)
+			{
+				delete m_scene;
+			}
+		}
+
 		scene::Scene& GetScene()
 		{
-			return m_scene;
+			assert(m_scene != nullptr);
+			return *m_scene;
 		}
 
 		const scene::Scene& GetScene() const
 		{
-			return m_scene;
+			assert(m_scene != nullptr);
+			return *m_scene;
 		}
 
-		void ResetScene()
+		void ResetScene(scene::ISceneNodeFactory* nodeFactory)
 		{
-			m_scene = {};
+			if (m_scene != nullptr)
+			{
+				delete m_scene;
+			}
+
+			m_scene = new scene::Scene(nodeFactory);
 		}
 
 	private:
-		scene::Scene m_scene;
+		scene::Scene* m_scene;
 
 	};
 
@@ -42,8 +58,8 @@ namespace aether
 
 		void Init()
 		{
-			CreateWorld();
 			m_renderer = create_render_module();
+			CreateWorld();
 		}
 
 

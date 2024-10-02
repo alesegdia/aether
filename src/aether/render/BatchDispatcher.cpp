@@ -65,10 +65,12 @@ namespace aether::render
 				}
 			}
 
+			m_batchActionProvider->StartRenderElementsStep();
 			for (auto& element : batch.GetElements())
 			{
 				m_batchActionProvider->RenderElement(*element, batch);
 			}
+			m_batchActionProvider->FinishRenderElementsStep();
 		}
 	}
 

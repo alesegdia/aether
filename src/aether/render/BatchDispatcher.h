@@ -34,6 +34,11 @@ namespace aether::render {
          * @param batch Reference to the batch.
          */
         virtual void RenderElement(const IBatchedEntity& element, Batch& batch) = 0;
+
+
+        virtual void StartRenderElementsStep() = 0;
+        virtual void FinishRenderElementsStep() = 0;
+
     };
 
     /**

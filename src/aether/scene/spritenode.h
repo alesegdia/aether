@@ -1,6 +1,5 @@
 #pragma once
 
-
 namespace aether::render
 {
     class Texture;

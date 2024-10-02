@@ -19,61 +19,101 @@
 namespace aether::render
 {
     class IRenderModule;
-}
+} // namespace aether::render
 
 namespace aether::scene {
 
-class SceneNode : public core::ModuleObject
-{
-public:
+    /**
+     * @brief Represents a node in the scene graph.
+     */
+    class SceneNode : public core::ModuleObject
+    {
+    public:
 
-    SceneNode(core::ModuleObject* o) : core::ModuleObject(o) {}
+        /**
+         * @brief Constructs a SceneNode object.
+         * @param o Pointer to the parent ModuleObject.
+         */
+        SceneNode(core::ModuleObject* o) : core::ModuleObject(o) {}
 
-    using Shared = std::shared_ptr<SceneNode>;
+        using Shared = std::shared_ptr<SceneNode>;
 
-    virtual ~SceneNode();
+        /**
+         * @brief Destroys the SceneNode object.
+         */
+        virtual ~SceneNode();
 
-    /// <summary>
-    /// Retrieves the position of this node relative to its parent
-    /// </summary>
-    /// <returns></returns>
-    const glm::vec3& GetRelativePosition() const;
+        /**
+         * @brief Retrieves the position of this node relative to its parent.
+         * @return The relative position as a glm::vec3.
+         */
+        const glm::vec3& GetRelativePosition() const;
 
-    /// <summary>
-    /// Renders the
-    /// </summary>
-    virtual void Render();
+        /**
+         * @brief Renders the node.
+         */
+        virtual void Render();
 
-    const std::vector<SceneNode*>& GetChildren() const;
+        /**
+         * @brief Retrieves the children of this node.
+         * @return A vector of pointers to the child nodes.
+         */
+        const std::vector<SceneNode*>& GetChildren() const;
 
-    SceneNode* GetParent();
+        /**
+         * @brief Retrieves the parent of this node.
+         * @return Pointer to the parent node.
+         */
+        SceneNode* GetParent();
 
-    void SetParent(SceneNode* newParent);
+        /**
+         * @brief Sets the parent of this node.
+         * @param newParent Pointer to the new parent node.
+         */
+        void SetParent(SceneNode* newParent);
 
-    void AddChild(SceneNode* sceneNode);
+        /**
+         * @brief Adds a child node to this node.
+         * @param sceneNode Pointer to the child node to be added.
+         */
+        void AddChild(SceneNode* sceneNode);
 
-    void ComputeRenderMatrix();
+        /**
+         * @brief Computes the render matrix for this node.
+         */
+        void ComputeRenderMatrix();
 
-    void SetRelativePosition(glm::vec3 relativePosition);
+        /**
+         * @brief Sets the position of this node relative to its parent.
+         * @param relativePosition The new relative position as a glm::vec3.
+         */
+        void SetRelativePosition(glm::vec3 relativePosition);
 
-    const glm::mat4x4& GetModel();
+        /**
+         * @brief Retrieves the model matrix of this node.
+         * @return The model matrix as a glm::mat4x4.
+         */
+        const glm::mat4x4& GetModel();
 
-    void RemoveChild(SceneNode* child);
+        /**
+         * @brief Removes a child node from this node.
+         * @param child Pointer to the child node to be removed.
+         */
+        void RemoveChild(SceneNode* child);
 
-protected:
+    protected:
 
-    SceneNode* m_parent{nullptr};
-    render::Color m_color = render::Color(1.0f, 1.0f, 1.0f);
-    std::vector<SceneNode*> m_children;
-    
-    bool m_modelDirty = true;
-    glm::mat4x4 m_model = {};
-    glm::vec3 m_scale = {};
-    glm::vec3 m_rotation = {};
-    glm::vec3 m_relativePosition = {};
-    glm::mat4x4 m_renderMatrix = {};
+        SceneNode* m_parent{ nullptr }; ///< Pointer to the parent node.
+        render::Color m_color = render::Color(1.0f, 1.0f, 1.0f); ///< Color of the node.
+        std::vector<SceneNode*> m_children; ///< Vector of pointers to the child nodes.
 
-};
+        bool m_modelDirty = true; ///< Flag indicating if the model matrix needs to be recomputed.
+        glm::mat4x4 m_model = {}; ///< Model matrix of the node.
+        glm::vec3 m_scale = {}; ///< Scale of the node.
+        glm::vec3 m_rotation = {}; ///< Rotation of the node.
+        glm::vec3 m_relativePosition = {}; ///< Position of the node relative to its parent.
+        glm::mat4x4 m_renderMatrix = {}; ///< Render matrix of the node.
 
+    };
 
-}
+} // namespace aether::scene

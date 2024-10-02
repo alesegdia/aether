@@ -262,8 +262,6 @@ public:
 
     TileSet::Shared GetTileset(int i);
 
-    void Render();
-
     std::unordered_map<std::string, TileLayer::Shared>& GetTileLayers();
 
     void SetBasePath(const std::string& basePath);

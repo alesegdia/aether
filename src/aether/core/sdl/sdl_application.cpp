@@ -142,7 +142,9 @@ int SDLApplication::Init(const CommandLineArguments& args)
         Logger::LogMsg("SDL video initialized successfully.");
     }
 
+#ifdef AETHER_USE_SDL
 	TTF_Init();
+#endif
 
 
     if (IsOpenGLActivated())
@@ -196,6 +198,8 @@ int SDLApplication::Init(const CommandLineArguments& args)
         SDL_GetWindowSize(m_window, &w, &h);
         glViewport(0, 0, w, h);
         glClearColor(0.0f, 0.5f, 1.0f, 0.0f);
+
+
 #else
         m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
         aether_sdl_set_renderer(m_renderer);
@@ -236,6 +240,9 @@ void SDLApplication::Deinit()
 
     SDL_DestroyWindow(m_window);
     IMG_Quit();
+#ifdef AETHER_USE_SDL
+    TTF_Quit();
+#endif
     SDL_Quit();
 }
 

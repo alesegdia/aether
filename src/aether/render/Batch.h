@@ -1,11 +1,13 @@
 #pragma once
 
 #include <vector>
-#include "aether/render/IBatchedEntity.h"
-#include "aether/render/ShaderProgram.h"
-#include "aether/render/Texture.h"
 
 namespace aether::render {
+
+    // Forward declarations
+    class IBatchedEntity;
+    class ShaderProgram;
+    class Texture;
 
     /**
      * @class Batch

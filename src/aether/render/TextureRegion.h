@@ -2,87 +2,99 @@
 
 #include "aether/render/Texture.h"
 #include "aether/math/rect.h"
+#include <array>
 
 namespace aether::render {
 
+    /**
+     * @brief Represents a region of a texture.
+     */
     class TextureRegion
     {
     public:
-        TextureRegion()
-        {
+        /**
+         * @brief Default constructor.
+         */
+        TextureRegion();
 
-        }
+        /**
+         * @brief Constructs a TextureRegion with the entire texture.
+         * @param texture Pointer to the texture.
+         */
+        TextureRegion(Texture* texture);
 
-        TextureRegion( Texture* texture )
-            : m_texture(texture)
-        {
-            SetClip(math::Rectf(0.0f, 0.0f, float(texture->GetSize().GetX()), float(texture->GetSize().GetY())));
-        }
+        /**
+         * @brief Constructs a TextureRegion with a specified region.
+         * @param texture Pointer to the texture.
+         * @param x X coordinate of the region.
+         * @param y Y coordinate of the region.
+         * @param w Width of the region.
+         * @param h Height of the region.
+         */
+        TextureRegion(Texture* texture, float x, float y, float w, float h);
 
-        TextureRegion( Texture* texture, float x, float y, float w, float h)
-            : m_texture(texture)
-        {
-            SetClip(aether::math::Rectf(x, y, w, h));
-        }
+        /**
+         * @brief Constructs a TextureRegion with a specified region.
+         * @param texture Pointer to the texture.
+         * @param x X coordinate of the region.
+         * @param y Y coordinate of the region.
+         * @param w Width of the region.
+         * @param h Height of the region.
+         */
+        TextureRegion(Texture* texture, int x, int y, int w, int h);
 
-        TextureRegion( Texture* texture, int x, int y, int w, int h)
-            : m_texture(texture)
-        {
-            SetClip(aether::math::Rectf(float(x), float(y), float(w), float(h)));
-        }
+        /**
+         * @brief Sets the clipping region.
+         * @param x X coordinate of the region.
+         * @param y Y coordinate of the region.
+         * @param w Width of the region.
+         * @param h Height of the region.
+         */
+        void SetClip(float x, float y, float w, float h);
 
-        void SetClip(float x, float y, float w, float h)
-        {
-            SetClip(aether::math::Rectf(x, y, w, h));
-        }
+        /**
+         * @brief Sets the clipping region.
+         * @param clip Rectangle defining the clipping region.
+         */
+        void SetClip(const aether::math::Rectf& clip);
 
-        void SetClip(const aether::math::Rectf& clip)
-        {
-            m_clip = clip;
-            RecomputeUV();
-        }
+        /**
+         * @brief Sets the texture.
+         * @param tex Pointer to the texture.
+         */
+        void SetTexture(Texture* tex);
 
-        void SetTexture(Texture* tex)
-        {
-            m_texture = tex;
-        }
+        /**
+         * @brief Gets the texture.
+         * @return Pointer to the texture.
+         */
+        Texture* GetTexture() const;
 
-        Texture* GetTexture() const
-        {
-            return m_texture;
-        }
+        /**
+         * @brief Gets the clipping region.
+         * @return Reference to the clipping rectangle.
+         */
+        const aether::math::Rectf& GetClip() const;
 
-        const aether::math::Rectf& GetClip() const
-        {
-            return m_clip;
-        }
+        /**
+         * @brief Gets the UV coordinates.
+         * @return Array containing the UV coordinates.
+         */
+        std::array<float, 4> GetUVs();
 
     private:
-        void RecomputeUV()
-        {
-            auto size = m_texture->GetSize();
-            auto tx = size.GetX();
-            auto ty = size.GetY();
-            auto cx = m_clip.x();
-            auto cy = m_clip.y();
-            auto cw = m_clip.w();
-            auto ch = m_clip.h();
+        /**
+         * @brief Recomputes the UV coordinates.
+         */
+        void RecomputeUV();
 
-            m_u0 = cx / tx;
-            m_v0 = cy / ty;
-            m_u1 = m_u0 + cw / tx;
-            m_v1 = m_v0 + ch / ty;
-        }
-        
-        Texture* m_texture = nullptr;
-        math::Rectf m_clip;
-        float m_u0 = 0;
-        float m_v0 = 0;
-        float m_u1 = 0;
-        float m_v1 = 0;
-
-
+        Texture* m_texture = nullptr; ///< Pointer to the texture.
+        math::Rectf m_clip; ///< Clipping region.
+        float m_u0 = 0; ///< U coordinate of the top-left corner.
+        float m_v0 = 0; ///< V coordinate of the top-left corner.
+        float m_u1 = 0; ///< U coordinate of the bottom-right corner.
+        float m_v1 = 0; ///< V coordinate of the bottom-right corner.
+        bool m_uvsDirty = true; ///< Flag indicating if the UVs need to be recomputed.
     };
 
-
-}
+} // namespace aether::render

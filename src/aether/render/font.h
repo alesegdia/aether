@@ -5,6 +5,11 @@
 
 namespace aether::render {
 
+
+    void init_font_system();
+
+    void deinit_font_system();
+
 enum TextAlign
 {
 	Left,

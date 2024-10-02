@@ -8,10 +8,5 @@ namespace aether::render
 
 	IRenderModule* Texture::GetRenderer() const { return (IRenderModule*)owner; }
 
-	math::Vec2i Texture::GetSize() const
-	{
-		return GetRenderer()->GetTextureSize(this);
-	}
-
 }
 

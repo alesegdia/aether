@@ -16,14 +16,17 @@
 namespace aether::scene {
 
     class SceneNode;
-    class SpriteNode;
+    class ISceneNodeFactory;
 
     class Scene : public core::ModuleObject
     {
     public:
         using SharedPtr = std::shared_ptr<Scene>;
 
-        Scene();
+        Scene(scene::ISceneNodeFactory* nodeFactory)
+            : m_nodeFactory(nodeFactory)
+        {
+        }
 
         void Traverse(const std::function<void(SceneNode*)>& functor);
 
@@ -39,7 +42,10 @@ namespace aether::scene {
 
         void Step();
 
-        SpriteNode
+        scene::ISpriteNode CreateSpriteNode()
+        {
+            return m_nodeFactory->CreateSpriteNode();
+        }
 
     private:
         void Traverse(const std::function<void(SceneNode*)>& functor, SceneNode* node);
@@ -47,6 +53,7 @@ namespace aether::scene {
         SceneNode m_root;
         std::vector<std::shared_ptr<SceneNode>> m_nodesSortedByZindex;
         aether::render::Color m_clearColor = aether::render::Color::Black;
+        scene::ISceneNodeFactory* m_nodeFactory = nullptr;
 
     };
 

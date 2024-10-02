@@ -2,14 +2,12 @@
 
 #include <nether/nether.h>
 
-#include "aether/scene/spritenode.h"
-#include "aether/render/gl/GLSceneNode.h"
+#include "aether/render/IBatchedEntity.h"
 #include "aether/render/IRenderModule.h"
+#include "aether/render/Sprite.h"
 #include "aether/render/Topology.h"
 #include "aether/scene/SceneNode.h"
 #include "aether/scene/spritenode.h"
-#include "aether/render/IBatchedEntity.h"
-
 
 namespace aether::render
 {

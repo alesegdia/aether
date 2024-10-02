@@ -11,49 +11,55 @@ namespace tilemap {
 
 std::shared_ptr<TileMap> BuildMap(const Tmx::Map &inmap, aether::render::IRenderModule* renderer)
 {
+    // Create a new TileMap object
     std::shared_ptr<TileMap> outmap(new TileMap());
     outmap->SetBasePath(inmap.GetFilepath());
 
     std::vector<TileSet::Shared> tilesets;
 
-    // parse tilesets
-    for( auto tileset : inmap.GetTilesets() ) {
-
+    // Parse tilesets from the input map
+    for (auto tileset : inmap.GetTilesets()) {
         auto newTileset = std::make_shared<TileSet>();
         tilesets.push_back(newTileset);
         outmap->AddTileset(newTileset);
         newTileset->SetName(tileset->GetName());
         newTileset->SetTileSize(tileset->GetTileWidth(), tileset->GetTileHeight());
 
+        // Load texture for the tileset
         auto path = inmap.GetFilepath() + "/" + tileset->GetImage()->GetSource();
         render::Texture* t = renderer->LoadTextureFromFile(path);
 
+        // Calculate the number of columns and rows in the tileset
         auto columns = tileset->GetImage()->GetWidth() / tileset->GetTileWidth();
         auto rows = tileset->GetImage()->GetHeight() / tileset->GetTileHeight();
+
+        // Create spritesheet for the tileset
         auto newSheet = std::make_shared<render::Spritesheet>(columns, rows, t);
         outmap->AddSheet(newSheet);
         newTileset->SetFirstGid(tileset->GetFirstGid());
 
-        for( int i = 0; i < rows; i++ ) {
-            for( int j = 0; j < columns; j++ ) {
+        // Add tiles to the tileset
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
                 auto index = i * columns + j;
                 auto frame = newSheet->GetFrame(index);
                 newTileset->AddTile(index, frame, TileCollisionBehaviour::Empty);
             }
         }
 
-        for( auto tile : tileset->GetTiles() ) {
-
-            // set collision behaviour
+        // Set collision behavior for tiles
+        for (auto tile : tileset->GetTiles()) {
             auto tileId = tile->GetId();
             auto newTile = newTileset->GetTile(tileId);
-            if( tile->GetProperties().HasProperty("collision") ) {
+
+            // Set collision behaviour for this tile
+            if (tile->GetProperties().HasProperty("collision")) {
                 auto collisionType = tile->GetProperties().GetStringProperty("collision");
-                if( collisionType == "solid" )
+                if (collisionType == "solid")
                 {
                     newTile->collisionBehaviour = TileCollisionBehaviour::Solid;
                 }
-                else if( collisionType == "oneway" )
+                else if (collisionType == "oneway")
                 {
                     newTile->collisionBehaviour = TileCollisionBehaviour::Oneway;
                 }
@@ -63,38 +69,37 @@ std::shared_ptr<TileMap> BuildMap(const Tmx::Map &inmap, aether::render::IRender
                 }
             }
 
-            // copy props
-            for( auto prop : tile->GetProperties().GetList())
+            // Copy properties from the tile
+            for (auto prop : tile->GetProperties().GetList())
             {
                 newTile->props[prop.first] = prop.second;
             }
         }
     }
 
-    // parse layers
-    for( auto layer : inmap.GetTileLayers() ) {
-
+    // Parse layers from the input map
+    for (auto layer : inmap.GetTileLayers()) {
         auto tmxTileLayer = static_cast<Tmx::TileLayer*>(layer);
         auto tilesetId = std::max(0, tmxTileLayer->GetTile(0, 0).tilesetId);
 
-        // IGNORE IF THERE I
-        // if( tilesetId == -1 ) continue;
+        std::shared_ptr<TileLayer> tileLayer = std::make_shared<TileLayer>(layer->GetName(), layer->GetZOrder());
 
         bool hasVisibleProp = tmxTileLayer->GetProperties().HasProperty("visible");
         bool visiblePropOn = tmxTileLayer->GetProperties().GetBoolProperty("visible");
+        tileLayer->SetVisible(!hasVisibleProp || visiblePropOn);
 
-        std::shared_ptr<TileLayer> tileLayer = std::make_shared<TileLayer>(layer->GetName(), layer->GetZOrder());
         tileLayer->SetMapSize(tmxTileLayer->GetWidth(), tmxTileLayer->GetHeight());
         outmap->AddTileLayer(tileLayer);
         TileLayer::Data rawData(size_t(tmxTileLayer->GetWidth()), size_t(tmxTileLayer->GetHeight()));
         auto tileset = outmap->GetTileset(tilesetId);
         tileLayer->SetTileSize(tileset->GetTileSize().GetX(), tileset->GetTileSize().GetY());
 
-        for( int i = 0; i < tmxTileLayer->GetWidth(); i++ ) {
-            for( int j = 0; j < tmxTileLayer->GetHeight(); j++ ) {
+        // Set tile data for the layer
+        for (int i = 0; i < tmxTileLayer->GetWidth(); i++) {
+            for (int j = 0; j < tmxTileLayer->GetHeight(); j++) {
                 auto cellValue = -1;
                 auto tilesetId = tmxTileLayer->GetTile(i, j).tilesetId;
-                if( tilesetId != -1 ) {
+                if (tilesetId != -1) {
                     tileLayer->SetTileset(tilesets[size_t(tilesetId)]);
                     auto firstGid = tilesets[size_t(tilesetId)]->GetFirstGid();
                     cellValue = int(tmxTileLayer->GetTileId(i, j));
@@ -102,18 +107,18 @@ std::shared_ptr<TileMap> BuildMap(const Tmx::Map &inmap, aether::render::IRender
                 rawData.SetCell(size_t(i), size_t(j), cellValue);
             }
         }
-        tileLayer->SetVisible(!hasVisibleProp || visiblePropOn);
         tileLayer->SetData(rawData);
     }
 
-    for( auto group : inmap.GetObjectGroups() ) {
+    // Parse object groups from the input map
+    for (auto group : inmap.GetObjectGroups()) {
         auto newObjectLayer = std::make_shared<ObjectLayer>(group->GetName(), group->GetZOrder());
         outmap->AddObjectLayer(newObjectLayer);
-        for( auto object : group->GetObjects() ) {
+        for (auto object : group->GetObjects()) {
             auto& newObject = newObjectLayer->CreateNewObject(object->GetName(),
-                                                        object->GetX(), object->GetY(),
-                                                        object->GetWidth(), object->GetHeight());
-            for( auto prop : object->GetProperties().GetList() ) {
+                object->GetX(), object->GetY(),
+                object->GetWidth(), object->GetHeight());
+            for (auto prop : object->GetProperties().GetList()) {
                 newObject.props[prop.first] = prop.second;
             }
         }
@@ -121,6 +126,8 @@ std::shared_ptr<TileMap> BuildMap(const Tmx::Map &inmap, aether::render::IRender
 
     return outmap;
 }
+
+
 
 Tile::Tile(const render::TextureRegion *tex, TileCollisionBehaviour tcb)
     : texture(tex),
@@ -283,25 +290,6 @@ bool TileLayer::IsValidTile(size_t x, size_t y) const
 {
     return x < m_mapSizeInTiles.GetX() &&
            y < m_mapSizeInTiles.GetY();
-}
-
-void TileLayer::Render()
-{
-    /*
-    for( size_t i = 0; i < m_data->GetRowsNumber(); i++ )
-    {
-        for( size_t j = 0; j < m_data->GetColsNumber(); j++ )
-        {
-            int cell = m_data->GetCell(j, i);
-            if( cell != -1 ) {
-                Tile* t = m_tileset->GetTile(cell);
-                if( t != nullptr && t->texture != nullptr) {
-                    t->texture->Draw(j * m_tileSize.GetX(), i * m_tileSize.GetY());
-                }
-            }
-        }
-    }
-    */
 }
 
 void TileLayer::AddProperty(const std::string &key, const std::string &value)

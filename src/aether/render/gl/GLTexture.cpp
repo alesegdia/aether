@@ -18,4 +18,9 @@ namespace aether::render {
 		return { width, height };
 	}
 
+	std::shared_ptr<nether::Texture> GLTexture::GetNetherTexture()
+	{
+		return m_texture;
+	}
+
 }
