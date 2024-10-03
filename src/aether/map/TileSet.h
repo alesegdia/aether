@@ -3,8 +3,6 @@
 #include "aether/map/Tile.h"
 
 
-class IRenderModule;
-
 namespace aether {
     namespace tilemap {
 

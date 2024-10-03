@@ -1,43 +1,43 @@
 #pragma once
 
 #include "aether/map/Layer.h"
-#include "aether/math/rect.h"
+#include "aether/math/Rect.h"
 #include <unordered_map>
-#include <functional>
-namespace aether {
-    namespace tilemap {
 
-        class ObjectLayer : public Layer {
-        public:
+namespace aether::tilemap
+{
 
-            struct Object {
-                std::string name;
-                math::Recti aabb;
-                std::unordered_map<std::string, std::string> props;
-            };
+	class ObjectLayer : public Layer {
+	public:
 
-            using Shared = std::shared_ptr<ObjectLayer>;
+		struct Object {
+			std::string name;
+			math::Recti aabb;
+			std::unordered_map<std::string, std::string> props;
+		};
 
-            ObjectLayer(const std::string& id, int zOrder);
+		using Shared = std::shared_ptr<ObjectLayer>;
 
-            Object& CreateNewObject(const std::string& name, int x, int y, int w, int h);
+		ObjectLayer(const std::string& id, int zOrder);
 
-            const std::vector<Object>& GetAllObjects() const;
+		Object& CreateNewObject(const std::string& name, int x, int y, int w, int h);
 
-            void ForEachObject(std::function<void(const Object&)> callback)
-            {
-                for (const auto& object : m_objects)
-                {
-                    callback(object);
-                }
-            }
+		const std::vector<Object>& GetAllObjects() const;
 
-            void Render() override;
+		void ForEachObject(std::function<void(const Object&)> callback)
+		{
+			for (const auto& object : m_objects)
+			{
+				callback(object);
+			}
+		}
 
-        private:
-            std::vector<Object> m_objects;
+		void Render() override;
 
-        };
+	private:
+		std::vector<Object> m_objects;
 
-    }
+	};
+
+
 }

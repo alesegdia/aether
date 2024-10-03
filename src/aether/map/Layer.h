@@ -1,39 +1,58 @@
 #pragma once
 
-#include <string>
-#include <memory>
+#include "aether/math/matrix.h"
+#include "aether/math/vec.h"
+#include "aether/render/spritesheet.h"
+#include "aether/render/TextureRegion.h"
+
+#include "aether/core/utility.h"
+
+#include <vector>
+#include <functional>
+
+#include <Tmx.h>
+
+
+class IRenderModule;
 
 namespace aether {
-    namespace tilemap {
+	namespace tilemap {
 
-        class Layer {
-        public:
-            using Shared = std::shared_ptr<Layer>;
+		class Layer {
+		public:
+			using Shared = std::shared_ptr<Layer>;
 
-            Layer(const std::string& id, int zOrder);
+			virtual ~Layer()
+			{
 
-            virtual ~Layer();
-            virtual void Render() = 0;
+			}
 
-            const std::string& GetName();
+			Layer(const std::string& id, int zOrder);
 
-            int GetDepthOrder() const;
+			virtual ~Layer();
+			virtual void Render() = 0;
 
-            void SetVisible(bool visible)
-            {
-                m_visible = visible;
-            }
+			const std::string& GetName();
 
-            bool IsVisible()
-            {
-                return m_visible;
-            }
+			int GetDepthOrder() const;
 
-        private:
-            std::string m_name;
-            int m_depthOrder = 0;
-            bool m_visible = true;
-        };
+			void SetVisible(bool visible)
+			{
+				m_visible = visible;
+			}
 
-    }
+			bool IsVisible()
+			{
+				return m_visible;
+			}
+
+		private:
+			std::string m_name;
+			int m_depthOrder = 0;
+			bool m_visible = true;
+
+		};
+
+
+	}
 }
