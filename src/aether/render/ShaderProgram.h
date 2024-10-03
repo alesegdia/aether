@@ -14,8 +14,6 @@ namespace aether::render
 
 		}
 
-	private:
-
 	};
 
 }

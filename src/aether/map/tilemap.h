@@ -3,7 +3,7 @@
 #include "aether/math/matrix.h"
 #include "aether/math/vec.h"
 #include "aether/render/spritesheet.h"
-
+#include "aether/render/texture.h"
 #include "aether/core/utility.h"
 
 #include <vector>
@@ -192,6 +192,16 @@ public:
         return m_data->GetCell(x, y) == -1;
     }
 
+    void SetCell(int x, int y, int cell)
+    {
+        m_data->SetCell(x, y, cell);
+    }
+
+	int GetCell(int x, int y)
+	{
+		return m_data->GetCell(x, y);
+	}
+
 private:
     std::unique_ptr<Data> m_data;
     std::shared_ptr<TileSet> m_tileset;
@@ -268,18 +278,24 @@ public:
 
     const std::string& GetBasePath();
 
-    float GetWidth() const
+    float GetWidthInTiles() const
     {
         assert(!m_layers.empty() && "must have some tile layer to fetch width");
         const auto& layer = *(*(m_tileLayers.begin())).second;
         return float(layer.GetMapWidth() * layer.GetTileWidth());
     }
 
-    float GetHeight() const
+    float GetHeightInTiles() const
     {
         assert(!m_layers.empty() && "must have some tile layer to fetch height");
         const auto& layer = *(*(m_tileLayers.begin())).second;
         return float(layer.GetMapHeight() * layer.GetTileHeight());
+    }
+
+    aether::render::Texture* GetAnyLayerTexture() const
+    {
+		assert(!m_tileLayers.empty() && "must have some tile layer to fetch texture");
+		return m_tileLayers.begin()->second->GetTileSet()->GetTile(0)->texture->GetTexture();
     }
 
 private:

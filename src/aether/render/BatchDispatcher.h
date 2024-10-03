@@ -8,6 +8,11 @@ namespace aether::render {
     class IBatchedEntity;
     class Camera;
 
+    struct InstanceBatch
+    {
+		std::vector<IBatchedEntity*> elements;
+    };
+
     /**
      * @class IBatchActionProvider
      * @brief Interface for batch actions, providing methods for shader preparation, texture preparation, and rendering elements.

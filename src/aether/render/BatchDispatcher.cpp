@@ -1,6 +1,6 @@
 
 #include <algorithm>
-
+#include <unordered_map>
 #include "aether/render/BatchDispatcher.h"
 #include "aether/render/IBatchedEntity.h"
 #include "aether/render/Shaderprogram.h"
@@ -31,10 +31,10 @@ namespace aether::render
 		// sort first by texture and then by shader
 		std::sort(m_batches.begin(), m_batches.end(), [](const Batch& b1, const Batch& b2) {
 			return b1.GetTexture() > b2.GetTexture();
-			});
+		});
 		std::sort(m_batches.begin(), m_batches.end(), [](const Batch& b1, const Batch& b2) {
 			return b1.GetShader() > b2.GetShader();
-			});
+		});
 
 		// return last element
 		return &(m_batches.back());
@@ -66,11 +66,30 @@ namespace aether::render
 			}
 
 			m_batchActionProvider->StartRenderElementsStep();
+			std::unordered_map<InstancedEntity*, InstanceBatch> instanceBatches;
 			for (auto& element : batch.GetElements())
 			{
-				m_batchActionProvider->RenderElement(*element, batch);
+				if (element->IsInstanced())
+				{
+					if (instanceBatches.find(element->GetTopology()) == instanceBatches.end())
+					{
+						instanceBatches[element->GetTopology()] = InstanceBatch();
+					}
+					instanceBatches[element->GetTopology()].elements.push_back(const_cast<IBatchedEntity*>(element));
+				}
+				else
+				{
+					m_batchActionProvider->RenderElement(*element, batch);
+				}
 			}
 			m_batchActionProvider->FinishRenderElementsStep();
+
+			/*
+			for (auto& [topology, instanceBatch] : instanceBatches)
+			{
+				m_batchActionProvider->RenderInstanced(instanceBatch);
+			}
+			*/
 		}
 	}
 

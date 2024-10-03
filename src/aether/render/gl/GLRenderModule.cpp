@@ -1,7 +1,9 @@
 #include "aether/render/gl/GLRenderModule.h"
 #include "nether/nether.h"
 #include "aether/render/gl/GLShaderProgram.h"
-#include "aether/render/gl/GLTilemapNode.h"
+
+
+#include "aether/render/gl/GLResources.h"
 
 namespace aether::render {
 
@@ -48,9 +50,9 @@ namespace aether::render {
 
     Sprite* GLRenderModule::CreateSprite(Texture* texture, const math::Recti& rect)
     {
-        m_allSprites.emplace_back(this, texture);
-        m_allSprites.back().SetClippingRect(rect.x(), rect.y(), rect.w(), rect.h());
-        return &m_allSprites.back();
+        m_allSprites.emplace_back(new Sprite(this, texture));
+        m_allSprites.back()->SetClippingRect(rect.x(), rect.y(), rect.w(), rect.h());
+        return m_allSprites.back();
     }
 
     void GLRenderModule::Render()
@@ -60,27 +62,31 @@ namespace aether::render {
 
     scene::ISpriteNode* GLRenderModule::CreateSpriteNode()
     {
-        return new GLSpriteNode(this);
+        m_allSpriteNodes.emplace_back(this);
+        return &m_allSpriteNodes.back();
     }
 
     scene::ITilemapNode* GLRenderModule::CreateTilemapNode()
     {
-        return new GLTilemapNode(this);
+        m_allTilemapNodes.emplace_back(new GLTilemapNode(this));
+        return m_allTilemapNodes.back();
     }
 
     void GLRenderModule::RenderElement(const IBatchedEntity& element, Batch& batch)
     {
-        // Implementation for rendering an element
+		element.Render(batch);
     }
 
     void GLRenderModule::ShaderPreparationStep(Batch& batch)
     {
-        batch.m_shader->Use();
+		auto shader = ResourceCast(batch.GetShader());
+        shader->GetNetherShader()->Use();
     }
 
     void GLRenderModule::TexturePreparationStep(Batch& batch)
     {
-        batch.m_texture->Bind(nether::TextureUnit::Texture0);
+        auto texture = ResourceCast(batch.GetTexture());
+        texture->GetNetherTexture()->Bind(nether::TextureUnit::Texture0);
     }
 
     void GLRenderModule::StartRenderElementsStep()

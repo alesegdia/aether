@@ -13,7 +13,7 @@ namespace aether::scene
 		virtual ~ITilemapNode() = default;
 
 		
-		virtual void SetLayerCell(int layer, int x, int y, int tile) = 0;
+		virtual void SetLayerCell(const std::string& layer, int x, int y, int tile) = 0;
 
 	};
 

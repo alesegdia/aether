@@ -46,6 +46,12 @@ public:
 
     const aether::math::Vec2f& GetScale();
 
+	aether::math::Rectf GetBoundary()
+	{
+		return aether::math::Rectf(m_position.GetX(), m_position.GetY(), m_viewport.GetX(), m_viewport.GetY());
+
+	}
+
     /// <summary>
     /// Returns the position of the camera with the added shake
     /// THIS NEEDS TO RETURN A COPY BECAUSE THE RETURNED VECTOR IS CREATED NEWLY A

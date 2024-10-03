@@ -1,6 +1,7 @@
-import sys
 import os
 import subprocess
+import tkinter as tk
+from tkinter import messagebox
 
 def create_files(base_directory, base_name):
     # Ensure the base directory exists
@@ -31,6 +32,13 @@ def create_files(base_directory, base_name):
     
     print(f"CPP file created: {cpp_file_name}")
 
+def on_submit():
+    names = entry.get().split()
+    base_directory = "fixed/base/directory"  # Set your fixed base directory here
+
+    for name in names:
+        create_files(base_directory, name)
+
     # Trigger a command after creating the files
     open_file_command = "genie.exe --backend=backend-gl vs2022"
     
@@ -38,11 +46,20 @@ def create_files(base_directory, base_name):
         print(f"Executing command: {open_file_command}")
         subprocess.run(open_file_command, shell=True)
 
-if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python create_files.py <base_directory> <name>")
-        sys.exit(1)
+    
+    messagebox.showinfo("Success", "Files created successfully!")
 
-    base_directory = sys.argv[1]
-    name = sys.argv[2]
-    create_files(base_directory, name)
+# Create the main window
+root = tk.Tk()
+root.title("File Creator")
+
+# Create and place the widgets
+tk.Label(root, text="Enter names (separated by space):").pack(pady=10)
+entry = tk.Entry(root, width=50)
+entry.pack(pady=5)
+
+submit_button = tk.Button(root, text="Create Files", command=on_submit)
+submit_button.pack(pady=20)
+
+# Run the application
+root.mainloop()
