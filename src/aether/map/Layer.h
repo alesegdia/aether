@@ -29,7 +29,6 @@ namespace aether {
 
 			Layer(const std::string& id, int zOrder);
 
-			virtual ~Layer();
 			virtual void Render() = 0;
 
 			const std::string& GetName();

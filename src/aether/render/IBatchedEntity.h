@@ -27,6 +27,7 @@ namespace aether::render
 
 		virtual bool IsInstanced() const = 0;
 
+		// if it's instanced, it will return the common instanced entity
 		virtual InstancedEntity* GetInstancedEntity() const
 		{
 			return nullptr;

@@ -10,8 +10,6 @@ namespace aether::tilemap
 		m_depthOrder = zOrder;
 	}
 
-	Layer::~Layer() = default;
-
 	const std::string& Layer::GetName()
 	{
 		return m_name;

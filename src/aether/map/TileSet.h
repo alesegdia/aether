@@ -21,6 +21,7 @@ namespace aether {
             void SetFirstGid(int gid);
 
             int GetFirstGid();
+            int GetLastGid();
 
             const math::Vec2i& GetTileSize();
 

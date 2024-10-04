@@ -6,7 +6,8 @@
 #include "aether/map/Tile.h"
 #include "aether/map/TileSet.h"
 #include "aether/map/TilesetCollection.h"
-#include <map>
+#include <unordered_map>
+#include <string>
 
 namespace aether {
     namespace tilemap {
@@ -14,11 +15,18 @@ namespace aether {
 		class TileLayer : public Layer {
 		public:
 
-			using Data = aether::math::Matrix2Di;
+			using Data = rztl::Matrix2Di;
 			using Shared = std::shared_ptr<TileLayer>;
 
 			TileLayer(const std::string& id, int zOrder);
-			virtual ~TileLayer();
+			~TileLayer() override
+			{
+				if (tile_map)
+				{
+					delete[] tile_map;
+					tile_map = NULL;
+				}
+			}
 
 			void SetTileset(TileSet::Shared tileset);
 
@@ -58,11 +66,11 @@ namespace aether {
 			}
 
 		private:
-			std::unique_ptr<Data> m_data;
+			std::unique_ptr<Data> m_data = nullptr;
 			std::shared_ptr<TileSet> m_tileset;
-			std::map<std::string, std::string> m_props;
-			math::Vec2sz m_mapSizeInTiles;
-			math::Vec2f m_tileSize;
+			std::unordered_map<std::string, std::string> m_props;
+			rztl::Vec2sz m_mapSizeInTiles;
+			rztl::Vec2f m_tileSize;
 			std::shared_ptr<TilesetCollection> m_tilesetCollection;
 
 		};

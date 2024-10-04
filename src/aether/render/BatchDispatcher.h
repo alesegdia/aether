@@ -6,11 +6,16 @@
 namespace aether::render {
 
     class IBatchedEntity;
+    class InstancedEntity;
     class Camera;
 
+    /**
+     * @struct InstanceBatch
+     * @brief Represents a batch of instanced entities.
+     */
     struct InstanceBatch
     {
-		std::vector<IBatchedEntity*> elements;
+        std::vector<IBatchedEntity*> elements; ///< List of batched entities
     };
 
     /**
@@ -40,10 +45,22 @@ namespace aether::render {
          */
         virtual void RenderElement(const IBatchedEntity& element, Batch& batch) = 0;
 
+        /**
+         * @brief Renders an instanced entity a number of times defined by te batch.
+         * @param entity Pointer to the instanced entity.
+         * @param batch Pointer to the instance batch.
+         */
+        virtual void RenderInstanced(InstancedEntity* entity, InstanceBatch* batch) = 0;
 
+        /**
+         * @brief Starts the rendering step for elements.
+         */
         virtual void StartRenderElementsStep() = 0;
-        virtual void FinishRenderElementsStep() = 0;
 
+        /**
+         * @brief Finishes the rendering step for elements.
+         */
+        virtual void FinishRenderElementsStep() = 0;
     };
 
     /**

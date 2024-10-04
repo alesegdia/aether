@@ -6,6 +6,7 @@ namespace aether::tilemap
 
 	Tile* TileSet::GetTile(uint16_t tile_index)
 	{
+		tile_index = tile_index - m_gid;
 		if (tile_index >= m_tiles.size())
 		{
 			return nullptr;
@@ -37,6 +38,11 @@ namespace aether::tilemap
 	int TileSet::GetFirstGid()
 	{
 		return m_gid;
+	}
+
+	int TileSet::GetLastGid()
+	{
+		return m_gid + m_tiles.size();
 	}
 
 	const math::Vec2i& TileSet::GetTileSize()

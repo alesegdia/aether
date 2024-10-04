@@ -1,29 +1,21 @@
 #pragma once
 
 #include "aether/core/utility.h"
+#include <vector>
+#include <memory>
 
-namespace aether::tilemap
-{
+namespace aether::tilemap {
 
-class TilesetCollection
-{
-public:
-	Tile* GetTile(int tileID)
-	{
-		return m_tilesets[0]->GetTile(tileID);
-	}
+    class Tile;
+    class TileSet;
 
-	void AddTileset(const std::shared_ptr<TileSet>& tileset)
-	{
-		aether::core::insert_sorted(m_tilesets, tileset, [](const std::shared_ptr<TileSet> a, const std::shared_ptr<TileSet> b)
-			{
-				return a->GetFirstGid() > b->GetFirstGid();
-			});
-	}
+    class TilesetCollection {
+    public:
+        Tile* GetTile(int tileID);
+        void AddTileset(const std::shared_ptr<TileSet>& tileset);
 
-private:
-	std::vector<std::shared_ptr<TileSet>> m_tilesets;
-};
-
+    private:
+        std::vector<std::shared_ptr<TileSet>> m_tilesets;
+    };
 
 }

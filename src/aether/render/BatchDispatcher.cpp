@@ -69,13 +69,17 @@ namespace aether::render
 			std::unordered_map<InstancedEntity*, InstanceBatch> instanceBatches;
 			for (auto& element : batch.GetElements())
 			{
+				auto instancedEntity = element->GetInstancedEntity();
 				if (element->IsInstanced())
 				{
-					if (instanceBatches.find(element->GetTopology()) == instanceBatches.end())
+					auto instancedEntity = element->GetInstancedEntity();
+					assert(instancedEntity != nullptr);
+
+					if (!instanceBatches.contains(instancedEntity))
 					{
-						instanceBatches[element->GetTopology()] = InstanceBatch();
+						instanceBatches[instancedEntity] = InstanceBatch();
 					}
-					instanceBatches[element->GetTopology()].elements.push_back(const_cast<IBatchedEntity*>(element));
+					instanceBatches[instancedEntity].elements.push_back(const_cast<IBatchedEntity*>(element));
 				}
 				else
 				{
@@ -84,12 +88,10 @@ namespace aether::render
 			}
 			m_batchActionProvider->FinishRenderElementsStep();
 
-			/*
-			for (auto& [topology, instanceBatch] : instanceBatches)
+			for (auto& [instancedEntity, instanceBatch] : instanceBatches)
 			{
-				m_batchActionProvider->RenderInstanced(instanceBatch);
+				m_batchActionProvider->RenderInstanced(instancedEntity, &instanceBatch);
 			}
-			*/
 		}
 	}
 

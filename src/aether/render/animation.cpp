@@ -2,8 +2,6 @@
 
 namespace aether::render {
 
-AnimationsManager AnimationsManager::instance;
-
 void AnimationData::ResetAnimationTimer()
 {
     timer = 0;

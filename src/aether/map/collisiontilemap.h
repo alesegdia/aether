@@ -7,6 +7,7 @@
 #include "../math/rect.h"
 
 #include "tilemap.h"
+#include "Tile.h"
 
 
 namespace aether {

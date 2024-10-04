@@ -4,6 +4,7 @@
 #include "aether/map/TileLayer.h"
 #include "aether/map/ObjectLayer.h"
 #include "aether/core/utility.h"
+#include "aether/render/Spritesheet.h"
 
 #include <vector>
 #include <functional>
@@ -51,7 +52,7 @@ namespace aether {
 				m_tilesetCollection = std::make_shared<TilesetCollection>();
 			}
 
-			void AddSheet(const std::shared_ptr<render::Spritesheet>& sheet);
+			void AddSheet(const std::shared_ptr<aether::render::Spritesheet>& sheet);
 
 			void AddTileset(const TileSet::Shared& tileset);
 
