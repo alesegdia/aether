@@ -95,6 +95,14 @@ namespace aether {
 				return float(layer.GetMapHeight() * layer.GetTileHeight());
 			}
 
+			/*
+			Texture* GetAnyTilesetTexture()
+			{
+				assert(!m_tilesets.empty() && "must have some tileset to fetch texture");
+				return m_tilesets[0]->GetTexture();
+			}
+			*/
+
 		private:
 			std::vector<Layer::Shared> m_layers;
 			std::vector<TileSet::Shared> m_tilesets;

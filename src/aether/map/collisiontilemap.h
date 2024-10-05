@@ -2,11 +2,8 @@
 
 #include <cstdint>
 
-#include "../math/matrix.h"
-#include "../math/vec.h"
-#include "../math/rect.h"
-
-#include "tilemap.h"
+#include "aether/math/rect.h"
+#include "TileLayer.h"
 #include "Tile.h"
 
 
@@ -29,10 +26,10 @@ class GenericCollisionTileMap
 {
 public:
 
-    GenericCollisionTileMap(TileLayer::Shared tilelayer);
+    GenericCollisionTileMap(aether::tilemap::TileLayer::Shared tilelayer);
     virtual ~GenericCollisionTileMap();
 
-    CollisionInfo Move(math::Rect<int> &rect, int new_x, int new_y);
+    CollisionInfo Move(::aether::math::Recti &rect, int new_x, int new_y);
 
     bool IsSolidTile( float x, float y )
     {
@@ -41,7 +38,7 @@ public:
     }
 
 protected:
-    virtual void Internal_Move(math::Recti& rect, int new_x, int new_y, CollisionInfo* ci) = 0;
+    virtual void Internal_Move(math::Rect<int>& rect, int new_x, int new_y, CollisionInfo* ci) = 0;
 
     bool IsSolid( size_t x, size_t y );
     bool isOneway( size_t x, size_t y );
@@ -68,7 +65,7 @@ public:
     ~CollisionTilemap() override;
 
 private:
-    virtual void Internal_Move(math::Recti& rect, int new_x, int new_y, CollisionInfo* ci) override;
+    virtual void Internal_Move(math::Rect<int>& rect, int new_x, int new_y, CollisionInfo* ci) override;
 
 };
 

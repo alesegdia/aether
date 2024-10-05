@@ -24,7 +24,9 @@ namespace aether::scene {
         using SharedPtr = std::shared_ptr<Scene>;
 
         Scene(scene::ISceneNodeFactory* nodeFactory)
-            : m_nodeFactory(nodeFactory)
+			: core::ModuleObject(this)
+            , m_root(this)
+            , m_nodeFactory(nodeFactory)
         {
         }
 
@@ -41,11 +43,6 @@ namespace aether::scene {
         void SetClearColor(aether::render::Color color);
 
         void Step();
-
-        scene::ISpriteNode CreateSpriteNode()
-        {
-            return m_nodeFactory->CreateSpriteNode();
-        }
 
     private:
         void Traverse(const std::function<void(SceneNode*)>& functor, SceneNode* node);

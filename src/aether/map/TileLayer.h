@@ -19,14 +19,6 @@ namespace aether {
 			using Shared = std::shared_ptr<TileLayer>;
 
 			TileLayer(const std::string& id, int zOrder);
-			~TileLayer() override
-			{
-				if (tile_map)
-				{
-					delete[] tile_map;
-					tile_map = NULL;
-				}
-			}
 
 			void SetTileset(TileSet::Shared tileset);
 

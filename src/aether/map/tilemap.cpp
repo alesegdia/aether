@@ -174,21 +174,6 @@ namespace aether {
             return m_objectLayers[layerId];
         }
 
-        void TileMap::Render()
-        {
-            /*
-            aether::graphics::hold_bitmap(true);
-            for( auto layer : m_layers )
-            {
-                if (layer->IsVisible())
-                {
-                    layer->Render();
-                }
-            }
-            aether::graphics::hold_bitmap(false);
-            */
-        }
-
         std::unordered_map<std::string, TileLayer::Shared>& TileMap::GetTileLayers()
         {
             return m_tileLayers;
@@ -204,6 +189,11 @@ namespace aether {
             return m_basePath;
         }
 
+		TileSet::Shared TileMap::GetTileset(int i)
+		{
+			assert(i < m_tilesets.size() && i >= 0);
+			return m_tilesets[i];
+		}
 
     }
 }

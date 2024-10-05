@@ -62,7 +62,7 @@ namespace aether::render {
 
     scene::ISpriteNode* GLRenderModule::CreateSpriteNode()
     {
-        m_allSpriteNodes.emplace_back(this);
+        m_allSpriteNodes.emplace_back(new GLSpriteNode(this));
         return &m_allSpriteNodes.back();
     }
 

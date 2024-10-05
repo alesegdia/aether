@@ -2,8 +2,7 @@
 
 #include <iostream>
 
-namespace aether {
-namespace math {
+namespace aether::math {
 
 
     template <typename T>
@@ -281,5 +280,5 @@ namespace math {
         return (T(0) < val) - (val < T(0));
     }
 
-}
+
 }

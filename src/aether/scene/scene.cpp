@@ -4,13 +4,6 @@
 
 namespace aether::scene {
 
-    Scene::Scene()
-        : ModuleObject(nullptr)
-        , m_root(this)
-    {
-
-    }
-
     void Scene::Traverse(const std::function<void(SceneNode*)>& functor)
     {
         Traverse(functor, &m_root);

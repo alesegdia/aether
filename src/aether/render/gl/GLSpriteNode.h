@@ -38,16 +38,23 @@ namespace aether::render
             return m_shader;
         }
 
-        render::Topology* GetTopology() const override
-        {
-            return m_topology.get();
-        }
-
         render::Texture* GetTexture() const override
         {
             return m_sprite.GetRegion()->GetTexture();
         }
 
+
+
+        void SetTexture(render::Texture* texture) override;
+
+
+        glm::mat4x4 GetEntityModel() override;
+
+
+        void Draw() const override;
+
+
+        bool IsInstanced() const override;
 
     private:
         Sprite m_sprite;

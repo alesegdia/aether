@@ -55,11 +55,5 @@ namespace aether::tilemap
 		m_tileSize.Set(w, h);
 	}
 
-	TileSet::Shared TileMap::GetTileset(int i)
-	{
-		assert(i < m_tilesets.size() && i >= 0);
-		return m_tilesets[i];
-	}
-
 
 }
