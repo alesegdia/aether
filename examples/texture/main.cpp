@@ -10,7 +10,7 @@ public:
     {
         auto texture = aether::get_engine()->GetRenderer()->LoadTextureFromFile("media/aether-logo.png");
         auto scn = aether::get_scene();
-        auto sprite = scn.CreateSpriteNode();
+        //auto sprite = scn.CreateSpriteNode();
         
         return 0;
     }

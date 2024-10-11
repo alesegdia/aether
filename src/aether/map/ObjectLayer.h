@@ -32,8 +32,6 @@ namespace aether::tilemap
 			}
 		}
 
-		void Render() override;
-
 	private:
 		std::vector<Object> m_objects;
 

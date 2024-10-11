@@ -6,7 +6,7 @@
 namespace aether
 {
 	void init_engine();
-	render::IRenderModule* create_render_module();
+	aether::render::IRenderModule* create_render_module();
 	scene::ISceneNodeFactory* get_node_factory();
 	scene::Scene& get_scene();
 

@@ -24,10 +24,5 @@ namespace aether::tilemap
 		return m_objects;
 	}
 
-	void ObjectLayer::Render()
-	{
-
-	}
-
 
 }

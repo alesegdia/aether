@@ -48,8 +48,6 @@ namespace aether {
 
 			bool IsValidTile(size_t x, size_t y) const;
 
-			void Render() override;
-
 			void AddProperty(const std::string& key, const std::string& value);
 
 			bool IsUnsetTile(size_t x, size_t y)

@@ -80,16 +80,16 @@ namespace aether::render {
 			return order;
 		}
 
+		const std::vector<TextureConfigEntry>& GetEntries() const
+		{
+			return m_entries;
+		}
+
     private:
 		std::vector<TextureConfigEntry> m_entries;
 
     };
 
-	TextureConfig CreateSingleTextureConfig(Texture* texture, int slot = 0)
-	{
-		TextureConfig config;
-		config.AddEntrySorted(slot, texture);
-		return config;
-	}
+	TextureConfig CreateSingleTextureConfig(Texture* texture, int slot = 0);
 
 }

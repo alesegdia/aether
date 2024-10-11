@@ -22,17 +22,17 @@ namespace aether::render
 		batch->AddElement(node);
 	}
 
-	aether::render::Batch* BatchDispatcher::AddBatchForNode(const IBatchedEntity* node)
+	Batch* BatchDispatcher::AddBatchForNode(const IBatchedEntity* node)
 	{
 		// add batch with node properties
 		Batch* batch = new Batch(node->GetTextureConfig(), node->GetShader());
 		m_batches.push_back(batch);
 
 		// sort first by texture and then by shader
-		std::sort(m_batches.begin(), m_batches.end(), [](const Batch*& b1, const Batch*& b2) {
+		std::sort(m_batches.begin(), m_batches.end(), [](const Batch* b1, const Batch* b2) {
 			return b1->GetOrder() > b2->GetOrder();
 		});
-		std::sort(m_batches.begin(), m_batches.end(), [](const Batch*& b1, const Batch*& b2) {
+		std::sort(m_batches.begin(), m_batches.end(), [](const Batch* b1, const Batch* b2) {
 			return b1->GetOrder() > b2->GetOrder();
 		});
 

@@ -6,6 +6,15 @@
 
 #include "aether/render/gl/GLResources.h"
 
+namespace aether {
+
+	aether::render::IRenderModule* create_render_module()
+	{
+		return new aether::render::GLRenderModule();
+	}
+
+}
+
 namespace aether::render {
 
     GLRenderModule::GLRenderModule()
@@ -86,8 +95,13 @@ namespace aether::render {
 
     void GLRenderModule::TexturePreparationStep(Batch& batch)
     {
-        auto texture = ResourceCast(batch.GetTexture());
-        texture->GetNetherTexture()->Bind(nether::TextureUnit::Texture0);
+        for (auto entry : batch.GetTextureConfig().GetEntries())
+		{
+			auto texture = ResourceCast(entry.GetTexture());
+
+			// fixme: this is a hack, we need to bind the texture to the correct texture unit
+			texture->GetNetherTexture()->Bind(nether::TextureUnit::Texture0);
+        }
     }
 
     void GLRenderModule::StartRenderElementsStep()
@@ -105,9 +119,5 @@ namespace aether::render {
 		throw std::logic_error("The method or operation is not implemented.");
 	}
 
-    aether::render::IRenderModule* create_render_module()
-    {
-        return new aether::render::GLRenderModule();
-    }
 } // namespace aether::render
 

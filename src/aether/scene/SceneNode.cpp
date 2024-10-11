@@ -53,7 +53,7 @@ inline void SceneNode::SetRelativePosition(glm::vec3 relativePosition)
     }
 }
 
-inline const glm::mat4x4& SceneNode::GetModel()
+const glm::mat4x4& SceneNode::GetModel()
 {
     if (m_modelDirty)
     {

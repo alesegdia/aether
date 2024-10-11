@@ -49,7 +49,7 @@ namespace aether::render
             return GetModel();
         }
 
-        void Draw() override
+        void Draw() const override
         {
 
         }

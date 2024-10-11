@@ -26,6 +26,11 @@ namespace aether {
 
             void SetTileSize(int w, int h);
 
+            aether::render::Texture* GetTexture()
+            {
+                return nullptr;
+            }
+
         private:
             std::vector<Tile> m_tiles;
             std::string m_name;
