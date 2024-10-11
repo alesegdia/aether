@@ -26,12 +26,17 @@ namespace aether::render {
         return m_shader;
     }
 
-    Texture* Batch::GetTexture() const
-    {
-        return m_texture;
-    }
+	TextureConfig Batch::GetTextureConfig() const
+	{
+		return m_textureConfig;
+	}
 
-    Batch::Batch(Texture* texture, ShaderProgram* shader) : m_texture(texture), m_shader(shader)
+	uint64_t Batch::GetTextureOrder() const
+	{
+		return m_textureConfig.GetOrder();
+	}
+
+    Batch::Batch(TextureConfig texturecfg, ShaderProgram* shader) : m_textureConfig(texturecfg), m_shader(shader)
     {
     }
 

@@ -50,11 +50,6 @@ namespace aether::scene {
         const glm::vec3& GetRelativePosition() const;
 
         /**
-         * @brief Renders the node.
-         */
-        virtual void Render();
-
-        /**
          * @brief Retrieves the children of this node.
          * @return A vector of pointers to the child nodes.
          */

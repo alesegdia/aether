@@ -2,7 +2,6 @@
 
 #include "aether/render/IRenderModule.h"
 #include "aether/render/BatchDispatcher.h"
-#include "aether/render/gl/GLCamera.h"
 #include "aether/render/gl/GLFont.h"
 #include "aether/render/gl/GLTexture.h"
 #include "aether/render/gl/GLShaderProgram.h"
@@ -36,7 +35,6 @@ namespace aether::render {
         Texture* LoadTextureFromFile(const std::string& path) override;
         Font* LoadFontFromFile(const std::string& path, int size) override;
         ShaderProgram* LoadShaderFromFile(const std::string& vspath, const std::string& fspath) override;
-        Camera* CreateCamera(const math::Vec2<float>& position, float rotation) override;
         Sprite* CreateSprite(Texture* texture, const math::Recti& rect) override;
         scene::ISpriteNode* CreateSpriteNode() override;
         scene::ITilemapNode* CreateTilemapNode() override;
@@ -47,13 +45,24 @@ namespace aether::render {
         void StartRenderElementsStep() override;
         void FinishRenderElementsStep() override;
 
+
+        Camera* CreateCamera(const math::Vec2f& viewport) override;
+
+
+        void RenderInstanced(InstancedEntity* entity, InstanceBatch* batch) override;
+
     private:
         BatchDispatcher m_batchDispatcher;
         std::vector<GLFont> m_allFonts;
         std::vector<GLTexture> m_allTextures;
-        std::vector<GLCamera> m_allCameras;
+        std::vector<Camera*> m_allCameras;
         std::vector<GLShaderProgram> m_allShaders;
-        
+		std::vector<Sprite*> m_allSprites;
+		std::vector<render::GLSpriteNode*> m_allSpriteNodes;
+		std::vector<render::GLTilemapNode*> m_allTilemapNodes;
+		GLShaderProgram* m_spriteShader;
+		GLShaderProgram* m_tilemapShader;
+
         template <typename T>
         void RemoveElementFromVector(std::vector<T*>& v, T* obj)
         {
@@ -65,10 +74,6 @@ namespace aether::render {
             }
         }
 
-        std::vector<Sprite*> m_allSprites;
-        std::vector<render::GLSpriteNode*> m_allSpriteNodes;
-        std::vector<render::GLTilemapNode*> m_allTilemapNodes;
-        GLShaderProgram* m_spriteShader;
 
     };
 

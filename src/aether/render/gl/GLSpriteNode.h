@@ -31,6 +31,7 @@ namespace aether::render
 		void SetTexture(Texture* texture) override
 		{
             m_sprite.SetTexture(texture);
+            m_textureConfig = CreateSingleTextureConfig(texture);
 		}
 
         render::ShaderProgram* GetShader() const override
@@ -38,28 +39,28 @@ namespace aether::render
             return m_shader;
         }
 
-        render::Texture* GetTexture() const override
+        render::TextureConfig GetTextureConfig() const override
         {
-            return m_sprite.GetRegion()->GetTexture();
+            return m_textureConfig;
+        }
+
+        glm::mat4x4 GetEntityModel() override
+        {
+            return GetModel();
+        }
+
+        void Draw() override
+        {
+
         }
 
 
-
-        void SetTexture(render::Texture* texture) override;
-
-
-        glm::mat4x4 GetEntityModel() override;
-
-
-        void Draw() const override;
-
-
-        bool IsInstanced() const override;
 
     private:
         Sprite m_sprite;
         render::ShaderProgram* m_shader;
         std::unique_ptr<render::Topology> m_topology;
+        TextureConfig m_textureConfig;
 
     };
 

@@ -51,6 +51,10 @@ public:
     void Reset( size_t width, size_t height, Texture* texture );
     void Load( size_t width, size_t height, Texture* texture );
 
+    Texture* GetTexture()
+    {
+		return m_texture;
+    }
 
 private:
 

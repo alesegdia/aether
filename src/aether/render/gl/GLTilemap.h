@@ -54,18 +54,23 @@ namespace aether::render {
 
 	class GLTilemapNode : public scene::SceneNode, public scene::ITilemapNode, public render::IBatchedEntity {
 	public:
-		GLTilemapNode(core::ModuleObject* o, render::ShaderProgram* shader, render::Texture* texture, tilemap::TileMap* tilemap);
+		GLTilemapNode(core::ModuleObject* o, render::ShaderProgram* shader, tilemap::TileMap* tilemap);
 
 		render::ShaderProgram* GetShader() const override;
-		render::Texture* GetTexture() const override;
+		render::TextureConfig GetTextureConfig() const override;
 		void SetLayerCell(const std::string& layer, int x, int y, int cell) override;
 		void Draw() const override;
 		glm::mat4x4 GetEntityModel() override;
 
+
 	private:
+
+		void SetTextureConfigToTilemap();
+
 		tilemap::TileMap* m_tilemap;
 		render::ShaderProgram* m_shader;
 		std::vector<render::TilemapTopology> m_mapParts;
+		TextureConfig m_textureConfig;
 	};
 
 }

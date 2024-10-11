@@ -2,11 +2,12 @@
 
 #include <glm/glm.hpp>
 
+#include "aether/render/Texture.h"
+
 namespace aether::render
 {
 
 	class ShaderProgram;
-	class Texture;
 	class Topology;
 
 	class InstancedEntity
@@ -20,14 +21,13 @@ namespace aether::render
 		virtual ~IBatchedEntity() = default;
 
 		virtual ShaderProgram* GetShader() const = 0;
-		virtual Texture* GetTexture() const = 0;
+		virtual TextureConfig GetTextureConfig() const = 0;
 		virtual glm::mat4x4 GetEntityModel() = 0;
 		
 		virtual void Draw() const = 0;
 
-		virtual bool IsInstanced() const = 0;
-
 		// if it's instanced, it will return the common instanced entity
+		// otherwise, it will return nullptr
 		virtual InstancedEntity* GetInstancedEntity() const
 		{
 			return nullptr;

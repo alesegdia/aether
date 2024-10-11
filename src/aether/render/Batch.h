@@ -1,6 +1,9 @@
 #pragma once
 
+#include "aether/render/Texture.h"
+
 #include <vector>
+#include <cassert>
 
 namespace aether::render {
 
@@ -20,13 +23,15 @@ namespace aether::render {
          * @param texture Pointer to the texture used by the batch.
          * @param shader Pointer to the shader program used by the batch.
          */
-        Batch(Texture* texture, ShaderProgram* shader);
+        Batch(TextureConfig texturecfg, ShaderProgram* shader);
 
         /**
          * @brief Gets the texture used by the batch.
          * @return Pointer to the texture.
          */
-        Texture* GetTexture() const;
+        TextureConfig GetTextureConfig() const;
+
+        uint64_t GetTextureOrder() const;
 
         /**
          * @brief Gets the shader program used by the batch.
@@ -52,8 +57,14 @@ namespace aether::render {
          */
         const std::vector<const IBatchedEntity*>& GetElements() const;
 
+        int GetOrder() const
+        {
+            assert(false);
+            return -1;
+        }
+
     private:
-        Texture* m_texture; ///< Pointer to the texture used by the batch.
+        TextureConfig m_textureConfig; ///< Pointer to the texture used by the batch.
         ShaderProgram* m_shader; ///< Pointer to the shader program used by the batch.
         std::vector<const IBatchedEntity*> m_elements; ///< List of entities in the batch.
     };

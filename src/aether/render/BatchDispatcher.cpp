@@ -25,52 +25,49 @@ namespace aether::render
 	aether::render::Batch* BatchDispatcher::AddBatchForNode(const IBatchedEntity* node)
 	{
 		// add batch with node properties
-		Batch batch(node->GetTexture(), node->GetShader());
+		Batch* batch = new Batch(node->GetTextureConfig(), node->GetShader());
 		m_batches.push_back(batch);
 
 		// sort first by texture and then by shader
-		std::sort(m_batches.begin(), m_batches.end(), [](const Batch& b1, const Batch& b2) {
-			return b1.GetTexture() > b2.GetTexture();
+		std::sort(m_batches.begin(), m_batches.end(), [](const Batch*& b1, const Batch*& b2) {
+			return b1->GetOrder() > b2->GetOrder();
 		});
-		std::sort(m_batches.begin(), m_batches.end(), [](const Batch& b1, const Batch& b2) {
-			return b1.GetShader() > b2.GetShader();
+		std::sort(m_batches.begin(), m_batches.end(), [](const Batch*& b1, const Batch*& b2) {
+			return b1->GetOrder() > b2->GetOrder();
 		});
 
-		// return last element
-		return &(m_batches.back());
+		return batch;
 	}
 
 	void BatchDispatcher::Render()
 	{
 		render::ShaderProgram* prevShader = nullptr;
-		render::Texture* prevTexture = nullptr;
+		render::TextureConfig prevTexture;
 
 		for (auto& batch : m_batches)
 		{
-			auto currentShader = batch.GetShader();
+			auto currentShader = batch->GetShader();
 			if (currentShader != prevShader)
 			{
 				prevShader = currentShader;
-				m_batchActionProvider->ShaderPreparationStep(batch);
-				m_batchActionProvider->TexturePreparationStep(batch);
-				prevTexture = batch.GetTexture();
-			}
-			else
-			{
-				auto currentTexture = batch.GetTexture();
-				if (currentTexture != prevTexture)
-				{
-					m_batchActionProvider->TexturePreparationStep(batch);
-					prevTexture = currentTexture;
-				}
+				m_batchActionProvider->ShaderPreparationStep(*batch);
+				m_batchActionProvider->TexturePreparationStep(*batch);
+				prevTexture = batch->GetTextureConfig();
 			}
 
+			auto currentTexture = batch->GetTextureConfig();
+			if (currentTexture != prevTexture)
+			{
+				m_batchActionProvider->TexturePreparationStep(*batch);
+				prevTexture = currentTexture;
+			}
+			
 			m_batchActionProvider->StartRenderElementsStep();
 			std::unordered_map<InstancedEntity*, InstanceBatch> instanceBatches;
-			for (auto& element : batch.GetElements())
+			for (auto& element : batch->GetElements())
 			{
 				auto instancedEntity = element->GetInstancedEntity();
-				if (element->IsInstanced())
+				if (instancedEntity != nullptr)
 				{
 					auto instancedEntity = element->GetInstancedEntity();
 					assert(instancedEntity != nullptr);
@@ -83,7 +80,7 @@ namespace aether::render
 				}
 				else
 				{
-					m_batchActionProvider->RenderElement(*element, batch);
+					m_batchActionProvider->RenderElement(*element, *batch);
 				}
 			}
 			m_batchActionProvider->FinishRenderElementsStep();
@@ -103,18 +100,18 @@ namespace aether::render
 		for (auto& batch : m_batches)
 		{
 			int currentBatchScore = 0;
-			if (batch.GetTexture() == node->GetTexture())
+			if (batch->GetTextureConfig() == node->GetTextureConfig())
 			{
 				currentBatchScore += SameTextureScore;
 			}
-			if (batch.GetShader() == node->GetShader())
+			if (batch->GetShader() == node->GetShader())
 			{
 				currentBatchScore += SameShaderScore;
 			}
 			if (currentBatchScore >= bestBatchScore)
 			{
 				bestBatchScore = currentBatchScore;
-				selectedBatch = &batch;
+				selectedBatch = batch;
 			}
 		}
 
@@ -140,7 +137,7 @@ namespace aether::render
 
 		for (auto& batch : m_batches)
 		{
-			batch.RemoveElement(node);
+			batch->RemoveElement(node);
 		}
 	}
 

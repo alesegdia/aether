@@ -15,11 +15,6 @@ const glm::vec3& SceneNode::GetRelativePosition() const
     return m_relativePosition;
 }
 
-void SceneNode::Render()
-{
-
-}
-
 const std::vector<SceneNode*>& SceneNode::GetChildren() const
 {
     return m_children;

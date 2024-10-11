@@ -52,6 +52,12 @@ namespace aether {
 				m_tilesetCollection = std::make_shared<TilesetCollection>();
 			}
 
+			render::Texture* GetTexture()
+			{
+				assert(!m_sheetStore.empty() && "must have some tileset to fetch texture");
+				return m_sheetStore[0]->GetTexture();
+			}
+
 			void AddSheet(const std::shared_ptr<aether::render::Spritesheet>& sheet);
 
 			void AddTileset(const TileSet::Shared& tileset);

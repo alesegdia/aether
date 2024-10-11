@@ -6,7 +6,6 @@
 namespace aether {
     namespace tilemap {
 
-
         class TileSet
         {
         public:

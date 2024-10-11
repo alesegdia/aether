@@ -2,6 +2,7 @@
 #include "nether/nether.h"
 #include "aether/render/gl/GLShaderProgram.h"
 
+#include "aether/render/Camera.h"
 
 #include "aether/render/gl/GLResources.h"
 
@@ -42,10 +43,10 @@ namespace aether::render {
         return shaderProgram;
     }
 
-    Camera* GLRenderModule::CreateCamera(const math::Vec2<float>& position, float rotation)
+    Camera* GLRenderModule::CreateCamera(const math::Vec2f& viewport)
     {
-        m_allCameras.emplace_back(this, position, rotation);
-        return &m_allCameras.back();
+        m_allCameras.emplace_back(new Camera(this, viewport));
+        return m_allCameras.back();
     }
 
     Sprite* GLRenderModule::CreateSprite(Texture* texture, const math::Recti& rect)
@@ -62,19 +63,19 @@ namespace aether::render {
 
     scene::ISpriteNode* GLRenderModule::CreateSpriteNode()
     {
-        m_allSpriteNodes.emplace_back(new GLSpriteNode(this));
-        return &m_allSpriteNodes.back();
+        m_allSpriteNodes.emplace_back(new GLSpriteNode(this, m_spriteShader, nullptr));
+        return m_allSpriteNodes.back();
     }
 
     scene::ITilemapNode* GLRenderModule::CreateTilemapNode()
     {
-        m_allTilemapNodes.emplace_back(new GLTilemapNode(this));
+        m_allTilemapNodes.emplace_back(new GLTilemapNode(this, m_tilemapShader, nullptr));
         return m_allTilemapNodes.back();
     }
 
     void GLRenderModule::RenderElement(const IBatchedEntity& element, Batch& batch)
     {
-		element.Render(batch);
+		element.Draw();
     }
 
     void GLRenderModule::ShaderPreparationStep(Batch& batch)
@@ -98,6 +99,11 @@ namespace aether::render {
     {
         // Implementation for finishing the render elements step
     }
+
+	void GLRenderModule::RenderInstanced(InstancedEntity* entity, InstanceBatch* batch)
+	{
+		throw std::logic_error("The method or operation is not implemented.");
+	}
 
     aether::render::IRenderModule* create_render_module()
     {

@@ -75,7 +75,13 @@ namespace aether::render {
          */
         BatchDispatcher(IBatchActionProvider* batchActionProvider);
 
-        virtual ~BatchDispatcher() = default;
+        virtual ~BatchDispatcher()
+        {
+            for (auto batch : m_batches)
+            {
+                delete batch;
+            }
+        }
 
         /**
          * @brief Adds an entity to the appropriate batch.
@@ -112,7 +118,7 @@ namespace aether::render {
         static constexpr int SameShaderScore = 2; ///< Score for matching shaders.
         static constexpr int SameTextureScore = 1; ///< Score for matching textures.
 
-        std::vector<Batch> m_batches; ///< List of batches.
+        std::vector<Batch*> m_batches; ///< List of batches.
         IBatchActionProvider* m_batchActionProvider; ///< Pointer to the batch action provider.
     };
 

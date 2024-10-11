@@ -65,7 +65,7 @@ namespace aether::render
          * @param viewport The viewport size for the camera.
          * @return Pointer to the created Camera object.
          */
-        virtual Camera* CreateCamera(const math::Vec2f& viewport, float rotation) = 0;
+        virtual Camera* CreateCamera(const math::Vec2f& viewport) = 0;
 
         /**
          * @brief Create a sprite.
