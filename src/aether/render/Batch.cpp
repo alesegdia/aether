@@ -13,6 +13,7 @@ namespace aether::render {
 
     void Batch::AddElement(const IBatchedEntity* node)
     {
+        
         m_elements.push_back(node);
     }
 

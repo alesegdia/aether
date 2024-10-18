@@ -44,7 +44,7 @@ inline void SceneNode::ComputeRenderMatrix()
     m_renderMatrix = m_parent != nullptr ? m_parent->GetModel() * GetModel() : GetModel();
 }
 
-inline void SceneNode::SetRelativePosition(glm::vec3 relativePosition)
+void SceneNode::SetRelativePosition(glm::vec3 relativePosition)
 {
     if (relativePosition != m_relativePosition)
     {

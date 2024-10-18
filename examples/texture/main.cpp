@@ -8,7 +8,7 @@ public:
 
     int Ready(const aether::core::CommandLineArguments& args) override
     {
-        auto texture = aether::get_engine()->GetRenderer()->LoadTextureFromFile("media/aether-logo.png");
+        auto texture = aether::GEngine->GetRenderer()->LoadTextureFromFile("media/aether-logo.png");
         auto scn = aether::get_scene();
         //auto sprite = scn.CreateSpriteNode();
         

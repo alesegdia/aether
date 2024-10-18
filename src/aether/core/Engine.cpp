@@ -7,8 +7,11 @@ namespace {
 
 namespace aether
 {
+	Engine* GEngine = nullptr;
+
 	void init_engine()
 	{
+		GEngine = &s_engine;
 		s_engine.Init();
 	}
 

@@ -90,7 +90,6 @@ namespace aether
 
 	};
 
-
-	Engine* get_engine();
+	extern class Engine* GEngine;
 
 }

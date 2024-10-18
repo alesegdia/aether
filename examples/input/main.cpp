@@ -1,17 +1,14 @@
 #include <aether/aether.h>
 
-/*
 class NormalScreen : public aether::core::IScreen
 {
 public:
     virtual int Load() final
     {
-        if (false == m_texture.IsValid())
-        {
-            m_texture.Load("media/aether-logo.PNG");
-        }
-
-        m_position.Set(0, 0);
+        auto texture = aether::GEngine->GetRenderer()->LoadTextureFromFile("media/aether-logo.PNG");
+        m_spriteNode = aether::GEngine->GetRenderer()->CreateSpriteNode();
+        m_spriteNode->SetTexture(texture);
+		m_spriteNode->SetRelativePosition({ 0, 0, 0 });
         return 0;
     }
 
@@ -22,8 +19,8 @@ public:
 
     virtual void Render() final
     {
-        aether::graphics::clear(1.f, 0.f, 0.f);
-        m_texture.Draw(m_position.GetX(), m_position.GetY());
+		aether::GEngine->GetRenderer()->SetClearColor({1.f, 0.f, 0.f, 1.f});
+
     }
 
     virtual void Update(uint64_t delta) final
@@ -54,7 +51,7 @@ public:
     }
 
 private:
-    aether::graphics::Texture m_texture;
+    aether::scene::ISpriteNode* m_spriteNode;
     aether::math::Vec2f m_position;
 
 };
@@ -65,7 +62,6 @@ class MyGame : public aether::core::Application
 public:
     MyGame(int w, int h) : aether::core::Application(w, h) {}
 
-    virtual int Init(const aether::core::CommandLineArguments& args) override { return 0; }
     virtual int Ready(const aether::core::CommandLineArguments& args) override
     {
         auto scr = std::static_pointer_cast<aether::core::IScreen>(std::make_shared<NormalScreen>());
@@ -75,12 +71,13 @@ public:
 
 private:
 
-
 };
+
 
 int main( int argc, char** argv )
 {
     aether::core::CommandLineArguments args(argc, argv);
     return MyGame(200, 200).Exec(args);
 }
-*/
+
+

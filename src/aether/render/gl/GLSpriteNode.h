@@ -12,11 +12,11 @@
 namespace aether::render
 {
 
-    class GLSpriteNode : public scene::SceneNode, public scene::ISpriteNode, public render::IBatchedEntity
+    class GLSpriteNode : public scene::ISpriteNode, public render::IBatchedEntity
     {
     public:
         GLSpriteNode(core::ModuleObject* o, render::ShaderProgram* shader, render::Texture* texture)
-            : SceneNode(o)
+            : ISpriteNode(o)
             , m_shader(shader)
             , m_sprite(o, texture)
         {

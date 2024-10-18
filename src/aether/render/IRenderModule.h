@@ -4,6 +4,8 @@
 #include "aether/core/ModuleObject.h"
 #include "aether/math/vec.h"
 #include "aether/math/rect.h"
+
+#include "aether/scene/spritenode.h"
 #include <string>
 
 namespace aether::render
@@ -32,6 +34,11 @@ namespace aether::render
 
     public:
         virtual ~IRenderModule() = default;
+
+        void SetClearColor(aether::render::Color color)
+        {
+            m_clearColor = color;
+        }
 
         /**
          * @brief Load a texture from a file.
@@ -75,6 +82,17 @@ namespace aether::render
          * @return Pointer to the created Sprite object.
          */
         virtual Sprite* CreateSprite(Texture* texture, const math::Recti& rect) = 0;
+
+
+		virtual scene::ISpriteNode* CreateSpriteNode() = 0;
+
+    protected:
+		aether::render::Color GetClearColor() const
+		{
+			return m_clearColor;
+		}
+    private:
+        aether::render::Color m_clearColor = aether::render::Color::Magenta;
 
     };
 

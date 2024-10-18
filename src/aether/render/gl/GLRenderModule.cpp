@@ -67,6 +67,8 @@ namespace aether::render {
 
     void GLRenderModule::Render()
     {
+        auto clearColor = GetClearColor();
+		glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
         m_batchDispatcher.Render();
     }
 
