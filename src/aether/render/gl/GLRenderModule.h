@@ -30,7 +30,7 @@ namespace aether::render {
         GLRenderModule();
         ~GLRenderModule();
 
-        void Render();
+        void Render() override;
 
         Texture* LoadTextureFromFile(const std::string& path) override;
         Font* LoadFontFromFile(const std::string& path, int size) override;
@@ -58,10 +58,28 @@ namespace aether::render {
         std::vector<Camera*> m_allCameras;
         std::vector<GLShaderProgram> m_allShaders;
 		std::vector<Sprite*> m_allSprites;
+
+        // Scene Nodes
 		std::vector<render::GLSpriteNode*> m_allSpriteNodes;
 		std::vector<render::GLTilemapNode*> m_allTilemapNodes;
-		GLShaderProgram* m_spriteShader;
+
+        // Active nodes
+        std::vector<IBatchedEntity*> m_activeBatchedEntities;
+
+        // Shaders
+        GLShaderProgram* m_spriteShader;
 		GLShaderProgram* m_tilemapShader;
+
+        /*
+		template<typename NodeType, typename... Args>
+		NodeType* CreateNode(std::vector<NodeType*>& v, Args&&... args)
+		{
+			auto node = new NodeType(this, std::forward<Args>(args)...);
+			v.emplace_back(node);
+			m_activeBatchedEntities.push_back(node);
+			return node;
+		}
+        */
 
         template <typename T>
         void RemoveElementFromVector(std::vector<T*>& v, T* obj)

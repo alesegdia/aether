@@ -1,5 +1,6 @@
 #pragma once
 
+/*
 #include "aether/resources/baseassetstorage.h"
 #include "aether/graphics/font.h"
 
@@ -17,3 +18,5 @@ namespace aether
 
 	}
 }
+
+*/

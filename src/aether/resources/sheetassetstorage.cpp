@@ -5,14 +5,16 @@
 
 #include "aether/render/IRenderModule.h"
 
+#include "aether/core/Engine.h"
+
 namespace aether
 {
 	namespace resources
 	{
 
-		std::shared_ptr<aether::render::Spritesheet> SheetAssetStorage::LoadImpl(std::string path)
+		aether::render::Spritesheet* SheetAssetStorage::LoadImpl(std::string path)
 		{
-			auto spritesheet = std::make_shared<render::Spritesheet>();
+			auto spritesheet = new render::Spritesheet();
 
 			ConfigFile configFile;
 			configFile.Load(path.c_str());
@@ -23,8 +25,9 @@ namespace aether
 			configFile.GetValue("default", "cols", cols);
 			configFile.GetValue("default", "asset", relPath);
 
-			auto texture = m_renderModule->LoadTextureFromFile(path);
+			auto texture = aether::GEngine->GetRenderer()->LoadTextureFromFile(path);
 			m_cachedTextures.push_back(texture);
+			m_cachedSheets.push_back(spritesheet);
 
 			spritesheet->Load(cols, rows, texture);
 			return spritesheet;		

@@ -6,6 +6,8 @@
 
 #include "aether/render/gl/GLResources.h"
 
+#include "aether/render/BatchDispatcher.h"
+
 namespace aether {
 
 	aether::render::IRenderModule* create_render_module()
@@ -30,6 +32,14 @@ namespace aether::render {
         m_allTextures.clear();
         m_allCameras.clear();
         m_allSprites.clear();
+		if (m_tilemapShader != nullptr)
+		{
+			delete m_tilemapShader;
+		}
+        if (m_spriteShader!= nullptr)
+		{
+			delete m_tilemapShader;
+		}
     }
 
     Texture* GLRenderModule::LoadTextureFromFile(const std::string& path)
@@ -68,20 +78,26 @@ namespace aether::render {
     void GLRenderModule::Render()
     {
         auto clearColor = GetClearColor();
-		glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
-        m_batchDispatcher.Render();
+        glClearColor(255.f, 0.f, 255.f, 255.f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		// glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+        //m_batchDispatcher.Render();
     }
 
     scene::ISpriteNode* GLRenderModule::CreateSpriteNode()
     {
-        m_allSpriteNodes.emplace_back(new GLSpriteNode(this, m_spriteShader, nullptr));
-        return m_allSpriteNodes.back();
+		auto node = new GLSpriteNode(this, m_spriteShader, nullptr);
+        m_allSpriteNodes.emplace_back(node);
+        m_batchDispatcher.AddToBatch(node);
+        return node;
     }
 
     scene::ITilemapNode* GLRenderModule::CreateTilemapNode()
     {
-        m_allTilemapNodes.emplace_back(new GLTilemapNode(this, m_tilemapShader, nullptr));
-        return m_allTilemapNodes.back();
+		auto node = new GLTilemapNode(this, m_tilemapShader, nullptr);
+		m_allTilemapNodes.emplace_back(node);
+		m_batchDispatcher.AddToBatch(node);
+        return node;
     }
 
     void GLRenderModule::RenderElement(const IBatchedEntity& element, Batch& batch)

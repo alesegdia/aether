@@ -35,7 +35,7 @@ namespace aether
 				m_storageMap[path] = asset;
 			}
 
-			virtual std::shared_ptr<StoredAssetType> LoadImpl(std::string path) = 0;
+			virtual StoredAssetType* LoadImpl(std::string path) = 0;
 
 			std::string GetLoadMessage() override
 			{
@@ -49,7 +49,7 @@ namespace aether
 			}
 
 		private:
-			std::unordered_map<std::string, std::shared_ptr<StoredAssetType>> m_storageMap;
+			std::unordered_map<std::string, StoredAssetType*> m_storageMap;
 			std::string m_loadMessage;
 
 		};

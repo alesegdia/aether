@@ -16,7 +16,7 @@ namespace aether::render
 	}
 
 
-	inline void BatchDispatcher::AddToBatch(const IBatchedEntity* node)
+	void BatchDispatcher::AddToBatch(const IBatchedEntity* node)
 	{
 		auto batch = GetBestBatchForNode(node);
 		batch->AddElement(node);

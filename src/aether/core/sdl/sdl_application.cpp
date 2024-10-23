@@ -132,30 +132,44 @@ int SDLApplication::Init(const CommandLineArguments& args)
     Uint32 windowFlags = SDL_WINDOW_SHOWN;
 
 
-	int flags = IMG_INIT_PNG;
-    if(IMG_Init(flags) & flags != flags) {
-        Logger::LogError("Failed to initialize SDL image.");
-        return -1;
-    }
-    else
+    if(false == IsOpenGLActivated())
     {
-        Logger::LogMsg("SDL video initialized successfully.");
+	    int flags = IMG_INIT_PNG;
+        if(IMG_Init(flags) & flags != flags)
+        {
+            Logger::LogError("Failed to initialize SDL image.");
+            return -1;
+        }
+        else
+        {
+            Logger::LogMsg("SDL video initialized successfully.");
+        }
     }
 
 #ifdef AETHER_USE_SDL
 	TTF_Init();
 #endif
 
-
-    if (IsOpenGLActivated())
+    if (true == IsOpenGLActivated())
     {
-        SDL_GL_LoadLibrary(nullptr);
+        // SDL_GL_LoadLibrary(nullptr);
+
+        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+        int version = gladLoadGL((GLADloadfunc)SDL_GL_GetProcAddress);
+        printf("GL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
+
+        /*
         SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 
         SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
         SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+        */
 
         windowFlags |= SDL_WINDOW_OPENGL;
     }
@@ -228,6 +242,10 @@ void SDLApplication::PostRender()
     if(m_renderer != nullptr)
     {
         SDL_RenderPresent(m_renderer);
+    }
+    if (IsOpenGLActivated())
+	{
+		SDL_GL_SwapWindow(m_window);
     }
 }
 

@@ -1,14 +1,14 @@
 #include "aether/resources/textureassetstorage.h"
+#include "aether/core/Engine.h"
 
 namespace aether
 {
 	namespace resources
 	{
 
-		std::shared_ptr<aether::graphics::Texture> TextureAssetStorage::LoadImpl(std::string path)
+		aether::render::Texture* TextureAssetStorage::LoadImpl(std::string path)
 		{
-			auto texture = std::make_shared<graphics::Texture>();
-			texture->Load(path.c_str());
+			auto texture = aether::GEngine->GetRenderer()->LoadTextureFromFile(path);
 			return texture;
 		}
 

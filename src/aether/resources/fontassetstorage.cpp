@@ -1,6 +1,8 @@
 #include "aether/resources/fontassetstorage.h"
 #include "aether/resources/configfile.h"
 
+
+/*
 namespace aether
 {
 	namespace resources
@@ -21,3 +23,4 @@ namespace aether
 
 	}
 }
+*/

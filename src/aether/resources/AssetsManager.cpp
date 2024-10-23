@@ -12,9 +12,9 @@ namespace aether
 
 		AssetsManager::AssetsManager()
 		{
-			AddStorage(".font", std::make_shared<FontAssetStorage>());
+			//AddStorage(".font", std::make_shared<FontAssetStorage>());
 			AddStorage(".png", std::make_shared<TextureAssetStorage>());
-			AddStorage(".json", std::make_shared<AsepriteAnimStorage>());
+			//AddStorage(".json", std::make_shared<AsepriteAnimStorage>());
 			AddStorage(".sheet", std::make_shared<SheetAssetStorage>());
 		}
 

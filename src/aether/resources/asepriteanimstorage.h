@@ -1,18 +1,20 @@
 #pragma once
 
 #include "aether/resources/baseassetstorage.h"
-#include "aether/graphics/asepriteanimloader.h"
+#include "aether/render/asepriteanimloader.h"
 
+
+/*
 
 namespace aether
 {
 	namespace resources
 	{
 
-		class AsepriteAnimStorage : public BaseAssetStorage<aether::graphics::AsepriteAnimationData>
+		class AsepriteAnimStorage : public BaseAssetStorage<aether::render::AsepriteAnimationData>
 		{
 		public:
-			std::shared_ptr<aether::graphics::AsepriteAnimationData> LoadImpl(std::string path) override
+			std::shared_ptr<aether::render::AsepriteAnimationData> LoadImpl(std::string path) override
 			{
 				std::string error;
 				std::ifstream t(path);
@@ -23,9 +25,9 @@ namespace aether
 
 				if(result["meta"]["app"] == "https://www.aseprite.org/")
 				{
-					graphics::AsepriteAnimationLoader loader;
+					render::AsepriteAnimationLoader loader;
 					auto data = loader.Load(path);
-					return std::make_shared<graphics::AsepriteAnimationData>(data);
+					return std::make_shared<render::AsepriteAnimationData>(data);
 				}
 				SetLoadMessage(path + " is not an aseprite file.");
 				return nullptr;
@@ -34,3 +36,5 @@ namespace aether
 
 	}
 }
+
+*/

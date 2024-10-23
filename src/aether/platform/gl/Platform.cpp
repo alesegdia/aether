@@ -1,7 +1,7 @@
 #include "aether/platform.h"
 
 #include "aether/render/gl/GLRenderModule.h"
-#include "aether/core/sdl/sdl_application.h"
+#include "aether/core/gl/gl_application.h"
 
 namespace aether
 {

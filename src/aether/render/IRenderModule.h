@@ -86,6 +86,8 @@ namespace aether::render
 
 		virtual scene::ISpriteNode* CreateSpriteNode() = 0;
 
+        virtual void Render() = 0;
+
     protected:
 		aether::render::Color GetClearColor() const
 		{

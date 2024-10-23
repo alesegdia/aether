@@ -60,9 +60,9 @@ int ApplicationBase::Exec(const CommandLineArguments& args)
 {
     AppImplementationInit(args);
 
-    Initialize(args);
+	aether::init_engine();
 
-    aether::init_engine();
+    Initialize(args);
 
     while( false == m_doExit )
     {
@@ -96,7 +96,8 @@ void ApplicationBase::Step()
     {
         accum[0] -= m_renderStepTimer;
         PreRender();
-        Render();
+        aether::GEngine->GetRenderer()->Render();
+        // Render();
         PostRender();
     }
 

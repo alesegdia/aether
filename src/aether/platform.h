@@ -10,7 +10,7 @@
 #elif AETHER_USE_RAYLIB
 #include "core/raylib/rl_application.h"
 #elif AETHER_USE_GL
-#include "core/sdl/sdl_application.h"
+#include "core/gl/gl_application.h"
 #else
 	#error You must declare what backend to use
 #endif
