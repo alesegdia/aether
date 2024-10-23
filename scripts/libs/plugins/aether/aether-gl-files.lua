@@ -8,6 +8,7 @@ AETHER_GL_CORE_SOURCES = {
 
 	path.join(AETHER_PLUGINS_DIR, "nether/src/nether/**.*"),
 	path.join(AETHER_EXTERNALS_DIR, "glad/include/glad/gl.h"),
+	path.join(AETHER_EXTERNALS_DIR, "glad/src/gl.c"),
 	path.join(AETHER)
 }
 

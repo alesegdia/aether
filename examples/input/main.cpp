@@ -6,9 +6,9 @@ public:
     virtual int Load() final
     {
         auto texture = aether::GEngine->GetRenderer()->LoadTextureFromFile("media/aether-logo.PNG");
-        //m_spriteNode = aether::GEngine->GetRenderer()->CreateSpriteNode();
-        //m_spriteNode->SetTexture(texture);
-        //m_spriteNode->SetRelativePosition({ 0, 0, 0 });
+        m_spriteNode = aether::GEngine->GetRenderer()->CreateSpriteNode();
+        m_spriteNode->SetTexture(texture);
+        m_spriteNode->SetRelativePosition({ 0, 0, 0 });
 		aether::GEngine->GetRenderer()->SetClearColor({ 1.f, 0.f, 0.f, 1.f });
         return 0;
     }

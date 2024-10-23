@@ -44,7 +44,7 @@ namespace aether::render {
         void TexturePreparationStep(Batch& batch) override;
         void StartRenderElementsStep() override;
         void FinishRenderElementsStep() override;
-
+        void Init() override;
 
         Camera* CreateCamera(const math::Vec2f& viewport) override;
 

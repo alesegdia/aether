@@ -150,6 +150,8 @@ namespace aether::core {
             glContext = SDL_GL_CreateContext(m_window);
             
             int version = gladLoadGL((GLADloadfunc)SDL_GL_GetProcAddress);
+            gladInstallGLDebug();
+
             printf("GLAD GL Version: %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
 
             if (glContext == NULL)

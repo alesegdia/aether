@@ -13,7 +13,10 @@ namespace aether::render
 	public:
 		GLShaderProgram(ModuleObject* o, const std::string& vspath, const std::string& fspath);
 
-		nether::ShaderProgram* GetNetherShader() const { return m_shader.get(); }
+		nether::ShaderProgram* GetNetherShader() const
+		{
+			return m_shader.get();
+		}
 
 	private:
 		std::unique_ptr<nether::ShaderProgram> m_shader;

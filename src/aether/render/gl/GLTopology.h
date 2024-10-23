@@ -4,6 +4,7 @@
 #include <glad/gl.h>
 #include "aether/render/Topology.h"
 #include "nether/BufferObject.h" // Assuming this is the correct include path for BufferObject
+#include "nether/VertexArrayObject.h"
 
 namespace aether::render
 {
@@ -25,8 +26,13 @@ namespace aether::render
          */
         void ConfigureVertexAttribs();
 
+        void Draw();
+
+        void ConfigAndUpload();
+        
     private:
         nether::BufferObject m_vbo; ///< Vertex Buffer Object
         nether::BufferObject m_ebo; ///< Element Buffer Object
+        nether::VertexArrayObject m_vao;
     };
 }

@@ -5,7 +5,7 @@
 #include "aether/render/IBatchedEntity.h"
 #include "aether/render/IRenderModule.h"
 #include "aether/render/Sprite.h"
-#include "aether/render/Topology.h"
+#include "aether/render/gl/GLTopology.h"
 #include "aether/scene/SceneNode.h"
 #include "aether/scene/spritenode.h"
 
@@ -20,7 +20,14 @@ namespace aether::render
             , m_shader(shader)
             , m_sprite(o, texture)
         {
-            m_topology = std::make_unique<render::Topology>();
+            m_topology = std::make_unique<render::GLTopology>();
+            m_topology->SetVertexFormat(CreateP3U2VertexFormat());
+			m_topology->SetIndices({ 0, 1, 2, 2, 3, 0 });
+			m_topology->SetVertices({ -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+									  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+									  0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+									  -0.5f, 0.5f, 0.0f, 0.0f, 1.0f });
+            m_topology->ConfigAndUpload();
         }
 
 		void SetClippingRect(float x, float y, float w, float h) override
@@ -51,7 +58,7 @@ namespace aether::render
 
         void Draw() const override
         {
-
+            m_topology->Draw();
         }
 
 
@@ -59,7 +66,7 @@ namespace aether::render
     private:
         Sprite m_sprite;
         render::ShaderProgram* m_shader;
-        std::unique_ptr<render::Topology> m_topology;
+        std::unique_ptr<render::GLTopology> m_topology;
         TextureConfig m_textureConfig;
 
     };

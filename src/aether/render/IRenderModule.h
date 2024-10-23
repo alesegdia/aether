@@ -35,7 +35,7 @@ namespace aether::render
     public:
         virtual ~IRenderModule() = default;
 
-        void SetClearColor(aether::render::Color color)
+        void SetClearColor(const glm::vec4& color)
         {
             m_clearColor = color;
         }
@@ -88,13 +88,15 @@ namespace aether::render
 
         virtual void Render() = 0;
 
+        virtual void Init() = 0;
+
     protected:
-		aether::render::Color GetClearColor() const
+		glm::vec4 GetClearColor() const
 		{
 			return m_clearColor;
 		}
     private:
-        aether::render::Color m_clearColor = aether::render::Color::Magenta;
+        glm::vec4 m_clearColor = { 1.f, 0.f, 1.f, 1.f };
 
     };
 

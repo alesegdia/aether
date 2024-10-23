@@ -23,7 +23,14 @@ namespace aether::render {
         : IRenderModule(this)
         , m_batchDispatcher(this)
     {
+    }
 
+    void GLRenderModule::Init()
+    {
+        m_spriteShader = new GLShaderProgram(this, "media/default.vs", "media/default.fs");
+        auto nthsh = m_spriteShader->GetNetherShader();
+        nthsh->Use();
+        nthsh->SetIntUniform("texture", 0);
     }
 
     GLRenderModule::~GLRenderModule()
@@ -78,10 +85,10 @@ namespace aether::render {
     void GLRenderModule::Render()
     {
         auto clearColor = GetClearColor();
-        glClearColor(255.f, 0.f, 255.f, 255.f);
+        glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		// glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
-        //m_batchDispatcher.Render();
+		glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+        m_batchDispatcher.Render();
     }
 
     scene::ISpriteNode* GLRenderModule::CreateSpriteNode()

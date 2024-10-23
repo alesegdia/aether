@@ -12,9 +12,11 @@ namespace aether::render
 		Sprite(core::ModuleObject* o, render::Texture* tex)
 			: core::ModuleObject(o)
 		{
-			m_texRegion = std::make_unique<render::TextureRegion>();
-			m_texRegion->SetTexture(tex);
-			AdjustClippingRectToTexture();
+			m_texRegion = std::make_unique<TextureRegion>();
+			if (tex != nullptr)
+			{
+				SetTexture(tex);
+			}
 		}
 
 		virtual ~Sprite()
@@ -25,6 +27,7 @@ namespace aether::render
 		void SetTexture(render::Texture* t)
 		{
 			m_texRegion->SetTexture(t);
+			AdjustToTexture(t);
 		}
 
 		void AdjustClippingRectToTexture()
@@ -45,6 +48,15 @@ namespace aether::render
 
 	protected:
 		std::unique_ptr<render::TextureRegion> m_texRegion;
+
+	private:
+		void AdjustToTexture(render::Texture* tex)
+		{
+			m_texRegion = std::make_unique<render::TextureRegion>();
+			m_texRegion->SetTexture(tex);
+			AdjustClippingRectToTexture();
+		}
+
 
 	};
 

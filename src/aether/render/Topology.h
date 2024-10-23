@@ -82,6 +82,15 @@ namespace aether::render
          */
         const std::vector<unsigned int>& GetIndices() const;
 
+		/**
+		 * @brief Sets the vertex format.
+		 * @param format The vertex format to set.
+		 */
+        void SetVertexFormat(const VertexFormat& format)
+        {
+			m_vertexFormat = format;
+        }
+
         /**
          * @brief Gets the vertex format.
          * @return The vertex format.
@@ -102,7 +111,7 @@ namespace aether::render
 
 		bool HasIndices() const { return !m_indices.empty(); }
 
-    private:
+    protected:
         std::vector<float> m_vertices;           ///< List of vertex components
         std::vector<unsigned int> m_indices;     ///< List of indices
         VertexFormat m_vertexFormat;             ///< Vertex format

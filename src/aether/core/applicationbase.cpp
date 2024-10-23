@@ -34,6 +34,8 @@ int ApplicationBase::Initialize(const CommandLineArguments& args)
         Logger::LogMsg("Application initialized successfully.");
     }
 
+    aether::GEngine->GetRenderer()->Init();
+
     Logger::LogMsg("Custom app init.");
 	int ready_retcode = Ready(args);
 	if (ready_retcode != 0)
@@ -63,6 +65,7 @@ int ApplicationBase::Exec(const CommandLineArguments& args)
 	aether::init_engine();
 
     Initialize(args);
+
 
     while( false == m_doExit )
     {
