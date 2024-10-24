@@ -39,7 +39,7 @@ namespace aether::render {
         scene::ISpriteNode* CreateSpriteNode() override;
         scene::ITilemapNode* CreateTilemapNode() override;
 
-        void RenderElement(const IBatchedEntity& element, Batch& batch) override;
+        void RenderElement(IBatchedEntity& element, Batch& batch) override;
         void ShaderPreparationStep(Batch& batch) override;
         void TexturePreparationStep(Batch& batch) override;
         void StartRenderElementsStep() override;

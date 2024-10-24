@@ -27,9 +27,8 @@ namespace aether::render
 		ConfigureVertexAttribs();
 
 		m_vbo.Unbind();
-		m_ebo.Unbind();
 		m_vao.Unbind();
-
+		m_ebo.Unbind();
 	}
 
 	void GLTopology::ConfigureVertexAttribs()
@@ -37,8 +36,9 @@ namespace aether::render
 		const auto& components = GetVertexFormat().components;
 		for (size_t i = 0; i < components.size(); ++i)
 		{
-			const auto& component = components[i];
 			glEnableVertexAttribArray(static_cast<GLuint>(i));
+
+			const auto& component = components[i];
 			glVertexAttribPointer(
 				static_cast<GLuint>(i),
 				component.size,

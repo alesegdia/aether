@@ -59,7 +59,7 @@ namespace aether::render {
 		render::ShaderProgram* GetShader() const override;
 		render::TextureConfig GetTextureConfig() const override;
 		void SetLayerCell(const std::string& layer, int x, int y, int cell) override;
-		void Draw() const override;
+		void Draw() override;
 		glm::mat4x4 GetEntityModel() override;
 
 

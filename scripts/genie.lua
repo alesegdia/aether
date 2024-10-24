@@ -1,3 +1,4 @@
+
 AETHER_DIR = path.getabsolute("../")
 AETHER_EXTERNALS_DIR = path.getabsolute("../3rdparty")
 AETHER_PLUGINS_DIR = path.getabsolute("../module")
@@ -10,7 +11,6 @@ dofile(path.join(AETHER_DIR, "scripts/util/util.lua"))
 aetherConfig()
 
 solution "aether"
-
 	location "../build"
 	configurations { "debug", "release" }
 	platforms { "x32", "x64" }
@@ -18,24 +18,15 @@ solution "aether"
 	aetherBuild()
 
 	group "tests"
-	aetherProject("basic")
-		debugdir (AETHER_DIR)
-		files {
-			path.join(AETHER_DIR, "examples/basic/main.cpp")
-		}
 
-	aetherProject("input")
-		debugdir (AETHER_DIR)
-		files {
-			path.join(AETHER_DIR, "examples/input/main.cpp")
-		}
-		flags {
-			"Symbols",
-			"StaticRuntime"
-		}
-
-	aetherProject("texture")
-		debugdir (AETHER_DIR)
-		files {
-			path.join(AETHER_DIR, "examples/texture/main.cpp")
-		}
+	print("Scanning for tests...")
+	for _, file in ipairs(os.matchdirs("../examples/*")) do
+		print("Found test: " .. file)
+		local extracted = file:match("([^/]+)$")
+		aetherProject(extracted)
+			debugdir (AETHER_DIR)
+			flags { "Symbols", "StaticRuntime" }
+			files {
+				file .. "/**.*"
+			}
+	end

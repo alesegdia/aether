@@ -16,13 +16,13 @@ namespace aether::render
 	}
 
 
-	void BatchDispatcher::AddToBatch(const IBatchedEntity* node)
+	void BatchDispatcher::AddToBatch(IBatchedEntity* node)
 	{
 		auto batch = GetBestBatchForNode(node);
 		batch->AddElement(node);
 	}
 
-	Batch* BatchDispatcher::AddBatchForNode(const IBatchedEntity* node)
+	Batch* BatchDispatcher::AddBatchForNode(IBatchedEntity* node)
 	{
 		// add batch with node properties
 		Batch* batch = new Batch(node->GetTextureConfig(), node->GetShader());
@@ -92,7 +92,7 @@ namespace aether::render
 		}
 	}
 
-	aether::render::Batch* BatchDispatcher::GetBestBatchForNode(const IBatchedEntity* node)
+	aether::render::Batch* BatchDispatcher::GetBestBatchForNode(IBatchedEntity* node)
 	{
 		Batch* selectedBatch = nullptr;
 		int bestBatchScore = 0;
@@ -123,7 +123,7 @@ namespace aether::render
 		return selectedBatch;
 	}
 
-	void BatchDispatcher::RemoveFromBatch(const IBatchedEntity* node)
+	void BatchDispatcher::RemoveFromBatch(IBatchedEntity* node)
 	{
 		static std::vector<int> points = {};
 		while (points.size() < m_batches.size())

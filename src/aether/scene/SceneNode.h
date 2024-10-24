@@ -105,9 +105,9 @@ namespace aether::scene {
 
         bool m_modelDirty = true; ///< Flag indicating if the model matrix needs to be recomputed.
         glm::mat4x4 m_model = {}; ///< Model matrix of the node.
-        glm::vec3 m_scale = {}; ///< Scale of the node.
-        glm::vec3 m_rotation = {}; ///< Rotation of the node.
-        glm::vec3 m_relativePosition = {}; ///< Position of the node relative to its parent.
+        glm::vec3 m_scale = {1.f, 1.f, 1.f}; ///< Scale of the node.
+        glm::vec3 m_rotation = {0.f, 0.f, 0.f}; ///< Rotation of the node.
+        glm::vec3 m_relativePosition = {0.f, 0.f, 0.f}; ///< Position of the node relative to its parent.
         glm::mat4x4 m_renderMatrix = {}; ///< Render matrix of the node.
 
     };

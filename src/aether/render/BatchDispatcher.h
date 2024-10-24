@@ -43,7 +43,7 @@ namespace aether::render {
          * @param element Reference to the batched entity.
          * @param batch Reference to the batch.
          */
-        virtual void RenderElement(const IBatchedEntity& element, Batch& batch) = 0;
+        virtual void RenderElement(IBatchedEntity& element, Batch& batch) = 0;
 
         /**
          * @brief Renders an instanced entity a number of times defined by te batch.
@@ -87,13 +87,13 @@ namespace aether::render {
          * @brief Adds an entity to the appropriate batch.
          * @param node Pointer to the entity to be added.
          */
-        void AddToBatch(const IBatchedEntity* node);
+        void AddToBatch(IBatchedEntity* node);
 
         /**
          * @brief Removes an entity from its batch.
          * @param node Pointer to the entity to be removed.
          */
-        void RemoveFromBatch(const IBatchedEntity* node);
+        void RemoveFromBatch(IBatchedEntity* node);
 
         /**
          * @brief Renders all batches.
@@ -106,14 +106,14 @@ namespace aether::render {
          * @param node Pointer to the entity.
          * @return Pointer to the created batch.
          */
-        Batch* AddBatchForNode(const IBatchedEntity* node);
+        Batch* AddBatchForNode(IBatchedEntity* node);
 
         /**
          * @brief Gets the best batch for the specified entity.
          * @param node Pointer to the entity.
          * @return Pointer to the best batch.
          */
-        Batch* GetBestBatchForNode(const IBatchedEntity* node);
+        Batch* GetBestBatchForNode(IBatchedEntity* node);
 
         static constexpr int SameShaderScore = 2; ///< Score for matching shaders.
         static constexpr int SameTextureScore = 1; ///< Score for matching textures.

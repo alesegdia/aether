@@ -140,7 +140,7 @@ namespace aether::render
 		// m_tilemap->GetTileLayer(layer)->SetCell(x, y, cell);
 	}
 
-	void GLTilemapNode::Draw() const
+	void GLTilemapNode::Draw()
 	{
 		// Implement the drawing logic here
 	}

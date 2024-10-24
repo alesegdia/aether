@@ -6,18 +6,17 @@
 
 namespace aether::render {
 
-    const std::vector<const IBatchedEntity*>& Batch::GetElements() const
+    const std::vector<IBatchedEntity*>& Batch::GetElements() const
     {
         return m_elements;
     }
 
-    void Batch::AddElement(const IBatchedEntity* node)
+    void Batch::AddElement(IBatchedEntity* node)
     {
-        
         m_elements.push_back(node);
     }
 
-    void Batch::RemoveElement(const IBatchedEntity* node)
+    void Batch::RemoveElement(IBatchedEntity* node)
     {
         m_elements.erase(std::remove(m_elements.begin(), m_elements.end(), node), m_elements.end());
     }

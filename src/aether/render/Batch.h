@@ -43,19 +43,19 @@ namespace aether::render {
          * @brief Removes an entity from the batch.
          * @param node Pointer to the entity to be removed.
          */
-        void RemoveElement(const IBatchedEntity* node);
+        void RemoveElement(IBatchedEntity* node);
 
         /**
          * @brief Adds an entity to the batch.
          * @param node Pointer to the entity to be added.
          */
-        void AddElement(const IBatchedEntity* node);
+        void AddElement(IBatchedEntity* node);
 
         /**
          * @brief Gets the list of entities in the batch.
          * @return A const reference to the vector of entities.
          */
-        const std::vector<const IBatchedEntity*>& GetElements() const;
+        const std::vector<IBatchedEntity*>& GetElements() const;
 
         int GetOrder() const
         {
@@ -66,7 +66,7 @@ namespace aether::render {
     private:
         TextureConfig m_textureConfig; ///< Pointer to the texture used by the batch.
         ShaderProgram* m_shader; ///< Pointer to the shader program used by the batch.
-        std::vector<const IBatchedEntity*> m_elements; ///< List of entities in the batch.
+        std::vector<IBatchedEntity*> m_elements; ///< List of entities in the batch.
     };
 
 }

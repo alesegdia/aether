@@ -5,7 +5,7 @@ in vec3 ourColor;
 in vec2 TexCoord;
 
 // texture samplers
-uniform sampler2D texture;
+uniform sampler2D texture1;
 
 uniform float bias;
 

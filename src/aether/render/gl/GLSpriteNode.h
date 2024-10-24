@@ -9,6 +9,9 @@
 #include "aether/scene/SceneNode.h"
 #include "aether/scene/spritenode.h"
 
+#include "aether/render/gl/GLResources.h"
+#include "aether/render/gl/GLShaderProgram.h"
+
 namespace aether::render
 {
 
@@ -56,12 +59,13 @@ namespace aether::render
             return GetModel();
         }
 
-        void Draw() const override
+        void Draw() override
         {
+			auto glshader = ResourceCast(m_shader);
+            auto model = GetModel();
+			glshader->GetNetherShader()->SetMat4Uniform("model", model);
             m_topology->Draw();
         }
-
-
 
     private:
         Sprite m_sprite;

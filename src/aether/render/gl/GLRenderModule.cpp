@@ -30,7 +30,7 @@ namespace aether::render {
         m_spriteShader = new GLShaderProgram(this, "media/default.vs", "media/default.fs");
         auto nthsh = m_spriteShader->GetNetherShader();
         nthsh->Use();
-        nthsh->SetIntUniform("texture", 0);
+        nthsh->SetIntUniform("texture1", 0);
     }
 
     GLRenderModule::~GLRenderModule()
@@ -107,7 +107,7 @@ namespace aether::render {
         return node;
     }
 
-    void GLRenderModule::RenderElement(const IBatchedEntity& element, Batch& batch)
+    void GLRenderModule::RenderElement(IBatchedEntity& element, Batch& batch)
     {
 		element.Draw();
     }
