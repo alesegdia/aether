@@ -100,4 +100,42 @@ namespace aether::render
 
     };
 
+
+    class RenderModuleAccessor
+    {
+    public:
+        RenderModuleAccessor() {}
+
+        ~RenderModuleAccessor() = default;
+
+		void SetRenderModule(IRenderModule* renderModule)
+		{
+			m_renderModule = renderModule;
+		}
+
+        void SetClearColor(const glm::vec4& color)
+        {
+            m_renderModule->SetClearColor(color);
+        }
+
+        Texture* LoadTextureFromFile(const std::string& path)
+        {
+            return m_renderModule->LoadTextureFromFile(path);
+        }
+
+		void Init()
+		{
+			m_renderModule->Init();
+		}
+
+        void Render()
+		{
+			m_renderModule->Render();
+		}
+
+    private:
+        IRenderModule* m_renderModule;
+
+    };
+
 }

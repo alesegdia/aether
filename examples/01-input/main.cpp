@@ -5,22 +5,10 @@ class NormalScreen : public aether::core::IScreen
 public:
     virtual int Load() final
     {
-        auto texture = aether::GEngine->GetRenderer()->LoadTextureFromFile("media/aether-logo.PNG");
-        m_spriteNode = aether::GEngine->GetRenderer()->CreateSpriteNode();
-        m_spriteNode->SetTexture(texture);
+        m_spriteNode = aether::GEngine->CreateSpriteNode("media/aether-logo.PNG");
         m_spriteNode->SetRelativePosition({ 0, 0, 0 });
-		aether::GEngine->GetRenderer()->SetClearColor({ 1.f, 0.f, 0.f, 1.f });
+		aether::GEngine->GetRenderModuleAccessor()->SetClearColor({ 1.f, 0.f, 0.f, 1.f });
         return 0;
-    }
-
-    virtual int Unload() final
-    {
-        return 0;
-    }
-
-    virtual void Render() final
-    {
-
     }
 
     virtual void Update(uint64_t delta) final

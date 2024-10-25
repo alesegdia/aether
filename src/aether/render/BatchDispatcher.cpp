@@ -43,9 +43,11 @@ namespace aether::render
 	{
 		render::ShaderProgram* prevShader = nullptr;
 		render::TextureConfig prevTexture;
-
+		
+		// m_perfData.numElementsPerBatch.clear();
 		for (auto& batch : m_batches)
 		{
+			// m_perfData.numElementsPerBatch.push_back(batch->GetElements().size());
 			auto currentShader = batch->GetShader();
 			if (currentShader != prevShader)
 			{

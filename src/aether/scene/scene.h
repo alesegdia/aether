@@ -23,10 +23,9 @@ namespace aether::scene {
     public:
         using SharedPtr = std::shared_ptr<Scene>;
 
-        Scene(scene::ISceneNodeFactory* nodeFactory)
+        Scene()
 			: core::ModuleObject(this)
             , m_root(this)
-            , m_nodeFactory(nodeFactory)
         {
         }
 
@@ -50,7 +49,6 @@ namespace aether::scene {
         SceneNode m_root;
         std::vector<std::shared_ptr<SceneNode>> m_nodesSortedByZindex;
         aether::render::Color m_clearColor = aether::render::Color::Black;
-        scene::ISceneNodeFactory* m_nodeFactory = nullptr;
 
     };
 

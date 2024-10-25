@@ -8,7 +8,7 @@ namespace aether
 
 		aether::render::Texture* TextureAssetStorage::LoadImpl(std::string path)
 		{
-			auto texture = aether::GEngine->GetRenderer()->LoadTextureFromFile(path);
+			auto texture = aether::GEngine->GetRenderModuleAccessor()->LoadTextureFromFile(path);
 			return texture;
 		}
 

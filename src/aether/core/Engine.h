@@ -13,55 +13,47 @@ namespace aether
 	class World
 	{
 	public:
-		~World()
-		{
-			if (m_scene != nullptr)
-			{
-				delete m_scene;
-			}
-		}
+		~World() = default;
 
 		scene::Scene& GetScene()
 		{
-			assert(m_scene != nullptr);
-			return *m_scene;
+			return m_scene;
 		}
 
 		const scene::Scene& GetScene() const
 		{
-			assert(m_scene != nullptr);
-			return *m_scene;
+			return m_scene;
 		}
 
-		void ResetScene(scene::ISceneNodeFactory* nodeFactory)
+		void ResetScene()
 		{
-			if (m_scene != nullptr)
-			{
-				delete m_scene;
-			}
+			m_scene = {};
+		}
 
-			m_scene = new scene::Scene(nodeFactory);
+		void Step()
+		{
+			m_scene.Step();
 		}
 
 	private:
-		scene::Scene* m_scene;
+		scene::Scene m_scene;
 
 	};
 
 	class Engine
 	{
 	public:
-		render::IRenderModule* GetRenderer()
-		{
-			return m_renderer;
-		}
-
 		void Init()
 		{
 			m_renderer = create_render_module();
+			m_renderModuleAccessor.SetRenderModule(m_renderer);
 			CreateWorld();
 		}
 
+		void SetDeltaTimeInMicroseconds(uint64_t deltaTimeInMicroseconds)
+		{
+			m_deltaTimeInMicroseconds = deltaTimeInMicroseconds;
+		}
 
 		void Cleanup()
 		{
@@ -84,9 +76,37 @@ namespace aether
 			return m_currentWorld;
 		}
 
+		uint64_t GetDeltaTimeInMicroseconds() const
+		{
+			return m_deltaTimeInMicroseconds;
+		}
+
+		scene::ISpriteNode* CreateSpriteNode(const std::string& baseTexture)
+		{
+			auto texture = m_renderer->LoadTextureFromFile(baseTexture);
+			auto node = m_renderer->CreateSpriteNode();
+			node->SetTexture(texture);
+			m_currentWorld->GetScene().AddToSceneRoot(node);
+			return node;
+		}
+
+		scene::ISpriteNode* CreateSpriteNode()
+		{
+			auto node = m_renderer->CreateSpriteNode();
+			m_currentWorld->GetScene().AddToSceneRoot(node);
+			return node;
+		}
+
+		render::RenderModuleAccessor* GetRenderModuleAccessor()
+		{
+			return &m_renderModuleAccessor;
+		}
+
 	private:
+		render::RenderModuleAccessor m_renderModuleAccessor;
 		render::IRenderModule* m_renderer;
 		World* m_currentWorld;
+		uint64_t m_deltaTimeInMicroseconds = 0;
 
 	};
 

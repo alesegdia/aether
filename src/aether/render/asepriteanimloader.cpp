@@ -1,12 +1,13 @@
 #include "asepriteanimloader.h"
 
 #include "aether/render/IRenderModule.h"
+#include "aether/core/Engine.h"
 
 #include <filesystem>
 
 namespace aether::render {
 
-	AsepriteAnimationData AsepriteAnimationLoader::Load(IRenderModule* renderModule, const std::string& path)
+	AsepriteAnimationData AsepriteAnimationLoader::Load(const std::string& path)
 	{
 		AsepriteAnimationData data;
 
@@ -20,7 +21,7 @@ namespace aether::render {
 		auto image = meta["image"];
 		auto basePath = std::filesystem::path(path).parent_path().generic_string();
 		auto fullPath = basePath + "/" + std::string(meta["image"].string_value().c_str());
-		data.texture = renderModule->LoadTextureFromFile(fullPath);
+		data.texture = aether::GEngine->GetRenderModuleAccessor()->LoadTextureFromFile(fullPath);
 		auto frameDatas = std::vector<FrameData>();
 
 		for(auto frame : frames)

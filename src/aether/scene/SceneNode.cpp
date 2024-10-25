@@ -39,7 +39,7 @@ void SceneNode::AddChild(SceneNode* sceneNode)
     m_children.push_back(sceneNode);
 }
 
-inline void SceneNode::ComputeRenderMatrix()
+void SceneNode::ComputeRenderMatrix()
 {
     m_renderMatrix = m_parent != nullptr ? m_parent->GetModel() * GetModel() : GetModel();
 }

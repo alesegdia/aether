@@ -97,6 +97,11 @@ namespace aether::scene {
          */
         void RemoveChild(SceneNode* child);
 
+        virtual void Step()
+        {
+
+        }
+
     protected:
 
         SceneNode* m_parent{ nullptr }; ///< Pointer to the parent node.

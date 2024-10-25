@@ -37,6 +37,7 @@ namespace aether
 				return storage->GetItem(m_basePath + path);
 			}
 			
+		private:
 			void AddStorage(std::string extension, std::shared_ptr<IAssetStorage> storage);
 
 			bool ValidatePath(const char* path)
@@ -44,11 +45,10 @@ namespace aether
 				std::string strpath = path;
 				char lastChar = strpath[strpath.length() - 1];
 				char preLastChar = strpath[strpath.length() - 2];
-				if(lastChar == '/' && preLastChar != '/') return true;
+				if (lastChar == '/' && preLastChar != '/') return true;
 				return false;
 			}
-			
-		private:
+
 			std::string GetExt(std::string path);
 			std::string GetExt(std::filesystem::directory_entry dir);
 

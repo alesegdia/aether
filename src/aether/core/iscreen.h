@@ -17,13 +17,19 @@ public:
     /// Called everytime the screen is moved to active
     /// </summary>
     /// <returns>Zero if everything went fine, different than zero otherwise</returns>
-    virtual int Load() = 0 ;
+    virtual int Load()
+    { 
+        return 0;
+    }
 
     /// <summary>
     /// Called everytime the screen is removed from active
     /// </summary>
     /// <returns></returns>
-    virtual int Unload() = 0 ;
+    virtual int Unload()
+    {
+		return 0;
+    }
 
     bool UpdateInactive()
     {
@@ -90,12 +96,18 @@ protected:
      * @brief for game logic
      * @param delta time between current and last frames
      */
-    virtual void Update(uint64_t delta) = 0 ;
+    virtual void Update(uint64_t delta)
+    {
+
+    }
 
     /**
      * @brief called in a fixed rate, for rendering
      */
-    virtual void Render() = 0 ;
+    virtual void Render()
+    {
+
+    }
 
     void PushSubscreen(std::shared_ptr<IScreen> subscreen)
     {

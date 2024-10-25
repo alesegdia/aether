@@ -18,6 +18,13 @@ namespace aether::render {
         std::vector<IBatchedEntity*> elements; ///< List of batched entities
     };
 
+    /*
+    struct BatchPerfData
+    {
+		std::vector<int> numElementsPerBatch;
+    };
+    */
+
     /**
      * @class IBatchActionProvider
      * @brief Interface for batch actions, providing methods for shader preparation, texture preparation, and rendering elements.
@@ -100,6 +107,13 @@ namespace aether::render {
          */
         void Render();
 
+        /*
+        const BatchPerfData& GetPerfData() const
+        {
+			return m_perfData;
+        }
+        */
+
     private:
         /**
          * @brief Adds a new batch for the specified entity.
@@ -120,6 +134,8 @@ namespace aether::render {
 
         std::vector<Batch*> m_batches; ///< List of batches.
         IBatchActionProvider* m_batchActionProvider; ///< Pointer to the batch action provider.
+
+		//BatchPerfData m_perfData;
     };
 
 }

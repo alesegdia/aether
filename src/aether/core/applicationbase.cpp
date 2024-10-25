@@ -34,7 +34,7 @@ int ApplicationBase::Initialize(const CommandLineArguments& args)
         Logger::LogMsg("Application initialized successfully.");
     }
 
-    aether::GEngine->GetRenderer()->Init();
+    aether::GEngine->GetRenderModuleAccessor()->Init();
 
     Logger::LogMsg("Custom app init.");
 	int ready_retcode = Ready(args);
@@ -99,7 +99,7 @@ void ApplicationBase::Step()
     {
         accum[0] -= m_renderStepTimer;
         PreRender();
-        aether::GEngine->GetRenderer()->Render();
+        aether::GEngine->GetRenderModuleAccessor()->Render();
         // Render();
         PostRender();
     }
@@ -109,6 +109,7 @@ void ApplicationBase::Step()
     {
         accum[1] -= m_updateStepTimer;
         PreUpdate();
+        aether::GEngine->GetWorld()->Step();
         Update(m_updateStepTimer);
         PostUpdate();
         if (m_currentScreen != nullptr)

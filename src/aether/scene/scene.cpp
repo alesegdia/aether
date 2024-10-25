@@ -22,6 +22,7 @@ namespace aether::scene {
     {
         Traverse([](SceneNode* node) {
             node->ComputeRenderMatrix();
+            node->Step();
         }, &m_root);
     }
 

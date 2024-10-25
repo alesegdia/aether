@@ -15,20 +15,29 @@
 
 namespace aether::render {
 
+	enum ProjectionMode
+	{
+		Orthographic,
+		Perspective
+	};
 
 class Camera : public core::ModuleObject
 {
 public:
 
-	Camera( core::ModuleObject* o, const aether::math::Vec2f& viewport = aether::math::Vec2f(0, 0) )
+	Camera( core::ModuleObject* o, const glm::fvec2& viewport )
 	    : core::ModuleObject(o)
 		, m_viewport(viewport)
 	{
 	    
     }
 
-
     void SetPosition( const aether::math::Vec2f& new_position );
+
+	void SetProjectionMode(ProjectionMode mode)
+	{
+		m_projectionMode = mode;
+	}
 
 	float GetX();
 
@@ -46,10 +55,9 @@ public:
 
     const aether::math::Vec2f& GetScale();
 
-	aether::math::Rectf GetBoundary()
+	aether::math::Rectf GetBoundary() const
 	{
-		return aether::math::Rectf(m_position.GetX(), m_position.GetY(), m_viewport.GetX(), m_viewport.GetY());
-
+		return aether::math::Rectf(m_position.x, m_position.y, m_viewport.x, m_viewport.y);
 	}
 
     /// <summary>
@@ -93,14 +101,17 @@ public:
 		//m_deltaZoom = (rand() % 10) / 50.f;
 	}*/
 
-protected:
+private:
+
+	ProjectionMode m_projectionMode = ProjectionMode::Orthographic;
 
 	// cache last (position, scale) if performance issues
-    aether::math::Vec2f m_scale = aether::math::Vec2f(1, 1);
-    aether::math::Vec2f m_position = aether::math::Vec2f(0,0);
+	glm::fvec2 m_scale = { 1, 1 };
+	glm::fvec2 m_position = { 0, 0 };
 	float m_rotation = 0;
 
-    aether::math::Vec2f m_viewport;
+
+	glm::fvec2 m_viewport;
 
 	bool m_shake = false;
 	float m_shakeX = 0.0f;
