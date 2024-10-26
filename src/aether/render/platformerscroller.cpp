@@ -1,4 +1,5 @@
 
+/*
 #include "aether/render/platformerscroller.h"
 
 namespace aether::render {
@@ -80,3 +81,5 @@ namespace aether::render {
 
 
 }
+
+*/

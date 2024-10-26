@@ -3,6 +3,7 @@
 #include "aether/math/rect.h"
 #include "aether/math/vec.h"
 
+/*
 namespace aether::render {
 
 	class PlatformerScroller
@@ -35,3 +36,4 @@ namespace aether::render {
 
 
 }
+*/

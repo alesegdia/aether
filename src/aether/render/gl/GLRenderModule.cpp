@@ -4,6 +4,7 @@
 
 #include "aether/render/Camera.h"
 
+#include <glm/glm.hpp>
 #include "aether/render/gl/GLResources.h"
 
 #include "aether/render/BatchDispatcher.h"
@@ -69,9 +70,9 @@ namespace aether::render {
         return shaderProgram;
     }
 
-    Camera* GLRenderModule::CreateCamera(const math::Vec2f& viewport)
+    Camera* GLRenderModule::CreateCamera(const glm::fvec2& viewport, ProjectionMode projectionMode)
     {
-        m_allCameras.emplace_back(new Camera(this, viewport));
+        m_allCameras.emplace_back(new Camera(this, viewport, projectionMode));
         return m_allCameras.back();
     }
 
@@ -116,6 +117,7 @@ namespace aether::render {
     {
 		auto shader = ResourceCast(batch.GetShader());
         shader->GetNetherShader()->Use();
+        shader->GetNetherShader()->SetMat4Uniform("viewProjection", GetActiveCamera()->GetViewProjectionMatrix());
     }
 
     void GLRenderModule::TexturePreparationStep(Batch& batch)

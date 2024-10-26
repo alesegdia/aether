@@ -4,6 +4,7 @@
 #include "aether/math/rect.h"
 #include "aether/math/vec.h"
 
+/*
 namespace aether::render {
 
 	class TopDownMapScroller
@@ -22,3 +23,4 @@ namespace aether::render {
 	};
 
 }
+*/

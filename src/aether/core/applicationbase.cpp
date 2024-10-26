@@ -36,6 +36,9 @@ int ApplicationBase::Initialize(const CommandLineArguments& args)
 
     aether::GEngine->GetRenderModuleAccessor()->Init();
 
+    auto firstCam = aether::GEngine->CreateCamera({ GetApplicationWindowScreenWidth(), GetApplicationWindowScreenHeight() }, render::ProjectionMode::Orthographic );
+	aether::GEngine->GetRenderModuleAccessor()->SetActiveCamera(firstCam);
+
     Logger::LogMsg("Custom app init.");
 	int ready_retcode = Ready(args);
 	if (ready_retcode != 0)

@@ -19,16 +19,25 @@ namespace aether::render
 		m_vao.Bind();
 
 		m_vbo.Bind();
-		m_vbo.UploadBufferData(m_vertices);
-
 		m_ebo.Bind();
-		m_ebo.UploadBufferData(m_indices);
 
 		ConfigureVertexAttribs();
 
 		m_vbo.Unbind();
 		m_vao.Unbind();
 		m_ebo.Unbind();
+	}
+
+	void GLTopology::UploadVertices()
+	{
+		m_vbo.Bind();
+		m_vbo.UploadBufferData(m_vertices);
+	}
+
+	void GLTopology::UploadIndices()
+	{
+		m_ebo.Bind();
+		m_ebo.UploadBufferData(m_indices);
 	}
 
 	void GLTopology::ConfigureVertexAttribs()

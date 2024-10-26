@@ -6,6 +6,7 @@ namespace aether::render {
 
 	GLTexture::GLTexture(IRenderModule* owner, std::shared_ptr<nether::Texture> tex)
 		: Texture(owner)
+		, m_texture(tex)
 	{
 
 	}

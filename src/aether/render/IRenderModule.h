@@ -4,9 +4,11 @@
 #include "aether/core/ModuleObject.h"
 #include "aether/math/vec.h"
 #include "aether/math/rect.h"
-
+#include <glm/glm.hpp>
 #include "aether/scene/spritenode.h"
 #include <string>
+
+#include "aether/render/Camera.h"
 
 namespace aether::render
 {
@@ -15,7 +17,6 @@ namespace aether::render
     class Texture;
     class ShaderProgram;
     class Sprite;
-    class Camera;
 
     /**
      * @brief Interface for the render module.
@@ -72,7 +73,7 @@ namespace aether::render
          * @param viewport The viewport size for the camera.
          * @return Pointer to the created Camera object.
          */
-        virtual Camera* CreateCamera(const math::Vec2f& viewport) = 0;
+        virtual Camera* CreateCamera(const glm::fvec2& viewport, ProjectionMode projectionMode) = 0;
 
         /**
          * @brief Create a sprite.
@@ -90,13 +91,25 @@ namespace aether::render
 
         virtual void Init() = 0;
 
+        void SetActiveCamera(Camera* newActiveCamera)
+        {
+            m_activeCamera = newActiveCamera;
+        }
+
+        Camera* GetActiveCamera() const
+        {
+            return m_activeCamera;
+        }
+
     protected:
 		glm::vec4 GetClearColor() const
 		{
 			return m_clearColor;
 		}
+
     private:
         glm::vec4 m_clearColor = { 1.f, 0.f, 1.f, 1.f };
+        render::Camera* m_activeCamera;
 
     };
 
@@ -133,8 +146,18 @@ namespace aether::render
 			m_renderModule->Render();
 		}
 
+		void SetActiveCamera(Camera* camera)
+		{
+			m_renderModule->SetActiveCamera(camera);
+		}
+
+		Camera* GetActiveCamera() const
+		{
+			return m_renderModule->GetActiveCamera();
+		}
+
     private:
-        IRenderModule* m_renderModule;
+        IRenderModule* m_renderModule = nullptr;
 
     };
 

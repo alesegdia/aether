@@ -5,12 +5,12 @@
 #include <memory>
 
 #include "aether/math/rect.h"
-#include "aether/math/vec.h"
 #include "aether/core/time.h"
 
 #include "aether/core/ModuleObject.h"
 
 #include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 
 namespace aether::render {
@@ -25,110 +25,198 @@ class Camera : public core::ModuleObject
 {
 public:
 
-	Camera( core::ModuleObject* o, const glm::fvec2& viewport )
+	Camera( core::ModuleObject* o, const glm::fvec2& viewport, ProjectionMode projectionMode )
 	    : core::ModuleObject(o)
-		, m_viewport(viewport)
 	{
-	    
+		Reset(viewport, projectionMode);
     }
 
-    void SetPosition( const aether::math::Vec2f& new_position );
+	const glm::fmat4& GetViewProjectionMatrix()
+	{
+		ResolveDirty();
+		return m_viewProjectionMatrix;
+	}
 
 	void SetProjectionMode(ProjectionMode mode)
 	{
 		m_projectionMode = mode;
+		switch (mode)
+		{
+		case ProjectionMode::Orthographic:
+			m_near = -1.f;
+			m_far = 1.f;
+			break;
+		case ProjectionMode::Perspective:
+			m_near = 0.1f;
+			m_far = 1000.f;
+		}
+		SetProjectionDirty();
 	}
 
-	float GetX();
+	void SetPosition(const glm::fvec3& new_position)
+	{
+		m_position = new_position;
+		SetViewDirty();
+	}
 
-	float GetY();
+	void SetPosition(float x, float y, float z)
+	{
+		m_position = { x, y, z };
+		SetViewDirty();
+	}
 
-    aether::math::Rectf GetBoundary() const;
+	void Move(float dx, float dy, float dz = 0)
+	{
+		m_position.x += dx;
+		m_position.y += dy;
+		m_position.z += dz;
+		SetViewDirty();
+	}
 
-	void SetPosition( float x, float y );
+	void SetScale(float x, float y, float z)
+	{
+		m_scale = { x, y, z };
+		SetViewDirty();
+	}
 
-	void Move( float x, float y );
+	void SetXRotation(float x)
+	{
+		rotation.x = x;
+		SetViewDirty();
+	}
 
-	void SetScale( float x, float y );
+	void SetYRotation(float y)
+	{
+		rotation.y = y;
+		SetViewDirty();
+	}
 
-    const aether::math::Vec2f& GetViewport();
+	void SetZRotation(float z)
+	{
+		rotation.z = z;
+		SetViewDirty();
+	}
 
-    const aether::math::Vec2f& GetScale();
+	const glm::fvec3& GetScale() const
+	{
+		return m_scale;
+	}
+
+    const glm::fvec2& GetViewport() const
+	{
+		return m_viewport;
+	}
 
 	aether::math::Rectf GetBoundary() const
 	{
 		return aether::math::Rectf(m_position.x, m_position.y, m_viewport.x, m_viewport.y);
 	}
 
-    /// <summary>
-    /// Returns the position of the camera with the added shake
-    /// THIS NEEDS TO RETURN A COPY BECAUSE THE RETURNED VECTOR IS CREATED NEWLY A
-    /// </summary>
-    /// <returns></returns>
-    aether::math::Vec2f GetPosition();
-
-	float GetRotation() const;
-
-	void EnableShake()
+	glm::fvec3 GetPosition() const
 	{
-		m_shake = true;
+		return m_position;
 	}
 
-	void DisableShake()
+	float GetXRotation() const
 	{
-		m_shake = false;
+		return rotation.x;
 	}
 
-	void Update()
+	float GetYRotation() const
 	{
-		if (m_shake)
-		{
-			auto time = aether::core::get_time();
-			m_shakeX = sinf(float(time)) * 10.f;
-		}
-		else
-		{
-			m_shakeX = 0;
-			m_shakeY = 0;
-		}
+		return rotation.y;
 	}
 
-	/*void Update(uint64_t delta)
+	float GetZRotation() const
 	{
-		//m_deltaRotation = (rand() % 10 - 5) / 50.f;
-		//m_deltaPositionX = (rand() % 10) / 50.f;
-		//m_deltaPositionY = (rand() % 10) / 50.f;
-		//m_deltaZoom = (rand() % 10) / 50.f;
-	}*/
+		return rotation.z;
+	}
+
+	void Reset(const glm::fvec2& viewport, ProjectionMode projectionMode)
+	{
+		m_scale				= { 1.f, 1.f, 1.f };
+		m_position			= { 0.f, 0.f, 0.f };
+		rotation			= { 0.f, 0.f, 0.f };
+		m_viewport			= viewport;
+		m_projectionDirty	= true;
+		m_viewDirty			= true;
+		m_fov				= 45.f;
+		m_projectionMatrix	= glm::fmat4(1.f);
+		
+		SetProjectionMode(projectionMode);
+		ResolveDirty();
+	}
 
 private:
+	void SetProjectionDirty()
+	{
+		m_projectionDirty = true;
+	}
+
+	void SetViewDirty()
+	{
+		m_viewDirty = true;
+	}
+
+	void ResolveDirty()
+	{
+		bool anyDirty = m_projectionDirty || m_viewDirty;
+		ResolveProjectionDirty();
+
+	}
+
+	void ResolveViewDirty()
+	{
+		if (m_viewDirty)
+		{
+			m_viewMatrix = glm::fmat4(1.f);
+			m_viewMatrix = glm::translate(m_viewMatrix, m_position);
+			m_viewMatrix = glm::scale(m_viewMatrix, m_scale);
+			m_viewMatrix = glm::rotate(m_viewMatrix, rotation.x, glm::fvec3(1.f, 0.f, 0.f));
+			m_viewMatrix = glm::rotate(m_viewMatrix, rotation.y, glm::fvec3(0.f, 1.f, 0.f));
+			m_viewMatrix = glm::rotate(m_viewMatrix, rotation.z, glm::fvec3(0.f, 0.f, 1.f));
+			m_viewDirty = false;
+		}
+	}
+
+	void ResolveProjectionDirty()
+	{
+		if (m_projectionDirty)
+		{
+			m_projectionMatrix = glm::fmat4(1.f);
+			if (m_projectionMode == ProjectionMode::Orthographic)
+			{
+				m_projectionMatrix = glm::ortho(0.f, m_viewport.x, m_viewport.y, 0.f, m_near, m_far);
+			}
+			else
+			{
+				m_projectionMatrix = glm::perspective(glm::radians(m_fov), m_viewport.x / m_viewport.y, m_near, m_far);
+			}
+			m_projectionDirty = false;
+		}
+	}
 
 	ProjectionMode m_projectionMode = ProjectionMode::Orthographic;
 
 	// cache last (position, scale) if performance issues
-	glm::fvec2 m_scale = { 1, 1 };
-	glm::fvec2 m_position = { 0, 0 };
-	float m_rotation = 0;
-
+	glm::fvec3 m_scale = { 1.f, 1.f, 1.f };
+	glm::fvec3 m_position = { 0.f, 0.f, 0.f };
+	glm::fvec3 rotation = { 0.f, 0.f, 0.f };
 
 	glm::fvec2 m_viewport;
 
-	bool m_shake = false;
-	float m_shakeX = 0.0f;
-	float m_shakeY = 0.0f;
+	glm::fmat4 m_projectionMatrix;
+	glm::fmat4 m_viewMatrix;
+	glm::fmat4 m_viewProjectionMatrix;
 
-	// effect on zoom
-	float m_wowFX = 10.f;
-	float m_deltaZoom = 0;
+	float m_near = 0.1f;
+	float m_far = 1000.f;
 
-	// effect on position
-	float m_shakeEffect = 10.f;
-	float m_deltaPositionX = 0;
-	float m_deltaPositionY = 0;
+	float m_fov = 45.f;
 
-	// effect on rotation
-	float m_dazzleFX = 10.f;
-	float m_deltaRotation = 0.f;
+	bool m_projectionDirty = true;
+	bool m_viewDirty = true;
+
 
 };
 

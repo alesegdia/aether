@@ -18,18 +18,22 @@ namespace aether::render
     class GLSpriteNode : public scene::ISpriteNode, public render::IBatchedEntity
     {
     public:
-        GLSpriteNode(core::ModuleObject* o, render::ShaderProgram* shader, render::Texture* texture)
+        GLSpriteNode(core::ModuleObject* o, render::ShaderProgram* shader, const glm::fvec2 size)
             : ISpriteNode(o)
             , m_shader(shader)
-            , m_sprite(o, texture)
+            , m_sprite(o, nullptr)
         {
+            // texture is null
+            float szx = size.x;
+			float szy = size.y;
+
             m_topology = std::make_unique<render::GLTopology>();
             m_topology->SetVertexFormat(CreateP3U2VertexFormat());
 			m_topology->SetIndices({ 0, 1, 2, 2, 3, 0 });
-			m_topology->SetVertices({ -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-									  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-									  0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
-									  -0.5f, 0.5f, 0.0f, 0.0f, 1.0f });
+			m_topology->SetVertices({ -szx, -szy, 0.0f, 0.0f, 0.0f,
+									  szx, -szy, 0.0f, 1.0f, 0.0f,
+                                      szx, szy, 0.0f, 1.0f, 1.0f,
+									  -szx, szy, 0.0f, 0.0f, 1.0f });
             m_topology->ConfigAndUpload();
         }
 

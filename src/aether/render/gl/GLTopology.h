@@ -31,6 +31,10 @@ namespace aether::render
         void ConfigAndUpload();
         
     private:
+
+        void UploadVertices();
+        void UploadIndices();
+
         nether::BufferObject m_vbo; ///< Vertex Buffer Object
         nether::BufferObject m_ebo; ///< Element Buffer Object
         nether::VertexArrayObject m_vao;

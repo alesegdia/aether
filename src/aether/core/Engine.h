@@ -3,6 +3,8 @@
 #include "aether/render/IRenderModule.h"
 #include "aether/scene/scene.h"
 
+#include <glm/glm.hpp>
+
 namespace aether
 {
 	void init_engine();
@@ -79,6 +81,16 @@ namespace aether
 		uint64_t GetDeltaTimeInMicroseconds() const
 		{
 			return m_deltaTimeInMicroseconds;
+		}
+
+		render::Camera* CreateCamera(const glm::fvec2& viewport, render::ProjectionMode projectionMode)
+		{
+			return m_renderer->CreateCamera(viewport, projectionMode);
+		}
+
+		void SetActiveSceneCamera(render::Camera* camera)
+		{
+			m_renderer->SetActiveCamera(camera);
 		}
 
 		scene::ISpriteNode* CreateSpriteNode(const std::string& baseTexture)

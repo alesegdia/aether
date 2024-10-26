@@ -46,8 +46,7 @@ namespace aether::render {
         void FinishRenderElementsStep() override;
         void Init() override;
 
-        Camera* CreateCamera(const math::Vec2f& viewport) override;
-
+        Camera* CreateCamera(const glm::fvec2& viewport, ProjectionMode projectionMode) override;
 
         void RenderInstanced(InstancedEntity* entity, InstanceBatch* batch) override;
 
