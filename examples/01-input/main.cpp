@@ -6,8 +6,8 @@ public:
     virtual int Load() final
     {
         m_spriteNode = aether::GEngine->CreateSpriteNode("media/aether-logo.PNG");
-        m_spriteNode->SetRelativePosition({ 0, 0, 0 });
-		aether::GEngine->GetRenderModuleAccessor()->SetClearColor({ 1.f, 0.f, 0.f, 1.f });
+        m_spriteNode->SetRelativePosition({ 400, 300, 0 });
+		aether::GEngine->GetRenderModuleAccessor()->SetClearColor({ 1.f, 0.f, 1.f, 1.f });
         return 0;
     }
 
@@ -33,7 +33,7 @@ public:
             delta_pos.y = 1;
         }
 
-        float d = float(delta) / 10e6;
+        float d = float(delta) / 10e4;
         static constexpr float SPEED = 20.f;
         m_spriteNode->SetRelativePosition(m_spriteNode->GetRelativePosition() + delta_pos * (d * SPEED));
     }
@@ -64,7 +64,7 @@ private:
 int main( int argc, char** argv )
 {
     aether::core::CommandLineArguments args(argc, argv);
-    return MyGame(200, 200).Exec(args);
+    return MyGame(800, 600).Exec(args);
 }
 
 
