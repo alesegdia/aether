@@ -9,7 +9,8 @@ public:
     int Ready(const aether::core::CommandLineArguments& args) override
     {
 		auto asepriteAnimData = aether::render::AsepriteAnimationLoader().Load("media/dknight.json");
-		m_spriteNode = aether::GEngine->CreateSpriteNode(glm::fvec2{100, 100});
+		m_spriteNode = aether::GEngine->CreateSpriteNode(glm::fvec2{32, 32});
+        m_spriteNode->SetRelativePosition({ 400, 300, 0 });
 		m_spriteNode->LoadAllAnimations(asepriteAnimData);
         return 0;
     }
@@ -38,5 +39,5 @@ private:
 int main( int argc, char** argv )
 {
     aether::core::CommandLineArguments args(argc, argv);
-    return MyGame(200, 200).Exec(args);
+    return MyGame(800, 600).Exec(args);
 }
