@@ -37,13 +37,13 @@ namespace aether::render {
          * @brief Prepares the shader for the batch.
          * @param batch Reference to the batch.
          */
-        virtual void ShaderPreparationStep(Batch& batch) = 0;
+        virtual void ShaderPreparationStep(IBatchedEntity* batch) = 0;
 
         /**
          * @brief Prepares the texture for the batch.
          * @param batch Reference to the batch.
          */
-        virtual void TexturePreparationStep(Batch& batch) = 0;
+        virtual void TexturePreparationStep(IBatchedEntity* batch) = 0;
 
         /**
          * @brief Renders an element in the batch.
@@ -114,7 +114,31 @@ namespace aether::render {
         }
         */
 
+        void Refresh(IBatchedEntity* node)
+        {
+            auto batch = FindBatchFor(node);
+            if (batch == nullptr)
+            {
+                return;
+            }
+            batch->RemoveElement(node);
+            AddToBatch(node);
+        }
+
     private:
+        Batch* FindBatchFor(IBatchedEntity* node)
+        {
+            for (auto batch : m_batches)
+            {
+                auto& elements = batch->GetElements();
+                if (std::find(elements.begin(), elements.end(), node) != elements.end())
+                {
+                    return batch;
+                }
+            }
+            return nullptr;
+        }
+
         /**
          * @brief Adds a new batch for the specified entity.
          * @param node Pointer to the entity.

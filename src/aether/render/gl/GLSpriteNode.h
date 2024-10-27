@@ -23,17 +23,17 @@ namespace aether::render
             , m_shader(shader)
             , m_sprite(o, nullptr)
         {
-            // texture is null
-            float szx = size.x;
+            m_renderer = (IRenderModule*)o;
+			float szx = size.x;
 			float szy = size.y;
 
             m_topology = std::make_unique<render::GLTopology>();
             m_topology->SetVertexFormat(CreateP3U2VertexFormat());
 			m_topology->SetIndices({ 0, 1, 2, 2, 3, 0 });
 			m_topology->SetVertices({ -szx, -szy, 0.0f, 0.0f, 0.0f,
-									  szx, -szy, 0.0f, 1.0f, 0.0f,
-                                      szx, szy, 0.0f, 1.0f, 1.0f,
-									  -szx, szy, 0.0f, 0.0f, 1.0f });
+									   szx, -szy, 0.0f, 1.0f, 0.0f,
+                                       szx,  szy, 0.0f, 1.0f, 1.0f,
+									  -szx,  szy, 0.0f, 0.0f, 1.0f });
             m_topology->ConfigAndUpload();
         }
 
@@ -46,6 +46,7 @@ namespace aether::render
 		{
             m_sprite.SetTexture(texture);
             m_textureConfig = CreateSingleTextureConfig(texture);
+            m_renderer->Refresh(this);
 		}
 
         render::ShaderProgram* GetShader() const override
@@ -76,6 +77,7 @@ namespace aether::render
         render::ShaderProgram* m_shader;
         std::unique_ptr<render::GLTopology> m_topology;
         TextureConfig m_textureConfig;
+        IRenderModule* m_renderer;
 
     };
 

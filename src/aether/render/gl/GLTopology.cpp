@@ -19,7 +19,10 @@ namespace aether::render
 		m_vao.Bind();
 
 		m_vbo.Bind();
+		UploadVertices();
+
 		m_ebo.Bind();
+		UploadIndices();
 
 		ConfigureVertexAttribs();
 

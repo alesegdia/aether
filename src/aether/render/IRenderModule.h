@@ -6,6 +6,7 @@
 #include "aether/math/rect.h"
 #include <glm/glm.hpp>
 #include "aether/scene/spritenode.h"
+#include "aether/render/IBatchedEntity.h"
 #include <string>
 
 #include "aether/render/Camera.h"
@@ -85,7 +86,7 @@ namespace aether::render
         virtual Sprite* CreateSprite(Texture* texture, const math::Recti& rect) = 0;
 
 
-		virtual scene::ISpriteNode* CreateSpriteNode() = 0;
+		virtual scene::ISpriteNode* CreateSpriteNode(const glm::fvec2& size) = 0;
 
         virtual void Render() = 0;
 
@@ -101,6 +102,8 @@ namespace aether::render
             return m_activeCamera;
         }
 
+        virtual void Refresh(IBatchedEntity* entity) = 0;
+
     protected:
 		glm::vec4 GetClearColor() const
 		{
@@ -108,6 +111,7 @@ namespace aether::render
 		}
 
     private:
+
         glm::vec4 m_clearColor = { 1.f, 0.f, 1.f, 1.f };
         render::Camera* m_activeCamera;
 

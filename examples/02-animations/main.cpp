@@ -9,7 +9,7 @@ public:
     int Ready(const aether::core::CommandLineArguments& args) override
     {
 		auto asepriteAnimData = aether::render::AsepriteAnimationLoader().Load("media/dknight.json");
-		m_spriteNode = aether::GEngine->CreateSpriteNode();
+		m_spriteNode = aether::GEngine->CreateSpriteNode(glm::fvec2{100, 100});
 		m_spriteNode->LoadAllAnimations(asepriteAnimData);
         return 0;
     }

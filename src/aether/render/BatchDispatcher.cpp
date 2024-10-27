@@ -43,31 +43,21 @@ namespace aether::render
 	{
 		render::ShaderProgram* prevShader = nullptr;
 		render::TextureConfig prevTexture;
+		render::ShaderProgram* currentShader = nullptr;
+		render::TextureConfig currentTexture;
 		
 		// m_perfData.numElementsPerBatch.clear();
 		for (auto& batch : m_batches)
 		{
-			// m_perfData.numElementsPerBatch.push_back(batch->GetElements().size());
-			auto currentShader = batch->GetShader();
-			if (currentShader != prevShader)
-			{
-				prevShader = currentShader;
-				m_batchActionProvider->ShaderPreparationStep(*batch);
-				m_batchActionProvider->TexturePreparationStep(*batch);
-				prevTexture = batch->GetTextureConfig();
-			}
-
-			auto currentTexture = batch->GetTextureConfig();
-			if (currentTexture != prevTexture)
-			{
-				m_batchActionProvider->TexturePreparationStep(*batch);
-				prevTexture = currentTexture;
-			}
 			
 			m_batchActionProvider->StartRenderElementsStep();
 			std::unordered_map<InstancedEntity*, InstanceBatch> instanceBatches;
 			for (auto& element : batch->GetElements())
 			{
+
+				m_batchActionProvider->ShaderPreparationStep(element);
+				m_batchActionProvider->TexturePreparationStep(element);
+
 				auto instancedEntity = element->GetInstancedEntity();
 				if (instancedEntity != nullptr)
 				{
@@ -110,7 +100,7 @@ namespace aether::render
 			{
 				currentBatchScore += SameShaderScore;
 			}
-			if (currentBatchScore >= bestBatchScore)
+			if (currentBatchScore > bestBatchScore)
 			{
 				bestBatchScore = currentBatchScore;
 				selectedBatch = batch;

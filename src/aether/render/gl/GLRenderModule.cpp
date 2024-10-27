@@ -88,13 +88,12 @@ namespace aether::render {
         auto clearColor = GetClearColor();
         glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
         m_batchDispatcher.Render();
     }
 
-    scene::ISpriteNode* GLRenderModule::CreateSpriteNode()
+    scene::ISpriteNode* GLRenderModule::CreateSpriteNode(const glm::fvec2& size)
     {
-		auto node = new GLSpriteNode(this, m_spriteShader, nullptr);
+		auto node = new GLSpriteNode(this, m_spriteShader, size);
         m_allSpriteNodes.emplace_back(node);
         m_batchDispatcher.AddToBatch(node);
         return node;
@@ -104,7 +103,7 @@ namespace aether::render {
     {
 		auto node = new GLTilemapNode(this, m_tilemapShader, nullptr);
 		m_allTilemapNodes.emplace_back(node);
-		m_batchDispatcher.AddToBatch(node);
+        m_batchDispatcher.AddToBatch(node);
         return node;
     }
 
@@ -113,16 +112,17 @@ namespace aether::render {
 		element.Draw();
     }
 
-    void GLRenderModule::ShaderPreparationStep(Batch& batch)
+    void GLRenderModule::ShaderPreparationStep(IBatchedEntity* batch)
     {
-		auto shader = ResourceCast(batch.GetShader());
+		auto shader = ResourceCast(batch->GetShader());
         shader->GetNetherShader()->Use();
         shader->GetNetherShader()->SetMat4Uniform("viewProjection", GetActiveCamera()->GetViewProjectionMatrix());
     }
 
-    void GLRenderModule::TexturePreparationStep(Batch& batch)
+    void GLRenderModule::TexturePreparationStep(IBatchedEntity* batch)
     {
-        for (auto entry : batch.GetTextureConfig().GetEntries())
+        auto entries = batch->GetTextureConfig().GetEntries();
+        for (auto entry : entries)
 		{
 			auto texture = ResourceCast(entry.GetTexture());
 

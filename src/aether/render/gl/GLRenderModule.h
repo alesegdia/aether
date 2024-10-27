@@ -36,12 +36,12 @@ namespace aether::render {
         Font* LoadFontFromFile(const std::string& path, int size) override;
         ShaderProgram* LoadShaderFromFile(const std::string& vspath, const std::string& fspath) override;
         Sprite* CreateSprite(Texture* texture, const math::Recti& rect) override;
-        scene::ISpriteNode* CreateSpriteNode() override;
+        scene::ISpriteNode* CreateSpriteNode(const glm::fvec2& size) override;
         scene::ITilemapNode* CreateTilemapNode() override;
 
         void RenderElement(IBatchedEntity& element, Batch& batch) override;
-        void ShaderPreparationStep(Batch& batch) override;
-        void TexturePreparationStep(Batch& batch) override;
+        void ShaderPreparationStep(IBatchedEntity* batch) override;
+        void TexturePreparationStep(IBatchedEntity* batch) override;
         void StartRenderElementsStep() override;
         void FinishRenderElementsStep() override;
         void Init() override;
@@ -49,6 +49,11 @@ namespace aether::render {
         Camera* CreateCamera(const glm::fvec2& viewport, ProjectionMode projectionMode) override;
 
         void RenderInstanced(InstancedEntity* entity, InstanceBatch* batch) override;
+
+        void Refresh(IBatchedEntity* entity) override
+        {
+            m_batchDispatcher.Refresh(entity);
+        }
 
     private:
         BatchDispatcher m_batchDispatcher;

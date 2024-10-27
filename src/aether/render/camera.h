@@ -162,7 +162,11 @@ private:
 	{
 		bool anyDirty = m_projectionDirty || m_viewDirty;
 		ResolveProjectionDirty();
-
+		ResolveViewDirty();
+		if (anyDirty)
+		{
+			m_viewProjectionMatrix = m_projectionMatrix * m_viewMatrix;
+		}
 	}
 
 	void ResolveViewDirty()

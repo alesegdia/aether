@@ -96,15 +96,17 @@ namespace aether
 		scene::ISpriteNode* CreateSpriteNode(const std::string& baseTexture)
 		{
 			auto texture = m_renderer->LoadTextureFromFile(baseTexture);
-			auto node = m_renderer->CreateSpriteNode();
+
+			auto txtsz = texture->GetSize();
+			auto node = m_renderer->CreateSpriteNode({ txtsz.GetX(), txtsz.GetY() });
 			node->SetTexture(texture);
 			m_currentWorld->GetScene().AddToSceneRoot(node);
 			return node;
 		}
 
-		scene::ISpriteNode* CreateSpriteNode()
+		scene::ISpriteNode* CreateSpriteNode(const glm::fvec2& size)
 		{
-			auto node = m_renderer->CreateSpriteNode();
+			auto node = m_renderer->CreateSpriteNode(size);
 			m_currentWorld->GetScene().AddToSceneRoot(node);
 			return node;
 		}
