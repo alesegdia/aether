@@ -18,6 +18,12 @@ namespace aether::render
 			return m_shader.get();
 		}
 
+		void Use() override;
+		void SetBoolUniform(const std::string& name, bool value) override;
+		void SetIntUniform(const std::string& name, int value) override;
+		void SetFloatUniform(const std::string& name, float value) override;
+		void SetMat4Uniform(const std::string& name, const glm::mat4x4& mat) override;
+
 	private:
 		std::unique_ptr<nether::ShaderProgram> m_shader;
 	};

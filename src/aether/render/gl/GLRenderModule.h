@@ -71,8 +71,9 @@ namespace aether::render {
         std::vector<IBatchedEntity*> m_activeBatchedEntities;
 
         // Shaders
-        GLShaderProgram* m_spriteShader;
-		GLShaderProgram* m_tilemapShader;
+        GLShaderProgram* m_defaultShader = nullptr;
+        GLShaderProgram* m_spriteShader = nullptr;
+        GLShaderProgram* m_tilemapShader = nullptr;
 
         /*
 		template<typename NodeType, typename... Args>
