@@ -12,6 +12,7 @@ public:
 		m_spriteNode = aether::GEngine->CreateSpriteNode(glm::fvec2{32, 32});
         m_spriteNode->SetRelativePosition({ 400, 300, 0 });
 		m_spriteNode->LoadAllAnimations(asepriteAnimData);
+        m_spriteNode->PlayAnimation("front");
         return 0;
     }
 
@@ -27,7 +28,7 @@ public:
         }
         else if (aether::core::is_key_down(aether::core::KeyCode::E))
         {
-            m_spriteNode->PlayAnimation("idle");
+            m_spriteNode->PlayAnimation("side");
         }
     }
 

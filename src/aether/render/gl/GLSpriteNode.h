@@ -49,6 +49,14 @@ namespace aether::render
             m_renderer->Refresh(this);
 		}
 
+		void SetTextureRegion(TextureRegion* region) override
+		{
+			m_sprite.SetTexture(region->GetTexture());
+			m_sprite.SetClippingRect(region->GetClip().x(), region->GetClip().y(), region->GetClip().w(), region->GetClip().h());
+			m_textureConfig = CreateSingleTextureConfig(region->GetTexture());
+			m_renderer->Refresh(this);
+		}
+
         render::ShaderProgram* GetShader() const override
         {
             return m_shader;
@@ -68,7 +76,10 @@ namespace aether::render
         {
 			auto glshader = ResourceCast(m_shader);
             auto model = GetModel();
-			glshader->GetNetherShader()->SetMat4Uniform("model", model);
+			glshader->SetMat4Uniform("model", model);
+            auto uvs = m_sprite.GetRegion()->GetUVs();
+            glshader->SetVec2Uniform("uv0", { uvs[0], uvs[1] });
+            glshader->SetVec2Uniform("uv1", { uvs[2], uvs[3] });
             m_topology->Draw();
         }
 

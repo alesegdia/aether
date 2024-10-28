@@ -22,6 +22,7 @@ namespace aether::render
 		virtual void SetIntUniform(const std::string& name, int value) = 0;
 		virtual void SetFloatUniform(const std::string& name, float value) = 0;
 		virtual void SetMat4Uniform(const std::string& name, const glm::mat4x4& mat) = 0;
+		virtual void SetVec2Uniform(const std::string& name, const glm::fvec2& v) = 0;
 
 	};
 

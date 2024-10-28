@@ -36,4 +36,9 @@ namespace aether::render {
         m_shader->SetMat4Uniform(name, mat);
     }
 
+    void GLShaderProgram::SetVec2Uniform(const std::string& name, const glm::fvec2& vec)
+    {
+        m_shader->SetVec2Uniform(name, vec);
+    }
+
 }

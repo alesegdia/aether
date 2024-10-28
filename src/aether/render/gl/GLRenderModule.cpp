@@ -30,8 +30,10 @@ namespace aether::render {
     {
         m_defaultShader = new GLShaderProgram(this, "media/default.vs", "media/default.fs");
         m_spriteShader = new GLShaderProgram(this, "media/sprite.vs", "media/sprite.fs");
+        
         m_defaultShader->Use();
         m_defaultShader->SetIntUniform("texture1", 0);
+        
         m_spriteShader->Use();
         m_spriteShader->SetIntUniform("texture1", 0);
     }

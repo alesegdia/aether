@@ -31,11 +31,7 @@ namespace aether::scene {
 
         void Traverse(const std::function<void(SceneNode*)>& functor);
 
-        void AddToSceneRoot(SceneNode* node)
-        {
-            m_root.AddChild(node);
-            node->SetParent(&m_root);
-        }
+        void AddToSceneRoot(SceneNode* node);
 
         void AddToScene(SceneNode* sceneNode);
 

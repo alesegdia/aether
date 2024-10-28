@@ -15,6 +15,7 @@ namespace aether::scene
     {
         m_currentAnimation = anim;
         m_currentAnimation->Reset(m_animationData);
+        SetTextureRegion(&(m_animationData.currentFrame->texture));
     }
 
     void ISpriteNode::PlayAnimation(const std::string& animationName)

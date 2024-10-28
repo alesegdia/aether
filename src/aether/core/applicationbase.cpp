@@ -110,6 +110,7 @@ void ApplicationBase::Step()
     // update
     while (accum[1] > m_updateStepTimer)
     {
+        aether::GEngine->SetDeltaTimeInMicroseconds(m_updateStepTimer);
         accum[1] -= m_updateStepTimer;
         PreUpdate();
         aether::GEngine->GetWorld()->Step();

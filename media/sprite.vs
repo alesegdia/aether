@@ -7,11 +7,11 @@ out vec2 TexCoord;
 uniform mat4 model;
 uniform mat4 viewProjection;
 
-uniform vec2 frame;
-uniform vec2 size;
+uniform vec2 uv0;
+uniform vec2 uv1;
 
 void main()
 {
     gl_Position = viewProjection * model * vec4(aPos, 1.0);
-    TexCoord = aTexCoord + frame * size;
+    TexCoord = uv0 + aTexCoord * (uv1 - uv0);
 }
