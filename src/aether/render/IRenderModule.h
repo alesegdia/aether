@@ -11,6 +11,13 @@
 
 #include "aether/render/Camera.h"
 
+#include "Tmx.h"
+
+namespace aether::tilemap
+{
+    class TileMap;
+}
+
 namespace aether::render
 {
 
@@ -87,6 +94,8 @@ namespace aether::render
 
 
 		virtual scene::ISpriteNode* CreateSpriteNode(const glm::fvec2& size) = 0;
+
+        virtual scene::ITilemapNode* CreateTilemapNode(const aether::tilemap::TileMap& map) = 0;
 
         virtual void Render() = 0;
 

@@ -14,6 +14,7 @@ namespace aether::scene
 {
 	class Scene;
 	class ISpriteNode;
+    class ITilemapNode;
 }
 
 namespace aether
@@ -49,6 +50,8 @@ namespace aether
         void SetActiveSceneCamera(render::Camera* camera);
         scene::ISpriteNode* CreateSpriteNode(const std::string& baseTexture);
         scene::ISpriteNode* CreateSpriteNode(const glm::fvec2& size);
+        scene::ITilemapNode* CreateTilemapNode(const std::string& tilemapPath);
+
         render::RenderModuleAccessor* GetRenderModuleAccessor();
 
     private:

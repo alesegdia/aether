@@ -101,6 +101,10 @@ protected:
 
     virtual int AppImplementationInit(const CommandLineArguments& args) { return 0; }
 
+    void Exit()
+    {
+        Close();
+    }
 
 private:
     void SetFPS(uint64_t& timer, uint64_t fps);

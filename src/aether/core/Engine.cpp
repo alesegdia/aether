@@ -4,6 +4,8 @@
 
 #include "aether/scene/scene.h"
 
+#include "aether/map/tilemap.h"
+
 namespace {
 	aether::Engine s_engine;
 }
@@ -110,6 +112,16 @@ namespace aether
     scene::ISpriteNode* Engine::CreateSpriteNode(const glm::fvec2& size)
     {
         auto node = m_renderer->CreateSpriteNode(size);
+        m_currentWorld->GetScene().AddToSceneRoot(node);
+        return node;
+    }
+
+    scene::ITilemapNode* Engine::CreateTilemapNode(const std::string& tilemapPath)
+    {
+        Tmx::Map map;
+        map.ParseFile(tilemapPath.c_str());
+        auto aetherTilemap = aether::tilemap::BuildMap(map);
+        auto node = m_renderer->CreateTilemapNode(aetherTilemap);
         m_currentWorld->GetScene().AddToSceneRoot(node);
         return node;
     }

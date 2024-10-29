@@ -103,7 +103,7 @@ namespace aether::render {
         return node;
     }
 
-    scene::ITilemapNode* GLRenderModule::CreateTilemapNode()
+    scene::ITilemapNode* GLRenderModule::CreateTilemapNode(const aether::tilemap::TileMap& map)
     {
 		auto node = new GLTilemapNode(this, m_tilemapShader, nullptr);
 		m_allTilemapNodes.emplace_back(node);

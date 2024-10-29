@@ -11,7 +11,6 @@
 namespace aether {
     namespace tilemap {
 
-
         std::shared_ptr<TileMap> BuildMap(const Tmx::Map& inmap)
         {
             // Create a new TileMap object

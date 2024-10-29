@@ -1,13 +1,14 @@
 #pragma once
 
 #include "aether/map/tilemap.h"
+#include "aether/scene/SceneNode.h"
 // Header for aether/scene/ITilemapNode
 
 namespace aether::scene
 {
 	
 
-	class ITilemapNode
+	class ITilemapNode : public SceneNode
 	{
 	public:
 		virtual ~ITilemapNode() = default;

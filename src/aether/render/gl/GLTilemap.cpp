@@ -6,7 +6,7 @@
 
 #include <set>
 #include <glm/mat4x4.hpp>
-#include <algorithm> // Add this include directive for std::min
+#include <algorithm>
 
 #include <nether/nether.h>
 #include "aether/render/IRenderModule.h"
