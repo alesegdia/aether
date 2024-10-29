@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <memory>
+
+#include <set>
 #include <glm/mat4x4.hpp>
 #include <algorithm> // Add this include directive for std::min
 
@@ -122,6 +124,15 @@ namespace aether::render
 	void GLTilemapNode::SetTextureConfigToTilemap()
 	{
 		// Create a texture config for the tilemap
+		std::set<render::Texture*> textures;
+		for (auto& tileset : m_tilemap->GetTilesetCollection()->GetTilesets())
+		{
+			textures.insert(tileset->GetTexture());
+		}
+		for (auto texture : textures)
+		{
+			m_textureConfig.AddEntrySorted(0, texture);
+		}
 		m_textureConfig.AddEntrySorted(0, m_tilemap->GetTileset(0)->GetTexture());
 	}
 
@@ -145,10 +156,5 @@ namespace aether::render
 		// Implement the drawing logic here
 	}
 
-	glm::mat4x4 GLTilemapNode::GetEntityModel()
-	{
-		return {};
-		//return GetModel();
-	}
 
 }

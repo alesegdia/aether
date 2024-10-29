@@ -6,13 +6,13 @@
 
 #include "TmxTileLayer.h"
 
-
+#include "aether/core/Engine.h"
 
 namespace aether {
     namespace tilemap {
 
 
-        std::shared_ptr<TileMap> BuildMap(const Tmx::Map& inmap, aether::render::IRenderModule* renderer)
+        std::shared_ptr<TileMap> BuildMap(const Tmx::Map& inmap)
         {
             // Create a new TileMap object
             std::shared_ptr<TileMap> outmap(new TileMap());
@@ -30,7 +30,7 @@ namespace aether {
 
                 // Load texture for the tileset
                 auto path = inmap.GetFilepath() + "/" + tileset->GetImage()->GetSource();
-                render::Texture* t = renderer->LoadTextureFromFile(path);
+                render::Texture* t = aether::GEngine->GetRenderModuleAccessor()->LoadTextureFromFile(path);
 
                 // Calculate the number of columns and rows in the tileset
                 auto columns = tileset->GetImage()->GetWidth() / tileset->GetTileWidth();
@@ -39,6 +39,7 @@ namespace aether {
                 // Create spritesheet for the tileset
                 auto newSheet = std::make_shared<render::Spritesheet>(columns, rows, t);
                 outmap->AddSheet(newSheet);
+                newTileset->SetSpritesheet(newSheet);
                 newTileset->SetFirstGid(tileset->GetFirstGid());
 
                 // Add tiles to the tileset

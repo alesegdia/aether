@@ -15,7 +15,7 @@
 
 namespace aether::render {
 
-	enum ProjectionMode
+	enum class ProjectionMode
 	{
 		Orthographic,
 		Perspective

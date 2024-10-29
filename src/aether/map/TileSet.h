@@ -1,6 +1,7 @@
 #pragma once
 
 #include "aether/map/Tile.h"
+#include "aether/render/Spritesheet.h"
 
 
 namespace aether {
@@ -19,6 +20,11 @@ namespace aether {
 
             void SetFirstGid(int gid);
 
+            void SetSpritesheet(std::shared_ptr<render::Spritesheet> sheet)
+            {
+				m_spritesheet = sheet;
+            }
+
             int GetFirstGid();
             int GetLastGid();
 
@@ -28,7 +34,7 @@ namespace aether {
 
             aether::render::Texture* GetTexture()
             {
-                return nullptr;
+                return m_spritesheet->GetTexture();
             }
 
         private:
@@ -36,6 +42,7 @@ namespace aether {
             std::string m_name;
             int m_gid;
             aether::math::Vec2i m_tileSize;
+			std::shared_ptr<render::Spritesheet> m_spritesheet;
 
         };
 

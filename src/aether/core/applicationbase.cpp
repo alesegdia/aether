@@ -4,6 +4,7 @@
 #include <iostream>
 #include "aether/core/logger.h"
 #include "aether/core/Engine.h"
+#include "aether/render/IRenderModule.h"
 
 #include "time.h"
 

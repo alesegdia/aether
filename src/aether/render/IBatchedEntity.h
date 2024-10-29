@@ -22,7 +22,9 @@ namespace aether::render
 
 		virtual ShaderProgram* GetShader() const = 0;
 		virtual TextureConfig GetTextureConfig() const = 0;
-		virtual glm::mat4x4 GetEntityModel() = 0;
+		
+		// leave it here just in case we need it later
+		// virtual glm::mat4x4 GetEntityModel() = 0;
 		
 		virtual void Draw() = 0;
 

@@ -1,5 +1,8 @@
 #include "aether/core/Engine.h"
 
+#include "aether/render/IRenderModule.h"
+
+#include "aether/scene/scene.h"
 
 namespace {
 	aether::Engine s_engine;
@@ -7,22 +10,114 @@ namespace {
 
 namespace aether
 {
-	Engine* GEngine = nullptr;
+    void init_engine()
+    {
+        GEngine = &s_engine;
+        s_engine.Init();
+    }
 
-	void init_engine()
+	World::World()
 	{
-		GEngine = &s_engine;
-		s_engine.Init();
+        m_scene = new scene::Scene();
 	}
 
-	Engine* get_engine()
-	{
-		return &s_engine;
-	}
+    World::~World()
+    {
+		delete m_scene;
+    }
 
-	scene::Scene& get_scene()
-	{
-		return s_engine.GetWorld()->GetScene();
-	}
+    scene::Scene& World::GetScene()
+    {
+        return *m_scene;
+    }
 
+    const scene::Scene& World::GetScene() const
+    {
+        return *m_scene;
+    }
+
+    void World::ResetScene()
+    {
+        m_scene = {};
+    }
+
+    void World::Step()
+    {
+        m_scene->Step();
+    }
+
+    void Engine::Init()
+    {
+        m_renderer = create_render_module();
+		m_renderModuleAccessor = new render::RenderModuleAccessor();
+        m_renderModuleAccessor->SetRenderModule(m_renderer);
+        CreateWorld();
+    }
+
+    void Engine::SetDeltaTimeInMicroseconds(uint64_t deltaTimeInMicroseconds)
+    {
+        m_deltaTimeInMicroseconds = deltaTimeInMicroseconds;
+    }
+
+    void Engine::Cleanup()
+    {
+        delete m_renderModuleAccessor;
+        delete m_renderer;
+        delete m_currentWorld;
+    }
+
+    World* Engine::CreateWorld()
+    {
+        if (m_currentWorld != nullptr)
+        {
+            delete m_currentWorld;
+        }
+        m_currentWorld = new World();
+        return m_currentWorld;
+    }
+
+    World* Engine::GetWorld()
+    {
+        return m_currentWorld;
+    }
+
+    uint64_t Engine::GetDeltaTimeInMicroseconds() const
+    {
+        return m_deltaTimeInMicroseconds;
+    }
+
+    render::Camera* Engine::CreateCamera(const glm::fvec2& viewport, render::ProjectionMode projectionMode)
+    {
+        return m_renderer->CreateCamera(viewport, projectionMode);
+    }
+
+    void Engine::SetActiveSceneCamera(render::Camera* camera)
+    {
+        m_renderer->SetActiveCamera(camera);
+    }
+
+    scene::ISpriteNode* Engine::CreateSpriteNode(const std::string& baseTexture)
+    {
+        auto texture = m_renderer->LoadTextureFromFile(baseTexture);
+
+        auto txtsz = texture->GetSize();
+        auto node = m_renderer->CreateSpriteNode({ txtsz.GetX(), txtsz.GetY() });
+        node->SetTexture(texture);
+        m_currentWorld->GetScene().AddToSceneRoot(node);
+        return node;
+    }
+
+    scene::ISpriteNode* Engine::CreateSpriteNode(const glm::fvec2& size)
+    {
+        auto node = m_renderer->CreateSpriteNode(size);
+        m_currentWorld->GetScene().AddToSceneRoot(node);
+        return node;
+    }
+
+    render::RenderModuleAccessor* Engine::GetRenderModuleAccessor()
+    {
+        return m_renderModuleAccessor;
+    }
+
+    Engine* GEngine = nullptr;
 }

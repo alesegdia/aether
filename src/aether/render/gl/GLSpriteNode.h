@@ -67,11 +67,6 @@ namespace aether::render
             return m_textureConfig;
         }
 
-        glm::mat4x4 GetEntityModel() override
-        {
-            return GetModel();
-        }
-
         void Draw() override
         {
 			auto glshader = ResourceCast(m_shader);

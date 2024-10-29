@@ -1,129 +1,62 @@
 #pragma once
 
-#include "aether/render/IRenderModule.h"
-#include "aether/scene/scene.h"
-
 #include <glm/glm.hpp>
+#include <string>
+namespace aether::render
+{
+	class IRenderModule;
+	class Camera;
+	class RenderModuleAccessor;
+	enum class ProjectionMode;
+}
+
+namespace aether::scene
+{
+	class Scene;
+	class ISpriteNode;
+}
 
 namespace aether
 {
-	void init_engine();
-	aether::render::IRenderModule* create_render_module();
-	scene::ISceneNodeFactory* get_node_factory();
-	scene::Scene& get_scene();
+    aether::render::IRenderModule* create_render_module();
+    void init_engine();
 
-	class World
-	{
-	public:
-		~World() = default;
+    class World
+    {
+    public:
+        World();
+        ~World();
 
-		scene::Scene& GetScene()
-		{
-			return m_scene;
-		}
+        scene::Scene& GetScene();
+        const scene::Scene& GetScene() const;
+        void ResetScene();
+        void Step();
 
-		const scene::Scene& GetScene() const
-		{
-			return m_scene;
-		}
+    private:
+        scene::Scene* m_scene;
+    };
 
-		void ResetScene()
-		{
-			m_scene = {};
-		}
+    class Engine
+    {
+    public:
+        void Init();
+        void SetDeltaTimeInMicroseconds(uint64_t deltaTimeInMicroseconds);
+        void Cleanup();
+        World* CreateWorld();
+        World* GetWorld();
+        uint64_t GetDeltaTimeInMicroseconds() const;
+        render::Camera* CreateCamera(const glm::fvec2& viewport, render::ProjectionMode projectionMode);
+        void SetActiveSceneCamera(render::Camera* camera);
+        scene::ISpriteNode* CreateSpriteNode(const std::string& baseTexture);
+        scene::ISpriteNode* CreateSpriteNode(const glm::fvec2& size);
+        render::RenderModuleAccessor* GetRenderModuleAccessor();
 
-		void Step()
-		{
-			m_scene.Step();
-		}
+    private:
+        render::RenderModuleAccessor* m_renderModuleAccessor;
+        render::IRenderModule* m_renderer;
+        World* m_currentWorld;
+        uint64_t m_deltaTimeInMicroseconds = 0;
+    };
 
-	private:
-		scene::Scene m_scene;
-
-	};
-
-	class Engine
-	{
-	public:
-		void Init()
-		{
-			m_renderer = create_render_module();
-			m_renderModuleAccessor.SetRenderModule(m_renderer);
-			CreateWorld();
-		}
-
-		void SetDeltaTimeInMicroseconds(uint64_t deltaTimeInMicroseconds)
-		{
-			m_deltaTimeInMicroseconds = deltaTimeInMicroseconds;
-		}
-
-		void Cleanup()
-		{
-			delete m_renderer;
-			delete m_currentWorld;
-		}
-
-		World* CreateWorld()
-		{
-			if (m_currentWorld != nullptr)
-			{
-				delete m_currentWorld;
-			}
-			m_currentWorld = new World();
-			return m_currentWorld;
-		}
-
-		World* GetWorld()
-		{
-			return m_currentWorld;
-		}
-
-		uint64_t GetDeltaTimeInMicroseconds() const
-		{
-			return m_deltaTimeInMicroseconds;
-		}
-
-		render::Camera* CreateCamera(const glm::fvec2& viewport, render::ProjectionMode projectionMode)
-		{
-			return m_renderer->CreateCamera(viewport, projectionMode);
-		}
-
-		void SetActiveSceneCamera(render::Camera* camera)
-		{
-			m_renderer->SetActiveCamera(camera);
-		}
-
-		scene::ISpriteNode* CreateSpriteNode(const std::string& baseTexture)
-		{
-			auto texture = m_renderer->LoadTextureFromFile(baseTexture);
-
-			auto txtsz = texture->GetSize();
-			auto node = m_renderer->CreateSpriteNode({ txtsz.GetX(), txtsz.GetY() });
-			node->SetTexture(texture);
-			m_currentWorld->GetScene().AddToSceneRoot(node);
-			return node;
-		}
-
-		scene::ISpriteNode* CreateSpriteNode(const glm::fvec2& size)
-		{
-			auto node = m_renderer->CreateSpriteNode(size);
-			m_currentWorld->GetScene().AddToSceneRoot(node);
-			return node;
-		}
-
-		render::RenderModuleAccessor* GetRenderModuleAccessor()
-		{
-			return &m_renderModuleAccessor;
-		}
-
-	private:
-		render::RenderModuleAccessor m_renderModuleAccessor;
-		render::IRenderModule* m_renderer;
-		World* m_currentWorld;
-		uint64_t m_deltaTimeInMicroseconds = 0;
-
-	};
-
-	extern class Engine* GEngine;
-
+    extern Engine* GEngine;
 }

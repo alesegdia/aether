@@ -1,4 +1,5 @@
 #include "aether/resources/textureassetstorage.h"
+#include "aether/render/IRenderModule.h"
 #include "aether/core/Engine.h"
 
 namespace aether

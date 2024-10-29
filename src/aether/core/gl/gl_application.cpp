@@ -175,6 +175,9 @@ namespace aether::core {
             SDL_GetWindowSize(m_window, &w, &h);
             glViewport(0, 0, w, h);
 
+            glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
             // initialize input
             //Input::Initialize();
 

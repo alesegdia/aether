@@ -21,6 +21,7 @@
 #include "render/topdownscroller.h"
 
 #include "render/camera.h"
+#include "render/IRenderModule.h"
 
 #include "math/matrix.h"
 #include "math/vec.h"

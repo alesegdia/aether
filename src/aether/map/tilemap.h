@@ -17,6 +17,7 @@ class IRenderModule;
 namespace aether {
 	namespace tilemap {
 
+		/*
 		template <typename ResourceType>
 		class ResourceStore {
 		public:
@@ -41,7 +42,7 @@ namespace aether {
 		private:
 			std::unordered_map<std::string, std::shared_ptr<ResourceType>> m_storage;
 		};
-
+		*/
 
 		class TileMap
 		{
@@ -109,6 +110,11 @@ namespace aether {
 			}
 			*/
 
+			std::shared_ptr<TilesetCollection> GetTilesetCollection()
+			{
+				return m_tilesetCollection;
+			}
+
 		private:
 			std::vector<Layer::Shared> m_layers;
 			std::vector<TileSet::Shared> m_tilesets;
@@ -121,7 +127,7 @@ namespace aether {
 		};
 
 
-		std::shared_ptr<TileMap> BuildMap(const Tmx::Map& inmap, aether::render::IRenderModule* module);
+		std::shared_ptr<TileMap> BuildMap(const Tmx::Map& inmap);
 
 
 	}
