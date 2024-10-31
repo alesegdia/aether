@@ -43,6 +43,10 @@ public:
 	int GetApplicationWindowScreenWidth() const;
 	int GetApplicationWindowScreenHeight() const;
 	void Close();
+    void Quit()
+    {
+        Close();
+    }
 
 private:
 	void Step();

@@ -37,7 +37,7 @@ namespace aether::render {
         ShaderProgram* LoadShaderFromFile(const std::string& vspath, const std::string& fspath) override;
         Sprite* CreateSprite(Texture* texture, const math::Recti& rect) override;
         scene::ISpriteNode* CreateSpriteNode(const glm::fvec2& size) override;
-        scene::ITilemapNode* CreateTilemapNode(const aether::tilemap::TileMap& map) override;
+        scene::ITilemapNode* CreateTilemapNode(const std::shared_ptr<tilemap::TileMap>& map) override;
 
         void RenderElement(IBatchedEntity& element, Batch& batch) override;
         void ShaderPreparationStep(IBatchedEntity* batch) override;

@@ -6,6 +6,7 @@
 #include "aether/math/rect.h"
 #include <glm/glm.hpp>
 #include "aether/scene/spritenode.h"
+#include "aether/scene/ITilemapNode.h"
 #include "aether/render/IBatchedEntity.h"
 #include <string>
 
@@ -17,6 +18,7 @@ namespace aether::tilemap
 {
     class TileMap;
 }
+
 
 namespace aether::render
 {
@@ -31,7 +33,7 @@ namespace aether::render
      *
      * This class provides an interface for rendering operations, including loading textures, fonts, shaders, and creating cameras and sprites.
      */
-    class IRenderModule : public core::ModuleObject, public scene::ISceneNodeFactory
+    class IRenderModule : public core::ModuleObject
     {
     protected:
         /**
@@ -95,7 +97,7 @@ namespace aether::render
 
 		virtual scene::ISpriteNode* CreateSpriteNode(const glm::fvec2& size) = 0;
 
-        virtual scene::ITilemapNode* CreateTilemapNode(const aether::tilemap::TileMap& map) = 0;
+        virtual scene::ITilemapNode* CreateTilemapNode(const std::shared_ptr<tilemap::TileMap>& map) = 0;
 
         virtual void Render() = 0;
 

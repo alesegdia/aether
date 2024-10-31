@@ -113,19 +113,21 @@ namespace aether::render
 		m_partitions[partitionY * ((m_tilemap.GetWidth() + m_partitionSize - 1) / m_partitionSize) + partitionX] = std::move(partition);
 	}
 
-	GLTilemapNode::GLTilemapNode(core::ModuleObject* o, render::ShaderProgram* shader, tilemap::TileMap* tilemap)
-		: scene::SceneNode(o)
+	GLTilemapNode::GLTilemapNode(core::ModuleObject* o, render::ShaderProgram* shader, const std::shared_ptr<tilemap::TileMap>& map)
+		: scene::ITilemapNode(o)
 		, m_shader(shader)
-		, m_tilemap(tilemap)
+		, m_tilemap(map)
 	{
 		SetTextureConfigToTilemap();
 	}
 
 	void GLTilemapNode::SetTextureConfigToTilemap()
 	{
+		m_textureConfig = {};
 		// Create a texture config for the tilemap
 		std::set<render::Texture*> textures;
-		for (auto& tileset : m_tilemap->GetTilesetCollection()->GetTilesets())
+		auto tsc = m_tilemap->GetTilesetCollection();
+		for (auto& tileset : tsc->GetTilesets())
 		{
 			textures.insert(tileset->GetTexture());
 		}
@@ -133,7 +135,6 @@ namespace aether::render
 		{
 			m_textureConfig.AddEntrySorted(0, texture);
 		}
-		m_textureConfig.AddEntrySorted(0, m_tilemap->GetTileset(0)->GetTexture());
 	}
 
 	render::ShaderProgram* GLTilemapNode::GetShader() const

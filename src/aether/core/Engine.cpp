@@ -5,6 +5,9 @@
 #include "aether/scene/scene.h"
 
 #include "aether/map/tilemap.h"
+#include "aether/scene/ITilemapNode.h"
+
+#include "aether/core/logger.h"
 
 namespace {
 	aether::Engine s_engine;
@@ -120,6 +123,12 @@ namespace aether
     {
         Tmx::Map map;
         map.ParseFile(tilemapPath.c_str());
+        if (map.HasError())
+        {
+            Logger::LogError("[" + std::to_string(map.GetErrorCode()) + "] " + map.GetErrorText());
+            return nullptr;
+        }
+
         auto aetherTilemap = aether::tilemap::BuildMap(map);
         auto node = m_renderer->CreateTilemapNode(aetherTilemap);
         m_currentWorld->GetScene().AddToSceneRoot(node);

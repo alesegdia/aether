@@ -8,36 +8,45 @@ public:
 
     int Ready(const aether::core::CommandLineArguments& args) override
     {
-		auto asepriteAnimData = aether::render::AsepriteAnimationLoader().Load("media/dknight.json");
-		m_spriteNode = aether::GEngine->CreateSpriteNode(glm::fvec2{32, 32});
-        m_spriteNode->SetRelativePosition({ 400, 300, 0 });
-		m_spriteNode->LoadAllAnimations(asepriteAnimData);
-        m_spriteNode->PlayAnimation("front");
+        auto asepriteAnimData = aether::render::AsepriteAnimationLoader().Load("media/dknight.json");
+        m_tilemapNode = aether::GEngine->CreateTilemapNode("examples/03-tilemaps/sample-tilemap.tmx");
+        if (m_tilemapNode == nullptr) return -1;
+        m_tilemapNode->SetRelativePosition({ 0, 0, 0 });
         return 0;
     }
 
     void GameStep(uint64_t delta) override
     {
-		if (aether::core::is_key_just_pressed(aether::core::KeyCode::Q))
-		{
-            m_spriteNode->PlayAnimation("front");
-        }
-        else if (aether::core::is_key_down(aether::core::KeyCode::W))
+        static constexpr float speed = 10.f;
+        if (aether::core::is_key_just_pressed(aether::core::KeyCode::Escape))
         {
-            m_spriteNode->PlayAnimation("back");
+            Quit();
         }
-        else if (aether::core::is_key_down(aether::core::KeyCode::E))
+
+        if (aether::core::is_key_just_pressed(aether::core::KeyCode::Left))
         {
-            m_spriteNode->PlayAnimation("side");
+            m_tilemapNode->Move({ 0, -speed });
+        }
+        else if (aether::core::is_key_down(aether::core::KeyCode::Right))
+        {
+            m_tilemapNode->Move({ 0,  speed });
+        }
+        else if (aether::core::is_key_down(aether::core::KeyCode::Up))
+        {
+            m_tilemapNode->Move({ speed,      0 });
+        }
+        else if (aether::core::is_key_down(aether::core::KeyCode::Down))
+        {
+            m_tilemapNode->Move({ -speed,      0 });
         }
     }
 
 private:
-    aether::scene::ISpriteNode* m_spriteNode;
+    aether::scene::ITilemapNode* m_tilemapNode;
 
 };
 
-int main( int argc, char** argv )
+int main(int argc, char** argv)
 {
     aether::core::CommandLineArguments args(argc, argv);
     return MyGame(800, 600).Exec(args);

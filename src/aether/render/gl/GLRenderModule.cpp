@@ -30,7 +30,8 @@ namespace aether::render {
     {
         m_defaultShader = new GLShaderProgram(this, "media/default.vs", "media/default.fs");
         m_spriteShader = new GLShaderProgram(this, "media/sprite.vs", "media/sprite.fs");
-        
+        m_tilemapShader = m_defaultShader;
+
         m_defaultShader->Use();
         m_defaultShader->SetIntUniform("texture1", 0);
         
@@ -103,9 +104,9 @@ namespace aether::render {
         return node;
     }
 
-    scene::ITilemapNode* GLRenderModule::CreateTilemapNode(const aether::tilemap::TileMap& map)
+    scene::ITilemapNode* GLRenderModule::CreateTilemapNode(const std::shared_ptr<tilemap::TileMap>& map)
     {
-		auto node = new GLTilemapNode(this, m_tilemapShader, nullptr);
+		auto node = new GLTilemapNode(this, m_tilemapShader, map);
 		m_allTilemapNodes.emplace_back(node);
         m_batchDispatcher.AddToBatch(node);
         return node;

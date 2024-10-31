@@ -9,6 +9,7 @@
 
 #include "aether/core/utility.h"
 
+#include <glm/glm.hpp>
 #include <glm/vec3.hpp> // glm::vec3
 #include <glm/vec4.hpp> // glm::vec4
 #include <glm/mat4x4.hpp> // glm::mat4
@@ -84,6 +85,28 @@ namespace aether::scene {
          * @param relativePosition The new relative position as a glm::vec3.
          */
         void SetRelativePosition(glm::vec3 relativePosition);
+
+        void Move(const glm::fvec3& delta)
+        {
+			m_relativePosition += delta;
+			m_modelDirty = true;
+        }
+
+        void Move(const glm::fvec2& delta)
+        {
+			Move(glm::fvec3(delta, 0.f));
+        }
+
+        void Move(float x, float y)
+        {
+            Move(glm::fvec2(x, y));
+        }
+
+		void Move(float x, float y, float z)
+		{
+			Move(glm::fvec3(x, y, z));
+		}
+
 
         /**
          * @brief Retrieves the model matrix of this node.

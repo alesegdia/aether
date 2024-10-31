@@ -23,7 +23,7 @@ namespace aether::scene
         virtual void SetClippingRect(float x, float y, float w, float h) = 0;
         virtual void SetTexture(render::Texture* texture) = 0;
 		virtual void SetTextureRegion(render::TextureRegion* region) = 0;
-        virtual void SetAnimation(std::shared_ptr<render::Animation> anim);
+        void SetAnimation(std::shared_ptr<render::Animation> anim);
 
         void PlayAnimation(const std::string& animationName);
         void Step() override;

@@ -105,8 +105,7 @@ namespace aether::core {
                 break;
             }
 
-            printf("[%d]: %s of %s severity, raised from %s: %s\n",
-                id, _type, _severity, _source, msg);
+            Logger::LogError("[" + std::to_string(id) + "]: " + _type + " of " + _severity + " severity, raised from " + _source + ": " + msg);
         }
 
         GLApplication::GLApplication(int sw, int sh)

@@ -11,6 +11,12 @@ namespace aether::scene
 	class ITilemapNode : public SceneNode
 	{
 	public:
+		ITilemapNode(core::ModuleObject* o)
+			: SceneNode(o)
+		{
+
+		}
+
 		virtual ~ITilemapNode() = default;
 
 		

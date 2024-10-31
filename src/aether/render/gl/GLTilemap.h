@@ -52,9 +52,9 @@ namespace aether::render {
 		std::vector<Partition> m_partitions;
 	};
 
-	class GLTilemapNode : public scene::SceneNode, public scene::ITilemapNode, public render::IBatchedEntity {
+	class GLTilemapNode : public scene::ITilemapNode, public render::IBatchedEntity {
 	public:
-		GLTilemapNode(core::ModuleObject* o, render::ShaderProgram* shader, tilemap::TileMap* tilemap);
+		GLTilemapNode(core::ModuleObject* o, render::ShaderProgram* shader, const std::shared_ptr<tilemap::TileMap>& map);
 
 		render::ShaderProgram* GetShader() const override;
 		render::TextureConfig GetTextureConfig() const override;
@@ -66,7 +66,7 @@ namespace aether::render {
 
 		void SetTextureConfigToTilemap();
 
-		tilemap::TileMap* m_tilemap;
+		std::shared_ptr<tilemap::TileMap> m_tilemap;
 		render::ShaderProgram* m_shader;
 		std::vector<render::TilemapTopology> m_mapParts;
 		TextureConfig m_textureConfig;

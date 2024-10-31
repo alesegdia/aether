@@ -8,45 +8,40 @@ public:
 
     int Ready(const aether::core::CommandLineArguments& args) override
     {
-		auto asepriteAnimData = aether::render::AsepriteAnimationLoader().Load("media/dknight.json");
-		m_tilemapNode = aether::GEngine->CreateTilemapNode("examples/02-animations/sample-tilemap.tmx");
-        m_tilemapNode->SetRelativePosition({ 0, 0, 0 });
+        auto asepriteAnimData = aether::render::AsepriteAnimationLoader().Load("media/dknight.json");
+        m_spriteNode = aether::GEngine->CreateSpriteNode(glm::fvec2{ 32, 32 });
+        m_spriteNode->SetRelativePosition({ 400, 300, 0 });
+        m_spriteNode->LoadAllAnimations(asepriteAnimData);
+        m_spriteNode->PlayAnimation("front");
         return 0;
     }
 
     void GameStep(uint64_t delta) override
-	{
-		static constexpr float speed = 10.f;
-		if (aether::core::is_key_just_pressed(aether::core::KeyCode::Escape))
-		{
-			Quit();
-		}
-		
-        if(aether::core::is_key_just_pressed(aether::core::KeyCode::Left))
-		{
-            m_tilemapNode->Move({      0, -speed });
-        }
-        else if (aether::core::is_key_down(aether::core::KeyCode::Right))
+    {
+        if (aether::core::is_key_just_pressed(aether::core::KeyCode::Q))
         {
-            m_tilemapNode->Move({      0,  speed });
+            m_spriteNode->PlayAnimation("front");
         }
-        else if (aether::core::is_key_down(aether::core::KeyCode::Up))
+        else if (aether::core::is_key_down(aether::core::KeyCode::W))
         {
-            m_tilemapNode->Move({  speed,      0 });
+            m_spriteNode->PlayAnimation("back");
         }
-        else if (aether::core::is_key_down(aether::core::KeyCode::Down))
+        else if (aether::core::is_key_down(aether::core::KeyCode::E))
         {
-            m_tilemapNode->Move({ -speed,      0 });
+            m_spriteNode->PlayAnimation("side");
         }
     }
 
 private:
-    aether::scene::ITilemapNode* m_tilemapNode;
+    aether::scene::ISpriteNode* m_spriteNode;
 
 };
 
-int main( int argc, char** argv )
+int main(int argc, char** argv)
 {
     aether::core::CommandLineArguments args(argc, argv);
     return MyGame(800, 600).Exec(args);
 }
+
+
+
