@@ -15,13 +15,20 @@
 namespace aether::render
 {
 
-	TilemapTopology::TilemapTopology(int tileSize, int partitionSize)
-		: m_tileSize(tileSize), m_partitionSize(partitionSize)
+	TilemapTopology::TilemapTopology(std::shared_ptr<tilemap::TileMap> tilemap, int tileSize, int partitionSize)
+		: m_tilemap(tilemap)
+		, m_tileSize(tileSize)
+		, m_partitionSize(partitionSize)
 	{
 		// Initialize partitions based on the tilemap size and partition size
-		int numPartitionsX = (m_tilemap.GetWidth() + partitionSize - 1) / partitionSize;
-		int numPartitionsY = (m_tilemap.GetHeight() + partitionSize - 1) / partitionSize;
+		int numPartitionsX = (m_tilemap->GetWidth() + partitionSize - 1) / partitionSize;
+		int numPartitionsY = (m_tilemap->GetHeight() + partitionSize - 1) / partitionSize;
 		m_partitions.resize(numPartitionsX * numPartitionsY);
+		for (int i = 0; i < m_partitions.size(); ++i)
+		{
+			m_partitions[i].x = i % numPartitionsX;
+			m_partitions[i].y = i / numPartitionsX;
+		}
 	}
 
 	void TilemapTopology::Initialize(tilemap::TileMap& tilemap)
@@ -154,6 +161,7 @@ namespace aether::render
 
 	void GLTilemapNode::Draw()
 	{
+
 		// Implement the drawing logic here
 	}
 

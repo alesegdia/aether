@@ -27,7 +27,7 @@ namespace aether::render {
 
 	class TilemapTopology {
 	public:
-		TilemapTopology(int tileSize, int partitionSize);
+		TilemapTopology(std::shared_ptr<tilemap::TileMap>, int tileSize, int partitionSize);
 
 		void Initialize(tilemap::TileMap& tilemap);
 		void Render(render::Camera* cam);
@@ -50,6 +50,7 @@ namespace aether::render {
 		int m_partitionSize;
 		tilemap::TileMap m_tilemap;
 		std::vector<Partition> m_partitions;
+		std::shared_ptr<tilemap::TileMap> m_tilemap;
 	};
 
 	class GLTilemapNode : public scene::ITilemapNode, public render::IBatchedEntity {

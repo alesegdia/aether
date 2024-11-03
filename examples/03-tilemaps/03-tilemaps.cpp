@@ -8,7 +8,6 @@ public:
 
     int Ready(const aether::core::CommandLineArguments& args) override
     {
-        auto asepriteAnimData = aether::render::AsepriteAnimationLoader().Load("media/dknight.json");
         m_tilemapNode = aether::GEngine->CreateTilemapNode("examples/03-tilemaps/sample-tilemap.tmx");
         if (m_tilemapNode == nullptr) return -1;
         m_tilemapNode->SetRelativePosition({ 0, 0, 0 });
