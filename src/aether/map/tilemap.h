@@ -48,10 +48,7 @@ namespace aether {
 		{
 		public:
 
-			TileMap()
-			{
-				m_tilesetCollection = std::make_shared<TilesetCollection>();
-			}
+			TileMap(const Tmx::Map& inmap);
 
 			render::Texture* GetTexture()
 			{
@@ -78,6 +75,11 @@ namespace aether {
 
 			TileLayer::Shared GetTileLayer(const std::string& layerId);
 
+			TileLayer::Shared GetTileLayer(int layerIndex)
+			{
+				return m_tileLayers.begin()->second;
+			}
+
 			ObjectLayer::Shared GetObjectLayer(const std::string& layerId);
 
 			TileSet::Shared GetTileset(int i);
@@ -88,27 +90,25 @@ namespace aether {
 
 			const std::string& GetBasePath();
 
-			float GetWidth() const
+			float GetTileWidth() const
 			{
-				assert(!m_layers.empty() && "must have some tile layer to fetch width");
-				const auto& layer = *(*(m_tileLayers.begin())).second;
-				return float(layer.GetMapWidth() * layer.GetTileWidth());
+				return m_tileSize.x;
 			}
 
-			float GetHeight() const
+			float GetTileHeight() const
 			{
-				assert(!m_layers.empty() && "must have some tile layer to fetch height");
-				const auto& layer = *(*(m_tileLayers.begin())).second;
-				return float(layer.GetMapHeight() * layer.GetTileHeight());
+				return m_tileSize.y;
 			}
 
-			/*
-			Texture* GetAnyTilesetTexture()
+			int GetWidthInTiles() const
 			{
-				assert(!m_tilesets.empty() && "must have some tileset to fetch texture");
-				return m_tilesets[0]->GetTexture();
+				return m_mapSizeInTiles.x;
 			}
-			*/
+
+			int GetHeightInTiles() const
+			{
+				return m_mapSizeInTiles.y;
+			}
 
 			std::shared_ptr<TilesetCollection> GetTilesetCollection()
 			{
@@ -116,6 +116,8 @@ namespace aether {
 			}
 
 		private:
+			glm::fvec2 m_tileSize;
+			glm::fvec2 m_mapSizeInTiles;
 			std::vector<Layer::Shared> m_layers;
 			std::vector<TileSet::Shared> m_tilesets;
 			std::shared_ptr<TilesetCollection> m_tilesetCollection;
@@ -125,9 +127,6 @@ namespace aether {
 			std::string m_basePath;
 
 		};
-
-
-		std::shared_ptr<TileMap> BuildMap(const Tmx::Map& inmap);
 
 
 	}

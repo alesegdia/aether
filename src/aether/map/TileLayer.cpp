@@ -8,10 +8,35 @@ namespace aether::tilemap
 		return m_tileset;
 	}
 
-	TileLayer::TileLayer(const std::string& id, int zOrder)
-		: Layer(id, zOrder)
+	TileLayer::TileLayer(const Tmx::TileLayer& tmxTileLayer, std::shared_ptr<TilesetCollection> tilesetCollection)
+		: Layer(tmxTileLayer.GetName(), tmxTileLayer.GetZOrder())
 	{
+		bool hasVisibleProp = tmxTileLayer.GetProperties().HasProperty("visible");
+		bool visiblePropOn = tmxTileLayer.GetProperties().GetBoolProperty("visible");
+		SetVisible(!hasVisibleProp || visiblePropOn);
+		SetMapSize(tmxTileLayer.GetWidth(), tmxTileLayer.GetHeight());
+		
+		TileLayer::Data rawData(size_t(tmxTileLayer.GetWidth()), size_t(tmxTileLayer.GetHeight()));
 
+		// Set tile data for the layer
+		for (int i = 0; i < tmxTileLayer.GetWidth(); i++)
+		{
+			for (int j = 0; j < tmxTileLayer.GetHeight(); j++)
+			{
+				auto tmxTileInstance = tmxTileLayer.GetTile(i, j);
+				
+				TileInstance tileInstance;
+				tileInstance.gid = tmxTileInstance.gid;
+				tileInstance.id = tmxTileInstance.id;
+				tileInstance.tilesetId = tmxTileInstance.tilesetId;
+				
+				// auto tileset = tilesetCollection->GetTilesets()[size_t(tileInstance.tilesetId)];
+				// tileInstance.tile = tileset->GetTile(tileInstance.id);
+
+				rawData.SetCell(size_t(i), size_t(j), tileInstance);
+			}
+		}
+		SetData(rawData);
 	}
 
 	void TileLayer::SetTileset(TileSet::Shared tileset)
@@ -42,10 +67,10 @@ namespace aether::tilemap
 			y >= 0 && y < m_data->GetRowsNumber())
 		{
 			auto cell = m_data->GetCell(x, y);
-			if (cell == -1 || m_tileset->GetTile(cell) == nullptr) {
+			if (cell.id == -1) {
 				return TileCollisionBehaviour::Empty;
 			}
-			return m_tileset->GetTile(cell)->collisionBehaviour;
+			return m_tileset->GetTile(cell.id)->GetCollisionBehaviour();
 		}
 		return TileCollisionBehaviour::Empty;
 	}
@@ -69,6 +94,12 @@ namespace aether::tilemap
 	void TileLayer::AddProperty(const std::string& key, const std::string& value)
 	{
 		m_props[key] = value;
+	}
+
+
+	glm::fvec2 TileLayer::GetTileUV() const
+	{
+		return glm::fvec2(1.0f / m_tileset->GetColumns(), 1.0f / m_tileset->GetRows());
 	}
 
 

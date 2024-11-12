@@ -8,7 +8,7 @@ namespace aether::render {
 Spritesheet::~Spritesheet()
 = default;
 
-std::vector<const TextureRegion*> Spritesheet::getAllFrames()
+std::vector<TextureRegion*> Spritesheet::getAllFrames()
 {
     return getFrames(0, m_frames.size() - 1);
 }
@@ -16,30 +16,30 @@ std::vector<const TextureRegion*> Spritesheet::getAllFrames()
 
 Spritesheet::Spritesheet(size_t width, size_t height, Texture* texture)
 {
-    Reset( width, height, std::move(texture) );
+    Reset( width, height, texture );
 }
 
 Spritesheet::Spritesheet() = default;
 
-const TextureRegion *Spritesheet::GetFrame(size_t num_frame) const
+TextureRegion *Spritesheet::GetFrame(size_t num_frame)
 {
     assert( num_frame < m_frames.size() );
     return &m_frames[num_frame];
 }
 
-const TextureRegion *Spritesheet::GetFrame(size_t x_frame, size_t y_frame) const
+TextureRegion *Spritesheet::GetFrame(size_t x_frame, size_t y_frame)
 {
     size_t index = CoordToIndex(x_frame, y_frame);
     assert( index < m_frames.size() );
     return GetFrame(CoordToIndex(x_frame, y_frame));
 }
 
-std::vector<const TextureRegion*> Spritesheet::getFrames(size_t start, size_t end)
+std::vector<TextureRegion*> Spritesheet::getFrames(size_t start, size_t end)
 {
     assert( start <= m_frames.size() );
     assert( end <= m_frames.size() );
 
-    std::vector<const TextureRegion*> frames;
+    std::vector<TextureRegion*> frames;
     for( size_t i = start; i <= end; i++ )
     {
         frames.push_back(&m_frames[i]);
@@ -50,6 +50,7 @@ std::vector<const TextureRegion*> Spritesheet::getFrames(size_t start, size_t en
 
 void Spritesheet::Reset(size_t width, size_t height, Texture* texture)
 {
+    m_texture = texture;
     m_width = int(width);
     m_height = int(height);
 

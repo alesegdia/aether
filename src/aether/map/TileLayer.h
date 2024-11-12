@@ -12,15 +12,24 @@
 namespace aether {
     namespace tilemap {
 
+		struct TileInstance
+		{
+			int tilesetId = -1;
+			unsigned id = 0;
+			unsigned gid = 0;
+		};
+
 		class TileLayer : public Layer {
 		public:
 
-			using Data = rztl::Matrix2Di;
+			using Data = rztl::Matrix2D<TileInstance>;
 			using Shared = std::shared_ptr<TileLayer>;
 
-			TileLayer(const std::string& id, int zOrder);
+			TileLayer(const Tmx::TileLayer& layer, std::shared_ptr<TilesetCollection> tilesetCollection);
 
 			void SetTileset(TileSet::Shared tileset);
+
+			glm::fvec2 GetTileUV() const;
 
 			void SetMapSize(size_t mapWidth, size_t mapHeight);
 
@@ -36,6 +45,17 @@ namespace aether {
 
 			int GetTileHeight() const;
 
+			Tile* GetTile(int x, int y)
+			{
+				auto cell = m_data->GetCell(x, y);
+				return cell.gid == 0 ? nullptr : m_tileset->GetTile(cell.gid);
+			}
+
+			TileInstance* GetTileInstance(int x, int y)
+			{
+				return &m_data->GetCell(x, y);
+			}
+
 			int GetMapWidth() const
 			{
 				return int(m_mapSizeInTiles.GetX());
@@ -50,10 +70,12 @@ namespace aether {
 
 			void AddProperty(const std::string& key, const std::string& value);
 
-			bool IsUnsetTile(size_t x, size_t y)
+			/*
+			bool IsUnsetTile(size_t x, size_t y) const
 			{
-				return m_data->GetCell(x, y) == -1;
+				return m_data->GetCell(x, y)->tile == nullptr;
 			}
+			*/
 
 		private:
 			std::unique_ptr<Data> m_data = nullptr;

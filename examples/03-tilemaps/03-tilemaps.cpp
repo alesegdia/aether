@@ -8,7 +8,7 @@ public:
 
     int Ready(const aether::core::CommandLineArguments& args) override
     {
-        m_tilemapNode = aether::GEngine->CreateTilemapNode("examples/03-tilemaps/sample-tilemap.tmx");
+        m_tilemapNode = aether::GEngine->CreateTilemapNode("examples/03-tilemaps/sample-map.tmx");
         if (m_tilemapNode == nullptr) return -1;
         m_tilemapNode->SetRelativePosition({ 0, 0, 0 });
         return 0;

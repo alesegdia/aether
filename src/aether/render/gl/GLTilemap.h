@@ -27,9 +27,8 @@ namespace aether::render {
 
 	class TilemapTopology {
 	public:
-		TilemapTopology(std::shared_ptr<tilemap::TileMap>, int tileSize, int partitionSize);
+		TilemapTopology(std::shared_ptr<tilemap::TileMap>, int partitionSize);
 
-		void Initialize(tilemap::TileMap& tilemap);
 		void Render(render::Camera* cam);
 
 	private:
@@ -42,14 +41,17 @@ namespace aether::render {
 			int x, y;
 		};
 
-		Partition* GetPartition(int x, int y);
-		void CreatePartitions();
-		void CreatePartition(int partitionX, int partitionY);
+		struct LayerData {
+			std::vector<Partition> layerPartitions;
+		};
 
-		int m_tileSize;
+		Partition* GetPartition(int x, int y);
+		Partition CreatePartition(tilemap::TileLayer* layer, int x0, int y0, int x1, int y1);
+
+		glm::fvec2 m_tileSize;
 		int m_partitionSize;
-		tilemap::TileMap m_tilemap;
-		std::vector<Partition> m_partitions;
+		glm::ivec2 m_numPartitions;
+		std::vector<LayerData> m_layers;
 		std::shared_ptr<tilemap::TileMap> m_tilemap;
 	};
 
@@ -69,7 +71,7 @@ namespace aether::render {
 
 		std::shared_ptr<tilemap::TileMap> m_tilemap;
 		render::ShaderProgram* m_shader;
-		std::vector<render::TilemapTopology> m_mapParts;
+		TilemapTopology m_topology;
 		TextureConfig m_textureConfig;
 	};
 

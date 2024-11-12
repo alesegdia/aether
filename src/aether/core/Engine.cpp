@@ -129,7 +129,7 @@ namespace aether
             return nullptr;
         }
 
-        auto aetherTilemap = aether::tilemap::BuildMap(map);
+        auto aetherTilemap = std::make_shared<aether::tilemap::TileMap>(map);
         auto node = m_renderer->CreateTilemapNode(aetherTilemap);
         m_currentWorld->GetScene().AddToSceneRoot(node);
         return node;
