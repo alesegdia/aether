@@ -53,6 +53,10 @@ namespace aether {
 
 			TileInstance* GetTileInstance(int x, int y)
 			{
+				if (y >= m_data->GetRowsNumber() && x >= m_data->GetColsNumber() && x < 0 && y < 0)
+				{
+					return nullptr;
+				}
 				return &m_data->GetCell(x, y);
 			}
 

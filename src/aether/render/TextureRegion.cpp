@@ -51,7 +51,7 @@ namespace aether::render {
         return m_clip;
     }
 
-    std::array<float, 4> TextureRegion::GetUVs()
+    uvs_t TextureRegion::GetUVs()
     {
         if (m_uvsDirty)
         {

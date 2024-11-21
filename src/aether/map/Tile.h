@@ -28,7 +28,7 @@ namespace aether::tilemap {
 			m_props[key] = value;
         }
 
-        std::array<float, 4> GetTexCoords()
+        uvs_t GetTexCoords()
         {
 			return m_texRegion->GetUVs();
         }

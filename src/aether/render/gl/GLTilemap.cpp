@@ -17,9 +17,10 @@
 namespace aether::render
 {
 
-	TilemapTopology::TilemapTopology(std::shared_ptr<tilemap::TileMap> tilemap, int partitionSize)
+	TilemapTopology::TilemapTopology(std::shared_ptr<tilemap::TileMap> tilemap, int partitionSize, const glm::fvec2& tilesize)
 		: m_tilemap(tilemap)
 		, m_partitionSize(partitionSize)
+		, m_tileSize(tilesize)
 	{
 		auto mapWidth  = tilemap->GetWidthInTiles();
 		auto mapHeight = tilemap->GetHeightInTiles();
@@ -45,7 +46,6 @@ namespace aether::render
 				}
 			}
 
-			data.layerPartitions.resize(m_numPartitions.x * m_numPartitions.y);
 			m_layers.push_back(data);
 		}
 	}
@@ -58,13 +58,11 @@ namespace aether::render
 		int tileWidth = m_tilemap->GetTileWidth();
 		int tileHeight = m_tilemap->GetTileHeight();
 
-		for (int tileY = y0; tileY < y1; tileY++)
+		unsigned int baseIndex = 0;
+		for (int tileX = x0; tileX < x1; tileX++)
 		{
-			for (int tileX = x0; tileX < x1; tileX++)
+			for (int tileY = y0; tileY < y1; tileY++)
 			{
-				if (tileX >= m_tilemap->GetWidthInTiles() || tileY >= m_tilemap->GetHeightInTiles())
-					continue;
-
 				auto tile = layer->GetTileInstance(tileX, tileY);
 				if (tile == nullptr)
 					continue;
@@ -80,28 +78,28 @@ namespace aether::render
 				// Get UV coordinates from the tilemap's first layer
 				auto uvCoords = tilesetTile->GetTexCoords();
 
-				// Add vertices for the tile (position and texture coordinates)
 				vertices.insert(vertices.end(), {
-					left, top, 0.0f, uvCoords[0], uvCoords[0],
-					right, top, 0.0f, uvCoords[1], uvCoords[1],
-					right, bottom, 0.0f, uvCoords[2], uvCoords[2],
-					left, bottom, 0.0f, uvCoords[3], uvCoords[3]
+					left,  top,    0.0f, uvCoords.u0, uvCoords.v0,
+					right, top,    0.0f, uvCoords.u1, uvCoords.v0,
+					right, bottom, 0.0f, uvCoords.u1, uvCoords.v1,
+					left,  bottom, 0.0f, uvCoords.u0, uvCoords.v1
 				});
-
-				// Calculate the base index for the current tile
-				unsigned int baseIndex = (tileY * m_partitionSize + tileX) * 4;
 
 				// Add indices for the two triangles that make up the tile
 				indices.insert(indices.end(), {
 					baseIndex, baseIndex + 1, baseIndex + 2,
 					baseIndex, baseIndex + 2, baseIndex + 3
 				});
+
+				baseIndex += 4;
 			}
 		}
 
 		TilemapTopology::Partition partition;
 		partition.x = x0 * m_tileSize.x;
 		partition.y = y0 * m_tileSize.y;
+		partition.indices = indices;
+		partition.vertices = vertices;
 		partition.vao.Generate();
 		partition.vbo.Generate(nether::BufferBindingTarget::ArrayBuffer);
 		partition.ebo.Generate(nether::BufferBindingTarget::ElementArrayBuffer);
@@ -131,26 +129,31 @@ namespace aether::render
 
 		// For each partition, check if it intersects with the camera boundary
 
+		int i = 0;
 		for (auto& layer : m_layers)
 		{
 			for (auto& partition : layer.layerPartitions)
 			{
-				// Get the partition's position and size
-				int partitionX = partition.x;
-				int partitionY = partition.y;
-				int partitionWidth  = std::min<int>(m_partitionSize, m_tilemap->GetTileWidth()  * m_tilemap->GetWidthInTiles()  - partitionX);
-				int partitionHeight = std::min<int>(m_partitionSize, m_tilemap->GetTileHeight() * m_tilemap->GetHeightInTiles() - partitionY);
-
-				// Create a rectangle representing the partition
-				aether::math::Rectf partitionRect(partitionX, partitionY, partitionWidth, partitionHeight);
-
-				// Check if the partition intersects with the camera boundary
-				if (true) // partitionRect.Intersects(cameraBoundary))
+				if (true)
 				{
-					partition.vao.Bind();
-					glDrawElements(GL_TRIANGLES, partition.indices.size(), GL_UNSIGNED_INT, 0);
-					partition.vao.Unbind();
+					// Get the partition's position and size
+					// int partitionX = partition.x;
+					// int partitionY = partition.y;
+					// int partitionWidth  = std::min<int>(m_partitionSize, m_tilemap->GetTileWidth()  * m_tilemap->GetWidthInTiles()  - partitionX);
+					// int partitionHeight = std::min<int>(m_partitionSize, m_tilemap->GetTileHeight() * m_tilemap->GetHeightInTiles() - partitionY);
+
+					// Create a rectangle representing the partition
+					// aether::math::Rectf partitionRect(partitionX, partitionY, partitionWidth, partitionHeight);
+
+					// Check if the partition intersects with the camera boundary
+					if (true) // partitionRect.Intersects(cameraBoundary))
+					{
+						partition.vao.Bind();
+						glDrawElements(GL_TRIANGLES, partition.indices.size(), GL_UNSIGNED_INT, 0);
+						partition.vao.Unbind();
+					}
 				}
+				i++;
 			}
 		}
 	}
@@ -159,7 +162,7 @@ namespace aether::render
 		: scene::ITilemapNode(o)
 		, m_shader(shader)
 		, m_tilemap(map)
-		, m_topology(map, 4)
+		, m_topology(map, 10, map->GetTileSize())
 	{
 		SetTextureConfigToTilemap();
 	}

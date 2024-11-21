@@ -4,6 +4,14 @@
 #include "aether/math/rect.h"
 #include <array>
 
+namespace aether
+{
+    struct uvs_t
+    {
+        float u0, v0, u1, v1;
+    };
+}
+
 namespace aether::render {
 
     /**
@@ -80,7 +88,7 @@ namespace aether::render {
          * @brief Gets the UV coordinates.
          * @return Array containing the UV coordinates.
          */
-        std::array<float, 4> GetUVs();
+        uvs_t GetUVs();
 
     private:
         /**

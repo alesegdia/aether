@@ -73,8 +73,8 @@ namespace aether::render
             auto model = GetModel();
 			glshader->SetMat4Uniform("model", model);
             auto uvs = m_sprite.GetRegion()->GetUVs();
-            glshader->SetVec2Uniform("uv0", { uvs[0], uvs[1] });
-            glshader->SetVec2Uniform("uv1", { uvs[2], uvs[3] });
+            glshader->SetVec2Uniform("uv0", { uvs.u0, uvs.v0 });
+            glshader->SetVec2Uniform("uv1", { uvs.u1, uvs.v1 });
             m_topology->Draw();
         }
 

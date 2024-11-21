@@ -27,7 +27,7 @@ namespace aether::render {
 
 	class TilemapTopology {
 	public:
-		TilemapTopology(std::shared_ptr<tilemap::TileMap>, int partitionSize);
+		TilemapTopology(std::shared_ptr<tilemap::TileMap>, int partitionSize, const glm::fvec2& tilesize);
 
 		void Render(render::Camera* cam);
 

@@ -16,28 +16,34 @@ public:
 
     void GameStep(uint64_t delta) override
     {
-        static constexpr float speed = 10.f;
+        int dx, dy;
+        dx = dy = 0;
+        static constexpr float speed = 3.f;
         if (aether::core::is_key_just_pressed(aether::core::KeyCode::Escape))
         {
             Quit();
         }
 
-        if (aether::core::is_key_just_pressed(aether::core::KeyCode::Left))
+        if (aether::core::is_key_down(aether::core::KeyCode::Down))
         {
-            m_tilemapNode->Move({ 0, -speed });
+            dy = 1;
         }
-        else if (aether::core::is_key_down(aether::core::KeyCode::Right))
+
+        if (aether::core::is_key_down(aether::core::KeyCode::Up))
         {
-            m_tilemapNode->Move({ 0,  speed });
+            dy = -1;
         }
-        else if (aether::core::is_key_down(aether::core::KeyCode::Up))
+
+        if (aether::core::is_key_down(aether::core::KeyCode::Right))
         {
-            m_tilemapNode->Move({ speed,      0 });
+            dx = 1;
         }
-        else if (aether::core::is_key_down(aether::core::KeyCode::Down))
+
+        if (aether::core::is_key_down(aether::core::KeyCode::Left))
         {
-            m_tilemapNode->Move({ -speed,      0 });
+            dx = -1;
         }
+        m_tilemapNode->Move({ speed * dx, speed * dy });
     }
 
 private:

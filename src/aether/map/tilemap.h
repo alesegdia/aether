@@ -115,6 +115,11 @@ namespace aether {
 				return m_tilesetCollection;
 			}
 
+			const glm::fvec2& GetTileSize()
+			{
+				return m_tileSize;
+			}
+
 		private:
 			glm::fvec2 m_tileSize;
 			glm::fvec2 m_mapSizeInTiles;
