@@ -12,7 +12,11 @@ namespace aether::scene
     class ITextNode : public SceneNode
     {
     public:
-        ITextNode(core::ModuleObject* o);
+        ITextNode(core::ModuleObject* o)
+			: SceneNode(o)
+        {
+
+        }
 
 		virtual void SetText(const std::string& text) = 0;
         virtual void SetSize(int size) = 0;

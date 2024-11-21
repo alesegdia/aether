@@ -36,6 +36,7 @@
 #include "scene/animationnode.h"
 #include "scene/gridnode.h"
 #include "scene/ITilemapNode.h"
+#include "scene/ITextNode.h"
 
 #include "rztl/rztl.h"
 
