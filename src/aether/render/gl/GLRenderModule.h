@@ -60,11 +60,11 @@ namespace aether::render {
 
     private:
         BatchDispatcher m_batchDispatcher;
-        std::vector<GLFont> m_allFonts;
-        std::vector<GLTexture> m_allTextures;
+        std::vector<GLFont*> m_allFonts;
+        std::vector<GLTexture*> m_allTextures;
         std::vector<Camera*> m_allCameras;
-        std::vector<GLShaderProgram> m_allShaders;
-        std::vector<GLTextNode> m_allTextNodes;
+        std::vector<GLShaderProgram*> m_allShaders;
+        std::vector<GLTextNode*> m_allTextNodes;
 
 		std::vector<Sprite*> m_allSprites;
 

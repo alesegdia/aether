@@ -63,19 +63,22 @@ namespace aether::render {
     {
         std::shared_ptr<nether::Texture> netherTex = std::make_shared<nether::Texture>();
         netherTex->LoadFromFile(path, nether::TextureFormat::RGBA8);
-        m_allTextures.emplace_back(this, netherTex);
-        return &m_allTextures.back();
+        auto tex = new GLTexture(this, netherTex);
+        m_allTextures.push_back(tex);
+        return m_allTextures.back();
     }
 
     Font* GLRenderModule::LoadFontFromFile(const std::string& path, int size)
     {
-        m_allFonts.emplace_back(this, path, size);
-        return &m_allFonts.back();
+        auto font = new GLFont(this, path, size);
+        m_allFonts.push_back(font);
+        return m_allFonts.back();
     }
 
     ShaderProgram* GLRenderModule::LoadShaderFromFile(const std::string& vspath, const std::string& fspath)
     {
         auto shaderProgram = new GLShaderProgram(this, vspath, fspath);
+        m_allShaders.push_back(shaderProgram);
         return shaderProgram;
     }
 
