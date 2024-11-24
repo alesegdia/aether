@@ -6,7 +6,9 @@
 
 #include "aether/map/tilemap.h"
 #include "aether/scene/ITilemapNode.h"
+#include "aether/scene/ITextNode.h"
 
+#include "aether/render/Font.h"
 #include "aether/core/logger.h"
 
 namespace {
@@ -54,6 +56,8 @@ namespace aether
     void Engine::Init()
     {
         m_renderer = create_render_module();
+        m_renderer->SetAssetsManager(m_assetsManager);
+        m_assetsManager = new resources::AssetsManager();
 		m_renderModuleAccessor = new render::RenderModuleAccessor();
         m_renderModuleAccessor->SetRenderModule(m_renderer);
         CreateWorld();
@@ -135,9 +139,26 @@ namespace aether
         return node;
     }
 
+    scene::ITextNode* Engine::CreateTextNode()
+	{
+		auto node = m_renderer->CreateTextNode();
+		m_currentWorld->GetScene().AddToSceneRoot(node);
+		return node;
+	}
+
+	render::Font* Engine::CreateFont(const std::string& fontPath, int size)
+	{
+		return m_renderer->LoadFontFromFile(fontPath, size);
+	}
+
     render::RenderModuleAccessor* Engine::GetRenderModuleAccessor()
     {
         return m_renderModuleAccessor;
+    }
+
+    resources::AssetsManager* Engine::GetAssetsManager()
+    {
+        return m_assetsManager;
     }
 
     Engine* GEngine = nullptr;

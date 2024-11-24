@@ -7,10 +7,13 @@
 #include <glm/glm.hpp>
 #include "aether/scene/spritenode.h"
 #include "aether/scene/ITilemapNode.h"
+#include "aether/scene/ITextNode.h"
 #include "aether/render/IBatchedEntity.h"
 #include <string>
 
 #include "aether/render/Camera.h"
+
+#include "aether/resources/AssetsManager.h"
 
 #include "Tmx.h"
 
@@ -99,6 +102,8 @@ namespace aether::render
 
         virtual scene::ITilemapNode* CreateTilemapNode(const std::shared_ptr<tilemap::TileMap>& map) = 0;
 
+        virtual scene::ITextNode* CreateTextNode() = 0;
+
         virtual void Render() = 0;
 
         virtual void Init() = 0;
@@ -115,6 +120,11 @@ namespace aether::render
 
         virtual void Refresh(IBatchedEntity* entity) = 0;
 
+		void SetAssetsManager(resources::AssetsManager* assetsManager)
+		{
+			m_assetsManager = assetsManager;
+		}
+
     protected:
 		glm::vec4 GetClearColor() const
 		{
@@ -125,6 +135,7 @@ namespace aether::render
 
         glm::vec4 m_clearColor = { 1.f, 0.f, 1.f, 1.f };
         render::Camera* m_activeCamera;
+		resources::AssetsManager* m_assetsManager;
 
     };
 

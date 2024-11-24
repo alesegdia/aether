@@ -3,6 +3,8 @@
 #include "aether/render/IRenderModule.h"
 #include <string>
 #include <ft2build.h>
+#include "aether/core/logger.h"
+#include "aether/render/gl/GLTexture.h"
 #include FT_FREETYPE_H
 
 namespace aether::render {
@@ -25,57 +27,130 @@ namespace aether::render {
 
     GLFont::GLFont(IRenderModule* owner, const std::string& path, int size)
         : Font(owner)
+        , m_characters()
     {
         FT_Face face;
         if (FT_New_Face(get_ft(), path.c_str(), 0, &face))
         {
-            printf("ERROR::FREETYPE: Failed to load font\n");
+			Logger::LogError("ERROR::FREETYPE: Failed to load font");
         }
 
         FT_Set_Pixel_Sizes(face, 0, size);
 
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // disable byte-alignment restriction
 
-        for (unsigned char c = 0; c < 128; c++)
-        {
-            // load character glyph 
-            if (FT_Load_Char(face, c, FT_LOAD_RENDER))
-            {
-                std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
-                continue;
+
+
+        int max_dim = (1 + (face->size->metrics.height >> 6)) * ceilf(sqrtf(MAX_GLYPHS));
+        int tex_width = 1;
+        while (tex_width < max_dim) tex_width <<= 1;
+        int tex_height = tex_width;
+
+        // render glyphs to atlas
+
+        char* pixels = (char*)calloc(tex_width * tex_height, 1);
+        int pen_x = 0, pen_y = 0;
+
+        for (int i = 0; i < MAX_GLYPHS; ++i) {
+            FT_Load_Char(face, i, FT_LOAD_RENDER | FT_LOAD_FORCE_AUTOHINT | FT_LOAD_TARGET_LIGHT);
+            FT_Bitmap* bmp = &face->glyph->bitmap;
+
+            if (pen_x + bmp->width >= tex_width) {
+                pen_x = 0;
+                pen_y += ((face->size->metrics.height >> 6) + 1);
             }
-            // generate texture
-            unsigned int texture;
-            glGenTextures(1, &texture);
-            glBindTexture(GL_TEXTURE_2D, texture);
-            glTexImage2D(
-                GL_TEXTURE_2D,
-                0,
-                GL_RED,
-                face->glyph->bitmap.width,
-                face->glyph->bitmap.rows,
-                0,
-                GL_RED,
-                GL_UNSIGNED_BYTE,
-                face->glyph->bitmap.buffer
-            );
-            // set texture options
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            // now store character for later use
-            Character character = {
-                texture,
-                glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-                glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-                face->glyph->advance.x
-            };
-            assert(c >= 0 && c < MAX_GLYPHS);
-            m_characters[size_t(c)] = character;
+
+            for (int row = 0; row < bmp->rows; ++row) {
+                for (int col = 0; col < bmp->width; ++col) {
+                    int x = pen_x + col;
+                    int y = pen_y + row;
+                    pixels[y * tex_width + x] = bmp->buffer[row * bmp->pitch + col];
+                }
+            }
+
+            // this is stuff you'd need when rendering individual glyphs out of the atlas
+
+            m_glyphs[i].x0 = pen_x;
+            m_glyphs[i].y0 = pen_y;
+            m_glyphs[i].x1 = pen_x + bmp->width;
+            m_glyphs[i].y1 = pen_y + bmp->rows;
+
+            m_glyphs[i].x_off = face->glyph->bitmap_left;
+            m_glyphs[i].y_off = face->glyph->bitmap_top;
+            m_glyphs[i].advance = face->glyph->advance.x >> 6;
+
+            pen_x += bmp->width + 1;
         }
 
-        FT_Done_Face(face);
+        char* png_data = (char*)calloc(tex_width * tex_height * 4, 1);
+        for (int i = 0; i < (tex_width * tex_height); ++i) {
+            png_data[i * 4 + 0] |= 0xff;
+            png_data[i * 4 + 1] |= 0xff;
+            png_data[i * 4 + 2] |= 0xff;
+            png_data[i * 4 + 3] |= pixels[i];
+        }
+
+        std::shared_ptr<nether::Texture> texture = std::make_shared<nether::Texture>();
+		texture->Create(tex_width, tex_height, (unsigned char*)png_data, nether::TextureFormat::RGBA8);
+
+		m_texture = new GLTexture(owner, texture);
+
+        delete png_data;
     }
+
+    TextData GLFont::CreateText(const std::string& text, float x, float y, float scale, const glm::fvec4& color)
+    {
+        TextData td;
+
+        // iterate through all characters
+        std::string::const_iterator c;
+        for (c = text.begin(); c != text.end(); c++)
+        {
+            Character ch = m_characters[*c];
+			glyph_info gi = m_glyphs[*c];
+            
+            float u0 = float(gi.x0) / float(m_texture->GetSize().GetX());
+            float u1 = float(gi.x1) / float(m_texture->GetSize().GetX());
+            
+            float v0 = float(gi.y0) / float(m_texture->GetSize().GetY());
+            float v1 = float(gi.y1) / float(m_texture->GetSize().GetY());
+
+            float xpos = x + ch.Bearing.x * scale;
+            float ypos = y - (ch.Size.y - ch.Bearing.y) * scale;
+
+            float w = ch.Size.x * scale;
+            float h = ch.Size.y * scale;
+
+            // update VBO for each character
+            td.vertices.insert(td.vertices.end(), {
+                xpos,     ypos + h,   u0, v0,
+                xpos,     ypos,       u0, v1,
+                xpos + w, ypos,       u1, v1,
+
+                xpos,     ypos + h,   u0, v0,
+                xpos + w, ypos,       u0, v1,
+                xpos + w, ypos + h,   u1, v0
+            });
+
+            x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+        }
+
+        td.vao.Generate();
+        td.vbo.Generate(nether::BufferBindingTarget::ArrayBuffer);
+
+        td.vao.Bind();
+        td.vbo.Bind();
+
+        td.vao.EnableVertexAttribArray(0);
+        td.vao.AddVertexAttribPointer(0, 4, nether::GLType::Float, nether::GLBoolean::False, 4 * sizeof(float), 0);
+
+        td.vbo.UploadBufferData(td.vertices);
+        td.vbo.Unbind();
+        td.vao.Unbind();
+
+        td.fontAtlasTexture = m_texture;
+
+        return td;
+    }
+
 
 }

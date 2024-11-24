@@ -18,6 +18,14 @@ namespace aether
 		class BaseAssetStorage : public IAssetStorage
 		{
 		public:
+			~BaseAssetStorage()
+			{
+				for (auto item : m_storageMap)
+				{
+					delete item.second;
+				}
+			}
+
 			std::shared_ptr<StoredAssetType> GetItem(std::string path)
 			{
 				auto p = std::filesystem::path(path);

@@ -1,15 +1,14 @@
 #include "aether/resources/fontassetstorage.h"
 #include "aether/resources/configfile.h"
+#include "aether/core/Engine.h"
 
 
-/*
 namespace aether
 {
 	namespace resources
 	{
-		std::shared_ptr<aether::graphics::Font> FontAssetStorage::LoadImpl(std::string path)
+		aether::render::Font* FontAssetStorage::LoadImpl(std::string path)
 		{
-			auto font = std::make_shared<graphics::Font>();
 			ConfigFile cfg;
 			cfg.Load(path.c_str());
 			int size = 0;
@@ -17,10 +16,9 @@ namespace aether
 			cfg.GetValue("default", "size", size);
 			cfg.GetValue("default", "asset", fontFile);
 			auto fullPath = GetPath(fontFile);
-			font->Load(fullPath.c_str(), size);
+			auto font = aether::GEngine->CreateFont(fullPath, size);
 			return font;
 		}
 
 	}
 }
-*/

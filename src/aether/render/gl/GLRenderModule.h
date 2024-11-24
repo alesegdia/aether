@@ -7,6 +7,8 @@
 #include "aether/render/gl/GLShaderProgram.h"
 #include "aether/render/gl/GLSpriteNode.h"
 #include "aether/render/gl/GLTilemap.h"
+#include "aether/render/gl/GLTextNode.h"
+
 #include "aether/render/Sprite.h"
 #include "aether/scene/SceneNodeFactory.h"
 #include <nether/nether.h>
@@ -38,6 +40,7 @@ namespace aether::render {
         Sprite* CreateSprite(Texture* texture, const math::Recti& rect) override;
         scene::ISpriteNode* CreateSpriteNode(const glm::fvec2& size) override;
         scene::ITilemapNode* CreateTilemapNode(const std::shared_ptr<tilemap::TileMap>& map) override;
+        scene::ITextNode* CreateTextNode() override;
 
         void RenderElement(IBatchedEntity& element, Batch& batch) override;
         void ShaderPreparationStep(IBatchedEntity* batch) override;
@@ -61,6 +64,8 @@ namespace aether::render {
         std::vector<GLTexture> m_allTextures;
         std::vector<Camera*> m_allCameras;
         std::vector<GLShaderProgram> m_allShaders;
+        std::vector<GLTextNode> m_allTextNodes;
+
 		std::vector<Sprite*> m_allSprites;
 
         // Scene Nodes
@@ -74,6 +79,7 @@ namespace aether::render {
         GLShaderProgram* m_defaultShader = nullptr;
         GLShaderProgram* m_spriteShader = nullptr;
         GLShaderProgram* m_tilemapShader = nullptr;
+        GLShaderProgram* m_textShader = nullptr;
 
         /*
 		template<typename NodeType, typename... Args>

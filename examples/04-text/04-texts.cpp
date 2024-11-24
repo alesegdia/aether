@@ -8,9 +8,11 @@ public:
 
     int Ready(const aether::core::CommandLineArguments& args) override
     {
-        m_tilemapNode = aether::GEngine->CreateTilemapNode("examples/03-tilemaps/sample-map.tmx");
-        if (m_tilemapNode == nullptr) return -1;
-        m_tilemapNode->SetRelativePosition({ 0, 0, 0 });
+		//m_textNode = aether::GEngine->CreateTextNode();
+		//if (m_textNode == nullptr) return -1;
+
+        //m_textNode->SetFont("examples/04-text/dafont.ttf");
+		//m_textNode->SetText("Hello AETHER!");
         return 0;
     }
 
@@ -43,11 +45,12 @@ public:
         {
             dx = -1;
         }
-        m_tilemapNode->Move({ speed * dx, speed * dy });
+        //m_textNode->Move({ speed * dx, speed * dy });
     }
 
 private:
-    aether::scene::ITilemapNode* m_tilemapNode;
+    aether::scene::ITextNode* m_textNode;
+	aether::render::Font* m_font;
 
 };
 

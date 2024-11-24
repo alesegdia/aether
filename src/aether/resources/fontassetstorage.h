@@ -1,8 +1,7 @@
 #pragma once
 
-/*
 #include "aether/resources/baseassetstorage.h"
-#include "aether/graphics/font.h"
+#include "aether/render/font.h"
 
 
 namespace aether
@@ -10,13 +9,12 @@ namespace aether
 	namespace resources
 	{
 
-		class FontAssetStorage : public BaseAssetStorage<aether::graphics::Font>
+		class FontAssetStorage : public BaseAssetStorage<aether::render::Font>
 		{
 		public:
-			std::shared_ptr<aether::graphics::Font> LoadImpl(std::string path) override;
+			aether::render::Font* LoadImpl(std::string path) override;
 		};
 
 	}
 }
 
-*/

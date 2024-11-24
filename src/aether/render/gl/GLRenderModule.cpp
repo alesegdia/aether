@@ -9,6 +9,7 @@
 
 #include "aether/render/BatchDispatcher.h"
 
+
 namespace aether {
 
 	aether::render::IRenderModule* create_render_module()
@@ -113,6 +114,16 @@ namespace aether::render {
 		m_allTilemapNodes.emplace_back(node);
         m_batchDispatcher.AddToBatch(node);
         return node;
+    }
+
+    scene::ITextNode* GLRenderModule::CreateTextNode()
+    {
+        /*
+        auto node = new GLTextNode(this, m_textShader);
+        m_allTextNodes.emplace_back(node);
+        m_batchDispatcher.AddToBatch(node);
+        */
+        return nullptr;
     }
 
     void GLRenderModule::RenderElement(IBatchedEntity& element, Batch& batch)
