@@ -14,7 +14,8 @@ namespace aether::tilemap
 
 		// Load texture for the tileset
 		auto path = basePath + "/" + tmxTileset.GetImage()->GetSource();
-		render::Texture* t = aether::GEngine->GetRenderModuleAccessor()->LoadTextureFromFile(path);
+
+		render::Texture* t = aether::GEngine->GetAssetsManager()->GetAsset<aether::render::Texture>(path);
 
 		// Create spritesheet for the tileset
 		m_columns = tmxTileset.GetImage()->GetWidth() / tmxTileset.GetTileWidth();

@@ -27,4 +27,11 @@ namespace aether::core
             str.erase(0, pos + delimiter.length());
         }
     }
+
+
+    std::string to_lower(std::string str)
+    {
+		std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+		return str;
+    }
 }

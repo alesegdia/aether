@@ -21,7 +21,7 @@ namespace aether::render {
 		auto image = meta["image"];
 		auto basePath = std::filesystem::path(path).parent_path().generic_string();
 		auto fullPath = basePath + "/" + std::string(meta["image"].string_value().c_str());
-		data.texture = aether::GEngine->GetRenderModuleAccessor()->LoadTextureFromFile(fullPath);
+		data.texture = aether::GEngine->GetAssetsManager()->GetAsset<aether::render::Texture>(fullPath);
 		auto frameDatas = std::vector<FrameData>();
 
 		for(auto frame : frames)

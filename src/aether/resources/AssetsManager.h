@@ -25,16 +25,17 @@ namespace aether
 			void LoadFolder(const char* path);
 
 			template <typename T>
-			std::shared_ptr<T> GetAsset(std::string path)
+			T* GetAsset(std::string path)
 			{
-				auto file_extension = std::filesystem::path(path).extension().generic_string();
+				auto file_extension = GetExt(path);
 				if (m_storages.count(file_extension) == 0)
 				{
 					return nullptr;
 				}
 				auto storage_iface = m_storages[file_extension];
 				auto storage = std::static_pointer_cast<BaseAssetStorage<T>>(storage_iface);
-				return storage->GetItem(m_basePath + path);
+				auto item = storage->GetItem(path);
+				return item;
 			}
 			
 		private:
@@ -53,7 +54,6 @@ namespace aether
 			std::string GetExt(std::filesystem::directory_entry dir);
 
 			std::unordered_map<std::string, std::shared_ptr<IAssetStorage>> m_storages;
-			std::string m_basePath;
 
 		};
 

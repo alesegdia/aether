@@ -107,8 +107,7 @@ namespace aether
 
     scene::ISpriteNode* Engine::CreateSpriteNode(const std::string& baseTexture)
     {
-        auto texture = m_renderer->LoadTextureFromFile(baseTexture);
-
+        auto texture = aether::GEngine->GetAssetsManager()->GetAsset<aether::render::Texture>(baseTexture);
         auto txtsz = texture->GetSize();
         auto node = m_renderer->CreateSpriteNode({ txtsz.GetX(), txtsz.GetY() });
         node->SetTexture(texture);

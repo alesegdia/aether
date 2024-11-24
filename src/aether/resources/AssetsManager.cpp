@@ -5,6 +5,7 @@
 #include "aether/resources/textureassetstorage.h"
 #include "aether/resources/fontassetstorage.h"
 
+#include "aether/core/utility.h"
 namespace aether
 {
 	namespace resources
@@ -20,23 +21,19 @@ namespace aether
 
 		std::string AssetsManager::GetExt(std::string path)
 		{
-			return std::filesystem::path(path).extension().generic_string();
+			auto ext = std::filesystem::path(path).extension().generic_string();
+			return aether::core::to_lower(ext);
 		}
 
 		std::string AssetsManager::GetExt(std::filesystem::directory_entry dir)
 		{
-			return std::filesystem::path(dir).extension().generic_string();
+			auto ext = std::filesystem::path(dir).extension().generic_string();
+			return aether::core::to_lower(ext);
 		}
 
 		void AssetsManager::LoadFolder(const char* path)
 		{
 			assert(ValidatePath(path));
-			m_basePath = path;
-			for(auto storage : m_storages)
-			{
-				storage.second->SetBasePath(path);
-			}
-
 			using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
 
 			for (const auto& dirEntry : recursive_directory_iterator(path))
@@ -59,6 +56,7 @@ namespace aether
 		void AssetsManager::AddStorage(std::string extension, std::shared_ptr<IAssetStorage> storage)
 		{
 			assert(m_storages.count(extension) == 0);
+			extension = aether::core::to_lower(extension);
 			m_storages[extension] = storage;
 		}
 

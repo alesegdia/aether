@@ -5,7 +5,8 @@ class NormalScreen : public aether::core::IScreen
 public:
     virtual int Load() final
     {
-        m_spriteNode = aether::GEngine->CreateSpriteNode("media/aether-logo.PNG");
+		aether::GEngine->GetAssetsManager()->LoadFolder("media/");
+        m_spriteNode = aether::GEngine->CreateSpriteNode("media/aether-logo.png");
         m_spriteNode->SetRelativePosition({ 400, 300, 0 });
 		aether::GEngine->GetRenderModuleAccessor()->SetClearColor({ 1.f, 0.f, 1.f, 1.f });
         return 0;

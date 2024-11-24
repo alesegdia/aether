@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <unordered_map>
+#include <map>
 #include <cassert>
 
 #include <filesystem>
@@ -26,14 +26,14 @@ namespace aether
 				}
 			}
 
-			std::shared_ptr<StoredAssetType> GetItem(std::string path)
+			StoredAssetType* GetItem(std::string path)
 			{
-				auto p = std::filesystem::path(path);
-				if (m_storageMap.count(p.generic_string()) == 0)
+				if (m_storageMap.count(path) == 0)
 				{
 					return nullptr;
 				}
-				return m_storageMap[p.generic_string()];
+				auto item = m_storageMap[path];
+				return item;
 			}
 
 			void Load(std::string path) override
@@ -57,7 +57,7 @@ namespace aether
 			}
 
 		private:
-			std::unordered_map<std::string, StoredAssetType*> m_storageMap;
+			std::map<std::string, StoredAssetType*> m_storageMap;
 			std::string m_loadMessage;
 
 		};

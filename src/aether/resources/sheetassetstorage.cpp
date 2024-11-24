@@ -25,7 +25,7 @@ namespace aether
 			configFile.GetValue("default", "cols", cols);
 			configFile.GetValue("default", "asset", relPath);
 
-			auto texture = aether::GEngine->GetRenderModuleAccessor()->LoadTextureFromFile(path);
+			auto texture = aether::GEngine->GetAssetsManager()->GetAsset<aether::render::Texture>(path);
 			m_cachedTextures.push_back(texture);
 			m_cachedSheets.push_back(spritesheet);
 
