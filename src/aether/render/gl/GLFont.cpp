@@ -18,7 +18,7 @@ namespace aether::render {
         {
             if (FT_Init_FreeType(&ft))
             {
-                printf("ERROR::FREETYPE: Could not init FreeType Library\n");
+                Logger::LogError() << "ERROR::FREETYPE: Could not init FreeType Library";
             }
             initialized = true;
         }
@@ -32,7 +32,7 @@ namespace aether::render {
         FT_Face face;
         if (FT_New_Face(get_ft(), path.c_str(), 0, &face))
         {
-			Logger::LogError("ERROR::FREETYPE: Failed to load font");
+			Logger::LogError() << "ERROR::FREETYPE: Failed to load font " << path;
         }
 
         FT_Set_Pixel_Sizes(face, 0, size);

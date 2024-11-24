@@ -23,16 +23,16 @@ ApplicationBase::~ApplicationBase()
 
 int ApplicationBase::Initialize(const CommandLineArguments& args)
 {
-    Logger::LogMsg("Initializing Application.");
+    Logger::LogMsg() << "Initializing Application.";
     int init_retcode = Init(args);
 
     if (init_retcode != 0) {
-        Logger::LogError("Application implementation failed to initialize with code <retcode>. Exiting.");
+        Logger::LogError() << "Application implementation failed to initialize with code <retcode>. Exiting.";
         return init_retcode;
     }
     else
     {
-        Logger::LogMsg("Application initialized successfully.");
+        Logger::LogMsg() << "Application initialized successfully.";
     }
 
     aether::GEngine->GetRenderModuleAccessor()->Init();
@@ -40,11 +40,17 @@ int ApplicationBase::Initialize(const CommandLineArguments& args)
     auto firstCam = aether::GEngine->CreateCamera({ GetApplicationWindowScreenWidth(), GetApplicationWindowScreenHeight() }, render::ProjectionMode::Orthographic );
 	aether::GEngine->GetRenderModuleAccessor()->SetActiveCamera(firstCam);
 
-    Logger::LogMsg("Custom app init.");
+    for (auto path : GetAssetPaths())
+    {
+        aether::GEngine->GetAssetsManager()->LoadFolder(path);
+    }
+
+
+    Logger::LogMsg() << "Custom app init.";
 	int ready_retcode = Ready(args);
 	if (ready_retcode != 0)
 	{
-        Logger::LogError("Custom app init implementation failed to initialize with code <retcode>. Exiting.");
+        Logger::LogError() << "Custom app init implementation failed to initialize with code <retcode>. Exiting.";
 		return ready_retcode;
 	}
 

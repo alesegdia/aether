@@ -48,6 +48,11 @@ public:
         Close();
     }
 
+    virtual std::vector<std::string> GetAssetPaths() const
+    {
+        return {};
+    }
+
 private:
 	void Step();
 

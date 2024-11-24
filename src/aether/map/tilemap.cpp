@@ -27,13 +27,13 @@ namespace aether {
 
             if (m_tilesetCollection->GetTilesets().size() <= 0)
             {
-                Logger::LogError("No tilesets found in the map file");
+                Logger::LogError() << "No tilesets found in the map file";
                 assert("false");
             }
 
             if (m_tilesetCollection->GetTilesets().size() > 1)
             {
-                Logger::LogError("The tilemap must have 1 maximum tileset. This is a restriction that will be removed in the future.");
+                Logger::LogError() << "The tilemap must have 1 maximum tileset. This is a restriction that will be removed in the future.";
 				assert("false");
             }
 

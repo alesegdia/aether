@@ -3,9 +3,9 @@
 class NormalScreen : public aether::core::IScreen
 {
 public:
+
     virtual int Load() final
     {
-		aether::GEngine->GetAssetsManager()->LoadFolder("media/");
         m_spriteNode = aether::GEngine->CreateSpriteNode("media/aether-logo.png");
         m_spriteNode->SetRelativePosition({ 400, 300, 0 });
 		aether::GEngine->GetRenderModuleAccessor()->SetClearColor({ 1.f, 0.f, 1.f, 1.f });
@@ -48,6 +48,11 @@ private:
 class MyGame : public aether::core::Application
 {
 public:
+    std::vector<std::string> GetAssetPaths() const override
+    {
+        return { "media/" };
+    }
+
     MyGame(int w, int h) : aether::core::Application(w, h) {}
 
     virtual int Ready(const aether::core::CommandLineArguments& args) override

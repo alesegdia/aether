@@ -23,6 +23,10 @@ namespace aether
 			AssetsManager();
 
 			void LoadFolder(const char* path);
+			void LoadFolder(const std::string& paths)
+			{
+				LoadFolder(paths.c_str());
+			}
 
 			template <typename T>
 			T* GetAsset(std::string path)

@@ -105,7 +105,7 @@ namespace aether::core {
                 break;
             }
 
-            Logger::LogError("[" + std::to_string(id) + "]: " + _type + " of " + _severity + " severity, raised from " + _source + ": " + msg);
+            Logger::LogError() << "[" << id << "]: " << _type << " of " << _severity << " severity, raised from " << _source << ": " << msg;
         }
 
         GLApplication::GLApplication(int sw, int sh)
@@ -117,12 +117,12 @@ namespace aether::core {
         int GLApplication::Init(const CommandLineArguments& args)
         {
             if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-                Logger::LogError("Failed to initialize SDL video.");
+                Logger::LogError() << "Failed to initialize SDL video.";
                 return -1;
             }
             else
             {
-                Logger::LogMsg("SDL video initialized successfully.");
+                Logger::LogMsg() << "SDL video initialized successfully.";
             }
 
             SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);

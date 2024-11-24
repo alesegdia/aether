@@ -6,6 +6,11 @@ class MyGame : public aether::core::Application
 public:
     MyGame(int w, int h) : aether::core::Application(w, h) {}
 
+    std::vector<std::string> GetAssetPaths() const override
+    {
+        return { "media/" };
+    }
+
     int Ready(const aether::core::CommandLineArguments& args) override
     {
         auto asepriteAnimData = aether::render::AsepriteAnimationLoader().Load("media/dknight.json");

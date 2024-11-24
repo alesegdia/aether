@@ -128,7 +128,7 @@ namespace aether
         map.ParseFile(tilemapPath.c_str());
         if (map.HasError())
         {
-            Logger::LogError("[" + std::to_string(map.GetErrorCode()) + "] " + map.GetErrorText());
+            Logger::LogError() << "[" << std::to_string(map.GetErrorCode()) << "] " << map.GetErrorText();
             return nullptr;
         }
 

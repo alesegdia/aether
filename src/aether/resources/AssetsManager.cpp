@@ -6,6 +6,8 @@
 #include "aether/resources/fontassetstorage.h"
 
 #include "aether/core/utility.h"
+#include "aether/core/logger.h"
+
 namespace aether
 {
 	namespace resources
@@ -36,10 +38,11 @@ namespace aether
 			assert(ValidatePath(path));
 			using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
 
+			Logger::LogMsg() << "Scanning " << std::string(path) << " for assets...";
 			for (const auto& dirEntry : recursive_directory_iterator(path))
 			{
 				auto ext = GetExt(dirEntry);
-				std::cout << "Loading " << dirEntry << " with extension " << ext << "..." << std::endl;
+				Logger::LogMsg() << "Loading " << dirEntry << " with extension " << ext << "...";
 				if (m_storages.count(ext) == 0)
 				{
 					std::cout << "There is no storage for extension \"" << ext << "\"." << std::endl;
