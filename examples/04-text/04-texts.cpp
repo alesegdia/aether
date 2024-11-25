@@ -6,13 +6,17 @@ class MyGame : public aether::core::Application
 public:
     MyGame(int w, int h) : aether::core::Application(w, h) {}
 
+	std::vector<std::string> GetAssetPaths() const override
+	{
+		return { "examples/04-text/", "media/" };
+	}
+
     int Ready(const aether::core::CommandLineArguments& args) override
     {
-		//m_textNode = aether::GEngine->CreateTextNode();
-		//if (m_textNode == nullptr) return -1;
-
-        //m_textNode->SetFont("examples/04-text/dafont.ttf");
-		//m_textNode->SetText("Hello AETHER!");
+		m_textNode = aether::GEngine->CreateTextNode();
+		m_textNode->SetRelativePosition({ 0, 0, 0 });
+        m_textNode->SetFont("media/dafont.font");
+		m_textNode->SetText("Hello AETHER!");
         return 0;
     }
 
@@ -45,7 +49,7 @@ public:
         {
             dx = -1;
         }
-        //m_textNode->Move({ speed * dx, speed * dy });
+        m_textNode->Move({ speed * dx, speed * dy });
     }
 
 private:

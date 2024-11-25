@@ -10,6 +10,7 @@
 #include "core/iscreen.h"
 #include "core/textinputprocessor.h"
 #include "core/Engine.h"
+#include "core/logger.h"
 
 #include "render/color.h"
 #include "render/font.h"

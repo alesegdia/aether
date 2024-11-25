@@ -3,6 +3,8 @@
 #include <utility>
 #include "spritesheet.h"
 
+#include "aether/core/logger.h"
+
 namespace aether::render {
 
 Spritesheet::~Spritesheet()
@@ -50,6 +52,10 @@ std::vector<TextureRegion*> Spritesheet::getFrames(size_t start, size_t end)
 
 void Spritesheet::Reset(size_t width, size_t height, Texture* texture)
 {
+    if (m_texture == nullptr)
+    {
+        Logger::LogError() << "Texture is NULL when resetting Spritesheet.";
+    }
     m_texture = texture;
     m_width = int(width);
     m_height = int(height);

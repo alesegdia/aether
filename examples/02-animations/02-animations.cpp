@@ -18,6 +18,9 @@ public:
         m_spriteNode->SetRelativePosition({ 400, 300, 0 });
         m_spriteNode->LoadAllAnimations(asepriteAnimData);
         m_spriteNode->PlayAnimation("front");
+        aether::Logger::LogMsg() << "This is a verbose message.";
+		aether::Logger::LogError() << "This is an error message.";
+		aether::Logger::LogWarning() << "This is a warning message.";
         return 0;
     }
 

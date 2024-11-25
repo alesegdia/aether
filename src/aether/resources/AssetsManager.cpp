@@ -38,22 +38,30 @@ namespace aether
 			assert(ValidatePath(path));
 			using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
 
-			Logger::LogMsg() << "Scanning " << std::string(path) << " for assets...";
-			for (const auto& dirEntry : recursive_directory_iterator(path))
+			try
 			{
-				auto ext = GetExt(dirEntry);
-				Logger::LogMsg() << "Loading " << dirEntry << " with extension " << ext << "...";
-				if (m_storages.count(ext) == 0)
+				Logger::LogMsg() << "Scanning " << std::string(path) << " for assets...";
+				for (const auto& dirEntry : recursive_directory_iterator(path))
 				{
-					std::cout << "There is no storage for extension \"" << ext << "\"." << std::endl;
+					auto ext = GetExt(dirEntry);
+					Logger::LogMsg() << "Loading " << dirEntry << " with extension " << ext << "...";
+					if (m_storages.count(ext) == 0)
+					{
+						Logger::LogWarning() << "There is no storage for extension \"" << ext << "\" so " << dirEntry << " won't be loaded.";
+					}
+					else
+					{
+						m_storages[ext]->Load(dirEntry.path().generic_string());
+						Logger::LogMsg() << m_storages[ext]->GetLoadMessage();
+					}
 				}
-				else
-				{
-					m_storages[ext]->Load(dirEntry.path().generic_string());
-					std::cout << m_storages[ext]->GetLoadMessage() << std::endl;
-				}
-				std::cout << std::endl;
+
 			}
+			catch (std::filesystem::filesystem_error& e)
+			{
+				Logger::LogError() << "Trying to scan an invalid path: " << e.path1();
+			}
+
 		}
 
 		void AssetsManager::AddStorage(std::string extension, std::shared_ptr<IAssetStorage> storage)

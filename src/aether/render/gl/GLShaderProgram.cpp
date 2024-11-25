@@ -2,6 +2,22 @@
 #include "aether/render/ShaderProgram.h"
 #include "nether/nether.h"
 
+#include "aether/core/logger.h"
+
+namespace {
+    void dispatchCompilationMessage(const nether::ShaderCompilationInfo& sci)
+    {
+        if (!sci.hasError)
+        {
+            aether::Logger::LogMsg() << sci.infoText;
+        }
+        else
+        {
+            aether::Logger::LogError() << sci.infoText;
+        }
+    }
+}
+
 namespace aether::render {
 
     GLShaderProgram::GLShaderProgram(ModuleObject* o, const std::string& vspath, const std::string& fspath)
@@ -9,6 +25,10 @@ namespace aether::render {
 	{
 		m_shader = std::make_unique<nether::ShaderProgram>();
 		m_shader->Load(vspath, fspath);
+        
+        dispatchCompilationMessage(m_shader->GetVertexShaderCompilationInfo());
+		dispatchCompilationMessage(m_shader->GetFragmentShaderCompilationInfo());
+		dispatchCompilationMessage(m_shader->GetShaderProgramCompilationInfo());
 	}
 
 	void GLShaderProgram::Use()

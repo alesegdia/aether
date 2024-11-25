@@ -40,11 +40,17 @@ int ApplicationBase::Initialize(const CommandLineArguments& args)
     auto firstCam = aether::GEngine->CreateCamera({ GetApplicationWindowScreenWidth(), GetApplicationWindowScreenHeight() }, render::ProjectionMode::Orthographic );
 	aether::GEngine->GetRenderModuleAccessor()->SetActiveCamera(firstCam);
 
+    bool some_path = false;
     for (auto path : GetAssetPaths())
     {
+        some_path = true;
         aether::GEngine->GetAssetsManager()->LoadFolder(path);
     }
 
+    if (!some_path)
+    {
+        aether::Logger::LogWarning() << "No specified asset paths. Assets might fail to load.";
+    }
 
     Logger::LogMsg() << "Custom app init.";
 	int ready_retcode = Ready(args);

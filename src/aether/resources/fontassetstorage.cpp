@@ -15,8 +15,13 @@ namespace aether
 			std::string fontFile;
 			cfg.GetValue("default", "size", size);
 			cfg.GetValue("default", "asset", fontFile);
-			auto fullPath = GetPath(fontFile);
-			auto font = aether::GEngine->CreateFont(fullPath, size);
+
+			// Extract base directory from path
+			std::filesystem::path basePath = std::filesystem::path(path).parent_path();
+			std::filesystem::path fullPath = basePath / fontFile;
+
+			auto font = aether::GEngine->CreateFont(fullPath.generic_string(), size);
+
 			return font;
 		}
 

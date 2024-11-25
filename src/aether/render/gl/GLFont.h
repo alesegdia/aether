@@ -10,6 +10,8 @@
 
 #include <nether/nether.h>
 
+#include "aether/render/gl/GLTopology.h"
+
 
 namespace aether::render
 {
@@ -34,13 +36,12 @@ namespace aether::render
 	{
 		void Clean()
 		{
-			vao.Delete();
-			vbo.Delete();
+
 		}
+
 		GLTexture* fontAtlasTexture;
-		nether::VertexArrayObject vao;
-		nether::BufferObject vbo;
-		std::vector<float> vertices;
+		GLTopology topology;
+		std::vector<int> indices;
 	};
 
 	class GLFont : public Font

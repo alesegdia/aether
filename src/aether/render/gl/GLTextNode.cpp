@@ -1,4 +1,7 @@
 #include "aether/render/gl/GLTextNode.h"
+#include "aether/render/gl/GLTexture.h"
+#include "aether/core/Engine.h"
+#include "aether/render/texture.h"
 
 namespace aether::render {
 
@@ -19,7 +22,9 @@ namespace aether::render {
         // TODO: Implement this method
     }
 
-    void GLTextNode::SetFont(const std::string& font) {
+    void GLTextNode::SetFont(const std::string& fontPath) {
+        Font* font = aether::GEngine->GetAssetsManager()->GetAsset<Font>(fontPath);
+		m_font = static_cast<GLFont*>(font);
         m_dirty = true;
     }
 
@@ -32,24 +37,33 @@ namespace aether::render {
     }
 
     ShaderProgram* GLTextNode::GetShader() const {
-        // TODO: Implement this method
-        return nullptr;
+        return m_shader;
     }
 
     TextureConfig GLTextNode::GetTextureConfig() const {
-        // TODO: Implement this method
-        return TextureConfig();
+        return m_textureConfig;
     }
 
     void GLTextNode::Draw() {
-        if (m_dirty)
+        if (m_font == nullptr)
         {
-			m_currentTextData.Clean();
-			m_currentTextData = m_font->CreateText(m_text, 0, 0, 1.0f, glm::fvec4(1.0f));
-			m_dirty = false;
+            aether::Logger::LogError() << "Font is null in the GLTextNode.";
+            aether::Logger::LogError() << "  - Check that the asset path has been loaded.\n";
+            aether::Logger::LogError() << "";
         }
-        m_currentTextData.vao.Bind();
-		glDrawArrays(GL_TRIANGLES, 0, m_currentTextData.vertices.size());
+        else
+        {
+            if (m_dirty)
+            {
+                m_currentTextData.Clean();
+                m_currentTextData = m_font->CreateText(m_text, 0, 0, 1.0f, glm::fvec4(1.0f));
+                m_dirty = false;
+                m_textureConfig = {};
+                m_textureConfig.AddEntrySorted(1, m_currentTextData.fontAtlasTexture);
+            }
+            
+            m_currentTextData.topology.Draw();
+        }
     }
 
 }

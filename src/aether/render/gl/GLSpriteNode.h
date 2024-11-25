@@ -29,7 +29,8 @@ namespace aether::render
 
             m_topology = std::make_unique<render::GLTopology>();
             m_topology->SetVertexFormat(CreateP3U2VertexFormat());
-			m_topology->SetIndices({ 0, 1, 2, 2, 3, 0 });
+			m_topology->SetIndices({ 0, 1, 2,
+                                     2, 3, 0  });
 			m_topology->SetVertices({ -szx, -szy, 0.0f, 0.0f, 0.0f,
 									   szx, -szy, 0.0f, 1.0f, 0.0f,
                                        szx,  szy, 0.0f, 1.0f, 1.0f,

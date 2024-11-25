@@ -23,7 +23,7 @@ namespace aether
 		{
 		public:
 			LogStream(LogChannel channel) : m_channel(channel) {}
-
+			
 			template<typename T>
 			LogStream& operator<<(const T& value)
 			{
@@ -36,13 +36,23 @@ namespace aether
 				auto now = std::chrono::system_clock::now();
 				auto now_time_t = std::chrono::system_clock::to_time_t(now);
 				auto now_tm = *std::localtime(&now_time_t);
-				std::cout << "[" << now << "] " << ChannelToString(m_channel) << ": " << m_stream.str() << std::endl;
+				std::cout << GetColorCode() << "[" << now << "] " << ChannelToString(m_channel) << ": " << m_stream.str() << std::endl;
 				// std::cout << "[" << std::put_time(&now_tm, "%H:%M:%S") << "] " << ChannelToString(m_channel) << ": " << m_stream.str() << std::endl;
 			}
 
 		private:
 			LogChannel m_channel;
 			std::ostringstream m_stream;
+
+			const char* GetColorCode()
+			{
+				switch (m_channel)
+				{
+				case LogChannel::Verbose: return "\033[0m"; break;
+				case LogChannel::Warning: return "\033[33m"; break;
+				case LogChannel::Error: return "\033[31m"; break;
+				}
+			}
 
 			static std::string ChannelToString(LogChannel channel)
 			{
@@ -70,6 +80,11 @@ namespace aether
 		static LogStream LogError()
 		{
 			return Log(LogChannel::Error);
+		}
+
+		static LogStream LogWarning()
+		{
+			return Log(LogChannel::Warning);
 		}
 	};
 }

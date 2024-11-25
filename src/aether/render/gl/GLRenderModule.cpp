@@ -32,6 +32,7 @@ namespace aether::render {
         m_defaultShader = new GLShaderProgram(this, "media/default.vs", "media/default.fs");
         m_spriteShader = new GLShaderProgram(this, "media/sprite.vs", "media/sprite.fs");
         m_tilemapShader = new GLShaderProgram(this, "media/tilemap.vs", "media/tilemap.fs");
+        m_textShader = new GLShaderProgram(this, "media/font.vs", "media/font.fs");
 
         m_defaultShader->Use();
         m_defaultShader->SetIntUniform("texture1", 0);
@@ -41,6 +42,9 @@ namespace aether::render {
 
         m_tilemapShader->Use();
         m_tilemapShader->SetIntUniform("texture1", 0);
+
+        m_textShader->Use();
+        m_textShader->SetIntUniform("texture1", 0);
     }
 
     GLRenderModule::~GLRenderModule()
@@ -121,12 +125,10 @@ namespace aether::render {
 
     scene::ITextNode* GLRenderModule::CreateTextNode()
     {
-        /*
         auto node = new GLTextNode(this, m_textShader);
         m_allTextNodes.emplace_back(node);
         m_batchDispatcher.AddToBatch(node);
-        */
-        return nullptr;
+        return node;
     }
 
     void GLRenderModule::RenderElement(IBatchedEntity& element, Batch& batch)
@@ -137,8 +139,18 @@ namespace aether::render {
     void GLRenderModule::ShaderPreparationStep(IBatchedEntity* batch)
     {
 		auto shader = ResourceCast(batch->GetShader());
-        shader->GetNetherShader()->Use();
-        shader->GetNetherShader()->SetMat4Uniform("viewProjection", GetActiveCamera()->GetViewProjectionMatrix());
+        if (shader == nullptr)
+        {
+            aether::Logger::LogError() << "Shader is null in the shader preparation step.";
+            aether::Logger::LogError() << "  - Check if the IBatchedEntity::GetShader method has actually been implemented or not.";
+            aether::Logger::LogError() << "";
+
+        }
+        else
+        {
+            shader->GetNetherShader()->Use();
+            shader->GetNetherShader()->SetMat4Uniform("viewProjection", GetActiveCamera()->GetViewProjectionMatrix());
+        }
     }
 
     void GLRenderModule::TexturePreparationStep(IBatchedEntity* batch)

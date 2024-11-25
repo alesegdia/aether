@@ -3,11 +3,10 @@
 #include <iostream>
 #include <map>
 #include <cassert>
-
 #include <filesystem>
+#include <regex>
 
 #include "aether/resources/iassetstorage.h"
-
 
 namespace aether
 {
@@ -28,6 +27,8 @@ namespace aether
 
 			StoredAssetType* GetItem(std::string path)
 			{
+				path = NormalizePath(path);
+
 				if (m_storageMap.count(path) == 0)
 				{
 					return nullptr;
@@ -38,6 +39,8 @@ namespace aether
 
 			void Load(std::string path) override
 			{
+				path = NormalizePath(path);
+
 				m_loadMessage = path + " loaded successfully.";
 				auto asset = LoadImpl(path);
 				m_storageMap[path] = asset;
@@ -60,8 +63,12 @@ namespace aether
 			std::map<std::string, StoredAssetType*> m_storageMap;
 			std::string m_loadMessage;
 
+			std::string NormalizePath(const std::string& path)
+			{
+				std::string normalizedPath = std::regex_replace(path, std::regex("/+"), "/");
+				return normalizedPath;
+			}
 		};
-
 
 	}
 }

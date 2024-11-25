@@ -11,6 +11,8 @@
 #include "aether/resources/iassetstorage.h"
 #include "aether/resources/baseassetstorage.h"
 
+#include "aether/core/logger.h"
+
 
 namespace aether
 {
@@ -34,6 +36,8 @@ namespace aether
 				auto file_extension = GetExt(path);
 				if (m_storages.count(file_extension) == 0)
 				{
+					Logger::LogError() << "Trying to get asset not present in storage: " << path;
+					Logger::LogError() << "\tCheck if the asset folder was added with Application::GetAssetPaths().";
 					return nullptr;
 				}
 				auto storage_iface = m_storages[file_extension];

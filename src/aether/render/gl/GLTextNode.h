@@ -13,8 +13,8 @@ namespace aether::render {
     public:
         GLTextNode(ModuleObject* o, GLShaderProgram* shader)
             : scene::ITextNode(o)
+            , m_shader(shader)
         {
-
         }
 
         virtual ~GLTextNode()
@@ -27,7 +27,7 @@ namespace aether::render {
         void SetSize(int size) override;
         void SetColor(const glm::fvec4& color) override;
         void SetAlignment(const glm::fvec2& alignment) override;
-        void SetFont(const std::string& font) override;
+        void SetFont(const std::string& fontPath) override;
         void SetLineSpacing(float spacing) override;
         void SetClippingRect(float x, float y, float w, float h) override;
 
@@ -41,6 +41,8 @@ namespace aether::render {
         std::string m_text;
         aether::render::TextData m_currentTextData;
         GLFont* m_font;
+        aether::render::GLShaderProgram* m_shader;
+        TextureConfig m_textureConfig;
 
     };
 

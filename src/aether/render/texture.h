@@ -54,7 +54,7 @@ namespace aether::render {
     class TextureConfig
     {
     public:
-		void AddEntrySorted(int slot, Texture* texture)
+		void AddEntrySorted(int slot, aether::render::Texture* texture)
 		{
 			m_entries.push_back(TextureConfigEntry(slot, texture));
 			std::sort(m_entries.begin(), m_entries.end(), [](const TextureConfigEntry& a, const TextureConfigEntry& b) { return a.GetSlot() < b.GetSlot(); });

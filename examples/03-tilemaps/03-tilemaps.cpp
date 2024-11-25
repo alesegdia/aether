@@ -6,6 +6,12 @@ class MyGame : public aether::core::Application
 public:
     MyGame(int w, int h) : aether::core::Application(w, h) {}
 
+    std::vector<std::string> GetAssetPaths() const override
+    {
+        return { "examples/03-tilemaps/" };
+    }
+
+
     int Ready(const aether::core::CommandLineArguments& args) override
     {
         m_tilemapNode = aether::GEngine->CreateTilemapNode("examples/03-tilemaps/sample-map.tmx");

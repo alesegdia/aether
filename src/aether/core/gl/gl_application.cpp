@@ -19,6 +19,8 @@ namespace aether::core {
             const char* _type;
             const char* _severity;
 
+            aether::LogChannel channel;
+
             switch (source) {
             case GL_DEBUG_SOURCE_API:
                 _source = "API";
@@ -52,34 +54,42 @@ namespace aether::core {
             switch (type) {
             case GL_DEBUG_TYPE_ERROR:
                 _type = "ERROR";
+                channel = LogChannel::Error;
                 break;
 
             case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
                 _type = "DEPRECATED BEHAVIOR";
+                channel = LogChannel::Warning;
                 break;
 
             case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
                 _type = "UDEFINED BEHAVIOR";
+                channel = LogChannel::Error;
                 break;
 
             case GL_DEBUG_TYPE_PORTABILITY:
                 _type = "PORTABILITY";
+                channel = LogChannel::Warning;
                 break;
 
             case GL_DEBUG_TYPE_PERFORMANCE:
                 _type = "PERFORMANCE";
+                channel = LogChannel::Warning;
                 break;
 
             case GL_DEBUG_TYPE_OTHER:
                 _type = "OTHER";
+                channel = LogChannel::Warning;
                 break;
 
             case GL_DEBUG_TYPE_MARKER:
                 _type = "MARKER";
+                channel = LogChannel::Verbose;
                 break;
 
             default:
                 _type = "UNKNOWN";
+                channel = LogChannel::Warning;
                 break;
             }
 
@@ -105,7 +115,7 @@ namespace aether::core {
                 break;
             }
 
-            Logger::LogError() << "[" << id << "]: " << _type << " of " << _severity << " severity, raised from " << _source << ": " << msg;
+            Logger::LogStream(channel) << "[" << id << "]: " << _type << " of " << _severity << " severity, raised from " << _source << ": " << msg;
         }
 
         GLApplication::GLApplication(int sw, int sh)
@@ -137,24 +147,24 @@ namespace aether::core {
                 SDL_WINDOW_OPENGL);
 
             if (!m_window) {
-                fprintf(stderr, "failed to create display! %s\n", SDL_GetError());
+                Logger::LogError() << "failed to create display! " << SDL_GetError();
                 return -1;
             }
 
             glContext = SDL_GL_CreateContext(m_window);
             
             int version = gladLoadGL((GLADloadfunc)SDL_GL_GetProcAddress);
-            printf("GLAD GL Version: %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
+            Logger::LogMsg() << "GLAD GL Version: " << GLAD_VERSION_MAJOR(version) << "." << GLAD_VERSION_MINOR(version);
 
             if (glContext == NULL)
             {
-                fprintf(stderr, "failed to create GL context! %s\n", SDL_GetError());
+				Logger::LogError() << "failed to create GL context! " << SDL_GetError();
                 return -1;
             }
 
-            printf("Vendor:   %s\n", glGetString(GL_VENDOR));
-            printf("Renderer: %s\n", glGetString(GL_RENDERER));
-            printf("Version:  %s\n", glGetString(GL_VERSION));
+            Logger::LogMsg() << "Vendor: " << glGetString(GL_VENDOR);
+            Logger::LogMsg() << "Renderer: " << glGetString(GL_RENDERER);
+            Logger::LogMsg() << "OpenGL Version: " << glGetString(GL_VERSION);
 
             // Use v-sync
             // SDL_GL_SetSwapInterval(1);
